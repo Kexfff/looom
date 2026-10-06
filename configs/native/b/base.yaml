@@ -1,0 +1,42 @@
+schema: 1
+source:
+  profile: arch
+  snapshot: "2026-10-03"
+system:
+  hostname: looom-rust-b
+  timezone: Europe/Moscow
+  locale: en_US.UTF-8
+  console_keymap: us
+kernel:
+  package: linux-lts
+desktop:
+  environment: none
+packages: []
+accounts:
+  user:
+    name: codex
+    uid: 1000
+    gid: 1000
+    groups: [wheel]
+    shell: /bin/bash
+    password_secret: login-codex
+  root:
+    password_secret: login-root
+units:
+  sshd.service: enabled
+files: {}
+persistent:
+  directories:
+    /etc/NetworkManager/system-connections:
+      id: network-connections
+      owner: root
+      group: root
+      mode: "0700"
+    /etc/looom-local:
+      id: local-settings
+      owner: root
+      group: root
+      mode: "0700"
+health:
+  required_units:
+    - sshd.service

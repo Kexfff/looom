@@ -1,0 +1,65 @@
+Oct 04 21:21:55 archlinux kernel: virt/tdx: TDX not supported by the host platform
+Oct 04 21:21:58 looom-vm (sd-chown)[293]: systemd-journalctl.socket: Failed to resolve group 'systemd-journal': Unknown group
+Oct 04 21:21:58 looom-vm systemd[1]: Failed to listen on Journal Log Access Socket.
+Oct 04 21:21:58 looom-vm systemd-tmpfiles[328]: /usr/lib/tmpfiles.d/static-nodes-permissions.conf:12: Failed to resolve group 'audio': Unknown group
+Oct 04 21:21:58 looom-vm systemd-tmpfiles[328]: /usr/lib/tmpfiles.d/static-nodes-permissions.conf:13: Failed to resolve group 'audio': Unknown group
+Oct 04 21:21:58 looom-vm systemd-tmpfiles[328]: /usr/lib/tmpfiles.d/static-nodes-permissions.conf:14: Failed to resolve group 'disk': Unknown group
+Oct 04 21:21:58 looom-vm systemd-tmpfiles[328]: /usr/lib/tmpfiles.d/static-nodes-permissions.conf:18: Failed to resolve group 'kvm': Unknown group
+Oct 04 21:21:58 looom-vm systemd-tmpfiles[328]: /usr/lib/tmpfiles.d/static-nodes-permissions.conf:19: Failed to resolve group 'kvm': Unknown group
+Oct 04 21:21:58 looom-vm systemd-tmpfiles[328]: /usr/lib/tmpfiles.d/static-nodes-permissions.conf:20: Failed to resolve group 'kvm': Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:13 Failed to resolve group 'clock', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:34 Failed to resolve group 'clock', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:43 Failed to resolve group 'tty', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:44 Failed to resolve group 'tty', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:45 Failed to resolve group 'tty', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:46 Failed to resolve group 'tty', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:47 Failed to resolve group 'uucp', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:49 Failed to resolve group 'kmem', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:51 Failed to resolve group 'input', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:54 Failed to resolve group 'video', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:55 Failed to resolve group 'video', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:56 Failed to resolve group 'video', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:57 Failed to resolve group 'video', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:58 Failed to resolve group 'video', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:59 Failed to resolve group 'video', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:61 Failed to resolve group 'render', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:62 Failed to resolve group 'render', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:63 Failed to resolve group 'render', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:65 Failed to resolve group 'sgx', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:66 Failed to resolve group 'sgx', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:71 Failed to resolve group 'audio', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:82 Failed to resolve group 'audio', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:83 Failed to resolve group 'audio', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:84 Failed to resolve group 'video', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:86 Failed to resolve group 'lp', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:87 Failed to resolve group 'lp', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:88 Failed to resolve group 'lp', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:89 Failed to resolve group 'lp', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:90 Failed to resolve group 'lp', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:91 Failed to resolve group 'lp', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:93 Failed to resolve group 'disk', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:94 Failed to resolve group 'optical', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:95 Failed to resolve group 'optical', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:96 Failed to resolve group 'optical', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:97 Failed to resolve group 'optical', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:98 Failed to resolve group 'optical', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:100 Failed to resolve group 'storage', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:101 Failed to resolve group 'disk', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:102 Failed to resolve group 'disk', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:103 Failed to resolve group 'disk', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:104 Failed to resolve group 'disk', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:105 Failed to resolve group 'disk', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:106 Failed to resolve group 'disk', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:107 Failed to resolve group 'disk', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:116 Failed to resolve group 'kvm', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:121 Failed to resolve group 'kvm', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:123 Failed to resolve group 'kvm', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/50-udev-default.rules:125 Failed to resolve group 'kvm', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/60-block.rules:16 Failed to resolve group 'disk', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/60-ltt2go-udev.rules:4 Failed to resolve user 'tss', ignoring: Unknown user
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/60-rfkill.rules:1 Failed to resolve group 'rfkill', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/60-tpm-udev.rules:3 Failed to resolve user 'tss', ignoring: Unknown user
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/60-tpm-udev.rules:4 Failed to resolve group 'tss', ignoring: Unknown group
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/60-tpm-udev.rules:5 Failed to resolve user 'tss', ignoring: Unknown user
+Oct 04 21:21:58 looom-vm systemd-udevd[330]: /usr/lib/udev/rules.d/60-tpm-udev.rules:6 Failed to resolve group 'tss', ignoring: Unknown group
+Oct 04 21:21:59 looom-vm systemd[1]: Failed to start D-Bus System Message Bus.

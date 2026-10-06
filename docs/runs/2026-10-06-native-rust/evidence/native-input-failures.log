@@ -1,0 +1,1 @@
+PASS: installed Rust CLI accepts valid lock, rejects stale recipe and corrupted archive digest before creating build inputs

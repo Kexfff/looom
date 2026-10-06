@@ -1,0 +1,15 @@
+==> WARNING: /run/looom-top/@root-v1r3 is not a mountpoint. This may have undesirable side effects.
+PASS: retained libxcrypt accepts yescrypt and rejects incorrect input
+==> WARNING: /run/looom-top/@root-v2 is not a mountpoint. This may have undesirable side effects.
+PASS: retained libxcrypt accepts yescrypt and rejects incorrect input
+==> WARNING: /run/looom-top/@root-desktop is not a mountpoint. This may have undesirable side effects.
+PASS: retained libxcrypt accepts yescrypt and rejects incorrect input
+==> WARNING: /run/looom-top/@root-mvp-a4 is not a mountpoint. This may have undesirable side effects.
+PASS: retained libxcrypt accepts yescrypt and rejects incorrect input
+==> WARNING: /run/looom-top/@root-mvp-b is not a mountpoint. This may have undesirable side effects.
+PASS: retained libxcrypt accepts yescrypt and rejects incorrect input
+Verified release: v1r3
+Verified release: v2
+Verified release: desktop
+Verified release: mvp-a4
+Verified release: mvp-b

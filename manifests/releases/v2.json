@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "id": "v2",
+  "phase": "confirmed",
+  "root_subvolume": "@root-v2",
+  "kernel_package": "linux-lts",
+  "kernel_version": "6.18.54-2-lts",
+  "root_uuid": "a79f6ab7-52ab-49d0-ab3c-a2b3a1918140",
+  "esp_uuid": "8CE8-BFE9",
+  "uki_sha256": "a9cb4eb920c5918051b72ac849a08349466d5ee6986812c597ba550f39b16e46",
+  "declarative_value": "updated-v2"
+}

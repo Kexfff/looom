@@ -1,0 +1,6 @@
+PASS: original root/codex credentials match bootstrap; temporary test secrets absent
+/@root-desktop ro,noatime,compress=zstd:3,discard=async,space_cache=v2,subvolid=290,subvol=/@root-desktop
+saved_entry=looom-desktop
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda2        58G   13G   45G  23% /
+/dev/vda1       2.0G  273M  1.8G  14% /efi

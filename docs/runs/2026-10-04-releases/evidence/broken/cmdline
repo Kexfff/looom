@@ -1,0 +1,1 @@
+root=UUID=a79f6ab7-52ab-49d0-ab3c-a2b3a1918140 rootflags=subvol=@root-broken ro console=tty0 console=ttyS0,115200n8 systemd.unit=emergency.target

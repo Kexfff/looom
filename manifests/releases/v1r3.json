@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "id": "v1r3",
+  "phase": "confirmed",
+  "root_subvolume": "@root-v1r3",
+  "kernel_package": "linux",
+  "kernel_version": "7.2.8-arch1-2",
+  "root_uuid": "a79f6ab7-52ab-49d0-ab3c-a2b3a1918140",
+  "esp_uuid": "8CE8-BFE9",
+  "uki_sha256": "f9ab08105f31860d60a7d3e2d649c9dfaf73eb657f40612de96272e62fe7c963",
+  "declarative_value": "baseline-v1"
+}

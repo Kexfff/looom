@@ -1,0 +1,5 @@
+Delete subvolume 320 (commit): '/run/looom-top/@build-rust-b/var/lib/portables'
+Delete subvolume 321 (commit): '/run/looom-top/@build-rust-b/var/lib/machines'
+Delete subvolume 319 (commit): '/run/looom-top/@build-rust-b'
+Recovered configured Rust build rust-b
+Published menu restored; incomplete candidates remain unselected

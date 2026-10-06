@@ -1,0 +1,34 @@
+SESSION  UID USER  SEAT  LEADER CLASS         TTY  IDLE SINCE
+      1  965 sddm  -     509    manager-early -    no   -
+     10 1000 codex -     694    manager       -    no   -
+     11    0 root  -     1106   user          -    no   -
+     12    0 root  -     1111   manager-early -    no   -
+      9 1000 codex seat0 688    user          tty1 no   -
+
+5 sessions listed.
+● sddm.service - Simple Desktop Display Manager
+     Loaded: loaded (/usr/lib/systemd/system/sddm.service; enabled; preset: disabled)
+    Drop-In: /etc/systemd/system/sddm.service.d
+             └─10-looom-accounts.conf
+     Active: active (running) since Sun 2026-10-04 21:59:38 MSK; 2min 20s ago
+ Invocation: 0db68a5f2f1e4be4a48381492f94fb38
+       Docs: man:sddm(1)
+             man:sddm.conf(5)
+   Main PID: 471 (sddm)
+      Tasks: 4 (limit: 9486)
+     Memory: 246.4M (peak: 250.2M)
+        CPU: 1.139s
+     CGroup: /system.slice/sddm.service
+             ├─471 /usr/bin/sddm
+             └─480 /usr/lib/Xorg -nolisten tcp -background none -seat seat0 vt2 -auth /run/sddm/xauth_ECogRB -noreset -displayfd 16
+
+Oct 04 22:01:50 looom-vm sddm-helper[688]: [PAM] Authenticating...
+Oct 04 22:01:50 looom-vm sddm-helper[688]: [PAM] Preparing to converse...
+Oct 04 22:01:50 looom-vm sddm-helper[688]: [PAM] Conversation with 1 messages
+Oct 04 22:01:50 looom-vm sddm-helper[688]: [PAM] returning.
+Oct 04 22:01:50 looom-vm sddm[471]: Authentication for user  "codex"  successful
+Oct 04 22:01:50 looom-vm sddm-helper[688]: pam_unix(sddm:session): session opened for user codex(uid=1000) by codex(uid=0)
+Oct 04 22:01:50 looom-vm sddm[471]: Auth: sddm-helper exited successfully
+Oct 04 22:01:50 looom-vm sddm[471]: Greeter stopped. SDDM::Auth::HELPER_SUCCESS
+Oct 04 22:01:50 looom-vm sddm-helper[688]: Starting Wayland user session: "/usr/share/sddm/scripts/wayland-session" "/usr/lib/plasma-dbus-run-session-if-needed /usr/bin/startplasma-wayland"
+Oct 04 22:01:50 looom-vm sddm[471]: Session started true

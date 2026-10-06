@@ -1,0 +1,5 @@
+Retained incomplete operation: interrupted building
+Published menu regenerated; incomplete roots are not added
+Rejected candidate retained for diagnosis: broken
+ro=false
+PASS: interrupted private build is not selectable and confirmed v1r3 remains available

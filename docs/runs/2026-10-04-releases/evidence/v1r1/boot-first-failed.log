@@ -1,0 +1,58 @@
+Oct 04 21:27:31 looom-vm systemd[1]: Starting D-Bus System Message Bus...
+Oct 04 21:27:31 looom-vm systemd[1]: Started D-Bus System Message Bus.
+Oct 04 21:27:31 looom-vm dbus-broker-launch[427]: ERROR launcher_run_child @ ../dbus-broker-37/src/launch/launcher.c +344: Permission denied
+Oct 04 21:27:31 looom-vm dbus-broker-launch[426]: ERROR service_add @ ../dbus-broker-37/src/launch/service.c +1011: Transport endpoint is not connected
+Oct 04 21:27:31 looom-vm dbus-broker-launch[426]:       launcher_add_services @ ../dbus-broker-37/src/launch/launcher.c +823
+Oct 04 21:27:31 looom-vm dbus-broker-launch[426]:       launcher_run @ ../dbus-broker-37/src/launch/launcher.c +1439
+Oct 04 21:27:31 looom-vm dbus-broker-launch[426]:       run @ ../dbus-broker-37/src/launch/main.c +152
+Oct 04 21:27:31 looom-vm dbus-broker-launch[426]:       main @ ../dbus-broker-37/src/launch/main.c +178
+Oct 04 21:27:31 looom-vm dbus-broker-launch[426]: Exiting due to fatal error: -107
+Oct 04 21:27:31 looom-vm systemd[1]: dbus-broker.service: Main process exited, code=exited, status=1/FAILURE
+Oct 04 21:27:31 looom-vm systemd[1]: dbus-broker.service: Failed with result 'exit-code'.
+Oct 04 21:27:31 looom-vm systemd[1]: Starting D-Bus System Message Bus...
+Oct 04 21:27:31 looom-vm systemd[1]: Started D-Bus System Message Bus.
+Oct 04 21:27:31 looom-vm dbus-broker-launch[449]: ERROR launcher_run_child @ ../dbus-broker-37/src/launch/launcher.c +344: Permission denied
+Oct 04 21:27:31 looom-vm dbus-broker-launch[445]: ERROR service_add @ ../dbus-broker-37/src/launch/service.c +1011: Transport endpoint is not connected
+Oct 04 21:27:31 looom-vm dbus-broker-launch[445]:       launcher_add_services @ ../dbus-broker-37/src/launch/launcher.c +823
+Oct 04 21:27:31 looom-vm dbus-broker-launch[445]:       launcher_run @ ../dbus-broker-37/src/launch/launcher.c +1439
+Oct 04 21:27:31 looom-vm dbus-broker-launch[445]:       run @ ../dbus-broker-37/src/launch/main.c +152
+Oct 04 21:27:31 looom-vm dbus-broker-launch[445]:       main @ ../dbus-broker-37/src/launch/main.c +178
+Oct 04 21:27:31 looom-vm dbus-broker-launch[445]: Exiting due to fatal error: -107
+Oct 04 21:27:31 looom-vm systemd[1]: dbus-broker.service: Main process exited, code=exited, status=1/FAILURE
+Oct 04 21:27:31 looom-vm systemd[1]: dbus-broker.service: Failed with result 'exit-code'.
+Oct 04 21:27:31 looom-vm systemd[1]: Starting D-Bus System Message Bus...
+Oct 04 21:27:31 looom-vm systemd[1]: Started D-Bus System Message Bus.
+Oct 04 21:27:31 looom-vm dbus-broker-launch[456]: ERROR launcher_run_child @ ../dbus-broker-37/src/launch/launcher.c +344: Permission denied
+Oct 04 21:27:31 looom-vm dbus-broker-launch[455]: ERROR service_add @ ../dbus-broker-37/src/launch/service.c +1011: Transport endpoint is not connected
+Oct 04 21:27:31 looom-vm dbus-broker-launch[455]:       launcher_add_services @ ../dbus-broker-37/src/launch/launcher.c +823
+Oct 04 21:27:31 looom-vm dbus-broker-launch[455]:       launcher_run @ ../dbus-broker-37/src/launch/launcher.c +1439
+Oct 04 21:27:31 looom-vm dbus-broker-launch[455]:       run @ ../dbus-broker-37/src/launch/main.c +152
+Oct 04 21:27:31 looom-vm dbus-broker-launch[455]:       main @ ../dbus-broker-37/src/launch/main.c +178
+Oct 04 21:27:31 looom-vm dbus-broker-launch[455]: Exiting due to fatal error: -107
+Oct 04 21:27:31 looom-vm systemd[1]: dbus-broker.service: Main process exited, code=exited, status=1/FAILURE
+Oct 04 21:27:31 looom-vm systemd[1]: dbus-broker.service: Failed with result 'exit-code'.
+Oct 04 21:27:31 looom-vm systemd[1]: Starting D-Bus System Message Bus...
+Oct 04 21:27:31 looom-vm systemd[1]: Started D-Bus System Message Bus.
+Oct 04 21:27:31 looom-vm dbus-broker-launch[460]: ERROR launcher_run_child @ ../dbus-broker-37/src/launch/launcher.c +344: Permission denied
+Oct 04 21:27:31 looom-vm dbus-broker-launch[459]: ERROR service_add @ ../dbus-broker-37/src/launch/service.c +1011: Transport endpoint is not connected
+Oct 04 21:27:31 looom-vm dbus-broker-launch[459]:       launcher_add_services @ ../dbus-broker-37/src/launch/launcher.c +823
+Oct 04 21:27:31 looom-vm dbus-broker-launch[459]:       launcher_run @ ../dbus-broker-37/src/launch/launcher.c +1439
+Oct 04 21:27:31 looom-vm dbus-broker-launch[459]:       run @ ../dbus-broker-37/src/launch/main.c +152
+Oct 04 21:27:31 looom-vm dbus-broker-launch[459]:       main @ ../dbus-broker-37/src/launch/main.c +178
+Oct 04 21:27:31 looom-vm dbus-broker-launch[459]: Exiting due to fatal error: -107
+Oct 04 21:27:31 looom-vm systemd[1]: dbus-broker.service: Main process exited, code=exited, status=1/FAILURE
+Oct 04 21:27:31 looom-vm systemd[1]: dbus-broker.service: Failed with result 'exit-code'.
+Oct 04 21:27:31 looom-vm systemd[1]: Starting D-Bus System Message Bus...
+Oct 04 21:27:31 looom-vm systemd[1]: Started D-Bus System Message Bus.
+Oct 04 21:27:31 looom-vm dbus-broker-launch[464]: ERROR launcher_run_child @ ../dbus-broker-37/src/launch/launcher.c +344: Permission denied
+Oct 04 21:27:31 looom-vm dbus-broker-launch[463]: ERROR service_add @ ../dbus-broker-37/src/launch/service.c +1011: Transport endpoint is not connected
+Oct 04 21:27:31 looom-vm dbus-broker-launch[463]:       launcher_add_services @ ../dbus-broker-37/src/launch/launcher.c +823
+Oct 04 21:27:31 looom-vm dbus-broker-launch[463]:       launcher_run @ ../dbus-broker-37/src/launch/launcher.c +1439
+Oct 04 21:27:31 looom-vm dbus-broker-launch[463]:       run @ ../dbus-broker-37/src/launch/main.c +152
+Oct 04 21:27:31 looom-vm dbus-broker-launch[463]:       main @ ../dbus-broker-37/src/launch/main.c +178
+Oct 04 21:27:31 looom-vm dbus-broker-launch[463]: Exiting due to fatal error: -107
+Oct 04 21:27:31 looom-vm systemd[1]: dbus-broker.service: Main process exited, code=exited, status=1/FAILURE
+Oct 04 21:27:31 looom-vm systemd[1]: dbus-broker.service: Failed with result 'exit-code'.
+Oct 04 21:27:31 looom-vm systemd[1]: dbus-broker.service: Start request repeated too quickly.
+Oct 04 21:27:31 looom-vm systemd[1]: dbus-broker.service: Failed with result 'start-limit-hit'.
+Oct 04 21:27:31 looom-vm systemd[1]: Failed to start D-Bus System Message Bus.

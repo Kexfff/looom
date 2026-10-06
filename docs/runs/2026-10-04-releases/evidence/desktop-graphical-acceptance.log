@@ -1,0 +1,23 @@
+active
+active
+active
+active
+active
+SESSION  UID USER  SEAT  LEADER CLASS         TTY  IDLE SINCE
+     10 1000 codex -     694    manager       -    no   -
+     13    0 root  -     1144   user          -    no   -
+     14    0 root  -     1149   manager-early -    no   -
+     16 1000 codex -     1173   background    -    no   -
+      9 1000 codex seat0 688    user          tty1 no   -
+
+5 sessions listed.
+741 /usr/bin/kwin_wayland_wrapper --xwayland
+748 /usr/bin/kwin_wayland --wayland-fd 7 --socket wayland-0 --xwayland-fd 8 --xwayland-fd 9 --xwayland-display :1 --xwayland-xauthority /run/user/1000/xauth_DLjcok --xwayland
+784 /usr/bin/pipewire
+786 /usr/bin/wireplumber
+867 /usr/bin/plasmashell --no-respawn
+905 /usr/bin/pipewire-pulse
+1083 /usr/lib/kf6/kioworker /usr/lib/qt6/plugins/kf6/kio/desktop.so desktop  local:/run/user/1000/plasmashellpeHLQW.1.kioworker.socket
+1115 /usr/lib/kf6/kioworker /usr/lib/qt6/plugins/kf6/kio/tags.so tags  local:/run/user/1000/plasmashellXtxcSF.2.kioworker.socket
+Confirmed running healthy release: desktop
+GRUB: {"saved_entry": "looom-desktop"}

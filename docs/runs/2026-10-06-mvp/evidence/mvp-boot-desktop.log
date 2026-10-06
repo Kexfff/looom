@@ -1,0 +1,88 @@
+looom-accounts: active
+NetworkManager: active
+sshd: active
+qemu-guest-agent: active
+systemd-timesyncd: active
+No database errors have been found!
+/etc/sudoers: parsed OK
+/etc/sudoers.d/10-looom-vm: parsed OK
+/
+   [ ] target exists
+   [ ] VFS options: ro,noatime
+   [ ] FS options: compress=zstd:3,subvol=@root-mvp-desktop
+   [ ] UUID=a79f6ab7-52ab-49d0-ab3c-a2b3a1918140 translated to /dev/vda2
+   [ ] source /dev/vda2 exists
+   [ ] FS type is btrfs
+/home
+   [ ] target exists
+   [ ] VFS options: rw,noatime
+   [ ] FS options: compress=zstd:3,subvol=@home
+   [ ] UUID=a79f6ab7-52ab-49d0-ab3c-a2b3a1918140 translated to /dev/vda2
+   [ ] source /dev/vda2 exists
+   [ ] FS type is btrfs
+/var
+   [ ] target exists
+   [ ] VFS options: rw,noatime
+   [ ] FS options: compress=zstd:3,subvol=@var
+   [ ] UUID=a79f6ab7-52ab-49d0-ab3c-a2b3a1918140 translated to /dev/vda2
+   [ ] source /dev/vda2 exists
+   [ ] FS type is btrfs
+/var/lib/looom
+   [ ] target exists
+   [ ] VFS options: rw,noatime
+   [ ] FS options: compress=zstd:3,subvol=@state
+   [ ] UUID=a79f6ab7-52ab-49d0-ab3c-a2b3a1918140 translated to /dev/vda2
+   [ ] source /dev/vda2 exists
+   [ ] FS type is btrfs
+/efi
+   [ ] target exists
+   [ ] VFS options: rw
+   [ ] FS options: umask=0077
+   [ ] UUID=8CE8-BFE9 translated to /dev/vda1
+   [ ] source /dev/vda1 exists
+   [ ] FS type is vfat
+/tmp
+   [ ] target exists
+   [ ] VFS options: rw,nosuid,nodev
+   [ ] FS options: mode=1777
+   [ ] do not check tmpfs source (pseudo/net)
+   [ ] do not check tmpfs FS type (pseudo/net)
+/etc/looom-local
+   [ ] target exists
+   [ ] VFS options: bind
+   [ ] userspace options: x-systemd.requires-mounts-for=/var/lib/looom
+   [ ] do not check /var/lib/looom/local-etc/looom-local source (pseudo/net)
+   [ ] do not check /var/lib/looom/local-etc/looom-local FS type (pseudo/net)
+/etc/NetworkManager/system-connections
+   [ ] target exists
+   [ ] VFS options: bind
+   [ ] userspace options: x-systemd.requires-mounts-for=/var/lib/looom
+   [ ] do not check /var/lib/looom/local-etc/NetworkManager/system-connections source (pseudo/net)
+   [ ] do not check /var/lib/looom/local-etc/NetworkManager/system-connections FS type (pseudo/net)
+/root/.ssh
+   [ ] target exists
+   [ ] VFS options: bind
+   [ ] userspace options: x-systemd.requires-mounts-for=/var/lib/looom
+   [ ] do not check /var/lib/looom/root-ssh source (pseudo/net)
+   [ ] do not check /var/lib/looom/root-ssh FS type (pseudo/net)
+Success, no errors or warnings detected
+Release account templates contain no password hashes
+
+Booted release mvp-desktop
+37c15787-8148-4aad-b9f9-8de2f2f9f21d
+7.2.8-arch1-2
+root=UUID=a79f6ab7-52ab-49d0-ab3c-a2b3a1918140 rootflags=subvol=@root-mvp-desktop ro console=tty0 console=ttyS0,115200n8
+mvp-desktop
+TARGET                                   SOURCE                                                         FSTYPE OPTIONS
+/                                        /dev/vda2[/@root-mvp-desktop]                                  btrfs  ro,noatime,compress=zstd:3,discard=async,space_cache=v2,subvolid=312,subvol=/@root-mvp-desktop
+|-/home                                  /dev/vda2[/@home]                                              btrfs  rw,noatime,compress=zstd:3,discard=async,space_cache=v2,subvolid=257,subvol=/@home
+|-/var                                   /dev/vda2[/@var]                                               btrfs  rw,noatime,compress=zstd:3,discard=async,space_cache=v2,subvolid=258,subvol=/@var
+| `-/var/lib/looom                       /dev/vda2[/@state]                                             btrfs  rw,noatime,compress=zstd:3,discard=async,space_cache=v2,subvolid=259,subvol=/@state
+|-/efi                                   /dev/vda1                                                      vfat   rw,relatime,fmask=0077,dmask=0077,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro
+|-/etc/looom-local                       /dev/vda2[/@state/local-etc/looom-local]                       btrfs  rw,noatime,compress=zstd:3,discard=async,space_cache=v2,subvolid=259,subvol=/@state
+|-/etc/NetworkManager/system-connections /dev/vda2[/@state/local-etc/NetworkManager/system-connections] btrfs  rw,noatime,compress=zstd:3,discard=async,space_cache=v2,subvolid=259,subvol=/@state
+`-/root/.ssh                             /dev/vda2[/@state/root-ssh]                                    btrfs  rw,noatime,compress=zstd:3,discard=async,space_cache=v2,subvolid=259,subvol=/@state
+saved_entry=looom-mvp-b
+next_entry=
+
+PASS: read-only release mvp-desktop

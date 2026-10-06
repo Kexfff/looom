@@ -1,0 +1,13 @@
+No database errors have been found!
+Finalization: exact inventory, locked credentials and unchanged UKI verified
+Create readonly snapshot of '/run/looom-build-mvp-b' in '/run/looom-top/@root-mvp-b'
+Delete subvolume 306 (commit): '/run/looom-top/@build-mvp-b/var/lib/portables'
+Delete subvolume 307 (commit): '/run/looom-top/@build-mvp-b/var/lib/machines'
+Delete subvolume 305 (commit): '/run/looom-top/@build-mvp-b'
+Validated read-only release mvp-b; not yet selectable in GRUB
+Retained incomplete operation: interrupted building
+Retained incomplete operation: mvp-a building
+Retained incomplete operation: mvp-a2 building
+Retained incomplete operation: mvp-a3 building
+Retained incomplete operation: mvp-b validated
+Published menu regenerated; incomplete roots are not added

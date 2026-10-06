@@ -1,0 +1,12 @@
+Disk /dev/vda: 125829120 sectors, 60.0 GiB
+Sector size (logical/physical): 512/512 bytes
+Disk identifier (GUID): F1F1C84A-F9CD-46A4-BADD-BD1C16F4832F
+Partition table holds up to 128 entries
+Main partition table begins at sector 2 and ends at sector 33
+First usable sector is 34, last usable sector is 125829086
+Partitions will be aligned on 2048-sector boundaries
+Total free space is 2014 sectors (1007.0 KiB)
+
+Number  Start (sector)    End (sector)  Size       Code  Name
+   1            2048         4196351   2.0 GiB     EF00  LOOOM-ESP
+   2         4196352       125829086   58.0 GiB    8300  LOOOM-ROOT

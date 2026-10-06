@@ -1,0 +1,6 @@
+UUID=a79f6ab7-52ab-49d0-ab3c-a2b3a1918140 / btrfs rw,noatime,compress=zstd:3,subvol=@bootstrap 0 0
+UUID=a79f6ab7-52ab-49d0-ab3c-a2b3a1918140 /home btrfs rw,noatime,compress=zstd:3,subvol=@home 0 0
+UUID=a79f6ab7-52ab-49d0-ab3c-a2b3a1918140 /var btrfs rw,noatime,compress=zstd:3,subvol=@var 0 0
+UUID=a79f6ab7-52ab-49d0-ab3c-a2b3a1918140 /var/lib/looom btrfs rw,noatime,compress=zstd:3,subvol=@state 0 0
+UUID=8CE8-BFE9 /efi vfat rw,umask=0077 0 2
+tmpfs /tmp tmpfs rw,nosuid,nodev,mode=1777 0 0

@@ -1,0 +1,9 @@
+Temporary password changed through the persistent credential API
+PASS: sddm PAM accepts changed password and rejects incorrect password
+SESSION UID USER SEAT  LEADER CLASS         TTY  IDLE SINCE
+      1 965 sddm -     509    manager-early -    no   -
+      4   0 root -     632    user          -    no   -
+      5   0 root -     637    manager-early -    no   -
+     c1 965 sddm seat0 503    greeter       tty2 no   -
+
+4 sessions listed.

@@ -1,0 +1,1698 @@
+{
+  "schema_version": 1,
+  "kind": "looom-bootstrap-package-inventory",
+  "architecture": "x86_64",
+  "archive_date": "2026/10/03",
+  "repository_url_template": "https://archive.archlinux.org/repos/2026/10/03/$repo/os/$arch",
+  "repositories": {
+    "core": {
+      "database_sha256": "1e99cebd2466f3efbafe879e632b005ce8793ff990daee97a6884bb8c18fd67e"
+    },
+    "extra": {
+      "database_sha256": "6bead450577cc7a816588ebc29f2025753aa1cbe3eec1f2e15920a60d655dedc"
+    }
+  },
+  "package_signatures": "Required; verified by pacman during installation",
+  "packages": [
+    {
+      "name": "acl",
+      "version": "2.4.0-1",
+      "archive": "acl-2.4.0-1-x86_64.pkg.tar.zst",
+      "sha256": "dca9ec50cf51243b86a67367a55e78b1851d31240b1edaf9c011f8511765d999",
+      "signature": "acl-2.4.0-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "da2da116693aa407ff94235d04670a3f255d6dab300458c073bec8cbdb25e549"
+    },
+    {
+      "name": "arch-install-scripts",
+      "version": "31-2",
+      "archive": "arch-install-scripts-31-2-any.pkg.tar.zst",
+      "sha256": "21844567f7811bb957cb57982c697ff6a466a13ea3c8ad2cd159a7603c83608e",
+      "signature": "arch-install-scripts-31-2-any.pkg.tar.zst.sig",
+      "signature_sha256": "1ea8adf9657c03ffa11af114babce8dee8269abb166a19ed8aa43b0892fbb00f"
+    },
+    {
+      "name": "archlinux-keyring",
+      "version": "20260909-1",
+      "archive": "archlinux-keyring-20260909-1-any.pkg.tar.zst",
+      "sha256": "6a8ea16f51d3b305c18322d5884ca959f12c32a3f186873090fdc18465605293",
+      "signature": "archlinux-keyring-20260909-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "5942acd5b5e27a45051c447b8054696465872e834af1a5bd3cb85e2881cf6cf8"
+    },
+    {
+      "name": "attr",
+      "version": "2.6.0-1",
+      "archive": "attr-2.6.0-1-x86_64.pkg.tar.zst",
+      "sha256": "0db32b421f67000950f7b55b531291ce8c13985c5444425b22dce94d485daed1",
+      "signature": "attr-2.6.0-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "e696478b468b9f48ec2a40562300274f0e5311c984d573bcdf49c7e2e77bea69"
+    },
+    {
+      "name": "audit",
+      "version": "4.2.1-1",
+      "archive": "audit-4.2.1-1-x86_64.pkg.tar.zst",
+      "sha256": "6b2f7e400336d05bf9a4b1b65015e4a7ac3a3842fbc67790913f9748513b964e",
+      "signature": "audit-4.2.1-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "db23dfc1974c7a3e5e91094143aa9514654050dd0ffcd77bfa1e1038f2152ff4"
+    },
+    {
+      "name": "base",
+      "version": "3-3",
+      "archive": "base-3-3-any.pkg.tar.zst",
+      "sha256": "e144d83f03b1a003d31bf9c83990bfe0a503bb7bd8721dee88d72c74606acd37",
+      "signature": "base-3-3-any.pkg.tar.zst.sig",
+      "signature_sha256": "68e32a033376ad8a2331ba8eb48a96e4bd3c34ae9e8cfbd59b51b77d1c67882a"
+    },
+    {
+      "name": "bash",
+      "version": "5.3.20-1",
+      "archive": "bash-5.3.20-1-x86_64.pkg.tar.zst",
+      "sha256": "73a67dc509ed4a6dd64e4c7eca2895643f48083940f49431782ce78c4d4619e1",
+      "signature": "bash-5.3.20-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "3f9eeacf7bff152be34b6181bc8dcb656c4fef6bf2b576b842a63dfd877871d7"
+    },
+    {
+      "name": "binutils",
+      "version": "2.47-4",
+      "archive": "binutils-2.47-4-x86_64.pkg.tar.zst",
+      "sha256": "d9508ad848fd6c31473ac0925cf8c3ec0d2a71bbbb5c7e39274186338a285660",
+      "signature": "binutils-2.47-4-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "4f2967176571f08a5911fbb93fe361517bc4a87e65017a2bcdc4188d095b12ea"
+    },
+    {
+      "name": "brotli",
+      "version": "1.2.0-1",
+      "archive": "brotli-1.2.0-1-x86_64.pkg.tar.zst",
+      "sha256": "4a0c95d5967476d0efdaf76d344b61e3eee02cd7920a315e457f3fd96311b7ec",
+      "signature": "brotli-1.2.0-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "3e93dd50ce5cc3651487915db7f421a446ba9e5994659a66857ce69c1a676581"
+    },
+    {
+      "name": "btrfs-progs",
+      "version": "7.1-1",
+      "archive": "btrfs-progs-7.1-1-x86_64.pkg.tar.zst",
+      "sha256": "5151b1c783a376bc85c04bb7ddc6f816668db60d9e864a88042dbb286b146456",
+      "signature": "btrfs-progs-7.1-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "14c627f6d31f221a5ff19a298cb50189efa87890d2196d22f11c021aa07297bf"
+    },
+    {
+      "name": "bzip2",
+      "version": "1.0.8-6",
+      "archive": "bzip2-1.0.8-6-x86_64.pkg.tar.zst",
+      "sha256": "8779003d659c441b952095c19907603a738c1366f25cc51be3fd139fa4e95748",
+      "signature": "bzip2-1.0.8-6-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "ff3df6a767771006e974e4eced7c7330e6c37b954bafe9aa62934a241ba5eba6"
+    },
+    {
+      "name": "ca-certificates",
+      "version": "20240618-1",
+      "archive": "ca-certificates-20240618-1-any.pkg.tar.zst",
+      "sha256": "982005bd5ecc998c05f561b57bb58b4457407779727e3c3d59e926d34a8b0712",
+      "signature": "ca-certificates-20240618-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "77cdfb670ec973dbb28e220d442c5e7df50b4e8e7661d75ca8f4e12c4cb92617"
+    },
+    {
+      "name": "ca-certificates-mozilla",
+      "version": "3.130-1",
+      "archive": "ca-certificates-mozilla-3.130-1-x86_64.pkg.tar.zst",
+      "sha256": "fd9a6bc532d139fedc0d3d53da1c7dc7a8e02c7196023dc6abd01e6245878668",
+      "signature": "ca-certificates-mozilla-3.130-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "11b54bfa409cac5b8daf80d56ff041250ecee9be9a065fe8949050bd823dde93"
+    },
+    {
+      "name": "ca-certificates-utils",
+      "version": "20240618-1",
+      "archive": "ca-certificates-utils-20240618-1-any.pkg.tar.zst",
+      "sha256": "aabd5b2b7030716ccdd465d607e734e851fe4a01adf8293a3968fe22eb89ce9b",
+      "signature": "ca-certificates-utils-20240618-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "d52b63127afe8ef0c8fcfaac2fef2b2b0b899d69548b210880d05c868cd45fc6"
+    },
+    {
+      "name": "coreutils",
+      "version": "9.12-2",
+      "archive": "coreutils-9.12-2-x86_64.pkg.tar.zst",
+      "sha256": "9196947f860144b5bf4dbe5079e8a1d38ea3080fdb83cae96294d1e83681c6eb",
+      "signature": "coreutils-9.12-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "c540d7fb743005325e25efc17a21098bbef96ddf5b83db00bd84c3eeba21ee74"
+    },
+    {
+      "name": "cryptsetup",
+      "version": "2.8.8-1",
+      "archive": "cryptsetup-2.8.8-1-x86_64.pkg.tar.zst",
+      "sha256": "322f0e79a7d659d5e645e96cad3d30966f7dd5476f984f96b50a4f4cea274640",
+      "signature": "cryptsetup-2.8.8-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "27a1590ce3d3852748f4dfc0e95bfda76026e11d8cb079125ac23958b2a4c579"
+    },
+    {
+      "name": "curl",
+      "version": "8.22.0-1",
+      "archive": "curl-8.22.0-1-x86_64.pkg.tar.zst",
+      "sha256": "60b5c0ccc169cf1e36c95a5b2cab79d73c1490715e6b122828a9590fd2fcfc1c",
+      "signature": "curl-8.22.0-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "f6875688e523eb87423c0c66fe29ec974dcc1fa86ef034b16743d6324bb9ee9a"
+    },
+    {
+      "name": "db5.3",
+      "version": "5.3.28-7",
+      "archive": "db5.3-5.3.28-7-x86_64.pkg.tar.zst",
+      "sha256": "abac3474e766fa8a36fcae945f5e8c8e818665fc41a56daff92db81cd176d389",
+      "signature": "db5.3-5.3.28-7-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "6d924ad6b7de7e882484cd7478956df824fcd88612c70ce48a90a5c8eafba499"
+    },
+    {
+      "name": "dbus",
+      "version": "1.16.2-1",
+      "archive": "dbus-1.16.2-1-x86_64.pkg.tar.zst",
+      "sha256": "740fb8d02f6a5798984f17bf09c4f9f62f42a8339499c283867d9c35cda0d8af",
+      "signature": "dbus-1.16.2-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "68852f2ce6b84b5e2853eb485297cf42459cd81b62be739ca77252ec4386bf5e"
+    },
+    {
+      "name": "dbus-broker",
+      "version": "37-3",
+      "archive": "dbus-broker-37-3-x86_64.pkg.tar.zst",
+      "sha256": "c3a915bb57188e6a43b9df25c0bf11f87528bc20ac50718b1772ce917c6d6117",
+      "signature": "dbus-broker-37-3-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "c5c9cb0232472a7b6b5b762d6cdba54e47fed914dce47ddeea974fa0483620e3"
+    },
+    {
+      "name": "dbus-broker-units",
+      "version": "37-3",
+      "archive": "dbus-broker-units-37-3-x86_64.pkg.tar.zst",
+      "sha256": "f3f73e7c8169f54e3e5447d266917ae7454bd984fc0ede0f85e2ca60e21d97df",
+      "signature": "dbus-broker-units-37-3-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "8656813dbcd20c11104e34c77d5d5ad8c67cb17521117c7d39b7a00b93724163"
+    },
+    {
+      "name": "dbus-units",
+      "version": "37-3",
+      "archive": "dbus-units-37-3-x86_64.pkg.tar.zst",
+      "sha256": "b3c4dee19391724893993ed993522846368bb38257daae4182de980255a995cc",
+      "signature": "dbus-units-37-3-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "2147fa3c43a6bbcdce48c782e7157b4b82e3a40a130008fe41e5bc69e48c4088"
+    },
+    {
+      "name": "device-mapper",
+      "version": "2.03.42-1",
+      "archive": "device-mapper-2.03.42-1-x86_64.pkg.tar.zst",
+      "sha256": "823b3ae9d616defbd61dbc7cf92f489b996ce520de54a2bbea8ced0918c069c3",
+      "signature": "device-mapper-2.03.42-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "2de42ca559619ccd88750aef60c3ecccf66d189bf2334c4ea5011dfd94aad63c"
+    },
+    {
+      "name": "diffutils",
+      "version": "3.12-2",
+      "archive": "diffutils-3.12-2-x86_64.pkg.tar.zst",
+      "sha256": "53830e09d46ceccde48a0fc1dcee026902e2a639a1b8a5e2a091d2a9d90b6967",
+      "signature": "diffutils-3.12-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "1ee58a31caa30784e8bc0f157542599c1fae3380fd0b4d8290d720598db6e685"
+    },
+    {
+      "name": "dosfstools",
+      "version": "4.2-5",
+      "archive": "dosfstools-4.2-5-x86_64.pkg.tar.zst",
+      "sha256": "03a7d8bd939a80418d9744afad00c22b91c4b411bdf9662744647c383a0ec503",
+      "signature": "dosfstools-4.2-5-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "2fd07bfe4424f016b9af1e39f05ed3b67c860cd84f1520f87dcb4a4a3981fa86"
+    },
+    {
+      "name": "duktape",
+      "version": "2.7.0-7",
+      "archive": "duktape-2.7.0-7-x86_64.pkg.tar.zst",
+      "sha256": "92452979e8cc6f34558ee4d9c3f34f8b7e0d7a8ebff94296b68c7926f00895cd",
+      "signature": "duktape-2.7.0-7-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "5440b78bd99de90c0a482bc7fa9fd6e2a3e96760d7c3985b528c25658ca00963"
+    },
+    {
+      "name": "e2fsprogs",
+      "version": "1.47.4-1",
+      "archive": "e2fsprogs-1.47.4-1-x86_64.pkg.tar.zst",
+      "sha256": "a78971bbbe0ae89d15a0cbbc952e64462edc5a6f991c1bb9cefd0539ca548bd4",
+      "signature": "e2fsprogs-1.47.4-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "32ea0aa46f7f3e822d0ef6533e6a3d13bdfbd935a678cd2b46f38b97ce49d1ec"
+    },
+    {
+      "name": "efibootmgr",
+      "version": "18-4",
+      "archive": "efibootmgr-18-4-x86_64.pkg.tar.zst",
+      "sha256": "1e6166d0024f3f0de37919a51f5c00981e42e6e087937858cf82f30edf71f17e",
+      "signature": "efibootmgr-18-4-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "fa81ff2cfeb237c2ba7bd65d0d2d0bb79c05101135b502151b7d3fa4997f7d17"
+    },
+    {
+      "name": "efivar",
+      "version": "39-2",
+      "archive": "efivar-39-2-x86_64.pkg.tar.zst",
+      "sha256": "9bfa2152203237d61f0e41819572e2fe19e9cf5613442b24f5f02573ab030e74",
+      "signature": "efivar-39-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "f2dab488d63fdc43de3b3a94a52e08adef6cae311e2be37c2b36aebc7b0c27da"
+    },
+    {
+      "name": "expat",
+      "version": "2.8.5-1",
+      "archive": "expat-2.8.5-1-x86_64.pkg.tar.zst",
+      "sha256": "25b7b51074df3c851b315a116e3a7a30a5d37b63cbbbc6e18e3a6563ba4e3f27",
+      "signature": "expat-2.8.5-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "6b813da7fcd7dac8c33738528fae196c196d2d18437bed83971d2e3d6f2a3d05"
+    },
+    {
+      "name": "file",
+      "version": "5.48-1",
+      "archive": "file-5.48-1-x86_64.pkg.tar.zst",
+      "sha256": "b77fe84e1dda2f32fcd11a004347c0a0c6bb9806376533c78abd78b4ea779af2",
+      "signature": "file-5.48-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "713a2352d74f85bb5f5a412067750b4972929e23337659662377b77e73e408d4"
+    },
+    {
+      "name": "filesystem",
+      "version": "2025.10.12-1",
+      "archive": "filesystem-2025.10.12-1-any.pkg.tar.zst",
+      "sha256": "6b6c3fee7432204840d3b6afc9bc1a68c28f591a47fb220071715c40cca956df",
+      "signature": "filesystem-2025.10.12-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "8939636bff7fd45d24e529c95ad12517ed9ca0ae47b9775f26d0711c96e7e25a"
+    },
+    {
+      "name": "findutils",
+      "version": "4.11.0-1",
+      "archive": "findutils-4.11.0-1-x86_64.pkg.tar.zst",
+      "sha256": "76ac56a7f03039d163306701e5c02777b9b7170ad5388e66e46c363dd2792edf",
+      "signature": "findutils-4.11.0-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "e39dd34af937bf7dcb6af38ec80cb876cdd3d36a15455c8de00c7f79f75bf618"
+    },
+    {
+      "name": "gawk",
+      "version": "5.4.1-1",
+      "archive": "gawk-5.4.1-1-x86_64.pkg.tar.zst",
+      "sha256": "875761229b80b29078cd1fafc35a07add9ac4c2dbb9a429bd0b72ddcc14a31bd",
+      "signature": "gawk-5.4.1-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "6d3a1664a88c148463018a1a6b465d070df69a74e071fccd70e521624ca6a5bb"
+    },
+    {
+      "name": "gcc-libs",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "archive": "gcc-libs-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst",
+      "sha256": "dbeca7c4844e3112de98ba95f7c2b2618f4dd2b9c693c34076b7ba51ddf4611e",
+      "signature": "gcc-libs-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "e06192e468c605ec41169964d2c5c6ffc50aa8503323429c2fb61f7df1ed13f9"
+    },
+    {
+      "name": "gdbm",
+      "version": "1.26-2",
+      "archive": "gdbm-1.26-2-x86_64.pkg.tar.zst",
+      "sha256": "7bb8768fc7f617c580ae4c7902aed5413984a8374915da42beeecbb085c2a29e",
+      "signature": "gdbm-1.26-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "525aa7bcff1cd5a2533d7e9148514d35dc9484cfa8a37b8ca0717f3cf07bbcac"
+    },
+    {
+      "name": "gettext",
+      "version": "1.0-2",
+      "archive": "gettext-1.0-2-x86_64.pkg.tar.zst",
+      "sha256": "bf1bd9d2f096f1446a645a89a26663371ab6ef78a8ed4b1c3f006b60569a2e28",
+      "signature": "gettext-1.0-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "f73ce63a5eb2ce5e6846c80b869adcc6547223dabb3aad0f7f5dda5b33138933"
+    },
+    {
+      "name": "git",
+      "version": "2.56.0-1",
+      "archive": "git-2.56.0-1-x86_64.pkg.tar.zst",
+      "sha256": "2da35402982c74083251b56bb04ee53bc14377dcc58cbb7e8682f1980beaee83",
+      "signature": "git-2.56.0-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "4f45db3897ea1a71c2fb142c7045b821e65b77ca435ac3940880d69999479d57"
+    },
+    {
+      "name": "glib2",
+      "version": "2.88.3-1",
+      "archive": "glib2-2.88.3-1-x86_64.pkg.tar.zst",
+      "sha256": "9569884e1f670d46e40ea0b8ca4ea2a1a29689be297fed1390bc5af9a03967d2",
+      "signature": "glib2-2.88.3-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "04f4315f58656f68a118a70888855b80585fb1b528fc989e91851923f18dd3cd"
+    },
+    {
+      "name": "glibc",
+      "version": "2.44+r50+g1848099f063e-1",
+      "archive": "glibc-2.44+r50+g1848099f063e-1-x86_64.pkg.tar.zst",
+      "sha256": "e8e4d50d45cb2bd21c9f7eabacc6a01bd5eb93dbd476f3f44d44038fc1eba417",
+      "signature": "glibc-2.44+r50+g1848099f063e-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "efa937dd709b4c3635d3a855e6a588b4442040648d2d3847d8ad9ddce4254a0a"
+    },
+    {
+      "name": "gmp",
+      "version": "6.3.0-3",
+      "archive": "gmp-6.3.0-3-x86_64.pkg.tar.zst",
+      "sha256": "2969061e117d2a8c19d89427b0b88e1c956a6269bc0602087d41aecd15097064",
+      "signature": "gmp-6.3.0-3-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "aee8cc17d53da0f259f8d464ce7ec464bae84c5661ac4b500296f395f9a70b57"
+    },
+    {
+      "name": "gnulib-l10n",
+      "version": "20241231-1",
+      "archive": "gnulib-l10n-20241231-1-any.pkg.tar.zst",
+      "sha256": "86e6ea818cb331171018bef6e4486c1176064655e0d459bcecc9cc9c2bb74a2c",
+      "signature": "gnulib-l10n-20241231-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "93d221e4dd995d6583b8c541ee48f3483110c85c676899432fb4533c8eb129b5"
+    },
+    {
+      "name": "gnupg",
+      "version": "2.4.9-3",
+      "archive": "gnupg-2.4.9-3-x86_64.pkg.tar.zst",
+      "sha256": "c758ccf2d09d85b033b30828800844609f47016ee93cd790315dea3818a95cc5",
+      "signature": "gnupg-2.4.9-3-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "6a5210a3686d9513bd8bf617a8ecbab41d80b707df3b4e4b5ddc938938ac8076"
+    },
+    {
+      "name": "gnutls",
+      "version": "3.8.13-3",
+      "archive": "gnutls-3.8.13-3-x86_64.pkg.tar.zst",
+      "sha256": "a61d5d908aa83ad2ed6ddffda70ae2ddb5a81852dddcbf68ec42c1744e8a8ee9",
+      "signature": "gnutls-3.8.13-3-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "7d9ccc0c6981ed2f526ab40714065fa316eb9f1812e834b3e5d5b9d91920a10d"
+    },
+    {
+      "name": "gpgme",
+      "version": "2.2.0-1",
+      "archive": "gpgme-2.2.0-1-x86_64.pkg.tar.zst",
+      "sha256": "d720cb9773612a993581e0478724ac0249087236b3e899d7dadc50ee143b279b",
+      "signature": "gpgme-2.2.0-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "466b9b6d466eedbd3dcce240b50938b8bae9500834a577069f74cb4785c5a952"
+    },
+    {
+      "name": "gpm",
+      "version": "1.20.7.r38.ge82d1a6-7",
+      "archive": "gpm-1.20.7.r38.ge82d1a6-7-x86_64.pkg.tar.zst",
+      "sha256": "c13146ba90f58ad4b561ffb15ae7d667718acca7865eb752b83d1530f3e67689",
+      "signature": "gpm-1.20.7.r38.ge82d1a6-7-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "cfdb88ec6c10ae9b7f4b6b8daba3428bcfd528fe713a587c2b6d429495bebab0"
+    },
+    {
+      "name": "gptfdisk",
+      "version": "1.0.10-2",
+      "archive": "gptfdisk-1.0.10-2-x86_64.pkg.tar.zst",
+      "sha256": "d373298ab5a7ef322af1cdcea394c7a89d3c7e7c87f6ca6c5fd7550c9d06083c",
+      "signature": "gptfdisk-1.0.10-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "b75a7108d347637df24377168157a8a062e4d163c1f5987f04ff845c67d70a98"
+    },
+    {
+      "name": "grep",
+      "version": "3.12-2",
+      "archive": "grep-3.12-2-x86_64.pkg.tar.zst",
+      "sha256": "9dd8a5dad99e8d388b1fb1406919de218d30c7e49924f615a12d3f2deaaecfe2",
+      "signature": "grep-3.12-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "4f9eec95225d793bd22477c340c4209ab08ae8b97221116ebc8080c4a70e0e9c"
+    },
+    {
+      "name": "grub",
+      "version": "2:2.16-1",
+      "archive": "grub-2:2.16-1-x86_64.pkg.tar.zst",
+      "sha256": "ba96d8453efb54ec909a5d11598b8032c5b30c6654170bd5e6438d4b01bc0ffd",
+      "signature": "grub-2:2.16-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "58ca870dc9febb0eca030c431fa973c2b09c0b646e1362d5c861389f820e02eb"
+    },
+    {
+      "name": "gzip",
+      "version": "1.15-1",
+      "archive": "gzip-1.15-1-x86_64.pkg.tar.zst",
+      "sha256": "4a2d1fd90458bf9751b9aca418f8e8ae6d570cb4a406bd7dc646ad7162a720fa",
+      "signature": "gzip-1.15-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "67a1f9dc686e9206e13243241c931d19cc50e48210abbc0ecdb5f420ad051404"
+    },
+    {
+      "name": "hwdata",
+      "version": "0.411-1",
+      "archive": "hwdata-0.411-1-any.pkg.tar.zst",
+      "sha256": "b8310305da30918a802d0ee1a06a30a605d933b6be7e2cf27a4c7d8d7fe54a2f",
+      "signature": "hwdata-0.411-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "26c3475b0cf56bf30904fa2dee5999c606bcc338a7b279672623e4319fe628f4"
+    },
+    {
+      "name": "iana-etc",
+      "version": "20260617-1",
+      "archive": "iana-etc-20260617-1-any.pkg.tar.zst",
+      "sha256": "f451da19de46e77177d959239e03b6ee837c93966ac72ca0b80a1e9a32abeb67",
+      "signature": "iana-etc-20260617-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "f9ff9653772fb84c915cc1b2968aeb97a9abd9883395c5c048c5ee6d8055cf1d"
+    },
+    {
+      "name": "icu",
+      "version": "78.3-1",
+      "archive": "icu-78.3-1-x86_64.pkg.tar.zst",
+      "sha256": "118fe41efa6c550f3fe67893946dcea2c6cbb5272299a6ddf4160fb17f3e4bb0",
+      "signature": "icu-78.3-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "f93029e13d7688093f8c4df591b6a63a7bb0c8e906be60ec11a2690b75ef72cd"
+    },
+    {
+      "name": "iproute2",
+      "version": "7.2.0-1",
+      "archive": "iproute2-7.2.0-1-x86_64.pkg.tar.zst",
+      "sha256": "cc112560ce18eba5b0b1da01847e1ec10a823ce56cdf897eb00ab12d6f02b083",
+      "signature": "iproute2-7.2.0-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "a88a145d28d109420a4f38352ec56a3e09acad43db6dcd9f7afd209a2fdae9ec"
+    },
+    {
+      "name": "iptables",
+      "version": "1:1.8.13-1",
+      "archive": "iptables-1:1.8.13-1-x86_64.pkg.tar.zst",
+      "sha256": "c827ed573b29dd488317da6b61be22c5d12154378b6bceda35ced834e8bbbc94",
+      "signature": "iptables-1:1.8.13-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "7ed72ce25b9f17d784c8804c8ef427e99d98dd8d1419340b420068e6a37d6818"
+    },
+    {
+      "name": "iputils",
+      "version": "20250605-1",
+      "archive": "iputils-20250605-1-x86_64.pkg.tar.zst",
+      "sha256": "7b7ef18785a9fb7767ecf793a9c87b474eec64440a55258f5c127861100d3933",
+      "signature": "iputils-20250605-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "85c8f049fa423c72a51b6dbf8700f674cfe4323ee0d9b3ae599dbe4aec2f43ec"
+    },
+    {
+      "name": "jansson",
+      "version": "2.15.1-1",
+      "archive": "jansson-2.15.1-1-x86_64.pkg.tar.zst",
+      "sha256": "ff1ff9da9ec0520b30cc4add6160ba5a171d9a478408863a2d99b61f5bb9866b",
+      "signature": "jansson-2.15.1-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "dfbbeb1e20c20d6c53c4cd9e5b5bc3ad5ddebaa057f1ab0797d8d92cf400a944"
+    },
+    {
+      "name": "json-c",
+      "version": "0.19-1",
+      "archive": "json-c-0.19-1-x86_64.pkg.tar.zst",
+      "sha256": "a2ebb9395bfc18a29abd21b6dd756519114e4e6241d6321588ada285ded4d63f",
+      "signature": "json-c-0.19-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "f95976479ebd904c0d76a74826f7913148f2c7ecfeb15b1ffaa6ac4b374e17eb"
+    },
+    {
+      "name": "kbd",
+      "version": "2.10.0-1",
+      "archive": "kbd-2.10.0-1-x86_64.pkg.tar.zst",
+      "sha256": "9322a5fb74f43341835d22d3ea0cf1d88d91eb4c98ab9fcb816955e2159b4b41",
+      "signature": "kbd-2.10.0-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "814cdb34807782ac6315ff8de40222af19cf1883cf49601801d8f34943d5f831"
+    },
+    {
+      "name": "keyutils",
+      "version": "1.6.3-4",
+      "archive": "keyutils-1.6.3-4-x86_64.pkg.tar.zst",
+      "sha256": "e3e5d4226bb7d213a6baddb997bf679a2b1106d95b5c2845b79bf8df1c3ef5fe",
+      "signature": "keyutils-1.6.3-4-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "1d9019b6225c2ae2d801b61b178db0bea9b54959e84441adee59a1436354efa1"
+    },
+    {
+      "name": "kmod",
+      "version": "34.2-1",
+      "archive": "kmod-34.2-1-x86_64.pkg.tar.zst",
+      "sha256": "8cce1b4dfd2a1f354a253bb60a36c83024042eef5d47cb0214ec5d4f47f2007e",
+      "signature": "kmod-34.2-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "e38e2194a153a67d3a0fbe8953c1d0b4a562607eff08b7dbd7ebb8c7cd0cd867"
+    },
+    {
+      "name": "krb5",
+      "version": "1.22.2-1",
+      "archive": "krb5-1.22.2-1-x86_64.pkg.tar.zst",
+      "sha256": "38dcaf86512559c47e9b084ce78f417b5e8b0634feb8cb80b5edeab2c40b704f",
+      "signature": "krb5-1.22.2-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "352555e1e89079221c39bb71d3bb567e33539833cdecf7ba0debb2320375744b"
+    },
+    {
+      "name": "leancrypto",
+      "version": "1.9.1-1",
+      "archive": "leancrypto-1.9.1-1-x86_64.pkg.tar.zst",
+      "sha256": "0494b72775287ab8a9f87dbb9a579cdde1e39fbb855e9040cf7bae793f04339f",
+      "signature": "leancrypto-1.9.1-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "499b7cc621320bce17d1eff4db6c3be3f49804c84909d158bb033f9b9de92ad1"
+    },
+    {
+      "name": "libarchive",
+      "version": "3.8.9-1",
+      "archive": "libarchive-3.8.9-1-x86_64.pkg.tar.zst",
+      "sha256": "07b7aaec008cc4892cb2da0c599a16438d2e70869a01b90c4e20bf153f58c3b3",
+      "signature": "libarchive-3.8.9-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "961917aed3a74274caa64108ac35d63d7ea3629a6bbfaeb229a9880cdeb9175e"
+    },
+    {
+      "name": "libasan",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "archive": "libasan-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst",
+      "sha256": "7f6c602ea97c01b67cf8261b87afa1a47c1eb383ded769aaef71475e781defdc",
+      "signature": "libasan-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "89eab8295fea81178c4433c23bc2cc82ed6381795953aee05ed2344ab7960396"
+    },
+    {
+      "name": "libassuan",
+      "version": "3.0.0-1",
+      "archive": "libassuan-3.0.0-1-x86_64.pkg.tar.zst",
+      "sha256": "1843d675b324c9d549f3413dcbe653ec86876ac2898fc94423926ed30eab25a1",
+      "signature": "libassuan-3.0.0-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "f8d4c1c6d838aa465bac7e47f1e71e0f0e6f61f087b4d8a5a19b2d540b9f74f9"
+    },
+    {
+      "name": "libatomic",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "archive": "libatomic-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst",
+      "sha256": "920cfea3dcac82e3d7c8ebbf64dfe341821c1118277d55b6c1e96035cd943656",
+      "signature": "libatomic-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "4d4192052e47f5f3ff87c8733b630751f8f5a94b7d76dab8c60d1e1cacc809b9"
+    },
+    {
+      "name": "libbpf",
+      "version": "1.7.0-1",
+      "archive": "libbpf-1.7.0-1-x86_64.pkg.tar.zst",
+      "sha256": "07ca39704fd534fcb4f520550cdddad5c113521f87035fb66f66a50a6d843257",
+      "signature": "libbpf-1.7.0-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "df15e3f973e21992404e51c782e4552e315314fa38d4fbccbbcc8802b8850bc6"
+    },
+    {
+      "name": "libcap",
+      "version": "2.78-1",
+      "archive": "libcap-2.78-1-x86_64.pkg.tar.zst",
+      "sha256": "3e984fe1d323b1c5a5fc60fef005776a4882fbca913d6fe3c41ad11128929ed1",
+      "signature": "libcap-2.78-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "ea04b0e2c6ed14aa62978b0048b17e01d55ace6959ab088edf006af209ebb6ee"
+    },
+    {
+      "name": "libcap-ng",
+      "version": "0.9.6-1",
+      "archive": "libcap-ng-0.9.6-1-x86_64.pkg.tar.zst",
+      "sha256": "05b0a8356f898e251845b2e5ffa5966be21ca85f3eaaf5aeb8a9e8df4148ba5c",
+      "signature": "libcap-ng-0.9.6-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "5da7165cd998d5c2a4718b10cc81618991d4db71db5d17c90687ff8e9138f977"
+    },
+    {
+      "name": "libdaemon",
+      "version": "0.14-6",
+      "archive": "libdaemon-0.14-6-x86_64.pkg.tar.zst",
+      "sha256": "ece83006a468d5205ea45d1de8e9cdb3a864700f9d904fc4b7d52d69dce1b0b6",
+      "signature": "libdaemon-0.14-6-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "ea53cd779bfb4f59913fa0a1e29f27935a2d4e1b9fca1a42d7514f4d5f26c690"
+    },
+    {
+      "name": "libedit",
+      "version": "20260512_3.1-1",
+      "archive": "libedit-20260512_3.1-1-x86_64.pkg.tar.zst",
+      "sha256": "70cb736e4fdee330cd0dfab45875f6ea378ae819958dd15748c300b8d7285b42",
+      "signature": "libedit-20260512_3.1-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "6f61da87117c55f2eef074dc61bb9aa33539e0b80edb2e0e7be9af98e2609f61"
+    },
+    {
+      "name": "libelf",
+      "version": "0.196-1",
+      "archive": "libelf-0.196-1-x86_64.pkg.tar.zst",
+      "sha256": "0f75f1f363c60d73f563fddc82964acd01cdc5167dbe2309d5d90e833388842b",
+      "signature": "libelf-0.196-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "e37a744f06600ae1e88673f54d6d647a50b9423a800412b5f1c4de79d44829a3"
+    },
+    {
+      "name": "libevent",
+      "version": "2.1.13-2",
+      "archive": "libevent-2.1.13-2-x86_64.pkg.tar.zst",
+      "sha256": "9fd8563e3aa1c64d80257b7b4f60d37cf8589260ba3eb015f8257e2cfd118b04",
+      "signature": "libevent-2.1.13-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "674e887a93ead82f0a74564359dda31188f460759aedf51319a4e3d089ed9e39"
+    },
+    {
+      "name": "libffi",
+      "version": "3.8.0-1",
+      "archive": "libffi-3.8.0-1-x86_64.pkg.tar.zst",
+      "sha256": "5d21227f2a1d10db60d0cf5bb02b36a1801ae61dc7dae8c3bc1afa548afd8601",
+      "signature": "libffi-3.8.0-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "98ac85de7e15a19b72d5b625d16d2eeb42408db1df8a76ad84f38fcf03048714"
+    },
+    {
+      "name": "libgcc",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "archive": "libgcc-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst",
+      "sha256": "7367dad49fc3229bde804816d412ab77306d433b1f92e4126b8b3ba3502c67d6",
+      "signature": "libgcc-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "46cc24a39bec852df9b2047c57c47947b6bf15ecb1b11dcbe2740c308d04efba"
+    },
+    {
+      "name": "libgcrypt",
+      "version": "1.12.4-1",
+      "archive": "libgcrypt-1.12.4-1-x86_64.pkg.tar.zst",
+      "sha256": "25ca27f53e0862e706b325d05893e43585be2bb0a0a4a750b8faa6e0e253e136",
+      "signature": "libgcrypt-1.12.4-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "5f45e9d6fc7d507f4d35ea817c7d1f9918c5c65f37a9d1ed891c34847dc7e9d7"
+    },
+    {
+      "name": "libgfortran",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "archive": "libgfortran-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst",
+      "sha256": "0b40387c87793ed7b72fc3138c6877630ed66d8b5f841e436f4372a6405663e6",
+      "signature": "libgfortran-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "692d6c3bf95764f5e971ba0831d2cefbf4d3a74002ff9a3d1e5f7d6f40d98804"
+    },
+    {
+      "name": "libgomp",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "archive": "libgomp-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst",
+      "sha256": "ffad807ed2ea36a29fe6da70dd77a6c476f1a1d5357cbec0b2481dbc84f303f4",
+      "signature": "libgomp-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "fa4bd2bbd2bfe9c4c2e4f06b7879e8809b3f550a9eb55bb6957dd7562fa92c44"
+    },
+    {
+      "name": "libgpg-error",
+      "version": "1.61-1",
+      "archive": "libgpg-error-1.61-1-x86_64.pkg.tar.zst",
+      "sha256": "7d5a5b39f588b275558f5e13bd792bff84cf89abb6d48e3e494d6c30e8ea9ca4",
+      "signature": "libgpg-error-1.61-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "21d5edd0bae84d11a305b29b430ef8bd8479f948a03a14a1812641373ca5e7b5"
+    },
+    {
+      "name": "libhwasan",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "archive": "libhwasan-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst",
+      "sha256": "299ad02f954643c8b0fb919b0d545ebba34816f0facc673399f79252b33ec018",
+      "signature": "libhwasan-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "0bed7e1f8494de20233794114830a225134b02129b978ac0942681c9bfa2429f"
+    },
+    {
+      "name": "libidn2",
+      "version": "2.3.8-1",
+      "archive": "libidn2-2.3.8-1-x86_64.pkg.tar.zst",
+      "sha256": "1749bdd4c395913df18c57fdd42820d3de88738b7163b7aa254d13e3da7b1d9d",
+      "signature": "libidn2-2.3.8-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "f0b60ed61fcf4d22afd0da0afd28327b116f0ff6f3d0b7e147d2e74080954805"
+    },
+    {
+      "name": "libksba",
+      "version": "1.8.1-1",
+      "archive": "libksba-1.8.1-1-x86_64.pkg.tar.zst",
+      "sha256": "6aa88da7314b620af39ae619625b6ffac55f347c1a977cec3c4a0e4bc6f6a79d",
+      "signature": "libksba-1.8.1-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "a09d43844d28bcc00981d5395913f0dcbeb16e64b603156093a279732d705624"
+    },
+    {
+      "name": "libldap",
+      "version": "2.7.1-1",
+      "archive": "libldap-2.7.1-1-x86_64.pkg.tar.zst",
+      "sha256": "bc83324fccf39b11cad9b5d672db02eef9db7fa406d335169f7732c75ac7906f",
+      "signature": "libldap-2.7.1-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "08ae4919cfde01969e6148c30da01aba2017f1c91db16af5d4a2c8b33a0641be"
+    },
+    {
+      "name": "liblsan",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "archive": "liblsan-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst",
+      "sha256": "11b69f544a6f3d1c58d5612ebc336837e76567f2413b96900a6eb33d5de06e21",
+      "signature": "liblsan-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "b26785e6b75eb226f6e3d94f5126df95fa34ffbe280c8865cfdbc74fef1090dd"
+    },
+    {
+      "name": "libmakepkg-dropins",
+      "version": "20-2",
+      "archive": "libmakepkg-dropins-20-2-any.pkg.tar.zst",
+      "sha256": "78c4e32d3140d11d2fd7d1bac6bcfdbdd34d3b59b56620f987fd28fd4334648e",
+      "signature": "libmakepkg-dropins-20-2-any.pkg.tar.zst.sig",
+      "signature_sha256": "e86d49d633f0398ac6b8013e0b3fe2804b88b68c79bde95f7d3ff512af681125"
+    },
+    {
+      "name": "libmm-glib",
+      "version": "1.24.2-1",
+      "archive": "libmm-glib-1.24.2-1-x86_64.pkg.tar.zst",
+      "sha256": "810a0d8a9cba68929b5f5318fac912a803dd5912d3964a54f2f92260e9ae2f53",
+      "signature": "libmm-glib-1.24.2-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "97e507f4d52606e83776aa704720a5611b8c14f47cb9ecf83494d3743cc8bf76"
+    },
+    {
+      "name": "libmnl",
+      "version": "1.0.5-2",
+      "archive": "libmnl-1.0.5-2-x86_64.pkg.tar.zst",
+      "sha256": "1ee554fe2637bbee1da61f0bdbd3f9d1dd89ddbb9809cd5ef012540a748ff4a0",
+      "signature": "libmnl-1.0.5-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "785af185aeead92c65a29ba9e2facee7eb4c4f053000cc0d7334430bc5a29b23"
+    },
+    {
+      "name": "libndp",
+      "version": "1.9-1",
+      "archive": "libndp-1.9-1-x86_64.pkg.tar.zst",
+      "sha256": "4285f52d6399cdd9edd740488f0efdb3c7bcc7f2559c6f0ff7c2233719f619d2",
+      "signature": "libndp-1.9-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "2cb987a940f4da65f950e5ebeaf38994dadfac085aa1c78db58d496d030905f4"
+    },
+    {
+      "name": "libnetfilter_conntrack",
+      "version": "1.1.1-1",
+      "archive": "libnetfilter_conntrack-1.1.1-1-x86_64.pkg.tar.zst",
+      "sha256": "9315ab4571be5d9764367f2e3d56004a127a7dfe6fbbfb1850c05efb674a8bdb",
+      "signature": "libnetfilter_conntrack-1.1.1-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "fc74469dbae09fc183238f506dade92abac352b1394f9e6ca030c11f875944c3"
+    },
+    {
+      "name": "libnewt",
+      "version": "0.52.25-2",
+      "archive": "libnewt-0.52.25-2-x86_64.pkg.tar.zst",
+      "sha256": "a6f7192698b7b0a978317135f9218e1d6da550b1d50c5d823564b801df08362c",
+      "signature": "libnewt-0.52.25-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "22d4d11c3c3e852a3b2324b8ac5e838e100ceea09056427d802f6ef1bf3074c0"
+    },
+    {
+      "name": "libnfnetlink",
+      "version": "1.0.2-2",
+      "archive": "libnfnetlink-1.0.2-2-x86_64.pkg.tar.zst",
+      "sha256": "b06f0d8f2723ac33155bf4f584d88906c5be68d3c3c8b4f3f0694a5874672727",
+      "signature": "libnfnetlink-1.0.2-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "2f241dbdbf3fcc09be3f6573e9d693da582fb3e9451ea1cebbcd5d7d044d214b"
+    },
+    {
+      "name": "libnftnl",
+      "version": "1.3.2-1",
+      "archive": "libnftnl-1.3.2-1-x86_64.pkg.tar.zst",
+      "sha256": "99114ae2579be7e4cdd553209394572c75751e3af9a3581d742f59a558f08620",
+      "signature": "libnftnl-1.3.2-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "5759c410faa529b962b4f8566288a721da2e92f27e10ab6e4a417547c7582658"
+    },
+    {
+      "name": "libnghttp2",
+      "version": "1.70.0-1",
+      "archive": "libnghttp2-1.70.0-1-x86_64.pkg.tar.zst",
+      "sha256": "332e2cb2d953dab326f97a3257594f8031ec0fce6305e2bcd5d64d9832c84778",
+      "signature": "libnghttp2-1.70.0-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "b381f4b01d6aefeed4a9d3c8d203cd31e0dfe6b001f00e24bce1d2c41c5d74f6"
+    },
+    {
+      "name": "libnghttp3",
+      "version": "1.18.0-1",
+      "archive": "libnghttp3-1.18.0-1-x86_64.pkg.tar.zst",
+      "sha256": "4a474a6c8c2970bead13cbdf4ab47662039d43dcc48aa811ee58becd778cf890",
+      "signature": "libnghttp3-1.18.0-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "035f5c0abf9e2384de4235d5e1d66075ad34376ff5a29d5e50a4ce9877a16fc3"
+    },
+    {
+      "name": "libngtcp2",
+      "version": "1.25.0-1",
+      "archive": "libngtcp2-1.25.0-1-x86_64.pkg.tar.zst",
+      "sha256": "e4a728d9f647f3c52a3aedd67c589be5f43e7dd31ebde6867ad535ba29ec9511",
+      "signature": "libngtcp2-1.25.0-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "d35ae40e8e0b430c8f49d825267e590db40f615f8795d582917a239e8baa06f9"
+    },
+    {
+      "name": "libnl",
+      "version": "3.12.0-1",
+      "archive": "libnl-3.12.0-1-x86_64.pkg.tar.zst",
+      "sha256": "531827dac4f6d3de9a7e4c8c31f3243bf484b39c41648178c18dc027566b1bb4",
+      "signature": "libnl-3.12.0-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "e953aa0a084905673520491333b3c83495bef28fcaf2bcd1d15b1e277257370f"
+    },
+    {
+      "name": "libnm",
+      "version": "1.58.1-2",
+      "archive": "libnm-1.58.1-2-x86_64.pkg.tar.zst",
+      "sha256": "21b2f67ed6fbd9cd0904cddd661b071145ae85425ceedcba9b39afa5188af8ac",
+      "signature": "libnm-1.58.1-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "fdeed8d5f5a13a2801df37ef1cd297a8c8c6815dd8946fcf74c2e6978df41edd"
+    },
+    {
+      "name": "libnsl",
+      "version": "2.0.1-2",
+      "archive": "libnsl-2.0.1-2-x86_64.pkg.tar.zst",
+      "sha256": "4ba7b85b42fbda5a1f07e15b8f91c60faa4c5f9168cc27d49fcd20e3a3be8bd8",
+      "signature": "libnsl-2.0.1-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "12514339d934bf96135478f200977a5f2fa955e7c443a30952611084741696c8"
+    },
+    {
+      "name": "libobjc",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "archive": "libobjc-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst",
+      "sha256": "b56770fbd0167ed14159744e3f18e220684f5acf65241b5110808ec49bdbffd6",
+      "signature": "libobjc-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "4b3f5f994cb5e8a3bc1cd22a3d4e4b0f7bd092b5589013bd4741a660ab681c78"
+    },
+    {
+      "name": "libp11-kit",
+      "version": "0.26.5-1",
+      "archive": "libp11-kit-0.26.5-1-x86_64.pkg.tar.zst",
+      "sha256": "8ddc055b304a98c2434fa5d25550c94c0bbcdb22388f752e05e619b2ee98027c",
+      "signature": "libp11-kit-0.26.5-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "8d6a4af098064489204fa265a2f3e2e08093dbf637bb29bd1f591064414fac5d"
+    },
+    {
+      "name": "libpcap",
+      "version": "1.11.0-1",
+      "archive": "libpcap-1.11.0-1-x86_64.pkg.tar.zst",
+      "sha256": "ed40e51f84882865d254571015a8ad403bf9c0ec743cf454e8223199de34580d",
+      "signature": "libpcap-1.11.0-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "cd74f92a26e5181ecda27ee09a50df5b62ad0ec9ab630f3846aa6f4ed2e40ee1"
+    },
+    {
+      "name": "libpgm",
+      "version": "5.3.128-4",
+      "archive": "libpgm-5.3.128-4-x86_64.pkg.tar.zst",
+      "sha256": "cca617d50f88c96d93fbedb75ec5e948e4a3471680e708e88f7d4e391923be4d",
+      "signature": "libpgm-5.3.128-4-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "da283e8390de3530a8bd01d9d143f24bae040b17ee7633d6a077328788537f1a"
+    },
+    {
+      "name": "libpsl",
+      "version": "0.21.5-2",
+      "archive": "libpsl-0.21.5-2-x86_64.pkg.tar.zst",
+      "sha256": "e07925c2487bd7deffdd57808b19561e80a4cb25a33e51dbd94efb673bc81944",
+      "signature": "libpsl-0.21.5-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "a7c132152c77c1081517963da336e4a578b69eac26c7d8466ba21cf82cdb3429"
+    },
+    {
+      "name": "libquadmath",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "archive": "libquadmath-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst",
+      "sha256": "c6db8f6c787601f17fa812f2270f4e53fad1426fa9e372ab2e1a881c1368cee3",
+      "signature": "libquadmath-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "bdb0e0dd999730c2338d267a9098e03f3170f5302268ad5695d0ebbf3b4a4fd4"
+    },
+    {
+      "name": "libsasl",
+      "version": "2.1.28-5",
+      "archive": "libsasl-2.1.28-5-x86_64.pkg.tar.zst",
+      "sha256": "113e1676371544e5142a46ee046a6179ace201c4f0a0d56b618a984b5c764463",
+      "signature": "libsasl-2.1.28-5-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "37430eb9dec611de8d5e34e964a4766e4c458d13ea3423ee60701a2e258ec3ee"
+    },
+    {
+      "name": "libseccomp",
+      "version": "2.6.0-1",
+      "archive": "libseccomp-2.6.0-1-x86_64.pkg.tar.zst",
+      "sha256": "3d3effb23898177d0faece196ac664859d29027b64cdeee3a09a2c3967b8401d",
+      "signature": "libseccomp-2.6.0-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "ea9bd6a5c9e2bacfdca13090ec318fd4c2743db13c6d7012c3507d718e6b85af"
+    },
+    {
+      "name": "libsecret",
+      "version": "0.21.8.2-1",
+      "archive": "libsecret-0.21.8.2-1-x86_64.pkg.tar.zst",
+      "sha256": "311a982a109a3814ebc8f467215f9c92660b85833e1c65b6da16ba21d6f406ad",
+      "signature": "libsecret-0.21.8.2-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "d88963189061038267d0c5a665268389565b0bdf7f47f09428a94c12f9ae73c1"
+    },
+    {
+      "name": "libsodium",
+      "version": "1.0.22-1",
+      "archive": "libsodium-1.0.22-1-x86_64.pkg.tar.zst",
+      "sha256": "fc0440c108fff0341f3cb7b4ee38f5a9406b45d9315205ce999e1b147b52f972",
+      "signature": "libsodium-1.0.22-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "ef237c7d31654299aa6ecd023aa1d30eb11e19560c7243ae9a9363b3826f7f6c"
+    },
+    {
+      "name": "libssh2",
+      "version": "1.11.1-7",
+      "archive": "libssh2-1.11.1-7-x86_64.pkg.tar.zst",
+      "sha256": "462cca91bff394c2719b7e8d1951f0c0a2db979d71521ac93dba6b6b6974f6b9",
+      "signature": "libssh2-1.11.1-7-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "1cb04222715ebacb102115edeeb13806ef611a29a1da9fdbc14cb0d26bfc2cfd"
+    },
+    {
+      "name": "libstdc++",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "archive": "libstdc++-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst",
+      "sha256": "15dc6bd2f3a2ee17fcd79a14325e9e0037722a592b2bdc55e1665d92112eaa51",
+      "signature": "libstdc++-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "2b33cf5ff95d0a669aceae8bb88abd2c3374f2e4ee4ea4402b771df4c483f719"
+    },
+    {
+      "name": "libsysprof-capture",
+      "version": "50.0-6",
+      "archive": "libsysprof-capture-50.0-6-x86_64.pkg.tar.zst",
+      "sha256": "4467ddc2c476f9a6249737ff1ef5714f4b376e55719968c168f3b8a86c098bbb",
+      "signature": "libsysprof-capture-50.0-6-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "5bf1118d4ba407ffb5255f2860a581c9120b64c9a52528d5816312b4d1970397"
+    },
+    {
+      "name": "libtasn1",
+      "version": "4.21.0-1",
+      "archive": "libtasn1-4.21.0-1-x86_64.pkg.tar.zst",
+      "sha256": "00e50489d3c00951380d578cf89ebd7d7a38d97269e7ca9ccc9cde146f1e21da",
+      "signature": "libtasn1-4.21.0-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "1fe8e06cf820063427f179f7d9bb33127fe30e13ad0d243450ea5cec06ff11d1"
+    },
+    {
+      "name": "libteam",
+      "version": "1.32-3",
+      "archive": "libteam-1.32-3-x86_64.pkg.tar.zst",
+      "sha256": "179c1120809f0a9ff4515ff75a700c1b57f57ac7327f6dab0570ce5504789018",
+      "signature": "libteam-1.32-3-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "429b10fa1dc8ee560e9120e47f4c8c54b47938e1b7ed1f62ef08b19c8a3dcfb1"
+    },
+    {
+      "name": "libtirpc",
+      "version": "1.3.8-1",
+      "archive": "libtirpc-1.3.8-1-x86_64.pkg.tar.zst",
+      "sha256": "4861eac60e6daffdf02366a09fc559ffe456e987410362793cd7faf91be22b30",
+      "signature": "libtirpc-1.3.8-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "99ba4c3784f24a396f65e9a8bed43a13d589477ecd31c6af323d4a41ac999560"
+    },
+    {
+      "name": "libtsan",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "archive": "libtsan-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst",
+      "sha256": "8dd48336bb11dd0d15b9f5d0560166838802b21e3d279db25d6da96df19e0437",
+      "signature": "libtsan-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "9028fc2090a8a75fc733779b1ce63496a94cc8865f7522f3fd089e7db0d1190e"
+    },
+    {
+      "name": "libubsan",
+      "version": "16.2.1+r23+gd564253eb6c8-1",
+      "archive": "libubsan-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst",
+      "sha256": "eba85316fdf63265285624baa22724fbb93e15901696f99d2c2cbde2162ad71d",
+      "signature": "libubsan-16.2.1+r23+gd564253eb6c8-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "f47cc27546160de44d77862bcfa2357360fc3843f057cc2675bc3c992b86baf8"
+    },
+    {
+      "name": "libunistring",
+      "version": "1.4.2-1",
+      "archive": "libunistring-1.4.2-1-x86_64.pkg.tar.zst",
+      "sha256": "582625bc02e710b587f4ed319e5c7ad29fd5d4d424b6384f125fc094f07ce590",
+      "signature": "libunistring-1.4.2-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "b81e0e49ea2283deb5df43a0ca0c051fd40f9e3546ae78181d6779324da16e47"
+    },
+    {
+      "name": "liburing",
+      "version": "2.15-1",
+      "archive": "liburing-2.15-1-x86_64.pkg.tar.zst",
+      "sha256": "ceaf9e41bcd5cb06efcffbc90a39628b7a5cae5490c5e6db810a792450070ad2",
+      "signature": "liburing-2.15-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "3847e970c8f76de1aaeb30552440b4f00fad088fcf3dea3ec49494272bd45e5d"
+    },
+    {
+      "name": "libusb",
+      "version": "1.0.30-1",
+      "archive": "libusb-1.0.30-1-x86_64.pkg.tar.zst",
+      "sha256": "8b75816afbb316dc92110d9ac542df3e20d9550fe949a1a1402b25366c0a2c6d",
+      "signature": "libusb-1.0.30-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "d7cc60fdf92601e05e65ab097e6761641d4615060207560b2e4e633ec42fa74d"
+    },
+    {
+      "name": "libutempter",
+      "version": "1.2.3-1",
+      "archive": "libutempter-1.2.3-1-x86_64.pkg.tar.zst",
+      "sha256": "e1dd15aed4cd76b42729d5dc58d4db3dd49d6c5fe08b33abee0df3bcfc98fd13",
+      "signature": "libutempter-1.2.3-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "fba77cbdcffc70408f3d825949116160a27b454ca4ad7295b15019c121bee735"
+    },
+    {
+      "name": "libverto",
+      "version": "0.3.2-6",
+      "archive": "libverto-0.3.2-6-x86_64.pkg.tar.zst",
+      "sha256": "d0965b1b256e330e300c2bc3c699afa24f2d800dc476541039d452b606309496",
+      "signature": "libverto-0.3.2-6-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "4e3fff809bbd5f488886655e6a274521b5c2f65643c2e55b056fcb3c7d297e54"
+    },
+    {
+      "name": "libxcrypt",
+      "version": "4.5.2-1",
+      "archive": "libxcrypt-4.5.2-1-x86_64.pkg.tar.zst",
+      "sha256": "7d324b88963786491391468203701efd2c812798a9c3fbcc4ff8a4ddb2d9f276",
+      "signature": "libxcrypt-4.5.2-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "2f0abf1574489e64789e10d3c3aa97b7c1f9c7385e4d79e4c4c5cba1a10fb842"
+    },
+    {
+      "name": "libxml2",
+      "version": "2.15.4-1",
+      "archive": "libxml2-2.15.4-1-x86_64.pkg.tar.zst",
+      "sha256": "a6b5c30f51a7ca7c85348de8e83280e6825a8f3e193cc6916ecd8e695d4a24bb",
+      "signature": "libxml2-2.15.4-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "8f8fbec0c9d4f0d93200f44ed347bd3a6aac5c6540af0cbb814a6e2dd9394045"
+    },
+    {
+      "name": "licenses",
+      "version": "20240728-1",
+      "archive": "licenses-20240728-1-any.pkg.tar.zst",
+      "sha256": "47e9f4ad914da21f6326cc4eb84a788043523191f80d8e661b936b25d7fa1879",
+      "signature": "licenses-20240728-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "2bbc4c61f974d4d5c3f064a6eb77364ff14629f37a0e4ef81f03dbe98b2920cd"
+    },
+    {
+      "name": "linux",
+      "version": "7.2.8.arch1-2",
+      "archive": "linux-7.2.8.arch1-2-x86_64.pkg.tar.zst",
+      "sha256": "99745cb20f82292d5285d9cb4307970f80844ba94d816ce6d708689d1a1895b4",
+      "signature": "linux-7.2.8.arch1-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "a03e8b721d017b8bce8924bcbaed8ea9191023ad92cf30b8d66d8e5f02588176"
+    },
+    {
+      "name": "linux-api-headers",
+      "version": "7.2-1",
+      "archive": "linux-api-headers-7.2-1-x86_64.pkg.tar.zst",
+      "sha256": "d8d3483363e70b353ae31bbf8773df77780724eaeaa140faf4e4111bdb87588f",
+      "signature": "linux-api-headers-7.2-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "5577d969776cbc37696f31cc5a18635599899647697f16e75508503beef81470"
+    },
+    {
+      "name": "linux-firmware",
+      "version": "20260916-1",
+      "archive": "linux-firmware-20260916-1-any.pkg.tar.zst",
+      "sha256": "a8a0530fd63ae55413379afcdf4eacb7b13d271e7ae65cb4475f86e03a45eee7",
+      "signature": "linux-firmware-20260916-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "957620227f3fd2e57960ec24f52d86cfca0c65219741745a0eb43df3cbf3d997"
+    },
+    {
+      "name": "linux-firmware-amd",
+      "version": "20260916-1",
+      "archive": "linux-firmware-amd-20260916-1-any.pkg.tar.zst",
+      "sha256": "94697c99d14ec4676edb71ff32b7ca6b801089ebc67c6fe1f71d49ca961d6512",
+      "signature": "linux-firmware-amd-20260916-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "797ee49118070101ad2c52395f678bbd2fc18692d9c2b32f3ef318239c91babe"
+    },
+    {
+      "name": "linux-firmware-amdgpu",
+      "version": "20260916-1",
+      "archive": "linux-firmware-amdgpu-20260916-1-any.pkg.tar.zst",
+      "sha256": "b46584dd0ff792f80a84135e4a8e19e1980fde858ffc56e8f00292ca1a21dabb",
+      "signature": "linux-firmware-amdgpu-20260916-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "76946bf31bbbc44e567eb22aa998a253e4b05665b0a81cf7bae587fa648f9fe3"
+    },
+    {
+      "name": "linux-firmware-atheros",
+      "version": "20260916-1",
+      "archive": "linux-firmware-atheros-20260916-1-any.pkg.tar.zst",
+      "sha256": "6e0cc60ea92768d91fb3bd1f4371fa8c9089a0161c242f4d72f7cfbe9ceb9d5a",
+      "signature": "linux-firmware-atheros-20260916-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "1273059da84ebdc24ef124b3cc4c2f61f3844b50280c165c8070a3e64591c1c7"
+    },
+    {
+      "name": "linux-firmware-broadcom",
+      "version": "20260916-1",
+      "archive": "linux-firmware-broadcom-20260916-1-any.pkg.tar.zst",
+      "sha256": "a03a67545dbd3f92b5fb99b431d18a11f00b122ac4d8f21611916a66f3dae08b",
+      "signature": "linux-firmware-broadcom-20260916-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "ea9df8ab91a682a917f7047fe61f8620ff694353c66fa3d8bcaebd0a828516df"
+    },
+    {
+      "name": "linux-firmware-cirrus",
+      "version": "20260916-1",
+      "archive": "linux-firmware-cirrus-20260916-1-any.pkg.tar.zst",
+      "sha256": "8cc577bd42f8bee1ecf7ea1356d343e027e5e4836491198a6caf0b9288198c7c",
+      "signature": "linux-firmware-cirrus-20260916-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "d029654edb151cdac8fb077d35d330f537bc2bff03acbade16b39b316df764a6"
+    },
+    {
+      "name": "linux-firmware-intel",
+      "version": "20260916-1",
+      "archive": "linux-firmware-intel-20260916-1-any.pkg.tar.zst",
+      "sha256": "23d158e5b1a906e06a1d9a26e636a556d32de5a22185eddf5746dfbdad49fc13",
+      "signature": "linux-firmware-intel-20260916-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "ef95984f51ed03122a9f8e23e80a1d010333b886344f845aba461c2c72c1a967"
+    },
+    {
+      "name": "linux-firmware-mediatek",
+      "version": "20260916-1",
+      "archive": "linux-firmware-mediatek-20260916-1-any.pkg.tar.zst",
+      "sha256": "de1fc95b17aad16d251b41c5e14ef40caededd19779a2e0aa3ac087233c039a2",
+      "signature": "linux-firmware-mediatek-20260916-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "6203c5a1fcc3340b95c057907f2bee3c70131894bdb531237bb993913e92314b"
+    },
+    {
+      "name": "linux-firmware-nvidia",
+      "version": "20260916-1",
+      "archive": "linux-firmware-nvidia-20260916-1-any.pkg.tar.zst",
+      "sha256": "578bb880be4a0ed1fb6c30ef6199fa8557ee4e056e4343a48861901d725f6a34",
+      "signature": "linux-firmware-nvidia-20260916-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "5517b1394b9c486ebb728ccf4db7127f8cad9cba16b013b114c3909fb9f6cc89"
+    },
+    {
+      "name": "linux-firmware-other",
+      "version": "20260916-1",
+      "archive": "linux-firmware-other-20260916-1-any.pkg.tar.zst",
+      "sha256": "f8105aa5ebc26b29ed586eaa3612874546a6a20362224af95ad999fe4b075ade",
+      "signature": "linux-firmware-other-20260916-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "50271befd80e4982617a24444d244ff2fd6437f93c0159653c8d7dc74dcdab14"
+    },
+    {
+      "name": "linux-firmware-radeon",
+      "version": "20260916-1",
+      "archive": "linux-firmware-radeon-20260916-1-any.pkg.tar.zst",
+      "sha256": "828bdc3bfda4babbc49e1618fc2c94ae2091203b7fe5e9010ec012e14a63a00b",
+      "signature": "linux-firmware-radeon-20260916-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "e97984aafce3a4bf14a4100c6b9148788a859e503546f567023beccb1302ceea"
+    },
+    {
+      "name": "linux-firmware-realtek",
+      "version": "20260916-1",
+      "archive": "linux-firmware-realtek-20260916-1-any.pkg.tar.zst",
+      "sha256": "c8a8826f03bc460b514958c3fa95fc81c3cc781e3856160eabc6b6cae4b2ecd2",
+      "signature": "linux-firmware-realtek-20260916-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "708df9d9c724018888b001d7aec99b0112b001debe25fc2929be857d37764368"
+    },
+    {
+      "name": "linux-firmware-ti",
+      "version": "20260916-1",
+      "archive": "linux-firmware-ti-20260916-1-any.pkg.tar.zst",
+      "sha256": "b7511ba47de4dff69e32ee3f9f02923ae7177edda6ea25bb2b74f1517122ebb7",
+      "signature": "linux-firmware-ti-20260916-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "32f58467c6a21f1ba70604c74581e6b7b86ccb9c297607a5933e2bf69f2bdc71"
+    },
+    {
+      "name": "linux-firmware-whence",
+      "version": "20260916-1",
+      "archive": "linux-firmware-whence-20260916-1-any.pkg.tar.zst",
+      "sha256": "02f3d8273e1b98a4e9f629fbaa5a703657846ad32b90d39a7c70b1f0e25df5db",
+      "signature": "linux-firmware-whence-20260916-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "e37115722b29d7f700db106d9c820108725df32d28e53fe1b43e2cd8a233f8fc"
+    },
+    {
+      "name": "lmdb",
+      "version": "0.9.35-1",
+      "archive": "lmdb-0.9.35-1-x86_64.pkg.tar.zst",
+      "sha256": "50ae8083860e1ffadf4fab3c173a043fd97be41f5ceda7d2e77c528cd84d2386",
+      "signature": "lmdb-0.9.35-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "82c1506e2e79a60816e87b4fb1dd06d0edd6cda2788b4a7f6425f72b4bfd4872"
+    },
+    {
+      "name": "lz4",
+      "version": "1:1.10.0-2",
+      "archive": "lz4-1:1.10.0-2-x86_64.pkg.tar.zst",
+      "sha256": "c6200c776440678fe8c26adae6c104194b425d9393a9e3fc09f934363f0c39a6",
+      "signature": "lz4-1:1.10.0-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "57e8540fcc15b40b11d90cedad54cf3f08a39ca85524c30f80d320e22378f4b8"
+    },
+    {
+      "name": "lzo",
+      "version": "2.10-5",
+      "archive": "lzo-2.10-5-x86_64.pkg.tar.zst",
+      "sha256": "dd5ec871aea5ddfd38d4a25539e966dc05e75d6969ebc31917c8d25b97ccd69e",
+      "signature": "lzo-2.10-5-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "437aabe1e1bd945dd980f4231cb12a6c64c1bc52352ee838daa07935a681562c"
+    },
+    {
+      "name": "mkinitcpio",
+      "version": "42.2-1",
+      "archive": "mkinitcpio-42.2-1-any.pkg.tar.zst",
+      "sha256": "7c412bc5f45a145e11794d85d0c7945f038452a29655af4d4d433db1ae9db972",
+      "signature": "mkinitcpio-42.2-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "a9b32c08423a64cfa0fc3945a05512fd6d3641748255b5b9f167ab31f2b3482a"
+    },
+    {
+      "name": "mkinitcpio-busybox",
+      "version": "1.36.1-1",
+      "archive": "mkinitcpio-busybox-1.36.1-1-x86_64.pkg.tar.zst",
+      "sha256": "573182e5dc39f49146d73e201bb2193372cc514e3a0fd09128205717a4fb558d",
+      "signature": "mkinitcpio-busybox-1.36.1-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "85389c6644744b0531b649f1ce788368af0734272feb5a2819ee41327f170397"
+    },
+    {
+      "name": "mobile-broadband-provider-info",
+      "version": "20251101-1",
+      "archive": "mobile-broadband-provider-info-20251101-1-any.pkg.tar.zst",
+      "sha256": "1b0146d8b72f6ffc3edcccd5709d8de42798c4827a5fccd994c389584d60c56c",
+      "signature": "mobile-broadband-provider-info-20251101-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "fbe347d77f49197691ace00fc81cb07480de15ba0eaa75433370d550349c41c4"
+    },
+    {
+      "name": "mpdecimal",
+      "version": "4.0.1-3",
+      "archive": "mpdecimal-4.0.1-3-x86_64.pkg.tar.zst",
+      "sha256": "8679f71ed9a982c91883adfaaf0f87a1b74d92d4060283180c4a105a6c7afb19",
+      "signature": "mpdecimal-4.0.1-3-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "bcc17af7b801c1eb181f32c1ce9fe6e087f8998fef087dff61669442ff711406"
+    },
+    {
+      "name": "mpfr",
+      "version": "4.2.2-1",
+      "archive": "mpfr-4.2.2-1-x86_64.pkg.tar.zst",
+      "sha256": "e765082b2c3260550887ccf34f6f0d24289fc5ca8c0949eb5c2e9937272ea80f",
+      "signature": "mpfr-4.2.2-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "6618248ca1784abbd2d9116abc640ca6fb50e14b99ac3beea89ad71befd1ff3e"
+    },
+    {
+      "name": "ncurses",
+      "version": "6.6-2",
+      "archive": "ncurses-6.6-2-x86_64.pkg.tar.zst",
+      "sha256": "9b80390fd681121443a45a51b74e2e2ade245ce22af8769915d63165b727e27c",
+      "signature": "ncurses-6.6-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "1105f5b44b6b3f33fc8d62bab628c2c73b85a246646e79b174ef6ebbfe3df8a6"
+    },
+    {
+      "name": "nettle",
+      "version": "4.0-1",
+      "archive": "nettle-4.0-1-x86_64.pkg.tar.zst",
+      "sha256": "679138a8405ca383aba7836d54fdc282db9394b7dc23c097b8965f70119adf13",
+      "signature": "nettle-4.0-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "f12ebb9488ac9190793201397136631c48134972ffe1e268b937864f5a42a099"
+    },
+    {
+      "name": "networkmanager",
+      "version": "1.58.1-2",
+      "archive": "networkmanager-1.58.1-2-x86_64.pkg.tar.zst",
+      "sha256": "691287ef230bdb50d72e42e6b0cf54ffc79cdb816b5c16a8c120ce39756d4cd1",
+      "signature": "networkmanager-1.58.1-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "99908946544c373eddb486bbaa47068a6760da982b1457e78a6c1e037b8fc1b1"
+    },
+    {
+      "name": "nftables",
+      "version": "1:1.1.7-3",
+      "archive": "nftables-1:1.1.7-3-x86_64.pkg.tar.zst",
+      "sha256": "5a25cfdb19c370d01cfe81ce8c1e2e1fa9a2e05d51d1417578e8c425893a5b29",
+      "signature": "nftables-1:1.1.7-3-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "ba212826dd4228d60b23e0d7817b0f244f988bbdaad4e1d37ea09dbbe5716795"
+    },
+    {
+      "name": "npth",
+      "version": "1.8-1",
+      "archive": "npth-1.8-1-x86_64.pkg.tar.zst",
+      "sha256": "2f045edab9f7fd2c04667c5ba7f70c47da7b6fcfe87a99a857ab7ef5a12f39b4",
+      "signature": "npth-1.8-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "09176d247c5d7d68a6feafebdf893c2e5dbe55bcde45ea1450f4d017815ec75c"
+    },
+    {
+      "name": "nspr",
+      "version": "4.40-1",
+      "archive": "nspr-4.40-1-x86_64.pkg.tar.zst",
+      "sha256": "00c276c71d748e5220757f26776f4ad340b1cb477eb835de0d088f9b36277ad7",
+      "signature": "nspr-4.40-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "525fec6ff6c54e291aa2aa4e93505b3b9cbdfbd604d12892ec591ff5ccd00a37"
+    },
+    {
+      "name": "nss",
+      "version": "3.130-1",
+      "archive": "nss-3.130-1-x86_64.pkg.tar.zst",
+      "sha256": "900b34f0df847f325e22a8ec27027fa91a7945eb2f19b3f888e9790c1fb95f8f",
+      "signature": "nss-3.130-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "cf2b3767c8585bf7c3339a323f5679036fe8eb89d7030792dfa46b840ef792e0"
+    },
+    {
+      "name": "numactl",
+      "version": "2.0.19-1",
+      "archive": "numactl-2.0.19-1-x86_64.pkg.tar.zst",
+      "sha256": "699bce74daee11fa49de93999ba4e023f132bc51a7768dec845b2979d54f367d",
+      "signature": "numactl-2.0.19-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "cd17ec9ec82f945be850c8bb818cc20d93942a9fe4265dbc08db8b5e1b1b499b"
+    },
+    {
+      "name": "openssh",
+      "version": "10.5p1-1",
+      "archive": "openssh-10.5p1-1-x86_64.pkg.tar.zst",
+      "sha256": "7095495592ec579541478fb82dc0c0038f3b9da8adc774ffe1a1589004432992",
+      "signature": "openssh-10.5p1-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "9bb5a0b656ede135b38851afe32a88e1e9c1a7d9dfa8aaf952b339579e426c0a"
+    },
+    {
+      "name": "openssl",
+      "version": "3.6.5-1",
+      "archive": "openssl-3.6.5-1-x86_64.pkg.tar.zst",
+      "sha256": "be0a07ef3d8ffa878732b138e98dee26559527212cb941fc5f6c282545c787cc",
+      "signature": "openssl-3.6.5-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "787059e6ec5ad33b6d730c8bb5d7c578adebac71ddd9cf7183d062155a649d8e"
+    },
+    {
+      "name": "p11-kit",
+      "version": "0.26.5-1",
+      "archive": "p11-kit-0.26.5-1-x86_64.pkg.tar.zst",
+      "sha256": "94ad53e76eaeacac1584ace5da7751d8e7fb7aefbfd3bd99d9c34d3461d630ad",
+      "signature": "p11-kit-0.26.5-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "9598eea5cf56a2bd20b14b0834a2dd78f70ec3fb4db0cf54f8da0a2aa1543351"
+    },
+    {
+      "name": "pacman",
+      "version": "7.1.0.r9.g54d9411-2",
+      "archive": "pacman-7.1.0.r9.g54d9411-2-x86_64.pkg.tar.zst",
+      "sha256": "2092ec7a0391416e4a1757c455bc071d7b58a124cedc83f582cb7d37d52f211b",
+      "signature": "pacman-7.1.0.r9.g54d9411-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "3e31debd8c57ac1c84c9586e57611e95e8a2ff7dfb8f3b54be95028ee36644e2"
+    },
+    {
+      "name": "pacman-contrib",
+      "version": "1.13.1-1",
+      "archive": "pacman-contrib-1.13.1-1-x86_64.pkg.tar.zst",
+      "sha256": "190d0a557a7863023007407832bf8003345e12ee9cc39f6e3c740b4b56cd234e",
+      "signature": "pacman-contrib-1.13.1-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "c9d55629a83a2aaa7855759dd413c5427f1ff725fc0f97f301abffb8a5486c8e"
+    },
+    {
+      "name": "pacman-mirrorlist",
+      "version": "20260610-1",
+      "archive": "pacman-mirrorlist-20260610-1-any.pkg.tar.zst",
+      "sha256": "f6008b33d950a4e4eb5930fe3852cceb0fe1fa5fdaff36125583201531fe4ae9",
+      "signature": "pacman-mirrorlist-20260610-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "3e6c60299cfa759c4018faeff0fe2cc1df4000bfb1739b0a3bc9114a9570de48"
+    },
+    {
+      "name": "pam",
+      "version": "1.7.3-1",
+      "archive": "pam-1.7.3-1-x86_64.pkg.tar.zst",
+      "sha256": "78edd987656671b1995412b60ac1a1ae92f7110a14ea3722c2ef3a81e928d7fb",
+      "signature": "pam-1.7.3-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "c60b54a47099d102a7d1db7f08cb7adef6d12e538086dc826f36a76c445aa606"
+    },
+    {
+      "name": "pambase",
+      "version": "20260616-1",
+      "archive": "pambase-20260616-1-any.pkg.tar.zst",
+      "sha256": "306265b486e3f7d2854d583202409cdd90f131368c92aa56f845822a5d2bbf65",
+      "signature": "pambase-20260616-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "9058ef8f2cea22f83d198b470a6ccb13faf8e59aa2443769ad1dc719d4c664ff"
+    },
+    {
+      "name": "pciutils",
+      "version": "3.15.0-1",
+      "archive": "pciutils-3.15.0-1-x86_64.pkg.tar.zst",
+      "sha256": "994429cef5db515b020bc5125faab04a441677837ebc16f03da53aecca213915",
+      "signature": "pciutils-3.15.0-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "fbc66e09f83e2003c1de8573b63d78736cfe15e6eb336647826b0c8734f41f72"
+    },
+    {
+      "name": "pcre",
+      "version": "8.45-5",
+      "archive": "pcre-8.45-5-x86_64.pkg.tar.zst",
+      "sha256": "386dc0f4c46f359e9bdd033f07d37b43df1f63a2649566685dc0c86e19623274",
+      "signature": "pcre-8.45-5-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "046cce77e5afe25a70e7e1fc738754abbf46d138ee841c9b8345ee18ef30aac3"
+    },
+    {
+      "name": "pcre2",
+      "version": "10.49-1",
+      "archive": "pcre2-10.49-1-x86_64.pkg.tar.zst",
+      "sha256": "e37f4152ff869a6ba050ad08307d7b6b474f4d48cbe0c6ccc01ce9118a774dbf",
+      "signature": "pcre2-10.49-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "f152c58ade2f4188e0cb128891df655924091aa9aa69d9a8743c1c15239d259e"
+    },
+    {
+      "name": "pcsclite",
+      "version": "2.5.2-1",
+      "archive": "pcsclite-2.5.2-1-x86_64.pkg.tar.zst",
+      "sha256": "67bdafe3eb3caa02329a1ef0f664d6b51777927a9d3725caffadfc7bc746da18",
+      "signature": "pcsclite-2.5.2-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "612130b4589fb008f077660be8c7ce5adbbedbecc7448976429deaccaf13d2c7"
+    },
+    {
+      "name": "perl",
+      "version": "5.42.2-2",
+      "archive": "perl-5.42.2-2-x86_64.pkg.tar.zst",
+      "sha256": "1f2f64d0c4c6c117ea814a2144cb9b22a93e2462e9a7773db2e982a68e378816",
+      "signature": "perl-5.42.2-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "40554dccd348457b284ac0cac0c39d3fcf18f241c80a501e74b983fa8f5f70ea"
+    },
+    {
+      "name": "perl-error",
+      "version": "0.17030-3",
+      "archive": "perl-error-0.17030-3-any.pkg.tar.zst",
+      "sha256": "2a6df48b14b3ea0cd6154b46825b4d056b9525a9a3e9afe761decda1d115d196",
+      "signature": "perl-error-0.17030-3-any.pkg.tar.zst.sig",
+      "signature_sha256": "09e982cc6edfe66099bb6b8e6e03864de5e86591aa4fa6eb7cdcf18cceea4d8b"
+    },
+    {
+      "name": "perl-mailtools",
+      "version": "2.22-3",
+      "archive": "perl-mailtools-2.22-3-any.pkg.tar.zst",
+      "sha256": "d93f6c122fa2301c2bd02095b8aaf9c225b5f26f64bb25d2199bfa9a1d3f47ba",
+      "signature": "perl-mailtools-2.22-3-any.pkg.tar.zst.sig",
+      "signature_sha256": "3bf340c8444991d8d8a16193da0f45f40245491adafeb82f8a82f1e2fb667ef8"
+    },
+    {
+      "name": "perl-timedate",
+      "version": "2.35-1",
+      "archive": "perl-timedate-2.35-1-any.pkg.tar.zst",
+      "sha256": "225b05f5d301b7e168299240b9369cece8d0bddee8627117ce23a57880679715",
+      "signature": "perl-timedate-2.35-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "cd483a6b3b5f8e7af69dec3df347cff644ea2e5323d4384bec2e04d5e36953be"
+    },
+    {
+      "name": "pinentry",
+      "version": "1.3.3-1",
+      "archive": "pinentry-1.3.3-1-x86_64.pkg.tar.zst",
+      "sha256": "16dfcc18fc60f8c654687970a9b7253ce17a987c44119fe2ee37c760460fc557",
+      "signature": "pinentry-1.3.3-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "6b86bbe881a31f3f61f5208a5445f6a6a7e28c163e7c65b84d3f6264c1108be0"
+    },
+    {
+      "name": "polkit",
+      "version": "127-3",
+      "archive": "polkit-127-3-x86_64.pkg.tar.zst",
+      "sha256": "96a5189e985738bdb895febd532db5cb3799b8fbb867b7ad8ec68c6e3b85c308",
+      "signature": "polkit-127-3-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "9759c62e13047d31b0a467bf668df199cb1d215f344b179ade4027333edf9076"
+    },
+    {
+      "name": "popt",
+      "version": "1.19-2",
+      "archive": "popt-1.19-2-x86_64.pkg.tar.zst",
+      "sha256": "877635962b604efa79409c3d423f4fdffc4868776af3e0e804cc94a0b57ca151",
+      "signature": "popt-1.19-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "e8fc1e82964776e0e7adb9e59372aaf66f23b905947a26e451adb6c908a24bff"
+    },
+    {
+      "name": "procps-ng",
+      "version": "4.0.7-1",
+      "archive": "procps-ng-4.0.7-1-x86_64.pkg.tar.zst",
+      "sha256": "7a0b17ee89ad1a04f7c6c86be69c9c816ac2c14da9648dfdefb7ccf4b22c14d3",
+      "signature": "procps-ng-4.0.7-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "09f4ca79fca74a0b8d769ea557174d0cbd7ae81250c3c4b9809429544670b72b"
+    },
+    {
+      "name": "psmisc",
+      "version": "23.7-2",
+      "archive": "psmisc-23.7-2-x86_64.pkg.tar.zst",
+      "sha256": "b6722605ae0f2912d7498e87839c702275bfd9280b076e92e80474a847561bd4",
+      "signature": "psmisc-23.7-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "c1cd5090c51f9d3fe480b108fdb14c24d9c66caa40ad25ba53ddd335cac51563"
+    },
+    {
+      "name": "python",
+      "version": "3.14.7-1",
+      "archive": "python-3.14.7-1-x86_64.pkg.tar.zst",
+      "sha256": "8a350ce53aae01ae687f043b301931e411bf06333ba480b42b3b5432a0e6c79b",
+      "signature": "python-3.14.7-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "ff4000fab52654e77a2de73ff242ea809b0b4fd2e17951a8375f575180c1ecae"
+    },
+    {
+      "name": "python-cffi",
+      "version": "2.1.1-1",
+      "archive": "python-cffi-2.1.1-1-x86_64.pkg.tar.zst",
+      "sha256": "0d17d222658ddcfec97c86dcf6f0e948dd611f81ee8752a44030f77b5ed0e1d1",
+      "signature": "python-cffi-2.1.1-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "2893dffb1ec3e0507caf27b38ec34faf333395a99d928a98e42b30d792e0e6c3"
+    },
+    {
+      "name": "python-cryptography",
+      "version": "50.0.2-1",
+      "archive": "python-cryptography-50.0.2-1-x86_64.pkg.tar.zst",
+      "sha256": "755b03d4e1ca8ae6ef53abba783109f6a8aeb411f589fbd91dd578097e2755e3",
+      "signature": "python-cryptography-50.0.2-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "ca37f877e47f311e30d8483ec1fab611f6f5bfcd69b9e69f21d19880e5ae78f9"
+    },
+    {
+      "name": "python-pefile",
+      "version": "2024.8.26-2",
+      "archive": "python-pefile-2024.8.26-2-any.pkg.tar.zst",
+      "sha256": "9e306ebe8b576a3a3f1d1db658e727253f29948d4145548d4dc3419532905fe5",
+      "signature": "python-pefile-2024.8.26-2-any.pkg.tar.zst.sig",
+      "signature_sha256": "68826c2be5eeab5ec08167de22c25bc11f3a9406f6d79f9843c10cea3cec2cf4"
+    },
+    {
+      "name": "python-pycparser",
+      "version": "3.00-1",
+      "archive": "python-pycparser-3.00-1-any.pkg.tar.zst",
+      "sha256": "425162e4fa72eb8c2deee584055df6e585f4602aa5d39736427718d2d424fe39",
+      "signature": "python-pycparser-3.00-1-any.pkg.tar.zst.sig",
+      "signature_sha256": "283741118b711672904b753b6169f69b2a09c77121a2a3354703b302c00aaec6"
+    },
+    {
+      "name": "qemu-guest-agent",
+      "version": "11.1.1-4",
+      "archive": "qemu-guest-agent-11.1.1-4-x86_64.pkg.tar.zst",
+      "sha256": "72de1321b13f476246c71d2b5a40fc7d41e2803497cec41ed61e726d2fdbffa2",
+      "signature": "qemu-guest-agent-11.1.1-4-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "d4f8597b47442459e8298ef469d5628d4c779a96c717421c2170b626ef2c9691"
+    },
+    {
+      "name": "readline",
+      "version": "8.3.6-1",
+      "archive": "readline-8.3.6-1-x86_64.pkg.tar.zst",
+      "sha256": "016b2aeebfbe9dfb89283c52bb49487d95ea23a875d477da42d000a793613020",
+      "signature": "readline-8.3.6-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "af09d1ae970195567187bf232e0cfdd24fa2a4a1652f6dc419f57a206e1dd9fd"
+    },
+    {
+      "name": "rsync",
+      "version": "3.5.1-1",
+      "archive": "rsync-3.5.1-1-x86_64.pkg.tar.zst",
+      "sha256": "15d025602074af0cc2c735c8034f21e42ef80ac4a4252542574e5887adf859f4",
+      "signature": "rsync-3.5.1-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "c4151c390ea5438392250ce27b7fc50d97f00af3884180d89973c121dd3d748b"
+    },
+    {
+      "name": "sed",
+      "version": "4.10-2",
+      "archive": "sed-4.10-2-x86_64.pkg.tar.zst",
+      "sha256": "90733f34fe5791b554b935998df858350bcea53061257dba06829ce3533f8e01",
+      "signature": "sed-4.10-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "244910461747529d48c4198b78c822762cd93cdf479103be6b4a5600a0703e63"
+    },
+    {
+      "name": "shadow",
+      "version": "4.20.0.arch1-1",
+      "archive": "shadow-4.20.0.arch1-1-x86_64.pkg.tar.zst",
+      "sha256": "615c819eb2d3e22158289f3cc2447f81ae981a6d11b3418da30b6085306b3e77",
+      "signature": "shadow-4.20.0.arch1-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "4b2c1845cb09de397536097b15c4d9b5a3282fe051a21e20c43efe4bd584c95a"
+    },
+    {
+      "name": "slang",
+      "version": "2.3.3-4",
+      "archive": "slang-2.3.3-4-x86_64.pkg.tar.zst",
+      "sha256": "272e4afe2bff678a590d28abbeba8eda95b2041c5d0063e01a8a0f457b13a177",
+      "signature": "slang-2.3.3-4-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "c800364fcace2b7a3a2ee4130622fdfeeca40df42fd6425147a6cd94a179a422"
+    },
+    {
+      "name": "sqlite",
+      "version": "3.53.4-1",
+      "archive": "sqlite-3.53.4-1-x86_64.pkg.tar.zst",
+      "sha256": "910e7e59acc3a51c7e3468bb45c7ca20d5e987eaf2c26e4e8ad9f0624bef76d2",
+      "signature": "sqlite-3.53.4-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "1c9a0a5ba95d220648fb7c49a78d14c4f45b682bbb5b4b2deccf27fbaed119b8"
+    },
+    {
+      "name": "sudo",
+      "version": "1.9.17.p2-6",
+      "archive": "sudo-1.9.17.p2-6-x86_64.pkg.tar.zst",
+      "sha256": "20c0467521c96e6ebdd14e23d4b9388252834adb8dcf4c4763092a117c4932ea",
+      "signature": "sudo-1.9.17.p2-6-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "8430589dbe9d54915e407efbf09c4243d020d1c8b43e0e425a359ba23f223a63"
+    },
+    {
+      "name": "systemd",
+      "version": "262-1",
+      "archive": "systemd-262-1-x86_64.pkg.tar.zst",
+      "sha256": "6a66944f081cbd190ed0a63bb7be8dae35d9c246dd7248a40b63e66977695f9d",
+      "signature": "systemd-262-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "13bda419ef699dc801c2f05703c624a303d34d9965a16428897c6967938bf4d9"
+    },
+    {
+      "name": "systemd-libs",
+      "version": "262-1",
+      "archive": "systemd-libs-262-1-x86_64.pkg.tar.zst",
+      "sha256": "da81ea2710c37b493df9c8d670c9801b2fe691f06131aba27d1dacf07c522fe5",
+      "signature": "systemd-libs-262-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "8867a85ae972e4d09435ee1bf0933da55554cf63f9edd73844bf6d8a2411de88"
+    },
+    {
+      "name": "systemd-sysvcompat",
+      "version": "262-1",
+      "archive": "systemd-sysvcompat-262-1-x86_64.pkg.tar.zst",
+      "sha256": "d42984261c2cbda668ff05ca6babbb05b74e15f4f7dbfe3be5a366f32416c7cb",
+      "signature": "systemd-sysvcompat-262-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "7e77f145f16cb2b93c95999a643c7984e571f0bbeb9747b00e92e52b225fc582"
+    },
+    {
+      "name": "systemd-ukify",
+      "version": "262-1",
+      "archive": "systemd-ukify-262-1-x86_64.pkg.tar.zst",
+      "sha256": "40879a2c4a3096a590b848dc575ce34639f3f5e153806e3e6d70c5b1bdf33d21",
+      "signature": "systemd-ukify-262-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "a1267cf71751ba66b32e6c2c05029f6a7c8aab476fb5b4c0b9e868c4577f9c5c"
+    },
+    {
+      "name": "tar",
+      "version": "1.35-5",
+      "archive": "tar-1.35-5-x86_64.pkg.tar.zst",
+      "sha256": "e8a3baa1b4bd754442f92c1c25794b9225700f931e1d2c175bb2e7d9a28725e7",
+      "signature": "tar-1.35-5-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "997037089e82093ebea1cd02748fc5cfaa6ec0bd217d9931db679d0faac072b3"
+    },
+    {
+      "name": "tmux",
+      "version": "3.7_c-1",
+      "archive": "tmux-3.7_c-1-x86_64.pkg.tar.zst",
+      "sha256": "dacfb3eb339bb87bd08be4b8134543ae4911243f8c90d0b9ef8dd98968cf40df",
+      "signature": "tmux-3.7_c-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "afdef51ed3fd39f3c097f7bddd12496c883ed1fba3425f12519c6d2f6d01a4c1"
+    },
+    {
+      "name": "tpm2-tss",
+      "version": "4.2.0-2",
+      "archive": "tpm2-tss-4.2.0-2-x86_64.pkg.tar.zst",
+      "sha256": "7aa2a963f99bcd51e4f3b2587fa8f374a7cfa09ec65749cc9a72fa6f3ad34fdc",
+      "signature": "tpm2-tss-4.2.0-2-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "c4900434ad92ca807f2aac16f04e5264da4faca8d212c96c5e6e0604dad91d31"
+    },
+    {
+      "name": "tzdata",
+      "version": "2026e-1",
+      "archive": "tzdata-2026e-1-x86_64.pkg.tar.zst",
+      "sha256": "921d75b3bdb810be4a917013fd2569912d0cc23dc718c591764f64ed83de26ea",
+      "signature": "tzdata-2026e-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "030b81b910bef2f9fbbd534e0c5066ab475aafcddb6319c3e0a2491d4d07bae4"
+    },
+    {
+      "name": "util-linux",
+      "version": "2.42.4-1",
+      "archive": "util-linux-2.42.4-1-x86_64.pkg.tar.zst",
+      "sha256": "95b7096bf4b45274645f6bb96f5b5508af6ea80e5fccba29244abaa53a341962",
+      "signature": "util-linux-2.42.4-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "3fbd1ba4d323e2bb047e39d1f3642744a86582d11ef502c3cc31469846e4c453"
+    },
+    {
+      "name": "util-linux-libs",
+      "version": "2.42.4-1",
+      "archive": "util-linux-libs-2.42.4-1-x86_64.pkg.tar.zst",
+      "sha256": "56075bc7da9be4470da36a040195f98aac0afbc1edcc7e4f27e6d267dcaf9f37",
+      "signature": "util-linux-libs-2.42.4-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "bddb21c95e98285c7c424415e9995270f595bcf47b80689b1045d8ff81d4b3c9"
+    },
+    {
+      "name": "vim",
+      "version": "9.2.1046-1",
+      "archive": "vim-9.2.1046-1-x86_64.pkg.tar.zst",
+      "sha256": "b354f8141dddb0f8ac24cac45a0bb0492641dcfd472549934730152c16bd9f78",
+      "signature": "vim-9.2.1046-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "4853e25dcdd4a61b4871fe7e572d32cd83dbcf802e33443950da4ca9399f9cc5"
+    },
+    {
+      "name": "vim-runtime",
+      "version": "9.2.1046-1",
+      "archive": "vim-runtime-9.2.1046-1-x86_64.pkg.tar.zst",
+      "sha256": "c0a4606ec789cacaaad4a0cdf6f1c9263452ba772ddaa71bcb30c1b14b2a4e3b",
+      "signature": "vim-runtime-9.2.1046-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "9c90bcda24db7d04695a57e911cac4fb7905ed2eca8383b93232857d96135ac9"
+    },
+    {
+      "name": "wpa_supplicant",
+      "version": "2:2.12-1",
+      "archive": "wpa_supplicant-2:2.12-1-x86_64.pkg.tar.zst",
+      "sha256": "fe87452ac26eaab3ce37a6a682e1b3992f4b7d6a19b3117b84bfe1a2a1ea51e6",
+      "signature": "wpa_supplicant-2:2.12-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "dd758b5a799dbc902f54b41df84908fb6d273c73c411cc2f6912f940777a1513"
+    },
+    {
+      "name": "xxhash",
+      "version": "0.8.4-1",
+      "archive": "xxhash-0.8.4-1-x86_64.pkg.tar.zst",
+      "sha256": "ef60bad0552de3eb8a0e1e2a07eb1bcaceaa771a5f36401a2cf0de135ffcc72b",
+      "signature": "xxhash-0.8.4-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "1cf41ca0f8dab11105a3b09f4f7ebdc19f2c0f42ad0ada7a1ff1a12aca784358"
+    },
+    {
+      "name": "xz",
+      "version": "5.8.4-1",
+      "archive": "xz-5.8.4-1-x86_64.pkg.tar.zst",
+      "sha256": "89b8e777c8f7a39413e1b223d4c212caec6ddd9470b3d1ea1d5161bcc6215c04",
+      "signature": "xz-5.8.4-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "7d8f7161885ac638a31620b9f284f4eaee8e4d242f13abaf39224c07abbc912a"
+    },
+    {
+      "name": "zeromq",
+      "version": "4.3.5-3",
+      "archive": "zeromq-4.3.5-3-x86_64.pkg.tar.zst",
+      "sha256": "e3ec5be13978db5ba53c86a2416fac800bc14da8d6c6c3325afd928ebf79d27b",
+      "signature": "zeromq-4.3.5-3-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "5c97bd5b3764e70ce88c5e2d1f34c0d7dfcf42faa65e8f9bebf5639ac76d492f"
+    },
+    {
+      "name": "zlib",
+      "version": "1:1.3.2-3",
+      "archive": "zlib-1:1.3.2-3-x86_64.pkg.tar.zst",
+      "sha256": "41cf0bb5df14e18f7fb868a97da3feb7c4127fba99bb332ad54b14322faac1b1",
+      "signature": "zlib-1:1.3.2-3-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "68dda1e68ea54cdd14b2f37b20c3114417e6d87846d7414bfb266e52b4488e3e"
+    },
+    {
+      "name": "zlib-ng",
+      "version": "2.3.3-1",
+      "archive": "zlib-ng-2.3.3-1-x86_64.pkg.tar.zst",
+      "sha256": "52971dcf5ca5e763a070518da9d615be52ea8f645fd44ee323211b6251d1cc67",
+      "signature": "zlib-ng-2.3.3-1-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "64e21f43c06cb7827f04e09a12fc99bfb3092c38433fd2cf3f0026f97560b306"
+    },
+    {
+      "name": "zstd",
+      "version": "1.5.7-3",
+      "archive": "zstd-1.5.7-3-x86_64.pkg.tar.zst",
+      "sha256": "d4cf0049137124c8a025eedfad267a3e8a02310c9efb9d1ae4a61aa1d02789fc",
+      "signature": "zstd-1.5.7-3-x86_64.pkg.tar.zst.sig",
+      "signature_sha256": "b21323eb13b11724167acc80cb010b0165f9e2b258dc7d90ca5c2c5c64f6c88a"
+    }
+  ]
+}

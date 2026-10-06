@@ -1,0 +1,18 @@
+active
+User=1000
+Name=codex
+Seat=seat0
+Type=wayland
+Active=yes
+plasma-plasmashell.service: active
+plasma-kwin_wayland.service: active
+pipewire.service: active
+pipewire-pulse.service: active
+wireplumber.service: active
+plasma-desktop 6.7.5-1
+plasma-workspace 6.7.5-1
+sddm 0.21.0-7
+pipewire 1:1.6.9-1
+wireplumber 0.5.18-1
+
+PASS: local Plasma Wayland session and audio services

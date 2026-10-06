@@ -1,0 +1,347 @@
+use looom::{
+    credentials::{self, Accounts},
+    machine::Machine,
+    releases::{Manager, Metadata},
+    util::*,
+};
+use std::{
+    fs::{self, File},
+    io::Write,
+    os::unix::fs::{PermissionsExt, symlink},
+    path::{Path, PathBuf},
+    sync::Arc,
+};
+
+fn vm() {
+    assert_eq!(
+        std::env::var("LOOOM_TEST_VM").as_deref(),
+        Ok("1"),
+        "tests only on authorized VM"
+    );
+    assert_eq!(
+        unsafe { libc::geteuid() },
+        0,
+        "runtime tests require root in VM"
+    );
+    assert!(matches!(
+        output("systemd-detect-virt", &["--vm"]).unwrap().as_str(),
+        "qemu" | "kvm"
+    ));
+    assert_eq!(
+        fs::read_to_string("/sys/class/net/enp1s0/address")
+            .unwrap()
+            .trim(),
+        "52:54:00:7b:23:63"
+    );
+}
+struct Mounted(PathBuf);
+impl Drop for Mounted {
+    fn drop(&mut self) {
+        // Never recursively remove a mountpoint, including when unmount fails.
+        if succeeds("umount", &[self.0.to_str().unwrap()]) {
+            let _ = fs::remove_dir(&self.0);
+        } else {
+            eprintln!(
+                "Fixture mount retained for explicit cleanup: {}",
+                self.0.display()
+            );
+        }
+    }
+}
+#[test]
+fn native_runtime_suite() {
+    vm();
+    let workspace = Path::new("/workspace/.native-fixtures");
+    mkdir(workspace, 0o700).unwrap();
+    let temp = tempfile::Builder::new()
+        .prefix("rust-")
+        .tempdir_in(workspace)
+        .unwrap();
+    credential_cases(temp.path());
+    publication_and_gc_cases(temp.path());
+}
+fn credential_cases(root: &Path) {
+    let fixture = root.join("accounts");
+    mkdir(&fixture, 0o700).unwrap();
+    for name in ["credentials", "templates"] {
+        mkdir(&fixture.join(name), 0o700).unwrap();
+    }
+    let runtime = tempfile::Builder::new()
+        .prefix("looom-native-accounts-")
+        .tempdir_in("/run")
+        .unwrap();
+    fs::set_permissions(runtime.path(), fs::Permissions::from_mode(0o755)).unwrap();
+    let accounts = Arc::new(Accounts {
+        credentials: fixture.join("credentials"),
+        templates: fixture.join("templates"),
+        runtime: runtime.path().into(),
+        managed: vec!["root".into(), "codex".into()],
+    });
+    fs::write(
+        accounts.templates.join("shadow"),
+        "root:!:20000:0:99999:7:::\ncodex:!:20000:0:99999:7:::\n",
+    )
+    .unwrap();
+    fs::write(accounts.templates.join("gshadow"), "root:!::\ncodex:!::\n").unwrap();
+    for user in &accounts.managed {
+        let value = credentials::hash_password("test-only-fixture").unwrap();
+        credentials::private_atomic(
+            &accounts.credentials.join(format!("{user}.hash")),
+            value.as_bytes(),
+        )
+        .unwrap();
+    }
+    accounts.generate().unwrap();
+    for path in [
+        accounts.credentials.join("codex.hash"),
+        accounts.runtime.join("shadow"),
+    ] {
+        assert!(!succeeds(
+            "runuser",
+            &["-u", "codex", "--", "test", "-r", string(&path).unwrap()]
+        ));
+    }
+    let path = accounts.credentials.join("codex.hash");
+    let original = fs::read(&path).unwrap();
+    let before = fs::read(accounts.runtime.join("shadow")).unwrap();
+    for bad in ["", "$garbage", "$6$bad", "!", "\n"] {
+        fs::write(&path, bad).unwrap();
+        assert!(accounts.generate().is_err());
+        assert_eq!(before, fs::read(accounts.runtime.join("shadow")).unwrap());
+    }
+    fs::write(&path, &original).unwrap();
+    fs::set_permissions(&path, fs::Permissions::from_mode(0o644)).unwrap();
+    assert!(accounts.generate().is_err());
+    fs::set_permissions(&path, fs::Permissions::from_mode(0o600)).unwrap();
+    command("chown", &["1000:1000", string(&path).unwrap()]).unwrap();
+    assert!(accounts.generate().is_err());
+    command("chown", &["0:0", string(&path).unwrap()]).unwrap();
+    command("setfacl", &["-m", "u:1000:r", string(&path).unwrap()]).unwrap();
+    assert!(accounts.generate().is_err());
+    command("setfacl", &["-b", string(&path).unwrap()]).unwrap();
+    fs::set_permissions(&path, fs::Permissions::from_mode(0o600)).unwrap();
+    command(
+        "setfacl",
+        &["-dm", "u:1000:r-x", string(&accounts.credentials).unwrap()],
+    )
+    .unwrap();
+    assert!(accounts.generate().is_err());
+    command("setfacl", &["-k", string(&accounts.credentials).unwrap()]).unwrap();
+    fs::remove_file(&path).unwrap();
+    symlink(accounts.credentials.join("root.hash"), &path).unwrap();
+    assert!(accounts.generate().is_err());
+    fs::remove_file(&path).unwrap();
+    assert!(accounts.generate().is_err());
+    credentials::private_atomic(&path, &original).unwrap();
+    // One runtime suite owns failpoint environment; no other test thread changes it.
+    unsafe {
+        std::env::set_var("LOOOM_FAIL_AFTER", "credential");
+    }
+    assert!(
+        accounts
+            .set_password("codex", "new-test-fixture-password")
+            .is_err()
+    );
+    unsafe {
+        std::env::remove_var("LOOOM_FAIL_AFTER");
+    }
+    assert_eq!(before, fs::read(accounts.runtime.join("shadow")).unwrap());
+    accounts.generate().unwrap();
+    let workers: Vec<_> = (0..8)
+        .map(|index| {
+            let accounts = accounts.clone();
+            std::thread::spawn(move || {
+                accounts
+                    .set_password("codex", &format!("test-fixture-{index}"))
+                    .unwrap()
+            })
+        })
+        .collect();
+    for worker in workers {
+        worker.join().unwrap();
+    }
+    let value = credentials::read_private(&path).unwrap();
+    assert_eq!(
+        value.trim(),
+        fs::read_to_string(accounts.runtime.join("shadow"))
+            .unwrap()
+            .lines()
+            .nth(1)
+            .unwrap()
+            .split(':')
+            .nth(1)
+            .unwrap()
+    );
+    assert_eq!(
+        serde_json::from_slice::<serde_json::Value>(
+            &fs::read(accounts.credentials.join(".transaction.json")).unwrap()
+        )
+        .unwrap()["phase"],
+        "synchronized"
+    );
+    println!(
+        "PASS: native credentials permissions, owners, symlinks, access/default ACL, missing/malformed inputs, interruption, eight concurrent updates"
+    );
+}
+fn publication_and_gc_cases(root: &Path) {
+    let suffix = root.file_name().unwrap().to_str().unwrap();
+    let top_path = PathBuf::from(format!("/run/looom-native-top-{suffix}"));
+    mkdir(&top_path, 0o700).unwrap();
+    let uuid = output("blkid", &["-s", "UUID", "-o", "value", "/dev/vda2"]).unwrap();
+    command(
+        "mount",
+        &[
+            "-o",
+            "subvolid=5,rw",
+            &format!("UUID={uuid}"),
+            string(&top_path).unwrap(),
+        ],
+    )
+    .unwrap();
+    let top = Mounted(top_path);
+    let image = root.join("esp.img");
+    File::create(&image)
+        .unwrap()
+        .set_len(128 * 1024 * 1024)
+        .unwrap();
+    command("mkfs.fat", &["-F", "32", string(&image).unwrap()]).unwrap();
+    let esp_path = PathBuf::from(format!("/run/looom-native-esp-{suffix}"));
+    mkdir(&esp_path, 0o700).unwrap();
+    command(
+        "mount",
+        &[
+            "-o",
+            "loop,umask=0077",
+            string(&image).unwrap(),
+            string(&esp_path).unwrap(),
+        ],
+    )
+    .unwrap();
+    let esp = Mounted(esp_path);
+    let profile = Machine {
+        schema: 1,
+        root_uuid: uuid.clone(),
+        esp_uuid: output("findmnt", &["-nro", "UUID", string(&esp.0).unwrap()]).unwrap(),
+        bootstrap_uki_sha256: "0".repeat(64),
+        home_subvolume: "@home".into(),
+        var_subvolume: "@var".into(),
+        state_subvolume: "@state".into(),
+        user: "codex".into(),
+        uid: 1000,
+        gid: 1000,
+        serial_console: true,
+        guest_agent: true,
+        passwordless_sudo: false,
+    };
+    let state = root.join("release-state");
+    mkdir(&state, 0o700).unwrap();
+    for name in ["releases", "operations"] {
+        mkdir(&state.join(name), 0o700).unwrap();
+    }
+    let manager = Manager {
+        machine: profile,
+        state,
+        top: top.0.clone(),
+        esp: esp.0.clone(),
+    };
+    let source = top.0.join("@root-mvp-b");
+    let metadata = Metadata {
+        schema_version: 1,
+        id: "mvp-b".into(),
+        phase: "validated".into(),
+        root_subvolume: "@root-mvp-b".into(),
+        kernel_package: "linux-lts".into(),
+        kernel_version: fs::read_dir(source.join("usr/lib/modules"))
+            .unwrap()
+            .next()
+            .unwrap()
+            .unwrap()
+            .file_name()
+            .into_string()
+            .unwrap(),
+        root_uuid: uuid.clone(),
+        esp_uuid: manager.machine.esp_uuid.clone(),
+        uki_sha256: hash_file(&source.join("boot/looom-mvp-b.efi")).unwrap(),
+        declarative_value: "mvp-b".into(),
+        created_at: 0,
+        engine: None,
+    };
+    manager.save(&metadata).unwrap();
+    manager.operation("mvp-b", "validated").unwrap();
+    mkdir(&manager.efi(), 0o700).unwrap();
+    let grub = manager.esp.join("looom/grub");
+    mkdir(&grub, 0o700).unwrap();
+    command(
+        "grub-editenv",
+        &[string(&grub.join("grubenv")).unwrap(), "create"],
+    )
+    .unwrap();
+    manager
+        .set_environment(&["saved_entry=looom-bootstrap".into()])
+        .unwrap();
+    let original = "set timeout=5\nmenuentry 'recovery' { true; }\n";
+    atomic(&grub.join("grub.cfg"), original.as_bytes(), 0o600).unwrap();
+    let environment = manager.environment().unwrap();
+    let mut info = std::mem::MaybeUninit::<libc::statvfs>::uninit();
+    let path = std::ffi::CString::new(esp.0.as_os_str().as_encoded_bytes()).unwrap();
+    assert_eq!(
+        unsafe { libc::statvfs(path.as_ptr(), info.as_mut_ptr()) },
+        0
+    );
+    let info = unsafe { info.assume_init() };
+    let mut left = info.f_bavail * info.f_frsize - 1024 * 1024;
+    let mut filler = File::create(esp.0.join("filler")).unwrap();
+    let block = vec![0u8; 1024 * 1024];
+    while left > 0 {
+        let count = left.min(block.len() as u64) as usize;
+        filler.write_all(&block[..count]).unwrap();
+        left -= count as u64;
+    }
+    filler.sync_all().unwrap();
+    drop(filler);
+    assert!(manager.publish("mvp-b").is_err());
+    assert_eq!(fs::read_to_string(grub.join("grub.cfg")).unwrap(), original);
+    assert_eq!(manager.environment().unwrap(), environment);
+    assert!(!manager.efi().join("looom-mvp-b.efi").exists());
+    assert_eq!(manager.load("mvp-b").unwrap().phase, "validated");
+    fs::remove_file(esp.0.join("filler")).unwrap();
+    unsafe {
+        std::env::set_var("LOOOM_FAIL_AFTER", "uki");
+    }
+    assert!(manager.publish("mvp-b").is_err());
+    unsafe {
+        std::env::remove_var("LOOOM_FAIL_AFTER");
+    }
+    manager.write_menu(&manager.menu(None).unwrap()).unwrap();
+    assert!(
+        !fs::read_to_string(grub.join("grub.cfg"))
+            .unwrap()
+            .contains("--id looom-mvp-b {")
+    );
+    assert_eq!(manager.environment().unwrap(), environment);
+    manager.publish("mvp-b").unwrap();
+    manager
+        .validate(&manager.load("mvp-b").unwrap(), true)
+        .unwrap();
+    assert_eq!(manager.environment().unwrap(), environment);
+    println!(
+        "PASS: native publication on actual FAT ENOSPC, interruption, recovery and unchanged saved choice"
+    );
+    let gc_id = format!("rust-gc-{}", suffix.to_ascii_lowercase());
+    let owned = top.0.join(format!("@root-{gc_id}"));
+    command("btrfs", &["subvolume", "create", string(&owned).unwrap()]).unwrap();
+    let mut garbage = metadata.clone();
+    garbage.id = gc_id.clone();
+    garbage.root_subvolume = format!("@root-{gc_id}");
+    garbage.phase = "validated".into();
+    manager.save(&garbage).unwrap();
+    manager.gc(2, false).unwrap();
+    assert!(owned.exists());
+    manager.gc(2, true).unwrap();
+    assert!(!owned.exists());
+    assert!(manager.load(&gc_id).is_err());
+    assert_eq!(manager.load("mvp-b").unwrap().phase, "published");
+    println!(
+        "PASS: native GC dry-run and removal touch only the uniquely created fixture subvolume"
+    );
+}

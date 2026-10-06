@@ -1,0 +1,2 @@
+PASS: stale lock rejected without resolving new versions
+PASS: corrupt archive identity rejected before creating build/metadata

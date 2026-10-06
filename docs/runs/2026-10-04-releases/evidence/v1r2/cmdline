@@ -1,0 +1,1 @@
+root=UUID=a79f6ab7-52ab-49d0-ab3c-a2b3a1918140 rootflags=subvol=@root-v1r2 ro console=tty0 console=ttyS0,115200n8

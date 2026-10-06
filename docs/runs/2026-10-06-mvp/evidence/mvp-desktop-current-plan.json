@@ -1,0 +1,93 @@
+{
+  "desktop": {
+    "environment": "plasma"
+  },
+  "explicit_requests": [
+    "arch-install-scripts",
+    "base",
+    "btrfs-progs",
+    "curl",
+    "dbus-broker-units",
+    "dolphin",
+    "dosfstools",
+    "efibootmgr",
+    "git",
+    "gptfdisk",
+    "grub",
+    "konsole",
+    "kscreen",
+    "linux",
+    "linux-firmware",
+    "mesa",
+    "mkinitcpio",
+    "networkmanager",
+    "noto-fonts",
+    "openssh",
+    "pacman-contrib",
+    "pipewire",
+    "pipewire-pulse",
+    "plasma-desktop",
+    "plasma-nm",
+    "plasma-pa",
+    "plasma-workspace",
+    "python",
+    "qemu-guest-agent",
+    "rsync",
+    "sddm",
+    "spice-vdagent",
+    "sudo",
+    "systemd-ukify",
+    "tmux",
+    "ttf-dejavu",
+    "vim",
+    "wireplumber",
+    "xdg-desktop-portal-kde"
+  ],
+  "file_changes": {
+    "add": [],
+    "change": [],
+    "remove": []
+  },
+  "files": {},
+  "health": {
+    "required_units": [
+      "sshd.service"
+    ]
+  },
+  "kernel": {
+    "extra_command_line": [],
+    "package": "linux"
+  },
+  "packages": {
+    "add": {},
+    "remove": {},
+    "upgrade": {}
+  },
+  "persistent": {
+    "directories": {
+      "/etc/NetworkManager/system-connections": {
+        "group": "root",
+        "id": "network-connections",
+        "mode": "0700",
+        "owner": "root"
+      },
+      "/etc/looom-local": {
+        "group": "root",
+        "id": "local-settings",
+        "mode": "0700",
+        "owner": "root"
+      }
+    }
+  },
+  "system": {
+    "console_keymap": "us",
+    "hostname": "looom-vm",
+    "locale": "en_US.UTF-8",
+    "timezone": "Europe/Moscow"
+  },
+  "target_packages": 651,
+  "unit_changes": {},
+  "units": {
+    "sshd.service": "enabled"
+  }
+}

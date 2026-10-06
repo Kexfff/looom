@@ -1,0 +1,3 @@
+Published: broken (permanent boot choice unchanged)
+Next boot only: broken
+GRUB: {"next_entry": "looom-broken", "saved_entry": "looom-v1r3"}

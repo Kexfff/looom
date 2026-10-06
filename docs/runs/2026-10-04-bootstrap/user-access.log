@@ -1,0 +1,15 @@
+uid=1000(codex) gid=1000(codex) groups=1000(codex),998(wheel)
+uid=0(root) gid=0(root) groups=0(root)
+198.18.1.83     STREAM archive.archlinux.org
+198.18.1.83     DGRAM  
+198.18.1.83     RAW    
+HTTP/2 200 
+server: nginx
+date: Sun, 04 Oct 2026 11:37:00 GMT
+content-type: application/octet-stream
+content-length: 129659
+last-modified: Fri, 02 Oct 2026 20:14:14 GMT
+etag: "6ac01096-1fa7b"
+strict-transport-security: max-age=31536000; includeSubdomains; preload
+accept-ranges: bytes
+

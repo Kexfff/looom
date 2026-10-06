@@ -1,0 +1,7 @@
+NAME   SIZE TYPE FSTYPE   MOUNTPOINTS
+loop0    1G loop squashfs /run/archiso/airootfs
+sr0    1.5G rom  iso9660  /run/archiso/bootmnt
+vda     60G disk          
+|-vda1   1M part          
+|-vda2   4G part vfat     
+`-vda3  56G part btrfs    

@@ -1,0 +1,12 @@
+Rejected candidate retained for diagnosis: v1r2
+Traceback (most recent call last):
+  File "/var/lib/looom/release-source/scripts/looom-release.py", line 227, in <module>
+    main()
+    ~~~~^^
+  File "/var/lib/looom/release-source/scripts/looom-release.py", line 199, in main
+    raise RuntimeError('Injected interruption after durable UKI, before boot menu')
+RuntimeError: Injected interruption after durable UKI, before boot menu
+Retained incomplete operation: v2 validated
+Published menu regenerated; incomplete roots are not added
+Published: v2 (permanent boot choice unchanged)
+PASS: interrupted publication preserves menu and confirmed choice; retry succeeds

@@ -1,0 +1,10 @@
+.local/
+__pycache__/
+/target/
+/.native-fixtures/
+*.qcow2
+*.iso
+*.secret
+*.hash
+id_ed25519
+id_rsa

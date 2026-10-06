@@ -1,0 +1,88 @@
+{
+  "grub": "saved_entry=looom-mvp-desktop\n",
+  "installed_binary_matches_frozen_input": true,
+  "looom_binary_sha256": "d3ee067e661ae2fb73dab04305963c70d8b6830279beb38f11b7788e8ad25b4c",
+  "password_test_restored": true,
+  "releases": {
+    "mvp-a4": {
+      "metadata": {
+        "declarative_value": "mvp-a4",
+        "esp_uuid": "8CE8-BFE9",
+        "id": "mvp-a4",
+        "kernel_package": "linux",
+        "kernel_version": "7.2.8-arch1-2",
+        "phase": "confirmed",
+        "root_subvolume": "@root-mvp-a4",
+        "root_uuid": "a79f6ab7-52ab-49d0-ab3c-a2b3a1918140",
+        "schema_version": 1,
+        "uki_sha256": "6a96ca678a63d815fa58ad707d8d2f7b1f64a8efbcbc87e48f39035224707142"
+      },
+      "packages": 210,
+      "request": {
+        "desktop": "none",
+        "kernel": "linux",
+        "packages": [
+          "tree"
+        ],
+        "recipe_sha256": "669d7085a6c2458705cc47ec39d9e0bcf1668a4ca5b636bd1207a351862cd932",
+        "source": {
+          "profile": "arch",
+          "snapshot": "2026-10-03"
+        }
+      }
+    },
+    "mvp-b": {
+      "metadata": {
+        "declarative_value": "mvp-b",
+        "esp_uuid": "8CE8-BFE9",
+        "id": "mvp-b",
+        "kernel_package": "linux-lts",
+        "kernel_version": "6.18.54-2-lts",
+        "phase": "confirmed",
+        "root_subvolume": "@root-mvp-b",
+        "root_uuid": "a79f6ab7-52ab-49d0-ab3c-a2b3a1918140",
+        "schema_version": 1,
+        "uki_sha256": "6db9d21431017ec185202dc3c40941cc01bf59bd5033a68f37917415ba9dbab1"
+      },
+      "packages": 209,
+      "request": {
+        "desktop": "none",
+        "kernel": "linux-lts",
+        "packages": [],
+        "recipe_sha256": "34d75db588051724026886360de91c20c8077842244af8065169826c8f7f7ebe",
+        "source": {
+          "profile": "arch",
+          "snapshot": "2026-10-03"
+        }
+      }
+    },
+    "mvp-desktop": {
+      "metadata": {
+        "declarative_value": "mvp-desktop",
+        "esp_uuid": "8CE8-BFE9",
+        "id": "mvp-desktop",
+        "kernel_package": "linux",
+        "kernel_version": "7.2.8-arch1-2",
+        "phase": "confirmed",
+        "root_subvolume": "@root-mvp-desktop",
+        "root_uuid": "a79f6ab7-52ab-49d0-ab3c-a2b3a1918140",
+        "schema_version": 1,
+        "uki_sha256": "678a272ba1855eaff22619c662f4ea625b92f66317804eaeecab0da4e95f9330"
+      },
+      "packages": 651,
+      "request": {
+        "desktop": "plasma",
+        "kernel": "linux",
+        "packages": [],
+        "recipe_sha256": "34d75db588051724026886360de91c20c8077842244af8065169826c8f7f7ebe",
+        "source": {
+          "profile": "arch",
+          "snapshot": "2026-10-03"
+        }
+      }
+    }
+  },
+  "running": "mvp-desktop",
+  "runtime_credentials_synchronized": true,
+  "system_failed_units": ""
+}

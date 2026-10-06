@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "id": "desktop",
+  "phase": "confirmed",
+  "root_subvolume": "@root-desktop",
+  "kernel_package": "linux",
+  "kernel_version": "7.2.8-arch1-2",
+  "root_uuid": "a79f6ab7-52ab-49d0-ab3c-a2b3a1918140",
+  "esp_uuid": "8CE8-BFE9",
+  "uki_sha256": "2a2e1409f976e765b7b071954ceb17969d8d2cc98895e25b22761b019449cf77",
+  "declarative_value": "desktop-v1"
+}

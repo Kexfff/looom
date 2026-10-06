@@ -1,0 +1,9 @@
+mkfs.fat 4.2 (2021-01-31)
+PASS: FAT ENOSPC preserves boot menu, saved choice and unpublished metadata
+Retained incomplete operation: v2 validated
+Published menu regenerated; incomplete roots are not added
+Retained incomplete operation: v2 validated
+Published menu regenerated; incomplete roots are not added
+PASS: recovery excludes durable but unpublished UKI
+Published: v2 (permanent boot choice unchanged)
+PASS: publication resumes after both faults without changing saved choice

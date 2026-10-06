@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "id": "rust-b",
+  "phase": "confirmed",
+  "root_subvolume": "@root-rust-b",
+  "kernel_package": "linux-lts",
+  "kernel_version": "6.18.54-2-lts",
+  "root_uuid": "a79f6ab7-52ab-49d0-ab3c-a2b3a1918140",
+  "esp_uuid": "8CE8-BFE9",
+  "uki_sha256": "628252fb606e967ec7ba73f1d0292da5a840be8be328269cf8c58cad309615cb",
+  "declarative_value": "rust-b",
+  "created_at": 1791304508,
+  "engine": "rust-0.2"
+}

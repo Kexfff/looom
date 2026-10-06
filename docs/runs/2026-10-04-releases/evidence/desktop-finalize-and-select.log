@@ -1,0 +1,10 @@
+No database errors have been found!
+Finalization: exact inventory, locked credentials and unchanged UKI verified
+Create readonly snapshot of '/run/looom-build-desktop' in '/run/looom-top/@root-desktop'
+Delete subvolume 288 (commit): '/run/looom-top/@build-desktop/var/lib/portables'
+Delete subvolume 289 (commit): '/run/looom-top/@build-desktop/var/lib/machines'
+Delete subvolume 287 (commit): '/run/looom-top/@build-desktop'
+Validated read-only release desktop; not yet selectable in GRUB
+Published: desktop (permanent boot choice unchanged)
+Next boot only: desktop
+GRUB: {"next_entry": "looom-desktop", "saved_entry": "looom-v1r3"}

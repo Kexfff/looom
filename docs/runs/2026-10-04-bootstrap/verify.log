@@ -1,0 +1,140 @@
+/etc/sudoers: parsed OK
+/etc/sudoers.d/10-looom-vm: parsed OK
+active
+active
+active
+active
+No database errors have been found!
+/
+   [ ] target exists
+   [ ] VFS options: rw,noatime
+   [ ] FS options: compress=zstd:3,subvol=@bootstrap
+   [ ] UUID=a79f6ab7-52ab-49d0-ab3c-a2b3a1918140 translated to /dev/vda2
+   [ ] source /dev/vda2 exists
+   [ ] FS type is btrfs
+/home
+   [ ] target exists
+   [ ] VFS options: rw,noatime
+   [ ] FS options: compress=zstd:3,subvol=@home
+   [ ] UUID=a79f6ab7-52ab-49d0-ab3c-a2b3a1918140 translated to /dev/vda2
+   [ ] source /dev/vda2 exists
+   [ ] FS type is btrfs
+/var
+   [ ] target exists
+   [ ] VFS options: rw,noatime
+   [ ] FS options: compress=zstd:3,subvol=@var
+   [ ] UUID=a79f6ab7-52ab-49d0-ab3c-a2b3a1918140 translated to /dev/vda2
+   [ ] source /dev/vda2 exists
+   [ ] FS type is btrfs
+/var/lib/looom
+   [ ] target exists
+   [ ] VFS options: rw,noatime
+   [ ] FS options: compress=zstd:3,subvol=@state
+   [ ] UUID=a79f6ab7-52ab-49d0-ab3c-a2b3a1918140 translated to /dev/vda2
+   [ ] source /dev/vda2 exists
+   [ ] FS type is btrfs
+/efi
+   [ ] target exists
+   [ ] VFS options: rw
+   [ ] FS options: umask=0077
+   [ ] UUID=8CE8-BFE9 translated to /dev/vda1
+   [ ] source /dev/vda1 exists
+   [ ] FS type is vfat
+/tmp
+   [ ] target exists
+   [ ] VFS options: rw,nosuid,nodev
+   [ ] FS options: mode=1777
+   [ ] do not check tmpfs source (pseudo/net)
+   [ ] do not check tmpfs FS type (pseudo/net)
+Success, no errors or warnings detected
+
+Installed bootstrap:
+ Static hostname: looom-vm
+       Icon name: computer-vm
+         Chassis: vm 💽
+      Machine ID: 085283a4f5db445a8f8475d9c30fbc1f
+         Boot ID: 96aba35acd5841d191b9890cac9740e1
+    Product UUID: 743f3785-8d03-45e5-bcb6-ed4df9b13e3f
+  Virtualization: kvm
+Operating System: Arch Linux
+          Kernel: Linux 7.2.8-arch1-2
+    Architecture: x86-64
+ Hardware Vendor: QEMU
+  Hardware Model: Standard PC _Q35 + ICH9, 2009_
+Hardware Version: pc-q35-11.1
+Firmware Version: unknown
+   Firmware Date: Wed 2022-02-02
+    Firmware Age: 4y 8month
+7.2.8-arch1-2
+TARGET             SOURCE                 FSTYPE OPTIONS
+/                  /dev/vda2[/@bootstrap] btrfs  rw,noatime,compress=zstd:3,discard=async,space_cache=v2,subvolid=256,subvol=/@bootstrap
+|-/var             /dev/vda2[/@var]       btrfs  rw,noatime,compress=zstd:3,discard=async,space_cache=v2,subvolid=258,subvol=/@var
+| `-/var/lib/looom /dev/vda2[/@state]     btrfs  rw,noatime,compress=zstd:3,discard=async,space_cache=v2,subvolid=259,subvol=/@state
+|-/home            /dev/vda2[/@home]      btrfs  rw,noatime,compress=zstd:3,discard=async,space_cache=v2,subvolid=257,subvol=/@home
+`-/efi             /dev/vda1              vfat   rw,relatime,fmask=0077,dmask=0077,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp1s0           UP             192.168.122.91/24 fe80::5054:ff:fe7b:2363/64 
+linux 7.2.8.arch1-2
+grub 2:2.16-1
+btrfs-progs 7.1-1
+pacman 7.1.0.r9.g54d9411-2
+openssh 10.5p1-1
+networkmanager 1.58.1-2
+saved_entry=looom-bootstrap
+systemd-boot not installed in ESP.
+System:
+      Firmware: UEFI 2.70 (EDK II 1.00)
+ Firmware Arch: x64
+   Secure Boot: disabled (unsupported)
+  TPM2 Support: no
+  Measured UKI: no
+   Measured OS: no
+  Boot into FW: supported
+ Platform Lang: n/a
+
+Current Stub:
+        Product: systemd-stub 262-1-arch
+       Features: ✓ Stub reports loader partition information
+                 ✓ Stub reports stub partition information
+                 ✓ Stub reports network boot URL
+                 ✓ Picks up credentials from boot partition
+                 ✓ Picks up system extension images from boot partition
+                 ✓ Picks up configuration extension images from boot partition
+                 ✓ Measures kernel+command line+sysexts
+                 ✓ Support for passing random seed to OS
+                 ✓ Pick up .cmdline from addons
+                 ✓ Pick up .cmdline from SMBIOS Type 11
+                 ✓ Pick up .dtb from addons
+                 ✓ Stub understands profile selector
+                 ✓ Stub measures SMBIOS information
+      Partition: /dev/disk/by-partuuid/5eceadc7-eec7-44c9-9bb4-491c5c9a03f3
+           Stub: └─/EFI/Linux/looom-bootstrap.efi
+
+Random Seed:
+ System Token: set
+       Exists: yes
+
+Available Boot Loaders on ESP:
+          ESP: /efi (/dev/disk/by-partuuid/5eceadc7-eec7-44c9-9bb4-491c5c9a03f3)
+         File: └─/efi//EFI/BOOT/BOOTX64.EFI
+
+No boot loaders listed in EFI Variables.
+
+Boot Loader Entry Locations:
+          ESP: /efi (/dev/disk/by-partuuid/5eceadc7-eec7-44c9-9bb4-491c5c9a03f3, $BOOT)
+       config: /efi//loader/loader.conf: No such file or directory
+        token: arch
+
+Default Boot Loader Entry:
+         type: Boot Loader Specification Type #2 (UKI, .efi)
+        title: Arch Linux
+           id: looom-bootstrap.efi
+       source: /efi//EFI/Linux/looom-bootstrap.efi (on the EFI System Partition)
+     sort-key: arch
+      version: 7.2.8-arch1-2
+        uname: 7.2.8-arch1-2
+        linux: /efi//EFI/Linux/looom-bootstrap.efi
+      profile: 0
+      options: root=UUID=a79f6ab7-52ab-49d0-ab3c-a2b3a1918140 rootflags=subvol=@bootstrap rw console=tty0 console=ttyS0,115200n8
+
+PASS: installed UEFI bootstrap checks
