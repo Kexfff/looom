@@ -1,0 +1,2 @@
+error: failed to init transaction (unable to lock database)
+error: could not lock database: Read-only file system

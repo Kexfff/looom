@@ -1,0 +1,12 @@
+2026-10-07T23:37:16+03:00
+No database errors have been found!
+PASS: booted read-only release n100-b, kernel, persistent mounts, units, accounts, exact inventory and native manager
+Running: n100-b
+GRUB: {"next_entry":"","saved_entry":"looom-n100-b"}
+n100-a confirmed 7.2.8-arch1-2 @root-n100-a
+n100-b confirmed 6.18.54-2-lts @root-n100-b
+PASS: actual UKI includes early-boot mask for systemd-tpm2-setup-early.service
+c7007c2fbceebcb87daa35a40e57ff261a5565c8ce195999394166e14c9f31ec  /usr/bin/looom
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/nvme0n1p1  2.0G  706M  1.4G  35% /efi
+/dev/nvme0n1p2  475G  8.9G  465G   2% /var/lib/looom

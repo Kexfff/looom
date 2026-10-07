@@ -1,0 +1,10 @@
+2026-10-07T23:18:04+03:00
+Published n100-b; permanent boot choice unchanged
+PASS_nonrunning_confirmation_rejected
+PASS_unconfirmed_rollback_rejected
+PASS: installed Rust CLI accepts valid lock, rejects stale recipe and corrupted archive digest before creating build inputs
+Next boot only: n100-b
+Running: n100-a
+GRUB: {"next_entry":"looom-n100-b","saved_entry":"looom-n100-a"}
+n100-a confirmed 7.2.8-arch1-2 @root-n100-a
+n100-b published 6.18.54-2-lts @root-n100-b

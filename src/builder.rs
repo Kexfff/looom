@@ -563,6 +563,18 @@ fn apply_units(root: &Path, bundle: &Bundle, m: &Machine) -> Result<()> {
             "systemctl",
             &[&format!("--root={}", root.display()), action, name],
         )?;
+        if state == "masked" {
+            // mkinitcpio's systemd hook copies vendor units and their /etc
+            // drop-ins, but does not preserve /etc masks in the initramfs.
+            // /dev/null cannot be a directory, so this condition is always
+            // false and also prevents the masked unit running before switch-root.
+            write(
+                root,
+                &format!("etc/systemd/system/{name}.d/00-looom-initrd-mask.conf"),
+                "[Unit]\nConditionPathExists=/dev/null/looom-masked\n",
+                0o644,
+            )?;
+        }
         if state == "enabled" {
             let enabled = output(
                 "systemctl",

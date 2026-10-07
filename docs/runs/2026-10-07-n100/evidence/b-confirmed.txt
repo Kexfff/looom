@@ -1,0 +1,16 @@
+2026-10-07T23:19:20+03:00
+No database errors have been found!
+PASS: booted read-only release n100-b, kernel, persistent mounts, units, accounts, exact inventory and native manager
+Confirmed healthy running release: n100-b
+PASS: actual UKI includes early-boot mask for systemd-tpm2-setup-early.service
+PASS: login PAM accepts persistent password and rejects incorrect password
+PASS: sddm PAM accepts persistent password and rejects incorrect password
+PASS: sudo PAM accepts persistent password and rejects incorrect password
+tree 2.3.2-1
+linux-lts 6.18.54-2
+uid=1000(owner) gid=1000(owner) groups=1000(owner),998(wheel)
+PASS_B_declaration_and_persistent_data
+Running: n100-b
+GRUB: {"next_entry":"","saved_entry":"looom-n100-b"}
+n100-a confirmed 7.2.8-arch1-2 @root-n100-a
+n100-b confirmed 6.18.54-2-lts @root-n100-b

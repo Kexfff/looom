@@ -1,0 +1,7 @@
+2026-10-07T23:13:29+03:00
+/dev/nvme0n1p2[/@bootstrap] /@bootstrap rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=256,subvol=/@bootstrap
+Running: bootstrap
+GRUB: {"next_entry":"","saved_entry":"looom-bootstrap"}
+n100-a published 7.2.8-arch1-2 @root-n100-a
+● systemd-tpm2-setup-early.service masked failed failed systemd-tpm2-setup-early.service
+PASS_unconfirmed_trial_returned_to_bootstrap

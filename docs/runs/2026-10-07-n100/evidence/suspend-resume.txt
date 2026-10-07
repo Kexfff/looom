@@ -1,0 +1,25 @@
+2026-10-07T23:23:51+03:00
+6.18.54-2-lts
+s2idle [deep]
+rtcwake: assuming RTC uses UTC ...
+rtcwake: wakeup from "mem" using /dev/rtc0 at Wed Oct  7 20:24:12 2026
+2026-10-07T23:24:17+03:00
+No database errors have been found!
+PASS: booted read-only release n100-b, kernel, persistent mounts, units, accounts, exact inventory and native manager
+User=1000
+Name=owner
+Seat=seat0
+Type=wayland
+Active=yes
+plasma-plasmashell.service: active
+plasma-kwin_wayland.service: active
+pipewire.service: active
+pipewire-pulse.service: active
+wireplumber.service: active
+PASS: actual local Plasma Wayland session and audio services
+Oct 07 23:23:51 looom-pc kernel: PM: suspend entry (deep)
+Oct 07 23:24:17 looom-pc kernel: ACPI: PM: Low-level resume complete
+Oct 07 23:24:17 looom-pc kernel: ACPI: PM: Waking up from system sleep state S3
+Oct 07 23:24:17 looom-pc kernel: Restarting tasks: Starting
+Oct 07 23:24:17 looom-pc kernel: Restarting tasks: Done
+Oct 07 23:24:17 looom-pc kernel: PM: suspend exit

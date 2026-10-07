@@ -1,0 +1,105 @@
+{
+  "desktop": {
+    "environment": "plasma"
+  },
+  "engine": "rust-0.2",
+  "explicit_requests": [
+    "arch-install-scripts",
+    "base",
+    "btrfs-progs",
+    "curl",
+    "dbus-broker-units",
+    "dolphin",
+    "dosfstools",
+    "efibootmgr",
+    "git",
+    "gptfdisk",
+    "grub",
+    "intel-ucode",
+    "konsole",
+    "kscreen",
+    "linux-firmware",
+    "linux-lts",
+    "mesa",
+    "mkinitcpio",
+    "networkmanager",
+    "noto-fonts",
+    "openssh",
+    "pacman-contrib",
+    "pciutils",
+    "pipewire",
+    "pipewire-pulse",
+    "plasma-desktop",
+    "plasma-nm",
+    "plasma-pa",
+    "plasma-workspace",
+    "qemu-guest-agent",
+    "rsync",
+    "sddm",
+    "spice-vdagent",
+    "sudo",
+    "systemd-ukify",
+    "tmux",
+    "tree",
+    "ttf-dejavu",
+    "vim",
+    "wireplumber",
+    "xdg-desktop-portal-kde"
+  ],
+  "file_changes": {
+    "add": [],
+    "change": [
+      "/etc/looom-hardware-generation"
+    ],
+    "remove": []
+  },
+  "health": {
+    "required_units": [
+      "sshd.service",
+      "NetworkManager.service"
+    ]
+  },
+  "kernel": {
+    "extra_command_line": [],
+    "package": "linux-lts"
+  },
+  "packages": {
+    "add": {
+      "linux-lts": "6.18.54-2",
+      "tree": "2.3.2-1"
+    },
+    "remove": {
+      "linux": "7.2.8.arch1-2"
+    },
+    "upgrade": {}
+  },
+  "persistent": {
+    "directories": {
+      "/etc/NetworkManager/system-connections": {
+        "group": "root",
+        "id": "network-connections",
+        "mode": "0700",
+        "owner": "root"
+      },
+      "/etc/looom-local": {
+        "group": "root",
+        "id": "local-settings",
+        "mode": "0700",
+        "owner": "root"
+      }
+    }
+  },
+  "system": {
+    "console_keymap": "us",
+    "hostname": "looom-pc",
+    "locale": "en_US.UTF-8",
+    "timezone": "Europe/Moscow"
+  },
+  "target_packages": 653,
+  "unit_changes": {
+    "bluetooth.service": {
+      "new": "masked",
+      "old": null
+    }
+  }
+}

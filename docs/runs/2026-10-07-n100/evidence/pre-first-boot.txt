@@ -1,0 +1,14 @@
+Running: bootstrap
+GRUB: {"saved_entry":"looom-bootstrap"}
+elif [ "$saved_entry" ]; then
+ set default="$saved_entry"
+ad1b202065e3c46559bf917d02480572a612e972616c3d049f1278634512b467  /mnt/usr/bin/looom
+BootCurrent: 0006
+Timeout: 1 seconds
+BootOrder: 0000,0002,0005,0006,0003,0001
+Boot0000* looom	HD(1,GPT,093001c2-2b26-4e8f-b4f1-c1dee30f43a2,0x800,0x400000)/\EFI\looom\grubx64.efi
+Boot0001* UEFI: Built-in EFI Shell	VenMedia(5023b95c-db26-429b-a648-bd47664c8012)0000424f
+Boot0002* Linux Boot Manager	HD(1,GPT,790367b1-fc06-47bc-a389-2232ae73bc0f,0x1000,0x200000)/\EFI\systemd\systemd-bootx64.efi
+Boot0003* UEFI: PXE IPv4 Realtek PCIe GBE Family Controller	PciRoot(0x0)/Pci(0x1c,0x0)/Pci(0x0,0x0)/MAC(e8ff1ed0be47,0)/IPv4(0.0.0.0,0,DHCP,0.0.0.0,0.0.0.0,0.0.0.0)0000424f
+Boot0005* UEFI OS	HD(1,GPT,790367b1-fc06-47bc-a389-2232ae73bc0f,0x1000,0x200000)/\EFI\BOOT\BOOTX64.EFI0000424f
+Boot0006* UEFI: Netac, Partition 2	PciRoot(0x0)/Pci(0x14,0x0)/USB(12,0)/HD(2,GPT,0517a087-59cf-404c-9a8f-d8257f9487fd,0x73e9fd8,0x10000)0000424f

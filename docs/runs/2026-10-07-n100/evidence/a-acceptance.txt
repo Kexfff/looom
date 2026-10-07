@@ -1,0 +1,19 @@
+2026-10-07T23:16:01+03:00
+User=1000
+Name=owner
+Seat=seat0
+Type=wayland
+Active=yes
+plasma-plasmashell.service: active
+plasma-kwin_wayland.service: active
+pipewire.service: active
+pipewire-pulse.service: active
+wireplumber.service: active
+PASS: actual local Plasma Wayland session and audio services
+No database errors have been found!
+PASS: booted read-only release n100-a, kernel, persistent mounts, units, accounts, exact inventory and native manager
+PASS_root_write_denied
+PASS_direct_pacman_denied
+PASS_owner_cannot_read_private_credential
+n100-persistent-home
+n100-persistent-local

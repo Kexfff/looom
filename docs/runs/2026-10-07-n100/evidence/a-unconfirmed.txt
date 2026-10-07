@@ -1,0 +1,7 @@
+2026-10-07T23:12:07+03:00
+No database errors have been found!
+PASS: booted read-only release n100-a, kernel, persistent mounts, units, accounts, exact inventory and native manager
+Running: n100-a
+GRUB: {"next_entry":"","saved_entry":"looom-bootstrap"}
+n100-a published 7.2.8-arch1-2 @root-n100-a
+PASS: actual UKI includes early-boot mask for systemd-tpm2-setup-early.service

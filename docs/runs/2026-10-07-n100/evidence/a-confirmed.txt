@@ -1,0 +1,7 @@
+2026-10-07T23:14:11+03:00
+Running: n100-a
+GRUB: {"next_entry":"","saved_entry":"looom-n100-a"}
+n100-a confirmed 7.2.8-arch1-2 @root-n100-a
+PASS: actual UKI includes early-boot mask for systemd-tpm2-setup-early.service
+uid=1000(owner) gid=1000(owner) groups=1000(owner),998(wheel)
+256 SHA256:3dNVdYuPjhuNPfFyE25lHopLArXOwOq2mK4JtRTs+Kg root@archiso (ED25519)

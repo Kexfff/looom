@@ -1,0 +1,1 @@
+PASS: 24 evidence/log files contain no actual private hashes or temporary password
