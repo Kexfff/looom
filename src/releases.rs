@@ -8,7 +8,7 @@ use serde::{Deserialize, Serialize};
 use std::{
     collections::{BTreeMap, BTreeSet},
     fs::{self, File},
-    io::Write,
+    io::{Read, Write},
     path::PathBuf,
     time::UNIX_EPOCH,
 };
@@ -36,6 +36,13 @@ pub struct Manager {
     pub state: PathBuf,
     pub top: PathBuf,
     pub esp: PathBuf,
+}
+#[derive(Deserialize, Serialize)]
+#[serde(deny_unknown_fields)]
+struct Publication {
+    id: String,
+    uki_sha256: String,
+    pending_uki: String,
 }
 impl Manager {
     pub fn installed(machine: Machine) -> Result<Self> {
@@ -239,6 +246,7 @@ impl Manager {
             "release cannot be published in this phase"
         );
         self.validate(&metadata, false)?;
+        self.clean_publication(rid)?;
         mkdir(&self.efi(), 0o700)?;
         let source = self
             .top
@@ -246,11 +254,60 @@ impl Manager {
             .join("boot")
             .join(format!("looom-{rid}.efi"));
         let destination = self.efi().join(format!("looom-{rid}.efi"));
+        if destination.exists() && hash_file(&destination)? != metadata.uki_sha256 {
+            // FAT recovery can retain the renamed UKI with a damaged cluster
+            // chain. Only an unselected, uncommitted candidate can be replaced;
+            // published/confirmed releases require explicit diagnosis.
+            ensure!(
+                metadata.phase == "validated"
+                    && !self
+                        .environment()?
+                        .values()
+                        .any(|v| v == &format!("looom-{rid}")),
+                "damaged published/selected UKI requires explicit recovery"
+            );
+            use std::os::unix::fs::MetadataExt;
+            let info = fs::symlink_metadata(&destination)?;
+            ensure!(info.is_file() && info.uid() == 0, "untrusted damaged UKI");
+            fs::remove_file(&destination)?;
+            sync_dir(&self.efi())?;
+            println!("Recreating damaged unselected candidate UKI: {rid}");
+        }
         if !destination.exists() {
             let mut file = tempfile::Builder::new()
                 .prefix(".uki-")
                 .tempfile_in(self.efi())?;
-            std::io::copy(&mut File::open(source)?, &mut file)?;
+            let journals = self.state.join("publications");
+            mkdir(&journals, 0o700)?;
+            json(
+                &journals.join(format!("{rid}.json")),
+                &Publication {
+                    id: rid.into(),
+                    uki_sha256: metadata.uki_sha256.clone(),
+                    pending_uki: file
+                        .path()
+                        .file_name()
+                        .context("pending UKI name")?
+                        .to_str()
+                        .context("pending UKI name")?
+                        .into(),
+                },
+                0o600,
+            )?;
+            let mut source = File::open(source)?;
+            let mut buffer = vec![0; 1024 * 1024];
+            let mut copied = 0;
+            loop {
+                let count = source.read(&mut buffer)?;
+                if count == 0 {
+                    break;
+                }
+                file.write_all(&buffer[..count])?;
+                copied += count;
+                if copied == 16 * 1024 * 1024 {
+                    failpoint("uki-copy")?;
+                }
+            }
             file.as_file().sync_all()?;
             ensure!(
                 hash_file(file.path())? == metadata.uki_sha256,
@@ -265,12 +322,65 @@ impl Manager {
         );
         failpoint("uki")?;
         self.write_menu(&self.menu(Some(rid))?)?;
+        failpoint("menu")?;
         if metadata.phase != "confirmed" {
             metadata.phase = "published".into();
         }
         self.save(&metadata)?;
         self.operation(rid, &metadata.phase)?;
+        self.clean_publication(rid)?;
         println!("Published {rid}; permanent boot choice unchanged");
+        Ok(())
+    }
+    fn clean_publication(&self, rid: &str) -> Result<()> {
+        let journal = self.state.join("publications").join(format!("{rid}.json"));
+        if !journal.exists() {
+            return Ok(());
+        }
+        let pending: Publication = serde_json::from_slice(&fs::read(&journal)?)?;
+        ensure!(
+            pending.id == rid && pending.uki_sha256 == self.load(rid)?.uki_sha256,
+            "publication journal identity mismatch"
+        );
+        ensure!(
+            pending.pending_uki.starts_with(".uki-")
+                && pending.pending_uki.len() <= 64
+                && pending
+                    .pending_uki
+                    .bytes()
+                    .all(|c| c.is_ascii_alphanumeric() || b"._-".contains(&c)),
+            "invalid pending UKI name"
+        );
+        let path = self.efi().join(&pending.pending_uki);
+        match fs::symlink_metadata(&path) {
+            Ok(info) => {
+                use std::os::unix::fs::MetadataExt;
+                ensure!(info.is_file() && info.uid() == 0, "untrusted pending UKI");
+                fs::remove_file(path)?;
+                sync_dir(&self.efi())?;
+            }
+            Err(e) if e.kind() == std::io::ErrorKind::NotFound => {}
+            Err(e) => return Err(e.into()),
+        }
+        fs::remove_file(journal)?;
+        sync_dir(&self.state.join("publications"))
+    }
+    pub fn recover_publications(&self) -> Result<()> {
+        let directory = self.state.join("publications");
+        if !directory.exists() {
+            return Ok(());
+        }
+        for item in fs::read_dir(directory)? {
+            let path = item?.path();
+            if path.extension().and_then(|s| s.to_str()) == Some("json") {
+                let id = path
+                    .file_stem()
+                    .and_then(|s| s.to_str())
+                    .context("publication ID")?;
+                ensure!(crate::config::identifier(id), "invalid publication ID");
+                self.clean_publication(id)?;
+            }
+        }
         Ok(())
     }
     pub fn health(&self, rid: &str) -> Result<()> {
@@ -470,6 +580,7 @@ impl Manager {
                     != metadata.id,
             "cannot remove selected/running release"
         );
+        self.clean_publication(&metadata.id)?;
         let root = self.top.join(&metadata.root_subvolume);
         if root.exists() {
             command(

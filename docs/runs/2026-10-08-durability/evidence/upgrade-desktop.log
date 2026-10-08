@@ -1,0 +1,30 @@
+Guest temporary password entered through guest uinput; verify the actual session
+User=1000
+Name=codex
+Seat=seat0
+Type=wayland
+Active=yes
+plasma-plasmashell.service: active
+plasma-kwin_wayland.service: active
+pipewire.service: active
+pipewire-pulse.service: active
+wireplumber.service: active
+PASS: actual local Plasma Wayland session and audio services
+Guest temporary password entered through guest uinput; verify the actual session
+User=1000
+Name=codex
+Seat=seat0
+Type=wayland
+Active=yes
+VM acceptance: systemctl failed: 
+User=1000
+Name=codex
+Seat=seat0
+Type=wayland
+Active=yes
+plasma-plasmashell.service: active
+plasma-kwin_wayland.service: active
+pipewire.service: active
+pipewire-pulse.service: active
+wireplumber.service: active
+PASS: actual local Plasma Wayland session and audio services

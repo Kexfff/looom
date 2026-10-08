@@ -1,0 +1,85 @@
+btrfs-progs v7.1
+See https://btrfs.readthedocs.io for more information.
+
+NOTE: default settings have changed in version 6.19 (supported since linux 6.1):
+      - enable block-group-tree (-O bgt)
+
+Label:              (null)
+UUID:               432d5c2c-2a71-48d2-88f3-f729737aca13
+Node size:          16384
+Sector size:        4096	(CPU page size: 4096)
+Filesystem size:    512.00MiB
+Block group profiles:
+  Data:             single            8.00MiB
+  Metadata:         DUP              32.00MiB
+  System:           DUP               8.00MiB
+SSD detected:       no
+Zoned device:       no
+Features:           extref, skinny-metadata, no-holes, free-space-tree, block-group-tree
+Checksum:           crc32c
+Number of devices:  1
+Devices:
+   ID        SIZE  PATH                                                    
+    1   512.00MiB  /var/lib/looom/dev/durability-20261008/fixture/btrfs.img
+
+mkfs.fat 4.2 (2021-01-31)
+Create subvolume '/run/looom-durability-btrfs/@root-baseline'
+Create subvolume '/run/looom-durability-btrfs/@root-candidate'
+No database errors have been found!
+PASS: booted read-only release rust-final, kernel, persistent mounts, units, accounts, exact inventory and native manager
+fsck.fat 4.2 (2021-01-31)
+There are differences between boot sector and its backup.
+This is mostly harmless. Differences: (offset:original/backup)
+  65:01/00
+  Not automatically fixing this.
+Dirty bit is set. Fs was not properly unmounted and some data may be corrupt.
+ Automatically removing dirty bit.
+
+Leaving filesystem unchanged.
+/var/lib/looom/dev/durability-20261008/fixture/fat.img: 7 files, 23/130811 clusters
+PASS: baseline UKI/root/menu and saved choice intact; candidate remains validated
+Published candidate; permanent boot choice unchanged
+Published candidate; permanent boot choice unchanged
+PASS: recovery removed unfinished UKI; explicit publication is repeatable; baseline remains saved
+fsck.fat 4.2 (2021-01-31)
+There are differences between boot sector and its backup.
+This is mostly harmless. Differences: (offset:original/backup)
+  65:01/00
+  Not automatically fixing this.
+Dirty bit is set. Fs was not properly unmounted and some data may be corrupt.
+ Automatically removing dirty bit.
+
+Leaving filesystem unchanged.
+/var/lib/looom/dev/durability-20261008/fixture/fat.img: 9 files, 32792/130811 clusters
+fsck.fat 4.2 (2021-01-31)
+There are differences between boot sector and its backup.
+This is mostly harmless. Differences: (offset:original/backup)
+  65:01/00
+  Not automatically fixing this.
+Dirty bit is set. Fs was not properly unmounted and some data may be corrupt.
+ Automatically removing dirty bit.
+
+*** Filesystem was changed ***
+Writing changes.
+/var/lib/looom/dev/durability-20261008/fixture/fat.img: 9 files, 32792/130811 clusters
+fsck.fat 4.2 (2021-01-31)
+/var/lib/looom/dev/durability-20261008/fixture/fat.img: 9 files, 32792/130811 clusters
+[1/8] checking log skipped (none written)
+[2/8] checking root items
+[3/8] checking extents
+[4/8] checking free space tree
+[5/8] checking fs roots
+[6/8] checking only csums items (without verifying data)
+[7/8] checking root refs
+[8/8] checking quota groups skipped (not enabled on this FS)
+Opening filesystem to check...
+Checking filesystem on /var/lib/looom/dev/durability-20261008/fixture/btrfs.img
+UUID: 432d5c2c-2a71-48d2-88f3-f729737aca13
+found 134643712 bytes used, no error found
+total csum bytes: 131136
+total tree bytes: 360448
+total fs tree bytes: 65536
+total extent tree bytes: 16384
+btree space waste bytes: 200585
+file data blocks allocated: 134283264
+ referenced 134283264

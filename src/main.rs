@@ -28,10 +28,14 @@ fn run() -> Result<()> {
     }
     if op == "--help" || op == "-h" {
         println!(
-            "looom {} — native Rust system releases\n\ncheck|init|bootstrap|lock|plan <base.yaml>\nboot-entry\nbuild <base.yaml> <release-id>\nstatus | verify | recover\npublish|try|rollback|reject <release-id>\nconfirm [release-id]\npassword <user> [--stdin]\naccounts generate|check\ngc [--keep N] [--apply]\n\nBuild never changes the boot choice. Reboot separately after try/rollback.\nGC previews candidates unless --apply is given.",
+            "looom {} — native Rust system releases\n\ncheck|init|bootstrap|lock|plan <base.yaml>\nboot-entry | boot-recovery\nbuild <base.yaml> <release-id>\nstatus | verify | recover\npublish|try|rollback|reject <release-id>\nconfirm [release-id]\npassword <user> [--stdin]\naccounts generate|check\ngc [--keep N] [--apply]\n\nBuild never changes the boot choice. Reboot separately after try/rollback.\nGC previews candidates unless --apply is given.",
             looom::VERSION
         );
         return Ok(());
+    }
+    if op == "boot-recovery" {
+        ensure!(args.len() == 1, "boot-recovery takes no arguments");
+        return looom::bootstrap::boot_recovery();
     }
     if op == "accounts" {
         root()?;
@@ -188,6 +192,7 @@ fn run() -> Result<()> {
         ensure!(args.len() == 1, "recover takes no arguments");
         builder::recover_builds(&manager)?;
         let _lock = manager.lock()?;
+        manager.recover_publications()?;
         for metadata in manager.list()? {
             if metadata.phase == "removing" {
                 manager.finish_removal(&metadata)?;

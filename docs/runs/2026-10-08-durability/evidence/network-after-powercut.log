@@ -1,0 +1,38 @@
+DEVICE  TYPE      STATE                   CONNECTION 
+lo      loopback  connected (externally)  lo         
+enp1s0  ethernet  unavailable             --         
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp1s0           UP             
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2186] manager[0x555bf63a7cf0]: rfkill: Wi-Fi hardware radio set enabled
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2187] manager[0x555bf63a7cf0]: rfkill: WWAN hardware radio set enabled
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2246] Loaded device plugin: NMAtmManager (/usr/lib/NetworkManager/1.58.1-2/libnm-device-plugin-adsl.so)
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2313] Loaded device plugin: NMBluezManager (/usr/lib/NetworkManager/1.58.1-2/libnm-device-plugin-bluetooth.so)
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2329] Loaded device plugin: NMOvsFactory (/usr/lib/NetworkManager/1.58.1-2/libnm-device-plugin-ovs.so)
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2752] Loaded device plugin: NMTeamFactory (/usr/lib/NetworkManager/1.58.1-2/libnm-device-plugin-team.so)
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2781] Loaded device plugin: NMWifiFactory (/usr/lib/NetworkManager/1.58.1-2/libnm-device-plugin-wifi.so)
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2789] Loaded device plugin: NMWwanFactory (/usr/lib/NetworkManager/1.58.1-2/libnm-device-plugin-wwan.so)
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2794] manager: rfkill: Wi-Fi enabled by radio killswitch; enabled by state file
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2795] manager: rfkill: WWAN enabled by radio killswitch; enabled by state file
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2795] manager: Networking is enabled by state file
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2797] settings: Loaded settings plugin: keyfile (internal)
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2822] dhcp: init: Using DHCP client 'internal'
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2824] manager: (lo): new Loopback device (/org/freedesktop/NetworkManager/Devices/1)
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2834] device (lo): state change: unmanaged -> unavailable (reason 'connection-assumed', managed-type: 'external')
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2836] device (lo): state change: unavailable -> disconnected (reason 'connection-assumed', managed-type: 'external')
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2846] device (lo): Activation: starting connection 'lo' (2b8adbd3-2954-48af-96fb-34c4eaea498c)
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2855] manager: (enp1s0): new Ethernet device (/org/freedesktop/NetworkManager/Devices/2)
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2856] device (enp1s0): state change: unmanaged -> unavailable (reason 'managed', managed-type: 'external')
+Oct 08 16:00:48 looom-vm systemd[1]: Started Network Manager.
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2892] bus-manager: acquired D-Bus service "org.freedesktop.NetworkManager"
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2908] ovsdb: disconnected from ovsdb
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2909] device (lo): state change: disconnected -> prepare (reason 'none', managed-type: 'external')
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2911] device (lo): state change: prepare -> config (reason 'none', managed-type: 'external')
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2912] device (lo): state change: config -> ip-config (reason 'none', managed-type: 'external')
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.2916] device (lo): state change: ip-config -> ip-check (reason 'none', managed-type: 'external')
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.3211] device (lo): state change: ip-check -> secondaries (reason 'none', managed-type: 'external')
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.3213] device (lo): state change: secondaries -> activated (reason 'none', managed-type: 'external')
+Oct 08 16:00:48 looom-vm NetworkManager[424]: <info>  [1791464448.3217] device (lo): Activation: successful, device activated.
+Oct 08 16:00:54 looom-vm NetworkManager[424]: <info>  [1791464454.2916] manager: startup complete
+Connection successfully activated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/3)
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp1s0           UP             192.168.122.91/24 fe80::5054:ff:fe7b:2363/64 

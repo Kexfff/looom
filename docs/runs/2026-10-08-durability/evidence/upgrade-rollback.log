@@ -1,0 +1,5 @@
+Rollback selected; reboot required: rust-final
+No database errors have been found!
+PASS: booted read-only release rust-final, kernel, persistent mounts, units, accounts, exact inventory and native manager
+PASS: old date/kernel restored, user/local markers preserved
+Rollback selected; reboot required: rust-upgrade-1007

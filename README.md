@@ -11,6 +11,7 @@
 [журнал Rust-проверок](docs/runs/2026-10-06-native-rust/README.md),
 [первый пилот на реальном компьютере](docs/physical-pilot.md).
 [Журнал установки и приёмки N100](docs/runs/2026-10-07-n100/README.md).
+[Обновление Arch и испытания сбоев на VM](docs/runs/2026-10-08-durability/README.md).
 
 ## Установка с нуля
 

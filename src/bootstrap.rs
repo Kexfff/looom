@@ -8,6 +8,92 @@ use anyhow::{Context, Result, ensure};
 use std::{fs, path::Path};
 
 const INITRAMFS: &str = "MODULES=(btrfs)\nBINARIES=()\nFILES=()\nHOOKS=(base systemd microcode modconf kms keyboard sd-vconsole block filesystems fsck)\nCOMPRESSION=\"zstd\"\n";
+/// The emergency entry lives in the EFI image, independently of mutable FAT
+/// menu files. Keep it first so GRUB's index-zero fallback remains bootable
+/// when a truncated external menu selects an entry that no longer exists.
+pub fn recovery_loader(esp_uuid: &str, serial: bool, destination: &Path) -> Result<()> {
+    ensure!(
+        !esp_uuid.is_empty() && esp_uuid.bytes().all(|c| c.is_ascii_hexdigit() || c == b'-'),
+        "invalid ESP UUID"
+    );
+    let work = tempfile::Builder::new()
+        .prefix("looom-grub-rescue-")
+        .tempdir_in("/run")?;
+    let config = work.path().join("grub.cfg");
+    let serial = if serial {
+        "serial --unit=0 --speed=115200 --word=8 --parity=no --stop=1\nterminal_input console serial\nterminal_output console serial\n"
+    } else {
+        ""
+    };
+    atomic(&config, format!("set timeout=5\nset default=looom-emergency\ninsmod part_gpt\ninsmod fat\ninsmod chain\nsearch --no-floppy --fs-uuid --set=esp {esp_uuid}\n{serial}menuentry 'looom emergency (embedded recovery)' --id looom-emergency {{\n chainloader ($esp)/EFI/Linux/looom-bootstrap.efi\n}}\nif [ -f ($esp)/looom/grub/grub.cfg ]; then\n source ($esp)/looom/grub/grub.cfg\nfi\n").as_bytes(), 0o600)?;
+    command("grub-script-check", &[string(&config)?])?;
+    let image = work.path().join("grubx64.efi");
+    command(
+        "grub-mkstandalone",
+        &[
+            "--format=x86_64-efi",
+            "--locales=",
+            "--fonts=",
+            "--themes=",
+            "--modules=part_gpt fat chain search search_fs_uuid normal configfile serial",
+            "--output",
+            string(&image)?,
+            &format!("boot/grub/grub.cfg={}", config.display()),
+        ],
+    )?;
+    // A new loader is published once. Updating an installed loader must use a
+    // different path and a separate UEFI entry, preserving the previous one.
+    ensure!(
+        !destination.exists(),
+        "loader already exists; do not replace a working EFI loader"
+    );
+    mkdir(destination.parent().context("loader directory")?, 0o700)?;
+    let mut pending = tempfile::Builder::new()
+        .prefix(".looom-loader-")
+        .tempfile_in(destination.parent().unwrap())?;
+    std::io::copy(&mut fs::File::open(&image)?, &mut pending)?;
+    pending.as_file().sync_all()?;
+    ensure!(
+        hash_file(pending.path())? == hash_file(&image)?,
+        "EFI loader copy mismatch"
+    );
+    pending
+        .persist_noclobber(destination)
+        .map_err(|e| e.error)?;
+    sync_dir(destination.parent().unwrap())
+}
+
+/// Add an immutable rescue dispatcher to an existing installation. It reads
+/// the same saved/next environment but does not change firmware boot order.
+pub fn boot_recovery() -> Result<()> {
+    let machine = machine::Machine::load()?;
+    machine.guard()?;
+    let _lock = Lock::acquire(&Path::new(STATE).join("release-control.lock"))?;
+    let loader = Path::new("/efi/EFI/looom/safex64.efi");
+    let receipt = Path::new(STATE).join("boot-recovery.json");
+    if loader.exists() {
+        let saved: serde_json::Value = serde_json::from_slice(&fs::read(&receipt).context(
+            "unregistered recovery loader without receipt; original loader is unchanged",
+        )?)?;
+        ensure!(
+            saved["esp_uuid"].as_str() == Some(machine.esp_uuid.as_str())
+                && saved["loader_sha256"].as_str() == Some(hash_file(loader)?.as_str()),
+            "recovery loader differs from receipt"
+        );
+    } else {
+        recovery_loader(&machine.esp_uuid, machine.serial_console, loader)?;
+        json(
+            &receipt,
+            &serde_json::json!({"esp_uuid":machine.esp_uuid,"loader_sha256":hash_file(loader)?}),
+            0o600,
+        )?;
+    }
+    register_entry(&machine, "looom-safe", "\\EFI\\looom\\safex64.efi", true)?;
+    println!(
+        "Registered looom-safe without changing BootOrder; test it with firmware BootNext before selecting it permanently"
+    );
+    Ok(())
+}
 pub fn prepare(config: &Config) -> Result<()> {
     root()?;
     ensure!(
@@ -162,6 +248,20 @@ pub fn prepare(config: &Config) -> Result<()> {
             "--no-nvram",
         ],
     )?;
+    // Retain the vendor-generated loader, then install a self-contained
+    // dispatcher with an emergency entry independent of the external menu.
+    let loader = Path::new("/efi/EFI/looom/grubx64.efi");
+    fs::rename(loader, loader.with_file_name("grubx64.vendor.efi"))?;
+    recovery_loader(
+        &output("findmnt", &["-nro", "UUID", "/efi"])?,
+        matches!(
+            output("systemd-detect-virt", &[])
+                .unwrap_or_default()
+                .as_str(),
+            "qemu" | "kvm"
+        ),
+        loader,
+    )?;
     let grub = Path::new("/efi/looom/grub");
     command("grub-editenv", &[string(&grub.join("grubenv"))?, "create"])?;
     command(
@@ -213,6 +313,16 @@ pub fn boot_entry() -> Result<()> {
         Path::new("/efi/EFI/looom/grubx64.efi").is_file(),
         "native GRUB loader is missing"
     );
+    register_entry(&machine, "looom", "\\EFI\\looom\\grubx64.efi", false)?;
+    println!("Registered looom UEFI entry; existing fallback loader retained");
+    Ok(())
+}
+fn register_entry(
+    machine: &machine::Machine,
+    label: &str,
+    loader: &str,
+    create_only: bool,
+) -> Result<()> {
     let partition = fs::canonicalize(format!("/dev/disk/by-uuid/{}", machine.esp_uuid))?;
     let name = partition
         .file_name()
@@ -234,23 +344,26 @@ pub fn boot_entry() -> Result<()> {
     ensure!(
         !before
             .lines()
-            .any(|l| l.starts_with("Boot") && l.split_whitespace().nth(1) == Some("looom")),
-        "looom UEFI entry already exists; use firmware boot menu"
+            .any(|l| l.starts_with("Boot") && l.split_whitespace().nth(1) == Some(label)),
+        "{label} UEFI entry already exists; use firmware boot menu"
     );
     command(
         "efibootmgr",
         &[
-            "--create",
+            if create_only {
+                "--create-only"
+            } else {
+                "--create"
+            },
             "--disk",
             &format!("/dev/{parent}"),
             "--part",
             &number.to_string(),
             "--label",
-            "looom",
+            label,
             "--loader",
-            "\\EFI\\looom\\grubx64.efi",
+            loader,
         ],
     )?;
-    println!("Registered looom UEFI entry; existing fallback loader retained");
     Ok(())
 }

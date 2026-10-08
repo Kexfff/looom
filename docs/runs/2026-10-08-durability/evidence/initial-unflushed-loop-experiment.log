@@ -1,0 +1,14 @@
+No database errors have been found!
+PASS: booted read-only release rust-final, kernel, persistent mounts, units, accounts, exact inventory and native manager
+fsck.fat 4.2 (2021-01-31)
+There are differences between boot sector and its backup.
+This is mostly harmless. Differences: (offset:original/backup)
+  65:01/00
+  Not automatically fixing this.
+Reclaimed 22 unused clusters (90112 bytes).
+Dirty bit is set. Fs was not properly unmounted and some data may be corrupt.
+ Automatically removing dirty bit.
+
+Leaving filesystem unchanged.
+/var/lib/looom/dev/durability-20261008/fixture/fat.img: 0 files, 1/130811 clusters
+VM durability: grub-editenv failed: grub-editenv: error: cannot open `/run/looom-durability-fat/looom/grub/grubenv.new': No such file or directory.

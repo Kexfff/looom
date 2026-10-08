@@ -1,0 +1,36 @@
+btrfs-progs v7.1
+See https://btrfs.readthedocs.io for more information.
+
+NOTE: default settings have changed in version 6.19 (supported since linux 6.1):
+      - enable block-group-tree (-O bgt)
+
+Label:              (null)
+UUID:               3e74ee16-8db4-4586-bc3b-d7598d905e67
+Node size:          16384
+Sector size:        4096	(CPU page size: 4096)
+Filesystem size:    512.00MiB
+Block group profiles:
+  Data:             single            8.00MiB
+  Metadata:         DUP              32.00MiB
+  System:           DUP               8.00MiB
+SSD detected:       no
+Zoned device:       no
+Features:           extref, skinny-metadata, no-holes, free-space-tree, block-group-tree
+Checksum:           crc32c
+Number of devices:  1
+Devices:
+   ID        SIZE  PATH                                                    
+    1   512.00MiB  /var/lib/looom/dev/durability-20261008/fixture/btrfs.img
+
+mkfs.fat 4.2 (2021-01-31)
+Create subvolume '/run/looom-durability-btrfs/@root-baseline'
+Create subvolume '/run/looom-durability-btrfs/@root-candidate'
+Prepared isolated 512 MiB Btrfs and FAT fixtures; main VM boot choice untouched
+Fault-test process 679 stopped at menu
+Atomic state write after confirmed ENOSPC: No space left on device (os error 28) at path "/run/looom-durability-btrfs/state/.looom-y5BzYg"
+VM durability: No space left on device (os error 28) at path "/run/looom-durability-btrfs/state/releases/.looom-9wwop7"
+PASS: baseline UKI/root and saved choice intact; candidate remains validated
+Published candidate; permanent boot choice unchanged
+Published candidate; permanent boot choice unchanged
+PASS: recovery removed unfinished UKI; explicit publication is repeatable; baseline remains saved
+PASS: real Btrfs ENOSPC after FAT menu commit, unchanged metadata/boot choice and successful recovery

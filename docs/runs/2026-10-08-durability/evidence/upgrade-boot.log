@@ -1,0 +1,20 @@
+No database errors have been found!
+PASS: booted read-only release rust-upgrade-1007, kernel, persistent mounts, units, accounts, exact inventory and native manager
+Running: rust-upgrade-1007
+GRUB: {"next_entry":"","saved_entry":"looom-rust-final"}
+broken rejected 6.18.54-2-lts @root-broken
+desktop confirmed 7.2.8-arch1-2 @root-desktop
+mvp-a4 confirmed 7.2.8-arch1-2 @root-mvp-a4
+mvp-b confirmed 6.18.54-2-lts @root-mvp-b
+mvp-desktop confirmed 7.2.8-arch1-2 @root-mvp-desktop
+rust-a confirmed 7.2.8-arch1-2 @root-rust-a
+rust-b confirmed 6.18.54-2-lts @root-rust-b
+rust-desktop confirmed 7.2.8-arch1-2 @root-rust-desktop
+rust-final confirmed 7.2.8-arch1-2 @root-rust-final
+rust-upgrade-1007 published 7.2.9-arch1-1 @root-rust-upgrade-1007
+v1 rejected 7.2.8-arch1-2 @root-v1
+v1r1 rejected 7.2.8-arch1-2 @root-v1r1
+v1r2 rejected 7.2.8-arch1-2 @root-v1r2
+v1r3 confirmed 7.2.8-arch1-2 @root-v1r3
+v2 confirmed 6.18.54-2-lts @root-v2
+Confirmed healthy running release: rust-upgrade-1007

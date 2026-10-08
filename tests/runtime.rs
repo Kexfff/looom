@@ -282,6 +282,29 @@ fn publication_and_gc_cases(root: &Path) {
     let original = "set timeout=5\nmenuentry 'recovery' { true; }\n";
     atomic(&grub.join("grub.cfg"), original.as_bytes(), 0o600).unwrap();
     let environment = manager.environment().unwrap();
+    let journals = manager.state.join("publications");
+    mkdir(&journals, 0o700).unwrap();
+    let journal = journals.join("mvp-b.json");
+    let victim = esp.0.join("victim");
+    fs::write(&victim, b"must remain intact").unwrap();
+    for pending in ["../victim", ".uki-link"] {
+        let mut checked = manager.clone();
+        if pending == ".uki-link" {
+            // FAT cannot contain symlinks; exercise the rejection on the
+            // fixture's Btrfs directory without touching the real ESP.
+            checked.esp = root.join("symlink-esp");
+            mkdir(&checked.efi(), 0o700).unwrap();
+            symlink(&victim, checked.efi().join(pending)).unwrap();
+        }
+        json(&journal, &serde_json::json!({"id":"mvp-b", "uki_sha256": metadata.uki_sha256, "pending_uki":pending}), 0o600).unwrap();
+        assert!(checked.recover_publications().is_err());
+        assert_eq!(fs::read(&victim).unwrap(), b"must remain intact");
+        fs::remove_file(&journal).unwrap();
+        if pending == ".uki-link" {
+            fs::remove_file(checked.efi().join(pending)).unwrap();
+        }
+    }
+    println!("PASS: publication recovery rejects traversal and symlink journal targets");
     let mut info = std::mem::MaybeUninit::<libc::statvfs>::uninit();
     let path = std::ffi::CString::new(esp.0.as_os_str().as_encoded_bytes()).unwrap();
     assert_eq!(
@@ -319,11 +342,20 @@ fn publication_and_gc_cases(root: &Path) {
             .contains("--id looom-mvp-b {")
     );
     assert_eq!(manager.environment().unwrap(), environment);
+    // A FAT power cut may corrupt a renamed but uncommitted UKI. Rebuild it
+    // from the verified read-only root; never repair a published slot this way.
+    let published_uki = manager.efi().join("looom-mvp-b.efi");
+    fs::write(&published_uki, b"damaged candidate").unwrap();
     manager.publish("mvp-b").unwrap();
     manager
         .validate(&manager.load("mvp-b").unwrap(), true)
         .unwrap();
     assert_eq!(manager.environment().unwrap(), environment);
+    fs::write(&published_uki, b"damaged published slot").unwrap();
+    assert!(manager.publish("mvp-b").is_err());
+    assert_eq!(fs::read(&published_uki).unwrap(), b"damaged published slot");
+    fs::copy(source.join("boot/looom-mvp-b.efi"), &published_uki).unwrap();
+    println!("PASS: damaged uncommitted UKI rebuilt; damaged published UKI preserved and rejected");
     println!(
         "PASS: native publication on actual FAT ENOSPC, interruption, recovery and unchanged saved choice"
     );

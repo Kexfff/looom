@@ -1,0 +1,9 @@
+No database errors have been found!
+PASS: booted read-only release rust-final, kernel, persistent mounts, units, accounts, exact inventory and native manager
+Delete subvolume 348 (commit): '/run/looom-top/@build-rust-upgrade-1007/var/lib/portables'
+Delete subvolume 349 (commit): '/run/looom-top/@build-rust-upgrade-1007/var/lib/machines'
+Delete subvolume 347 (commit): '/run/looom-top/@build-rust-upgrade-1007'
+Recovered configured Rust build rust-upgrade-1007
+Published menu restored; incomplete candidates remain unselected
+Published rust-upgrade-1007; permanent boot choice unchanged
+Next boot only: rust-upgrade-1007

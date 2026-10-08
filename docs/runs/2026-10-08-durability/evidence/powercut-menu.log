@@ -1,0 +1,48 @@
+btrfs-progs v7.1
+See https://btrfs.readthedocs.io for more information.
+
+NOTE: default settings have changed in version 6.19 (supported since linux 6.1):
+      - enable block-group-tree (-O bgt)
+
+Label:              (null)
+UUID:               02990f42-0cb8-4515-ae4b-ef3014ed21dd
+Node size:          16384
+Sector size:        4096	(CPU page size: 4096)
+Filesystem size:    512.00MiB
+Block group profiles:
+  Data:             single            8.00MiB
+  Metadata:         DUP              32.00MiB
+  System:           DUP               8.00MiB
+SSD detected:       no
+Zoned device:       no
+Features:           extref, skinny-metadata, no-holes, free-space-tree, block-group-tree
+Checksum:           crc32c
+Number of devices:  1
+Devices:
+   ID        SIZE  PATH                                                    
+    1   512.00MiB  /var/lib/looom/dev/durability-20261008/fixture/btrfs.img
+
+mkfs.fat 4.2 (2021-01-31)
+Create subvolume '/run/looom-durability-btrfs/@root-baseline'
+Create subvolume '/run/looom-durability-btrfs/@root-candidate'
+No database errors have been found!
+PASS: booted read-only release rust-final, kernel, persistent mounts, units, accounts, exact inventory and native manager
+fsck.fat 4.2 (2021-01-31)
+There are differences between boot sector and its backup.
+This is mostly harmless. Differences: (offset:original/backup)
+  65:01/00
+  Not automatically fixing this.
+/looom/grub/grub.cfg
+  Contains a free cluster (26). Assuming EOF.
+/looom/grub/grub.cfg
+  File size is 776 bytes, cluster chain length is 0 bytes.
+  Truncating file to 0 bytes.
+Dirty bit is set. Fs was not properly unmounted and some data may be corrupt.
+ Automatically removing dirty bit.
+Free cluster summary wrong (130788 vs. really 98019)
+  Auto-correcting.
+
+*** Filesystem was changed ***
+Writing changes.
+/var/lib/looom/dev/durability-20261008/fixture/fat.img: 10 files, 32792/130811 clusters
+VM durability: release absent from boot menu

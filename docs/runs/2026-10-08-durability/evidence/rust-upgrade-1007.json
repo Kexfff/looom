@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "id": "rust-upgrade-1007",
+  "phase": "confirmed",
+  "root_subvolume": "@root-rust-upgrade-1007",
+  "kernel_package": "linux",
+  "kernel_version": "7.2.9-arch1-1",
+  "root_uuid": "a79f6ab7-52ab-49d0-ab3c-a2b3a1918140",
+  "esp_uuid": "8CE8-BFE9",
+  "uki_sha256": "7be76829b5ab04396a32c47f114c014b54cb37183d09dd59458fcd861706c2f9",
+  "declarative_value": "rust-upgrade-1007",
+  "created_at": 1791465356,
+  "engine": "rust-0.2"
+}

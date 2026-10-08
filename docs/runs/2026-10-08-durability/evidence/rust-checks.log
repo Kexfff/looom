@@ -1,0 +1,111 @@
+    Checking looom v0.2.0 (/workspace)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.19s
+   Compiling looom v0.2.0 (/workspace)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.19s
+     Running unittests src/lib.rs (target/debug/deps/looom-d6ccbef5a1b2975e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/looom-039996093bc9cdaa)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/looom-n100-test.rs (target/debug/deps/looom_n100_test-cd8770417149c547)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/looom-vm-durability.rs (target/debug/deps/looom_vm_durability-2be08f293a84a109)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/looom-vm-test.rs (target/debug/deps/looom_vm_test-dc25f6717ede5a3f)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/bootstrap.rs (target/debug/deps/bootstrap-2c265806239a01bf)
+
+running 1 test
+test native_bootstrap_on_isolated_prepared_arch ... Create snapshot of '/run/looom-bootstrap-top-bootstrap-2zfj3n/@bootstrap' in '/run/looom-bootstrap-top-bootstrap-2zfj3n/@bootstrap-bootstrap-2zfj3n'
+Create subvolume '/run/looom-bootstrap-top-bootstrap-2zfj3n/@home-bootstrap-2zfj3n'
+Create subvolume '/run/looom-bootstrap-top-bootstrap-2zfj3n/@var-bootstrap-2zfj3n'
+Create subvolume '/run/looom-bootstrap-top-bootstrap-2zfj3n/@state-bootstrap-2zfj3n'
+mkfs.fat 4.2 (2021-01-31)
+==> Starting build: '7.2.8-arch1-2'
+  -> Running build hook: [base]
+  -> Running build hook: [systemd]
+  -> Running build hook: [microcode]
+  -> Running build hook: [modconf]
+  -> Running build hook: [kms]
+==> WARNING: Possibly missing firmware for module: 'ast'
+  -> Running build hook: [keyboard]
+==> WARNING: Possibly missing firmware for module: 'xhci_pci_renesas'
+  -> Running build hook: [sd-vconsole]
+  -> Running build hook: [block]
+==> WARNING: Possibly missing firmware for module: 'aic94xx'
+==> WARNING: Possibly missing firmware for module: 'bfa'
+==> WARNING: Possibly missing firmware for module: 'qed'
+==> WARNING: Possibly missing firmware for module: 'qla1280'
+==> WARNING: Possibly missing firmware for module: 'qla2xxx'
+==> WARNING: Possibly missing firmware for module: 'wd719x'
+  -> Running build hook: [filesystems]
+  -> Running build hook: [fsck]
+==> Generating module dependencies
+==> Creating zstd-compressed initcpio image
+  -> Early uncompressed CPIO image generation successful
+==> Initcpio image generation successful
+==> Creating unified kernel image: '/efi/EFI/Linux/looom-bootstrap.pending.efi'
+  -> Using ukify to build UKI
+Using config file: /usr/lib/kernel/uki.conf
+Wrote unsigned /efi/EFI/Linux/looom-bootstrap.pending.efi
+==> Unified kernel image generation successful
+Installing for x86_64-efi platform.
+Installation finished. No error reported.
+Registered Btrfs/UEFI machine; sudo requires a password by default
+Prepared native bootstrap; register its UEFI entry with looom boot-entry, then build/publish/try a release
+Delete subvolume 349 (commit): '/run/looom-bootstrap-top-bootstrap-2zfj3n/@state-bootstrap-2zfj3n'
+Delete subvolume 348 (commit): '/run/looom-bootstrap-top-bootstrap-2zfj3n/@var-bootstrap-2zfj3n'
+Delete subvolume 347 (commit): '/run/looom-bootstrap-top-bootstrap-2zfj3n/@home-bootstrap-2zfj3n'
+Delete subvolume 346 (commit): '/run/looom-bootstrap-top-bootstrap-2zfj3n/@bootstrap-bootstrap-2zfj3n'
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 59.51s
+
+     Running tests/configuration.rs (target/debug/deps/configuration-d947db9a577cfab9)
+
+running 5 tests
+test accepts_declared_vm_resources ... ok
+test accepts_generalized_user_and_rejects_bad_identity ... ok
+test rejects_source_directory_symlink ... ok
+test rejects_source_symlink ... ok
+test rejects_unsafe_or_ambiguous_inputs ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+
+     Running tests/runtime.rs (target/debug/deps/runtime-2770b67f7e7cd10c)
+
+running 1 test
+test native_runtime_suite ... mkfs.fat 4.2 (2021-01-31)
+Create subvolume '/run/looom-native-top-rust-QPlAv8/@root-rust-gc-rust-qplav8'
+Delete subvolume 350 (commit): '/run/looom-native-top-rust-QPlAv8/@root-rust-gc-rust-qplav8'
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.27s
+
+   Doc-tests looom
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Compiling looom v0.2.0 (/workspace)
+    Finished `release` profile [optimized] target(s) in 13.77s

@@ -132,6 +132,18 @@ impl Drop for Lock {
 }
 pub fn failpoint(point: &str) -> Result<()> {
     if std::env::var("LOOOM_FAIL_AFTER").as_deref() == Ok(point) {
+        if std::env::var("LOOOM_FAIL_MODE").as_deref() == Ok("stop") {
+            root()?;
+            eprintln!(
+                "Fault-test process {} stopped at {point}",
+                std::process::id()
+            );
+            ensure!(
+                unsafe { libc::raise(libc::SIGSTOP) } == 0,
+                "cannot stop fault-test process"
+            );
+            return Ok(());
+        }
         bail!("Injected interruption after {point}");
     }
     Ok(())
