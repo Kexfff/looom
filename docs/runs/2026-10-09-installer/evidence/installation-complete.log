@@ -1,0 +1,8 @@
+[10/12] publish
+Published initial; permanent boot choice unchanged
+[11/12] boot
+[12/12] ready
+Next boot only: initial
+Installation complete. First boot is a read-only trial; recovery remains the saved default.
+Boot the target disk, run: looom verify && looom confirm
+Retain workspace /var/lib/looom/dev/installer-20261009/install for the installation record; it contains private password hashes.

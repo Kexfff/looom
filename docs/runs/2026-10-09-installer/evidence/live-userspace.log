@@ -1,0 +1,21 @@
+looom install — terminal wizard
+looom install plan <disk> <base.yaml> <absolute-workspace> [--ssh-key <public-key-file>] [--no-nvram]
+looom install show <workspace>
+looom install apply <workspace> --confirm <exact-confirmation> [--passwords-stdin]
+looom install resume <workspace> [--passwords-stdin]
+Passwords: hidden TTY prompts, or bounded JSON on stdin {"root":"...","user":"..."}.
+A pending partition/format operation fails closed; resume never repeats it.
+Keep the workspace on a different persistent disk for recovery after reboot.
+looom installation plan
+Disk: /dev/vdb |  | serial=looom-wizard-2026100 | WWN= | 48.0 GiB
+ERASE ENTIRE DISK
+GPT: EFI 2 GiB (FAT32) + remaining Btrfs
+Subvolumes: @bootstrap, @home, @var, @state; read-only @root-initial
+Arch snapshot: 2026-10-07; kernel: linux; desktop: plasma
+Host: looom-installed; user: owner (1000/1000)
+Timezone: Europe/Moscow; locale: en_US.UTF-8; keymap: us
+SSH public key: false; UEFI entry: false
+Workspace: /run/looom-live-smoke
+Confirmation: ERASE /dev/vdb looom-wizard-2026100 51539607552
+looom: invalid password input; root/user JSON strings required
+PASS: official Arch ISO userspace runs frozen binary; tools/UEFI/locale preflight passes; invalid password input rejects before target writes

@@ -1,0 +1,14 @@
+SESSION  UID USER  SEAT  LEADER CLASS         TTY  IDLE SINCE
+     14 1000 owner seat0 721    user          tty1 no   -
+     15 1000 owner -     727    manager       -    no   -
+     16    0 root  -     1122   user          -    no   -
+     17    0 root  -     1127   manager-early -    no   -
+
+4 sessions listed.
+770 /usr/bin/kwin_wayland_wrapper --xwayland
+774 /usr/bin/kwin_wayland --wayland-fd 7 --socket wayland-0 --xwayland-fd 8 --xwayland-fd 9 --xwayland-display :1 --xwayland-xauthority /run/user/1000/xauth_cxSUKu --xwayland
+888 /usr/bin/plasmashell --no-respawn
+active
+active
+No database errors have been found!
+PASS: booted read-only release initial, kernel, persistent mounts, units, accounts, exact inventory and native manager

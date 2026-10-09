@@ -1,0 +1,8 @@
+[7/12] configure
+Generating locales...
+  en_US.UTF-8... done
+Generation complete.
+/etc/sudoers: parsed OK
+/etc/sudoers.d/10-looom-installer: parsed OK
+ssh-keygen: generating new host keys: RSA ECDSA ED25519 MLDSA44-ED25519 
+looom: Injected interruption after install-action-configure

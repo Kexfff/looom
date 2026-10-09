@@ -28,10 +28,20 @@ fn run() -> Result<()> {
     }
     if op == "--help" || op == "-h" {
         println!(
-            "looom {} — native Rust system releases\n\ncheck|init|bootstrap|lock|plan <base.yaml>\nboot-entry | boot-recovery\nbootstrap-update <confirmed-running-release> [generation-id]\nbootstrap-try | bootstrap-confirm | bootstrap-recover | bootstrap-list\nbuild <base.yaml> <release-id>\nstatus | verify | recover\npublish|try|rollback|reject <release-id>\nconfirm [release-id]\npassword <user> [--stdin]\naccounts generate|check\ngc [--keep N] [--apply]\n\nBuild never changes the boot choice. Reboot separately after try/rollback.\nGC previews candidates unless --apply is given.",
+            "looom {} — native Rust system releases\n\ninstall [plan|show|apply|resume] (install --help for usage)\ncheck|init|bootstrap|lock|plan <base.yaml>\nboot-entry | boot-recovery\nbootstrap-update <confirmed-running-release> [generation-id]\nbootstrap-try | bootstrap-confirm | bootstrap-recover | bootstrap-list\nbuild <base.yaml> <release-id>\nstatus | verify | recover\npublish|try|rollback|reject <release-id>\nconfirm [release-id]\npassword <user> [--stdin]\naccounts generate|check\ngc [--keep N] [--apply]\n\nBuild never changes the boot choice. Reboot separately after try/rollback.\nGC previews candidates unless --apply is given.",
             looom::VERSION
         );
         return Ok(());
+    }
+    if op == "install" {
+        return looom::installer::dispatch(&args[1..]);
+    }
+    if op == "internal-install-build" {
+        ensure!(args.len() == 1, "internal-install-build takes no arguments");
+        return looom::installer::first_release();
+    }
+    if op == "internal-install-run" {
+        return looom::installer::target_session(&args[1..]);
     }
     if op == "bootstrap-update" {
         ensure!(

@@ -1,0 +1,3 @@
+PASS: terminal wizard cancel; disk unchanged
+PASS: terminal wizard root-mismatch; disk unchanged; passwords hidden
+PASS: terminal wizard user-mismatch; disk unchanged; passwords hidden

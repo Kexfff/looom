@@ -1,0 +1,28 @@
+No database errors have been found!
+PASS: booted read-only release initial, kernel, persistent mounts, units, accounts, exact inventory and native manager
+error: package 'jq' was not found
+PASS: login accepts changed password and rejects wrong password
+PASS: sddm accepts changed password and rejects wrong password
+PASS: sudo accepts changed password and rejects wrong password
+Confirmed healthy running release: initial
+PASS: exact original user hash restored; private password fixture removed
+No database errors have been found!
+PASS: booted read-only release initial, kernel, persistent mounts, units, accounts, exact inventory and native manager
+Running: initial
+GRUB: {"next_entry":"","saved_entry":"looom-initial"}
+initial confirmed 7.2.9-arch1-1 @root-initial
+installer-v2 confirmed 7.2.9-arch1-1 @root-installer-v2
+  UNIT LOAD ACTIVE SUB DESCRIPTION
+
+0 loaded units listed.
+GC retain release: initial
+GC retain release: installer-v2
+GC preview complete; frozen inputs, evidence and persistent data retained
+0d824fc03b73eb14e351da7738f442ed28b6e2fc2d7c4925d96b95b3b9391eb7  /usr/bin/looom
+{
+  "plan_sha256": "7992242e2cc3c00c0095a182ab5bc31a8d065f679ca757eab3af02e0f313b465",
+  "recipe_sha256": "0d824fc03b73eb14e351da7738f442ed28b6e2fc2d7c4925d96b95b3b9391eb7",
+  "release": "initial",
+  "schema": 1,
+  "status": "awaiting-first-boot-confirmation"
+}

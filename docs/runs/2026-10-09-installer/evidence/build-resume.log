@@ -1,0 +1,7 @@
+[9/12] build
+Create readonly snapshot of '/run/looom-build-initial' in '/run/looom-top/@root-initial'
+Delete subvolume 266 (commit): '/run/looom-top/@build-initial/var/lib/portables'
+Delete subvolume 267 (commit): '/run/looom-top/@build-initial/var/lib/machines'
+Delete subvolume 265 (commit): '/run/looom-top/@build-initial'
+Recovered configured Rust build initial
+looom: Injected interruption after install-build

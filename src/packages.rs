@@ -84,6 +84,23 @@ pub fn load(yaml: &Path, config: &Config) -> Result<PackageLock> {
 }
 impl PackageLock {
     pub fn validate(&self, cfg: &Config, archives: bool) -> Result<()> {
+        self.validate_paths(
+            cfg,
+            archives,
+            Path::new(STATE),
+            Path::new("/var/cache/pacman/pkg"),
+        )
+    }
+    pub fn validate_at(&self, cfg: &Config, state: &Path, cache: &Path) -> Result<()> {
+        self.validate_paths(cfg, true, state, cache)
+    }
+    fn validate_paths(
+        &self,
+        cfg: &Config,
+        archives: bool,
+        state: &Path,
+        cache: &Path,
+    ) -> Result<()> {
         ensure!(
             self.schema_version == 1
                 && self.kind == "looom-package-lock"
@@ -132,7 +149,7 @@ impl PackageLock {
             );
             if archives {
                 for (name, sha) in [(&p.archive, &p.sha256), (&p.signature, &p.signature_sha256)] {
-                    let path = Path::new("/var/cache/pacman/pkg").join(name);
+                    let path = cache.join(name);
                     ensure!(
                         fs::symlink_metadata(&path)?.is_file() && hash_file(&path)? == *sha,
                         "locked archive/signature hash mismatch: {}",
@@ -153,7 +170,7 @@ impl PackageLock {
             if archives {
                 ensure!(
                     hash_file(
-                        &Path::new(STATE)
+                        &state
                             .join("repository-cache")
                             .join(&self.archive_date)
                             .join(format!("{repo}.db"))
@@ -186,12 +203,26 @@ pub fn inventory(root: Option<&Path>) -> Result<BTreeMap<String, String>> {
         .collect()
 }
 pub fn resolve(cfg: &Config, destination: &Path) -> Result<()> {
+    resolve_at(
+        cfg,
+        destination,
+        Path::new(STATE),
+        Path::new("/var/cache/pacman/pkg"),
+    )
+}
+
+/// Resolve and verify inputs before an installer is allowed to erase its disk.
+/// Paths belong to the caller's private workspace, never the target filesystem.
+pub fn resolve_at(cfg: &Config, destination: &Path, state: &Path, cache: &Path) -> Result<()> {
     root()?;
-    mkdir(&Path::new(STATE).join("dev"), 0o700)?;
-    let _lock = Lock::acquire(&Path::new(STATE).join("release-control.lock"))?;
+    mkdir(&state.join("dev"), 0o700)?;
+    if !cache.exists() {
+        mkdir(cache, 0o700)?;
+    }
+    let _lock = Lock::acquire(&state.join("release-control.lock"))?;
     let work = tempfile::Builder::new()
         .prefix("rust-resolve-")
-        .tempdir_in(Path::new(STATE).join("dev"))?;
+        .tempdir_in(state.join("dev"))?;
     let db = work.path().join("db");
     mkdir(&db, 0o700)?;
     let conf = work.path().join("pacman.conf");
@@ -203,7 +234,7 @@ pub fn resolve(cfg: &Config, destination: &Path) -> Result<()> {
         "--dbpath",
         string(&db)?,
         "--cachedir",
-        "/var/cache/pacman/pkg",
+        string(cache)?,
         "--logfile",
         string(&log)?,
         "--gpgdir",
@@ -238,11 +269,11 @@ pub fn resolve(cfg: &Config, destination: &Path) -> Result<()> {
             (archive.to_owned(), url.clone()),
             (format!("{archive}.sig"), format!("{url}.sig")),
         ] {
-            let path = Path::new("/var/cache/pacman/pkg").join(&file);
+            let path = cache.join(&file);
             if !path.exists() {
                 let mut temporary = tempfile::Builder::new()
                     .prefix(".looom-download-")
-                    .tempfile_in("/var/cache/pacman/pkg")?;
+                    .tempfile_in(cache)?;
                 command(
                     "curl",
                     &[
@@ -264,11 +295,9 @@ pub fn resolve(cfg: &Config, destination: &Path) -> Result<()> {
             name: name.into(),
             version: version.into(),
             archive: archive.into(),
-            sha256: hash_file(&Path::new("/var/cache/pacman/pkg").join(archive))?,
+            sha256: hash_file(&cache.join(archive))?,
             signature: format!("{archive}.sig"),
-            signature_sha256: hash_file(
-                &Path::new("/var/cache/pacman/pkg").join(format!("{archive}.sig")),
-            )?,
+            signature_sha256: hash_file(&cache.join(format!("{archive}.sig")))?,
         });
     }
     let mut verify = args;
@@ -276,10 +305,10 @@ pub fn resolve(cfg: &Config, destination: &Path) -> Result<()> {
     verify.extend(requests.iter().map(String::as_str));
     command("pacman", &verify)?;
     let mut repositories = BTreeMap::new();
-    let cache = Path::new(STATE)
+    let repository_cache = state
         .join("repository-cache")
         .join(cfg.source.snapshot.replace('-', "/"));
-    mkdir(&cache, 0o700)?;
+    mkdir(&repository_cache, 0o700)?;
     for repo in ["core", "extra"] {
         let source = db.join("sync").join(format!("{repo}.db"));
         repositories.insert(
@@ -288,7 +317,11 @@ pub fn resolve(cfg: &Config, destination: &Path) -> Result<()> {
                 database_sha256: hash_file(&source)?,
             },
         );
-        atomic(&cache.join(format!("{repo}.db")), &fs::read(source)?, 0o600)?;
+        atomic(
+            &repository_cache.join(format!("{repo}.db")),
+            &fs::read(source)?,
+            0o600,
+        )?;
     }
     packages.sort_by(|a, b| a.name.cmp(&b.name));
     let lock = PackageLock {
@@ -301,7 +334,7 @@ pub fn resolve(cfg: &Config, destination: &Path) -> Result<()> {
         package_signatures: "Required; pacman verified".into(),
         packages,
     };
-    lock.validate(cfg, true)?;
+    lock.validate_at(cfg, state, cache)?;
     json(destination, &lock, 0o600)?;
     println!(
         "Locked {} signed packages: {}",

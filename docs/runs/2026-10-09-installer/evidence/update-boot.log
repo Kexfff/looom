@@ -1,0 +1,8 @@
+No database errors have been found!
+PASS: booted read-only release installer-v2, kernel, persistent mounts, units, accounts, exact inventory and native manager
+jq 1.8.2-1
+PASS: login accepts changed password and rejects wrong password
+PASS: sddm accepts changed password and rejects wrong password
+PASS: sudo accepts changed password and rejects wrong password
+Confirmed healthy running release: installer-v2
+Rollback selected; reboot required: initial

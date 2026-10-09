@@ -1,0 +1,23 @@
+VM-only fixture: replay completed boot action as a pending boot checkpoint
+[11/12] boot
+BootCurrent: 0006
+Timeout: 3 seconds
+BootOrder: 0007,0006,0005,0003,0002,0000,0001,0004
+Boot0000* BootManagerMenuApp	FvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(eec25bdc-67f2-4d95-b1d5-f81b2039d11d)
+Boot0001* EFI Firmware Setup	FvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(462caa21-7614-4503-836e-8ab6f4662331)
+Boot0002* UEFI QEMU DVD-ROM QM00001 	PciRoot(0x0)/Pci(0x1f,0x2)/Sata(0,65535,0){auto_created_boot_option}
+Boot0003* UEFI Misc Device	PciRoot(0x0)/Pci(0x2,0x3)/Pci(0x0,0x0){auto_created_boot_option}
+Boot0004* EFI Internal Shell	FvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(7c04a583-9e3e-4f1c-ad65-e05268d0b4d1)
+Boot0005* looom	HD(1,GPT,5eceadc7-eec7-44c9-9bb4-491c5c9a03f3,0x800,0x400000)/\EFI\looom\grubx64.efi
+Boot0006* looom-safe	HD(1,GPT,5eceadc7-eec7-44c9-9bb4-491c5c9a03f3,0x800,0x400000)/\EFI\looom\safex64.efi
+Boot0007* looom-dd856018	HD(1,GPT,acd1c8f5-dd82-409c-aeb6-bf629194b639,0x800,0x400000)/\EFI\looom\grubx64.efi
+looom: Injected interruption after install-action-boot
+Boot0007* looom-dd856018	HD(1,GPT,acd1c8f5-dd82-409c-aeb6-bf629194b639,0x800,0x400000)/\EFI\looom\grubx64.efi
+Boot0007* looom-dd856018	HD(1,GPT,acd1c8f5-dd82-409c-aeb6-bf629194b639,0x800,0x400000)/\EFI\looom\grubx64.efi
+[11/12] boot
+[12/12] ready
+Next boot only: initial
+Installation complete. First boot is a read-only trial; recovery remains the saved default.
+Boot the target disk, run: looom verify && looom confirm
+Retain workspace /root/install-work for the installation record; it contains private password hashes.
+PASS: interrupted boot action resumes with same single UEFI entry, expected GUID/path; original BootOrder restored

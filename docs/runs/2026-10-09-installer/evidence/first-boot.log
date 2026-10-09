@@ -1,0 +1,24 @@
+No database errors have been found!
+PASS: booted read-only release initial, kernel, persistent mounts, units, accounts, exact inventory and native manager
+Running: initial
+GRUB: {"next_entry":"","saved_entry":"looom-bootstrap"}
+initial published 7.2.9-arch1-1 @root-initial
+TARGET SOURCE                    FSTYPE OPTIONS
+/      /dev/vda2[/@root-initial] btrfs  ro,noatime,compress=zstd:3,discard=async,space_cache=v2,subvolid=268,subvol=/@root-initial
+active
+active
+active
+active
+active
+NAME   SIZE FSTYPE
+vda     48G 
+|-vda1   2G vfat
+`-vda2  46G btrfs
+0d824fc03b73eb14e351da7738f442ed28b6e2fc2d7c4925d96b95b3b9391eb7  /usr/bin/looom
+{
+  "plan_sha256": "7992242e2cc3c00c0095a182ab5bc31a8d065f679ca757eab3af02e0f313b465",
+  "recipe_sha256": "0d824fc03b73eb14e351da7738f442ed28b6e2fc2d7c4925d96b95b3b9391eb7",
+  "release": "initial",
+  "schema": 1,
+  "status": "awaiting-first-boot-confirmation"
+}

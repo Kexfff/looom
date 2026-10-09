@@ -1,0 +1,20 @@
+looom installation plan
+Disk: /dev/vdb |  | serial=looom-installer-2026 | WWN= | 48.0 GiB
+ERASE ENTIRE DISK
+GPT: EFI 2 GiB (FAT32) + remaining Btrfs
+Subvolumes: @bootstrap, @home, @var, @state; read-only @root-initial
+Arch snapshot: 2026-10-07; kernel: linux; desktop: plasma
+Host: looom-installed; user: owner (1000/1000)
+Timezone: Europe/Moscow; locale: en_US.UTF-8; keymap: us
+SSH public key: true; UEFI entry: false
+Workspace: /var/lib/looom/dev/installer-20261009/negatives
+Confirmation: ERASE /dev/vdb looom-installer-2026 51539607552
+looom: exact disk-bound --confirm required; run install show
+looom: no installation journal; run apply with confirmation
+looom: selected disk is mounted at /efi
+looom: selected disk is mounted at /
+looom: foreign/nested mount inside installer workspace: /var/lib/looom/dev/installer-20261009/negatives/target/usr
+looom: disk identity changed
+looom: saved declaration differs from installation plan
+looom: Not a directory (os error 20)
+PASS: wrong confirmation, missing resume journal, active system disk, changed identity/config, symlink workspace; selected disk layout unchanged

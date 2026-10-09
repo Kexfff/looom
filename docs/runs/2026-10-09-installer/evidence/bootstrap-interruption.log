@@ -1,0 +1,38 @@
+[7/12] configure
+Generating locales...
+  en_US.UTF-8... done
+Generation complete.
+/etc/sudoers: parsed OK
+/etc/sudoers.d/10-looom-installer: parsed OK
+[8/12] bootstrap
+==> Starting build: '7.2.9-arch1-1'
+  -> Running build hook: [base]
+  -> Running build hook: [systemd]
+  -> Running build hook: [microcode]
+  -> Running build hook: [modconf]
+  -> Running build hook: [kms]
+  -> Running build hook: [keyboard]
+  -> Running build hook: [sd-vconsole]
+  -> Running build hook: [block]
+  -> Running build hook: [filesystems]
+  -> Running build hook: [fsck]
+==> Generating module dependencies
+==> Creating zstd-compressed initcpio image
+  -> Early uncompressed CPIO image generation successful
+==> Initcpio image generation successful
+==> Creating unified kernel image: '/var/lib/looom/bootstrap-install/bootstrap.efi'
+  -> Using ukify to build UKI
+==> Unified kernel image generation successful
+Registered Btrfs/UEFI machine; sudo requires a password by default
+Prepared native bootstrap; register its UEFI entry with looom boot-entry, then build/publish/try a release
+==> WARNING: Possibly missing firmware for module: 'ast'
+==> WARNING: Possibly missing firmware for module: 'xhci_pci_renesas'
+==> WARNING: Possibly missing firmware for module: 'aic94xx'
+==> WARNING: Possibly missing firmware for module: 'bfa'
+==> WARNING: Possibly missing firmware for module: 'qed'
+==> WARNING: Possibly missing firmware for module: 'qla1280'
+==> WARNING: Possibly missing firmware for module: 'qla2xxx'
+==> WARNING: Possibly missing firmware for module: 'wd719x'
+Using config file: /usr/lib/kernel/uki.conf
+Wrote unsigned /var/lib/looom/bootstrap-install/bootstrap.efi
+looom: Injected interruption after install-action-bootstrap

@@ -1,0 +1,8 @@
+TARGET SOURCE                 FSTYPE OPTIONS
+/      /dev/vda2[/@bootstrap] btrfs  rw,noatime,compress=zstd:3,discard=async,space_cache=v2,subvolid=256,subvol=/@bootstrap
+saved_entry=looom-bootstrap
+next_entry=
+active
+active
+active
+Next boot only: initial

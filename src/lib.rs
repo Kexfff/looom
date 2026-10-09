@@ -3,6 +3,7 @@ pub mod bootstrap_update;
 pub mod builder;
 pub mod config;
 pub mod credentials;
+pub mod installer;
 pub mod machine;
 pub mod packages;
 pub mod releases;

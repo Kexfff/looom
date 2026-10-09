@@ -1,0 +1,2 @@
+PASS: development VM profile, saved/next, recovery image, credentials and running release unchanged
+PASS: all 12 installer stages complete; target disk detached from mount namespace

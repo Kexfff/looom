@@ -176,6 +176,7 @@ pub fn build(manager: &Manager, bundle: Bundle) -> Result<()> {
     let mut args = vec!["-U", "-c", "-K", "-M", "-C", string(&conf)?, string(root)?];
     args.extend(paths.iter().map(String::as_str));
     command("pacstrap", &args)?;
+    failpoint("build-packages")?;
     mkdir(&root.join("usr/lib/looom"), 0o755)?;
     fs::rename(
         root.join("var/lib/pacman"),
@@ -898,6 +899,15 @@ pub(crate) fn install_sources(root: &Path) -> Result<()> {
         ("src/releases.rs", include_str!("releases.rs")),
         ("src/builder.rs", include_str!("builder.rs")),
         ("src/bootstrap.rs", include_str!("bootstrap.rs")),
+        ("src/installer.rs", include_str!("installer.rs")),
+        (
+            "src/installer/engine.rs",
+            include_str!("installer/engine.rs"),
+        ),
+        (
+            "configs/installer/base.yaml",
+            include_str!("../configs/installer/base.yaml"),
+        ),
         (
             "src/bootstrap_update.rs",
             include_str!("bootstrap_update.rs"),

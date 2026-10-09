@@ -1,0 +1,6 @@
+[5/12] subvolumes
+Create subvolume '/var/lib/looom/dev/installer-20261009/install/top/@bootstrap'
+Create subvolume '/var/lib/looom/dev/installer-20261009/install/top/@home'
+Create subvolume '/var/lib/looom/dev/installer-20261009/install/top/@var'
+Create subvolume '/var/lib/looom/dev/installer-20261009/install/top/@state'
+looom: Injected interruption after install-action-subvolumes

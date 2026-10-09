@@ -1,0 +1,121 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.19s
+   Compiling looom v0.2.0 (/workspace)
+    Finished `release` profile [optimized] target(s) in 8.84s
+     Running unittests src/lib.rs (target/release/deps/looom-61e05d77d250c39a)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/release/deps/looom-547d6dc8651e4711)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/looom-n100-test.rs (target/release/deps/looom_n100_test-99f031e22155bdeb)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/looom-vm-bootstrap.rs (target/release/deps/looom_vm_bootstrap-88e7c4e0fc6ac5b8)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/looom-vm-durability.rs (target/release/deps/looom_vm_durability-8bde3c8113f22cec)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/looom-vm-gc.rs (target/release/deps/looom_vm_gc-0cc6091d8ae347c2)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/looom-vm-installer.rs (target/release/deps/looom_vm_installer-fe40500d55ee492c)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/looom-vm-test.rs (target/release/deps/looom_vm_test-28745369bfc67b90)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/bootstrap.rs (target/release/deps/bootstrap-d4622bd7ab42b659)
+
+running 1 test
+test native_bootstrap_on_isolated_prepared_arch ... Create snapshot of '/run/looom-bootstrap-top-bootstrap-15yxmu/@bootstrap' in '/run/looom-bootstrap-top-bootstrap-15yxmu/@bootstrap-bootstrap-15yxmu'
+Create subvolume '/run/looom-bootstrap-top-bootstrap-15yxmu/@home-bootstrap-15yxmu'
+Create subvolume '/run/looom-bootstrap-top-bootstrap-15yxmu/@var-bootstrap-15yxmu'
+Create subvolume '/run/looom-bootstrap-top-bootstrap-15yxmu/@state-bootstrap-15yxmu'
+mkfs.fat 4.2 (2021-01-31)
+Valid schema 1; 1 packages, 1 files, 2 persistent directories
+Valid schema 1; 1 packages, 1 files, 2 persistent directories
+Valid schema 1; 1 packages, 1 files, 2 persistent directories
+Valid schema 1; 1 packages, 1 files, 2 persistent directories
+Valid schema 1; 1 packages, 1 files, 2 persistent directories
+Valid schema 1; 1 packages, 1 files, 2 persistent directories
+Valid schema 1; 1 packages, 1 files, 2 persistent directories
+Machine already initialized
+Prepared native bootstrap; register its UEFI entry with looom boot-entry, then build/publish/try a release
+Delete subvolume 396 (commit): '/run/looom-bootstrap-top-bootstrap-15yxmu/@state-bootstrap-15yxmu'
+Delete subvolume 395 (commit): '/run/looom-bootstrap-top-bootstrap-15yxmu/@var-bootstrap-15yxmu'
+Delete subvolume 394 (commit): '/run/looom-bootstrap-top-bootstrap-15yxmu/@home-bootstrap-15yxmu'
+Delete subvolume 393 (commit): '/run/looom-bootstrap-top-bootstrap-15yxmu/@bootstrap-bootstrap-15yxmu'
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 42.71s
+
+     Running tests/configuration.rs (target/release/deps/configuration-4091c93dc303ad65)
+
+running 5 tests
+test accepts_declared_vm_resources ... ok
+test accepts_generalized_user_and_rejects_bad_identity ... ok
+test rejects_source_directory_symlink ... ok
+test rejects_source_symlink ... ok
+test rejects_unsafe_or_ambiguous_inputs ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests/runtime.rs (target/release/deps/runtime-5f686040dbd8d123)
+
+running 1 test
+test native_runtime_suite ... mkfs.fat 4.2 (2021-01-31)
+Create subvolume '/run/looom-native-top-rust-8Va8IK/@root-rust-gc-rust-8va8ik-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+@root-rust-gc-rust-8va8ik-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	Name: 			@root-rust-gc-rust-8va8ik-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	UUID: 			e3fdc1aa-99f1-bd49-bad1-2aec46247a7e
+	Parent UUID: 		-
+	Received UUID: 		-
+	Creation time: 		2026-10-09 21:38:06 +0300
+	Subvolume ID: 		397
+	Generation: 		1699
+	Gen at creation: 	1699
+	Parent ID: 		5
+	Top level ID: 		5
+	Flags: 			-
+	Send transid: 		0
+	Send time: 		2026-10-09 21:38:06 +0300
+	Receive transid: 	0
+	Receive time: 		-
+	Snapshot(s):
+	Quota group:		n/a
+Delete subvolume 397 (commit): '/run/looom-native-top-rust-8Va8IK/@root-rust-gc-rust-8va8ik-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.48s
+
+   Doc-tests looom
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
