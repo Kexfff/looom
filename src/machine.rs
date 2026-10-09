@@ -102,7 +102,7 @@ impl Machine {
         );
         Ok(())
     }
-    pub fn guard(&self) -> Result<()> {
+    pub fn guard_mounts(&self) -> Result<()> {
         root()?;
         self.validate()?;
         ensure!(Path::new("/sys/firmware/efi").is_dir(), "UEFI required");
@@ -152,6 +152,10 @@ impl Machine {
         }
         let _dir = credentials::trusted_dir(Path::new(STATE), true)?;
         let _esp = credentials::trusted_dir(Path::new("/efi"), true)?;
+        Ok(())
+    }
+    pub fn guard(&self) -> Result<()> {
+        self.guard_mounts()?;
         ensure!(
             hash_file(Path::new("/efi/EFI/Linux/looom-bootstrap.efi"))?
                 == self.bootstrap_uki_sha256,
@@ -308,6 +312,7 @@ pub fn initialize(config: &Config) -> Result<()> {
             "initial import requires writable prepared bootstrap"
         );
         credentials::import_shadow(config)?;
+        failpoint("bootstrap-credentials")?;
         for name in ["passwd", "group", "shadow", "gshadow"] {
             let content = fs::read_to_string(Path::new("/etc").join(name))?;
             let data = credentials::locked_template(&content, name)?;
@@ -354,6 +359,8 @@ pub fn initialize(config: &Config) -> Result<()> {
             }
         }
         fs::copy("/etc/machine-id", state.join("machine-id"))?;
+        command("sync", &["-f", STATE])?;
+        failpoint("bootstrap-import")?;
         atomic(
             &state.join("release-state-initialized"),
             b"Imported by native Rust initializer\n",

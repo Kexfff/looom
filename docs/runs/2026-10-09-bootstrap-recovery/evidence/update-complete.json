@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "source": "rust-upgrade-1007",
+  "kernel": "7.2.9-arch1-1",
+  "subvolume": "@bootstrap-rust-upgrade-1007",
+  "old_machine": {
+    "schema": 1,
+    "root_uuid": "a79f6ab7-52ab-49d0-ab3c-a2b3a1918140",
+    "esp_uuid": "8CE8-BFE9",
+    "bootstrap_uki_sha256": "a6ee510c23e0ef61e46055a35cd1b67b92808b6e819ef2de9ce39344f506b9a5",
+    "home_subvolume": "@home",
+    "var_subvolume": "@var",
+    "state_subvolume": "@state",
+    "user": "codex",
+    "uid": 1000,
+    "gid": 1000,
+    "serial_console": true,
+    "guest_agent": true,
+    "passwordless_sudo": false
+  },
+  "manager_sha256": "a564be970ee86cd31ac3dc9a99cea13502f4c64976166133611218b5dc38f8c8",
+  "uki_sha256": "e43806d8a8bf0cd314cca682ac3dae7c73eba2f140b9bd5477c7a8f212f1666a",
+  "phase": "complete"
+}

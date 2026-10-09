@@ -1,4 +1,5 @@
 pub mod bootstrap;
+pub mod bootstrap_update;
 pub mod builder;
 pub mod config;
 pub mod credentials;

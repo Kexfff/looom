@@ -206,6 +206,7 @@ impl Manager {
             text.push_str("serial --unit=0 --speed=115200 --word=8 --parity=no --stop=1\nterminal_input console serial\nterminal_output console serial\n");
         }
         text.push_str("if [ -s ($esp)/looom/grub/grubenv ]; then\n load_env -f ($esp)/looom/grub/grubenv\nfi\nif [ \"$next_entry\" ]; then\n set default=\"$next_entry\"\n set next_entry=\n save_env -f ($esp)/looom/grub/grubenv next_entry\nelif [ \"$saved_entry\" ]; then\n set default=\"$saved_entry\"\nelse\n set default=looom-bootstrap\nfi\nmenuentry 'looom bootstrap (recovery)' --id looom-bootstrap {\n chainloader ($esp)/EFI/Linux/looom-bootstrap.efi\n}\n");
+        text.push_str(&crate::bootstrap_update::menu_entries(self)?);
         for metadata in self.list()?.iter().filter(|m| {
             matches!(m.phase.as_str(), "published" | "confirmed") || include == Some(m.id.as_str())
         }) {

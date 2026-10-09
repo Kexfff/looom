@@ -28,10 +28,25 @@ fn run() -> Result<()> {
     }
     if op == "--help" || op == "-h" {
         println!(
-            "looom {} — native Rust system releases\n\ncheck|init|bootstrap|lock|plan <base.yaml>\nboot-entry | boot-recovery\nbuild <base.yaml> <release-id>\nstatus | verify | recover\npublish|try|rollback|reject <release-id>\nconfirm [release-id]\npassword <user> [--stdin]\naccounts generate|check\ngc [--keep N] [--apply]\n\nBuild never changes the boot choice. Reboot separately after try/rollback.\nGC previews candidates unless --apply is given.",
+            "looom {} — native Rust system releases\n\ncheck|init|bootstrap|lock|plan <base.yaml>\nboot-entry | boot-recovery\nbootstrap-update <confirmed-running-release>\nbootstrap-try | bootstrap-confirm | bootstrap-recover\nbuild <base.yaml> <release-id>\nstatus | verify | recover\npublish|try|rollback|reject <release-id>\nconfirm [release-id]\npassword <user> [--stdin]\naccounts generate|check\ngc [--keep N] [--apply]\n\nBuild never changes the boot choice. Reboot separately after try/rollback.\nGC previews candidates unless --apply is given.",
             looom::VERSION
         );
         return Ok(());
+    }
+    if op == "bootstrap-update" {
+        ensure!(
+            args.len() == 2,
+            "bootstrap-update <confirmed-running-release>"
+        );
+        return looom::bootstrap_update::stage(&args[1]);
+    }
+    if ["bootstrap-try", "bootstrap-confirm", "bootstrap-recover"].contains(&op) {
+        ensure!(args.len() == 1, "bootstrap operation takes no arguments");
+        return match op {
+            "bootstrap-try" => looom::bootstrap_update::trial(),
+            "bootstrap-confirm" => looom::bootstrap_update::confirm(),
+            _ => looom::bootstrap_update::recover(),
+        };
     }
     if op == "boot-recovery" {
         ensure!(args.len() == 1, "boot-recovery takes no arguments");
@@ -145,6 +160,9 @@ fn run() -> Result<()> {
         let manager = Manager::installed(Machine::load()?)?;
         let _lock = manager.lock()?;
         return builder::finalize(&manager, Path::new(&args[1]));
+    }
+    if op == "recover" {
+        looom::bootstrap_update::recover()?;
     }
     let manager = Manager::installed(Machine::load()?)?;
     if op == "verify" {

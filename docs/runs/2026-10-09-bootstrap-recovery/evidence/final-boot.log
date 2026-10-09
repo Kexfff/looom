@@ -1,0 +1,78 @@
+No database errors have been found!
+PASS: booted read-only release rust-bootstrap-recovery, kernel, persistent mounts, units, accounts, exact inventory and native manager
+Running: rust-bootstrap-recovery
+GRUB: {"next_entry":"","saved_entry":"looom-rust-bootstrap-recovery"}
+broken rejected 6.18.54-2-lts @root-broken
+desktop confirmed 7.2.8-arch1-2 @root-desktop
+mvp-a4 confirmed 7.2.8-arch1-2 @root-mvp-a4
+mvp-b confirmed 6.18.54-2-lts @root-mvp-b
+mvp-desktop confirmed 7.2.8-arch1-2 @root-mvp-desktop
+rust-a confirmed 7.2.8-arch1-2 @root-rust-a
+rust-b confirmed 6.18.54-2-lts @root-rust-b
+rust-bootstrap-recovery confirmed 7.2.9-arch1-1 @root-rust-bootstrap-recovery
+rust-desktop confirmed 7.2.8-arch1-2 @root-rust-desktop
+rust-final confirmed 7.2.8-arch1-2 @root-rust-final
+rust-upgrade-1007 confirmed 7.2.9-arch1-1 @root-rust-upgrade-1007
+v1 rejected 7.2.8-arch1-2 @root-v1
+v1r1 rejected 7.2.8-arch1-2 @root-v1r1
+v1r2 rejected 7.2.8-arch1-2 @root-v1r2
+v1r3 confirmed 7.2.8-arch1-2 @root-v1r3
+v2 confirmed 6.18.54-2-lts @root-v2
+DEVICE  TYPE      STATE                   CONNECTION 
+enp1s0  ethernet  connected               looom-vm   
+lo      loopback  connected (externally)  lo         
+[    7.346737] looom-vm systemd[1]: Starting Network Manager...
+[    7.421993] looom-vm NetworkManager[420]: <info>  [1791554158.9793] NetworkManager (version 1.58.1-2) is starting... (boot:1628b059-bdbb-4302-b6f6-72a5dd4b0c27)
+[    7.422016] looom-vm NetworkManager[420]: <info>  [1791554158.9793] Read config: /etc/NetworkManager/NetworkManager.conf, /usr/lib/NetworkManager/conf.d/20-connectivity.conf, /etc/NetworkManager/conf.d/10-looom-readonly.conf
+[    7.425913] looom-vm NetworkManager[420]: <info>  [1791554158.9832] manager[0x55a457f23d00]: monitoring kernel firmware directory '/lib/firmware'.
+[    7.485618] looom-vm NetworkManager[420]: <info>  [1791554159.0429] hostname: hostname: using hostnamed
+[    7.485634] looom-vm NetworkManager[420]: <info>  [1791554159.0430] hostname: static hostname changed from (none) to "looom-vm"
+[    7.485933] looom-vm NetworkManager[420]: <info>  [1791554159.0433] dns-mgr: init: dns=default,systemd-resolved rc-manager=unmanaged
+[    7.496674] looom-vm NetworkManager[420]: <info>  [1791554159.0540] manager[0x55a457f23d00]: rfkill: Wi-Fi hardware radio set enabled
+[    7.496697] looom-vm NetworkManager[420]: <info>  [1791554159.0540] manager[0x55a457f23d00]: rfkill: WWAN hardware radio set enabled
+[    7.500431] looom-vm NetworkManager[420]: <info>  [1791554159.0578] Loaded device plugin: NMAtmManager (/usr/lib/NetworkManager/1.58.1-2/libnm-device-plugin-adsl.so)
+[    7.508037] looom-vm NetworkManager[420]: <info>  [1791554159.0653] Loaded device plugin: NMBluezManager (/usr/lib/NetworkManager/1.58.1-2/libnm-device-plugin-bluetooth.so)
+[    7.510368] looom-vm NetworkManager[420]: <info>  [1791554159.0677] Loaded device plugin: NMOvsFactory (/usr/lib/NetworkManager/1.58.1-2/libnm-device-plugin-ovs.so)
+[    7.556966] looom-vm NetworkManager[420]: <info>  [1791554159.1143] Loaded device plugin: NMTeamFactory (/usr/lib/NetworkManager/1.58.1-2/libnm-device-plugin-team.so)
+[    7.559888] looom-vm NetworkManager[420]: <info>  [1791554159.1172] Loaded device plugin: NMWifiFactory (/usr/lib/NetworkManager/1.58.1-2/libnm-device-plugin-wifi.so)
+[    7.560516] looom-vm NetworkManager[420]: <info>  [1791554159.1178] Loaded device plugin: NMWwanFactory (/usr/lib/NetworkManager/1.58.1-2/libnm-device-plugin-wwan.so)
+[    7.560955] looom-vm NetworkManager[420]: <info>  [1791554159.1183] manager: rfkill: Wi-Fi enabled by radio killswitch; enabled by state file
+[    7.561098] looom-vm NetworkManager[420]: <info>  [1791554159.1184] manager: rfkill: WWAN enabled by radio killswitch; enabled by state file
+[    7.561133] looom-vm NetworkManager[420]: <info>  [1791554159.1185] manager: Networking is enabled by state file
+[    7.561327] looom-vm NetworkManager[420]: <info>  [1791554159.1187] settings: Loaded settings plugin: keyfile (internal)
+[    7.562953] looom-vm NetworkManager[420]: <info>  [1791554159.1203] dhcp: init: Using DHCP client 'internal'
+[    7.563172] looom-vm NetworkManager[420]: <info>  [1791554159.1205] manager: (lo): new Loopback device (/org/freedesktop/NetworkManager/Devices/1)
+[    7.564216] looom-vm NetworkManager[420]: <info>  [1791554159.1215] device (lo): state change: unmanaged -> unavailable (reason 'connection-assumed', managed-type: 'external')
+[    7.564504] looom-vm NetworkManager[420]: <info>  [1791554159.1218] device (lo): state change: unavailable -> disconnected (reason 'connection-assumed', managed-type: 'external')
+[    7.565099] looom-vm NetworkManager[420]: <info>  [1791554159.1224] device (lo): Activation: starting connection 'lo' (b9040e46-e3f3-4b0d-a69a-a431b91f9097)
+[    7.565931] looom-vm NetworkManager[420]: <info>  [1791554159.1233] manager: (enp1s0): new Ethernet device (/org/freedesktop/NetworkManager/Devices/2)
+[    7.566105] looom-vm NetworkManager[420]: <info>  [1791554159.1234] device (enp1s0): state change: unmanaged -> unavailable (reason 'managed', managed-type: 'external')
+[    7.567631] looom-vm NetworkManager[420]: <info>  [1791554159.1250] bus-manager: acquired D-Bus service "org.freedesktop.NetworkManager"
+[    7.568354] looom-vm NetworkManager[420]: <info>  [1791554159.1257] ovsdb: disconnected from ovsdb
+[    7.568480] looom-vm NetworkManager[420]: <info>  [1791554159.1258] device (lo): state change: disconnected -> prepare (reason 'none', managed-type: 'external')
+[    7.568598] looom-vm NetworkManager[420]: <info>  [1791554159.1259] device (lo): state change: prepare -> config (reason 'none', managed-type: 'external')
+[    7.568684] looom-vm NetworkManager[420]: <info>  [1791554159.1260] device (lo): state change: config -> ip-config (reason 'none', managed-type: 'external')
+[    7.568779] looom-vm NetworkManager[420]: <info>  [1791554159.1261] device (enp1s0): carrier: link connected
+[    7.568993] looom-vm NetworkManager[420]: <info>  [1791554159.1263] device (lo): state change: ip-config -> ip-check (reason 'none', managed-type: 'external')
+[    7.569020] looom-vm systemd[1]: Started Network Manager.
+[    7.569387] looom-vm NetworkManager[420]: <info>  [1791554159.1267] device (enp1s0): state change: unavailable -> disconnected (reason 'carrier-changed', managed-type: 'full')
+[    7.569902] looom-vm NetworkManager[420]: <info>  [1791554159.1272] policy: auto-activating connection 'looom-vm' (7b5e6132-b2a2-3696-bf94-5aa5229f2325)
+[    7.570251] looom-vm NetworkManager[420]: <info>  [1791554159.1276] device (enp1s0): Activation: starting connection 'looom-vm' (7b5e6132-b2a2-3696-bf94-5aa5229f2325)
+[    7.570288] looom-vm NetworkManager[420]: <info>  [1791554159.1276] device (enp1s0): state change: disconnected -> prepare (reason 'none', managed-type: 'full')
+[    7.570389] looom-vm NetworkManager[420]: <info>  [1791554159.1277] manager: NetworkManager state is now CONNECTING
+[    7.570457] looom-vm NetworkManager[420]: <info>  [1791554159.1278] device (enp1s0): state change: prepare -> config (reason 'none', managed-type: 'full')
+[    7.570982] looom-vm NetworkManager[420]: <info>  [1791554159.1283] device (enp1s0): state change: config -> ip-config (reason 'none', managed-type: 'full')
+[    7.571344] looom-vm NetworkManager[420]: <info>  [1791554159.1287] dhcp4 (enp1s0): activation: beginning transaction (timeout in 45 seconds)
+[    7.572319] looom-vm NetworkManager[420]: <info>  [1791554159.1296] dhcp4 (enp1s0): state changed new lease, address=192.168.122.91, acd pending
+[    7.604089] looom-vm NetworkManager[420]: <info>  [1791554159.1614] device (lo): state change: ip-check -> secondaries (reason 'none', managed-type: 'external')
+[    7.604274] looom-vm NetworkManager[420]: <info>  [1791554159.1616] device (lo): state change: secondaries -> activated (reason 'none', managed-type: 'external')
+[    7.604706] looom-vm NetworkManager[420]: <info>  [1791554159.1620] device (lo): Activation: successful, device activated.
+[    7.699488] looom-vm NetworkManager[420]: <info>  [1791554159.2568] dhcp4 (enp1s0): state changed new lease, address=192.168.122.91
+[    7.701590] looom-vm NetworkManager[420]: <info>  [1791554159.2589] policy: set 'looom-vm' (enp1s0) as default for IPv4 routing and DNS
+[    7.720888] looom-vm NetworkManager[420]: <info>  [1791554159.2782] device (enp1s0): state change: ip-config -> ip-check (reason 'none', managed-type: 'full')
+[    7.723648] looom-vm NetworkManager[420]: <info>  [1791554159.2810] device (enp1s0): state change: ip-check -> secondaries (reason 'none', managed-type: 'full')
+[    7.723846] looom-vm NetworkManager[420]: <info>  [1791554159.2812] device (enp1s0): state change: secondaries -> activated (reason 'none', managed-type: 'full')
+[    7.724280] looom-vm NetworkManager[420]: <info>  [1791554159.2816] manager: NetworkManager state is now CONNECTED_SITE
+[    7.724545] looom-vm NetworkManager[420]: <info>  [1791554159.2819] device (enp1s0): Activation: successful, device activated.
+[    7.725768] looom-vm NetworkManager[420]: <info>  [1791554159.2831] manager: startup complete
+[    7.783282] looom-vm NetworkManager[420]: <info>  [1791554159.3406] manager: NetworkManager state is now CONNECTED_GLOBAL

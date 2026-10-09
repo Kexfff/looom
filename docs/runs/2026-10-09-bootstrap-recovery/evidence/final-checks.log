@@ -1,0 +1,5 @@
+No database errors have been found!
+PASS: booted read-only release rust-bootstrap-recovery, kernel, persistent mounts, units, accounts, exact inventory and native manager
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda2        58G   36G   23G  61% /
+/dev/vda1       2.0G  1.9G  178M  92% /efi

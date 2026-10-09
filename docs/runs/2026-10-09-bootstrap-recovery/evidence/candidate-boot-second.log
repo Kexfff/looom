@@ -1,0 +1,6 @@
+Fri Oct  9 13:34:25 UTC 2026
+7.2.9-arch1-1
+DEVICE  TYPE      STATE                   CONNECTION 
+enp1s0  ethernet  connected               looom-vm   
+lo      loopback  connected (externally)  lo         
+PASS: login PAM accepts persistent password and rejects incorrect password

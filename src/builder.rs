@@ -883,7 +883,7 @@ pub fn recover_builds(manager: &Manager) -> Result<()> {
     }
     Ok(())
 }
-fn install_sources(root: &Path) -> Result<()> {
+pub(crate) fn install_sources(root: &Path) -> Result<()> {
     let source = root.join("usr/lib/looom/source");
     for (name, data) in [
         ("Cargo.toml", include_str!("../Cargo.toml")),
@@ -898,6 +898,10 @@ fn install_sources(root: &Path) -> Result<()> {
         ("src/releases.rs", include_str!("releases.rs")),
         ("src/builder.rs", include_str!("builder.rs")),
         ("src/bootstrap.rs", include_str!("bootstrap.rs")),
+        (
+            "src/bootstrap_update.rs",
+            include_str!("bootstrap_update.rs"),
+        ),
         (
             "configs/bootstrap/packages.txt",
             include_str!("../configs/bootstrap/packages.txt"),

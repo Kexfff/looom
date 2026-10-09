@@ -5,6 +5,7 @@ use crate::{
     util::*,
 };
 use anyhow::{Context, Result, ensure};
+use serde::{Deserialize, Serialize};
 use std::{fs, path::Path};
 
 const INITRAMFS: &str = "MODULES=(btrfs)\nBINARIES=()\nFILES=()\nHOOKS=(base systemd microcode modconf kms keyboard sd-vconsole block filesystems fsck)\nCOMPRESSION=\"zstd\"\n";
@@ -94,19 +95,80 @@ pub fn boot_recovery() -> Result<()> {
     );
     Ok(())
 }
+#[derive(Deserialize, Serialize)]
+#[serde(deny_unknown_fields)]
+struct Installation {
+    schema: u32,
+    config_sha256: String,
+    root_uuid: String,
+    esp_uuid: String,
+    root_subvolume: String,
+    shared_fsroots: [String; 3],
+    original_fstab: String,
+    kernel: String,
+    uki_sha256: Option<String>,
+    loader_sha256: Option<String>,
+    complete: bool,
+}
+
+/// Copy from a checkpoint on Btrfs, retaining that checkpoint across FAT writes.
+/// Destination names are fixed by the caller, never taken from a journal.
+pub(crate) fn copy_checkpoint(source: &Path, destination: &Path, expected: &str) -> Result<()> {
+    use std::os::unix::fs::MetadataExt;
+    let checkpoint = fs::symlink_metadata(source)?;
+    ensure!(
+        checkpoint.is_file() && checkpoint.uid() == 0 && checkpoint.mode() & 0o022 == 0,
+        "unsafe bootstrap checkpoint"
+    );
+    ensure!(
+        hash_file(source)? == expected,
+        "bootstrap checkpoint integrity mismatch"
+    );
+    crate::credentials::trusted_dir(destination.parent().context("destination parent")?, true)?;
+    use std::os::unix::fs::OpenOptionsExt;
+    let validate_existing = |path: &Path| -> Result<bool> {
+        match fs::symlink_metadata(path) {
+            Ok(info) => {
+                ensure!(
+                    info.is_file() && info.uid() == 0,
+                    "unsafe bootstrap destination"
+                );
+                Ok(true)
+            }
+            Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(false),
+            Err(e) => Err(e.into()),
+        }
+    };
+    // Fixed, owned scratch name: a power cut cannot leak untracked random images.
+    let pending_path = destination.with_extension("pending");
+    if validate_existing(&pending_path)? {
+        fs::remove_file(&pending_path)?;
+        sync_dir(destination.parent().unwrap())?;
+    }
+    if validate_existing(destination)? && hash_file(destination)? == expected {
+        return Ok(());
+    }
+    let mut pending = fs::OpenOptions::new()
+        .write(true)
+        .create_new(true)
+        .mode(0o600)
+        .custom_flags(libc::O_NOFOLLOW | libc::O_CLOEXEC)
+        .open(&pending_path)?;
+    std::io::copy(&mut fs::File::open(source)?, &mut pending)?;
+    pending.sync_all()?;
+    ensure!(
+        hash_file(&pending_path)? == expected,
+        "bootstrap copy mismatch"
+    );
+    fs::rename(&pending_path, destination)?;
+    sync_dir(destination.parent().unwrap())
+}
+
 pub fn prepare(config: &Config) -> Result<()> {
     root()?;
     ensure!(
         Path::new("/sys/firmware/efi").is_dir() && std::env::consts::ARCH == "x86_64",
         "x86_64 UEFI required"
-    );
-    ensure!(
-        !Path::new(STATE).join("machine.json").exists(),
-        "machine is already registered; use init/verify"
-    );
-    ensure!(
-        !Path::new("/efi/looom").exists() && !Path::new("/efi/EFI/looom").exists(),
-        "existing looom boot namespace; explicit recovery required"
     );
     for item in fs::read_dir("/sys/firmware/efi/efivars")? {
         let path = item?.path();
@@ -159,8 +221,67 @@ pub fn prepare(config: &Config) -> Result<()> {
             "prepared shared subvolume required: {path}"
         );
     }
+    let shared_fsroots = [
+        output("findmnt", &["-nro", "FSROOT", "/home"])?,
+        output("findmnt", &["-nro", "FSROOT", "/var"])?,
+        output("findmnt", &["-nro", "FSROOT", STATE])?,
+    ];
     let _state = crate::credentials::trusted_dir(Path::new(STATE), true)?;
-    let original_fstab = fs::read_to_string("/etc/fstab")?;
+    let _lock = Lock::acquire(&Path::new(STATE).join("bootstrap-install.lock"))?;
+    let workdir = Path::new(STATE).join("bootstrap-install");
+    let record = workdir.join("journal.json");
+    let previous: Option<Installation> = if record.exists() {
+        Some(serde_json::from_str(&crate::credentials::read_private(
+            &record,
+        )?)?)
+    } else {
+        None
+    };
+    let config_sha256 = hash(&serde_json::to_vec(config)?);
+    let esp_uuid = output("findmnt", &["-nro", "UUID", "/efi"])?;
+    if let Some(journal) = &previous {
+        ensure!(
+            journal.schema == 1
+                && journal.config_sha256 == config_sha256
+                && journal.root_uuid == uuid
+                && journal.esp_uuid == esp_uuid
+                && journal.root_subvolume == subvol
+                && journal.shared_fsroots == shared_fsroots,
+            "bootstrap resume identity/declaration differs"
+        );
+        if journal.complete {
+            let profile = machine::Machine::load()?;
+            profile.guard()?;
+            profile.config_contract(config)?;
+            ensure!(
+                journal.uki_sha256.as_deref() == Some(profile.bootstrap_uki_sha256.as_str()),
+                "initial bootstrap was superseded; use bootstrap-update"
+            );
+            println!("Bootstrap already completed; no boot choice or state changed");
+            return Ok(());
+        }
+    } else {
+        ensure!(
+            !Path::new(STATE).join("machine.json").exists()
+                && !Path::new("/efi/looom").exists()
+                && !Path::new("/efi/EFI/looom").exists()
+                && !Path::new("/efi/EFI/Linux/looom-bootstrap.efi").exists()
+                && !workdir.exists(),
+            "existing bootstrap namespace without matching journal; explicit diagnosis required"
+        );
+    }
+    if !previous.as_ref().is_some_and(|j| j.complete) && Path::new(STATE).join("releases").exists()
+    {
+        ensure!(
+            !fs::read_dir(Path::new(STATE).join("releases"))?
+                .any(|e| e.is_ok_and(|e| e.path().extension().is_some_and(|s| s == "json"))),
+            "initial bootstrap cannot reset an existing release registry"
+        );
+    }
+    let original_fstab = previous
+        .as_ref()
+        .map(|j| j.original_fstab.clone())
+        .unwrap_or(fs::read_to_string("/etc/fstab")?);
     for line in original_fstab
         .lines()
         .filter(|l| !l.trim().is_empty() && !l.trim_start().starts_with('#'))
@@ -203,66 +324,108 @@ pub fn prepare(config: &Config) -> Result<()> {
         kernels.len() == 1,
         "one installed declared kernel required for bootstrap"
     );
-    let kernel = &kernels[0];
-    let directory = Path::new("/efi/EFI/Linux");
-    mkdir(directory, 0o700)?;
-    let destination = directory.join("looom-bootstrap.efi");
+    mkdir(&workdir, 0o700)?;
+    let mut journal = previous.unwrap_or(Installation {
+        schema: 1,
+        config_sha256,
+        root_uuid: uuid.clone(),
+        esp_uuid: esp_uuid.clone(),
+        root_subvolume: subvol.into(),
+        shared_fsroots,
+        original_fstab: original_fstab.clone(),
+        kernel: kernels[0].clone(),
+        uki_sha256: None,
+        loader_sha256: None,
+        complete: false,
+    });
     ensure!(
-        !destination.exists(),
-        "existing bootstrap UKI; explicit recovery required"
+        journal.kernel == kernels[0],
+        "prepared kernel changed during bootstrap"
     );
-    let work = tempfile::Builder::new()
-        .prefix("looom-bootstrap-")
-        .tempdir_in("/run")?;
-    let conf = work.path().join("mkinitcpio.conf");
-    let cmdline = work.path().join("cmdline");
-    fs::write(&conf, INITRAMFS)?;
-    fs::write(
-        &cmdline,
-        format!("root=UUID={uuid} rootflags=subvol={subvol} rw console=tty0\n"),
-    )?;
-    let pending = directory.join("looom-bootstrap.pending.efi");
-    command(
-        "mkinitcpio",
-        &[
-            "-k",
-            kernel,
-            "-c",
-            string(&conf)?,
-            "-U",
-            string(&pending)?,
-            "--cmdline",
-            string(&cmdline)?,
-        ],
-    )?;
-    fs::File::open(&pending)?.sync_all()?;
-    fs::rename(&pending, &destination)?;
-    sync_dir(directory)?;
-    command(
-        "grub-install",
-        &[
-            "--target=x86_64-efi",
-            "--efi-directory=/efi",
-            "--boot-directory=/efi/looom",
-            "--bootloader-id=looom",
-            "--no-nvram",
-        ],
-    )?;
-    // Retain the vendor-generated loader, then install a self-contained
-    // dispatcher with an emergency entry independent of the external menu.
-    let loader = Path::new("/efi/EFI/looom/grubx64.efi");
-    fs::rename(loader, loader.with_file_name("grubx64.vendor.efi"))?;
-    recovery_loader(
-        &output("findmnt", &["-nro", "UUID", "/efi"])?,
-        matches!(
+    ensure!(
+        serde_json::to_vec(&journal)?.len() <= 16000,
+        "bootstrap journal too large (fstab)"
+    );
+    json(&record, &journal, 0o600)?;
+    failpoint("bootstrap-journal")?;
+    let image = workdir.join("bootstrap.efi");
+    if journal.uki_sha256.is_none() {
+        let work = tempfile::Builder::new()
+            .prefix("looom-bootstrap-")
+            .tempdir_in("/run")?;
+        let conf = work.path().join("mkinitcpio.conf");
+        let cmdline = work.path().join("cmdline");
+        fs::write(&conf, INITRAMFS)?;
+        let serial = matches!(
             output("systemd-detect-virt", &[])
                 .unwrap_or_default()
                 .as_str(),
             "qemu" | "kvm"
-        ),
-        loader,
+        );
+        fs::write(
+            &cmdline,
+            format!(
+                "root=UUID={uuid} rootflags=subvol={subvol} rw console=tty0{}\n",
+                if serial {
+                    " console=ttyS0,115200n8"
+                } else {
+                    ""
+                }
+            ),
+        )?;
+        command(
+            "mkinitcpio",
+            &[
+                "-k",
+                &journal.kernel,
+                "-c",
+                string(&conf)?,
+                "-U",
+                string(&image)?,
+                "--cmdline",
+                string(&cmdline)?,
+            ],
+        )?;
+        fs::File::open(&image)?.sync_all()?;
+        sync_dir(&workdir)?;
+        journal.uki_sha256 = Some(hash_file(&image)?);
+        json(&record, &journal, 0o600)?;
+    }
+    let directory = Path::new("/efi/EFI/Linux");
+    mkdir(directory, 0o700)?;
+    copy_checkpoint(
+        &image,
+        &directory.join("looom-bootstrap.efi"),
+        journal.uki_sha256.as_deref().unwrap(),
     )?;
+    failpoint("bootstrap-uki")?;
+    let loader_checkpoint = workdir.join("grubx64.efi");
+    if journal.loader_sha256.is_none() {
+        // A crash before recording the digest may leave our own unregistered checkpoint.
+        remove_if_exists(&loader_checkpoint)?;
+        recovery_loader(
+            &esp_uuid,
+            matches!(
+                output("systemd-detect-virt", &[])
+                    .unwrap_or_default()
+                    .as_str(),
+                "qemu" | "kvm"
+            ),
+            &loader_checkpoint,
+        )?;
+        journal.loader_sha256 = Some(hash_file(&loader_checkpoint)?);
+        json(&record, &journal, 0o600)?;
+    }
+    mkdir(Path::new("/efi/EFI/looom"), 0o700)?;
+    copy_checkpoint(
+        &loader_checkpoint,
+        Path::new("/efi/EFI/looom/grubx64.efi"),
+        journal.loader_sha256.as_deref().unwrap(),
+    )?;
+    failpoint("bootstrap-loader")?;
     let grub = Path::new("/efi/looom/grub");
+    mkdir(grub, 0o700)?;
+    // No releases exist during this operation: repairing grubenv always selects recovery.
     command("grub-editenv", &[string(&grub.join("grubenv"))?, "create"])?;
     command(
         "grub-editenv",
@@ -275,6 +438,7 @@ pub fn prepare(config: &Config) -> Result<()> {
     machine::initialize(config)?;
     let profile = machine::Machine::load()?;
     profile.guard()?;
+    failpoint("bootstrap-profile")?;
     atomic(
         &Path::new(STATE).join("bootstrap-original-fstab"),
         original_fstab.as_bytes(),
@@ -300,6 +464,10 @@ pub fn prepare(config: &Config) -> Result<()> {
     );
     let _lock = manager.lock()?;
     manager.write_menu(&manager.menu(None)?)?;
+    command("sync", &["-f", "/efi"])?;
+    failpoint("bootstrap-menu")?;
+    journal.complete = true;
+    json(&record, &journal, 0o600)?;
     println!(
         "Prepared native bootstrap; register its UEFI entry with looom boot-entry, then build/publish/try a release"
     );

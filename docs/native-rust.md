@@ -58,6 +58,10 @@ looom bootstrap <base.yaml>
 looom init <base.yaml>
 looom boot-entry
 looom boot-recovery
+looom bootstrap-update <confirmed-running-release>
+looom bootstrap-try
+looom bootstrap-confirm
+looom bootstrap-recover
 looom lock <base.yaml>
 looom plan <base.yaml>
 looom build <base.yaml> <release-id>
@@ -84,8 +88,23 @@ looom accounts generate|check
 UEFI-запись `looom-safe`, сохраняя старый loader и BootOrder. Новый loader
 сначала проверяют через firmware BootNext, затем отдельно выбирают постоянно.
 Это не обновление bootstrap UKI. Аварийные EFI/UKI и сама ESP должны быть целы.
-Общий первоначальный bootstrap ещё не имеет полного журнала восстановления
-каждой промежуточной записи: частичный первый импорт требует разбора состояния.
+С 2026-10-09 первоначальный `bootstrap` записывает закрытый журнал и EFI
+checkpoints на Btrfs. Повтор с той же декларацией, ядром и mounts продолжает
+прерванную операцию, завершённый повтор не меняет выбор загрузки. Другая
+декларация или прежний EFI namespace без подходящего журнала отвергаются.
+Первый импорт проверяет уже сохранённые хэши паролей и не перезаписывает их.
+
+`bootstrap-update` создаёт аварийный writable root из здорового подтверждённого
+текущего релиза. `bootstrap-try` выбирает его только для следующей загрузки,
+`bootstrap-confirm` проверяет реально загруженный кандидат и лишь затем
+заменяет стабильный аварийный UKI. Saved рабочий релиз остаётся прежним.
+В recovery root используется multi-user.target; пакеты KDE сохраняются.
+`bootstrap-recover` согласует журнал между FAT и Btrfs; обычный `recover`
+выполняет этот шаг до проверки bootstrap SHA. Сохраняются предыдущий root,
+обе Btrfs-копии EFI и отдельная previous запись внешнего GRUB-меню.
+В MVP поддерживается одна сохраняемая операция обновления; управление
+историей аварийных поколений и её очистка — следующий отдельный шаг.
+Протокол и фактические испытания: [журнал](runs/2026-10-09-bootstrap-recovery/README.md).
 
 `lock` явно получает пакеты из выбранной даты Arch Linux Archive, проверяет
 подписи через pacman и фиксирует полное замыкание зависимостей, архивы, подписи,

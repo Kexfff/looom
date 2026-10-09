@@ -178,6 +178,99 @@ fn native_bootstrap_on_isolated_prepared_arch() {
         b"preserved during import\n",
     )
     .unwrap();
+    // Interrupt every cross-filesystem checkpoint and repeat the same declaration.
+    for point in [
+        "bootstrap-journal",
+        "bootstrap-uki",
+        "bootstrap-loader",
+        "bootstrap-credentials",
+        "bootstrap-import",
+        "bootstrap-profile",
+        "bootstrap-menu",
+    ] {
+        assert!(!succeeds(
+            "arch-chroot",
+            &[
+                string(&target).unwrap(),
+                "env",
+                &format!("LOOOM_FAIL_AFTER={point}"),
+                "looom",
+                "bootstrap",
+                "/root/native-test/base.yaml"
+            ]
+        ));
+        if point == "bootstrap-uki" {
+            // Known partial scratch is removed even if the destination is already valid.
+            fs::write(
+                target.join("efi/EFI/Linux/looom-bootstrap.pending"),
+                b"unfinished copy",
+            )
+            .unwrap();
+        }
+        if point == "bootstrap-loader" {
+            assert!(
+                !target
+                    .join("efi/EFI/Linux/looom-bootstrap.pending")
+                    .exists()
+            );
+        }
+        if point == "bootstrap-credentials" {
+            let credential = target.join("var/lib/looom/credentials/root.hash");
+            let before = hash_file(&credential).unwrap();
+            // FAT cannot carry symlinks: attack the Btrfs checkpoint instead.
+            let scratch = target.join("var/lib/looom/bootstrap-install/bootstrap.efi");
+            let backup = scratch.with_extension("test-backup");
+            fs::rename(&scratch, &backup).unwrap();
+            std::os::unix::fs::symlink("/var/lib/looom/credentials/root.hash", &scratch).unwrap();
+            assert!(!succeeds(
+                "arch-chroot",
+                &[
+                    string(&target).unwrap(),
+                    "looom",
+                    "bootstrap",
+                    "/root/native-test/base.yaml"
+                ]
+            ));
+            assert_eq!(hash_file(&credential).unwrap(), before);
+            fs::remove_file(&scratch).unwrap();
+            fs::rename(backup, scratch).unwrap();
+        }
+        let journal: serde_json::Value = serde_json::from_slice(
+            &fs::read(target.join("var/lib/looom/bootstrap-install/journal.json")).unwrap(),
+        )
+        .unwrap();
+        assert_eq!(journal["complete"], false);
+        // Changes in the declaration must not redirect a partially registered machine.
+        // The sample may change its hostname; use parsed YAML to ensure a distinct declaration.
+        let mut value: serde_json::Value = serde_json::to_value(
+            looom::config::load(Path::new("configs/native/a/base.yaml"))
+                .unwrap()
+                .0,
+        )
+        .unwrap();
+        value["system"]["hostname"] = "other-machine".into();
+        // JSON is a YAML subset accepted by our strict parser.
+        fs::write(
+            target.join("root/native-test/changed.yaml"),
+            serde_json::to_vec(&value).unwrap(),
+        )
+        .unwrap();
+        chroot(
+            &target,
+            "looom",
+            &["check", "/root/native-test/changed.yaml"],
+        )
+        .unwrap();
+        assert!(!succeeds(
+            "arch-chroot",
+            &[
+                string(&target).unwrap(),
+                "looom",
+                "bootstrap",
+                "/root/native-test/changed.yaml"
+            ]
+        ));
+    }
     chroot(
         &target,
         "looom",
@@ -209,7 +302,7 @@ fn native_bootstrap_on_isolated_prepared_arch() {
             0o600
         );
     }
-    assert!(!succeeds(
+    assert!(succeeds(
         "arch-chroot",
         &[
             string(&target).unwrap(),
@@ -219,7 +312,7 @@ fn native_bootstrap_on_isolated_prepared_arch() {
         ]
     ));
     println!(
-        "PASS: Rust bootstrap on isolated writable Arch snapshot + dedicated FAT; credentials imported, GRUB/UKI/profile created, repeat protected; NVRAM untouched"
+        "PASS: Rust bootstrap on isolated writable Arch snapshot + dedicated FAT; credentials imported, GRUB/UKI/profile created, all seven interruption checkpoints resumed, changed declarations rejected, repeat idempotent; NVRAM untouched"
     );
     drop(fixture);
     let _ = fs::remove_dir(&target);

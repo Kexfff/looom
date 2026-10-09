@@ -1,0 +1,93 @@
+    Checking looom v0.2.0 (/workspace)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.95s
+   Compiling looom v0.2.0 (/workspace)
+    Finished `release` profile [optimized] target(s) in 18.97s
+     Running unittests src/lib.rs (target/release/deps/looom-61e05d77d250c39a)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/release/deps/looom-547d6dc8651e4711)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/looom-n100-test.rs (target/release/deps/looom_n100_test-99f031e22155bdeb)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/looom-vm-bootstrap.rs (target/release/deps/looom_vm_bootstrap-88e7c4e0fc6ac5b8)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/looom-vm-durability.rs (target/release/deps/looom_vm_durability-8bde3c8113f22cec)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/looom-vm-test.rs (target/release/deps/looom_vm_test-28745369bfc67b90)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/bootstrap.rs (target/release/deps/bootstrap-1e8805d90b06f1d6)
+
+running 1 test
+test native_bootstrap_on_isolated_prepared_arch ... Create snapshot of '/run/looom-bootstrap-top-bootstrap-veu4y0/@bootstrap' in '/run/looom-bootstrap-top-bootstrap-veu4y0/@bootstrap-bootstrap-veu4y0'
+Create subvolume '/run/looom-bootstrap-top-bootstrap-veu4y0/@home-bootstrap-veu4y0'
+Create subvolume '/run/looom-bootstrap-top-bootstrap-veu4y0/@var-bootstrap-veu4y0'
+Create subvolume '/run/looom-bootstrap-top-bootstrap-veu4y0/@state-bootstrap-veu4y0'
+mkfs.fat 4.2 (2021-01-31)
+Valid schema 1; 1 packages, 1 files, 2 persistent directories
+Valid schema 1; 1 packages, 1 files, 2 persistent directories
+Valid schema 1; 1 packages, 1 files, 2 persistent directories
+Valid schema 1; 1 packages, 1 files, 2 persistent directories
+Valid schema 1; 1 packages, 1 files, 2 persistent directories
+Valid schema 1; 1 packages, 1 files, 2 persistent directories
+Valid schema 1; 1 packages, 1 files, 2 persistent directories
+Machine already initialized
+Prepared native bootstrap; register its UEFI entry with looom boot-entry, then build/publish/try a release
+Delete subvolume 368 (commit): '/run/looom-bootstrap-top-bootstrap-veu4y0/@state-bootstrap-veu4y0'
+Delete subvolume 367 (commit): '/run/looom-bootstrap-top-bootstrap-veu4y0/@var-bootstrap-veu4y0'
+Delete subvolume 366 (commit): '/run/looom-bootstrap-top-bootstrap-veu4y0/@home-bootstrap-veu4y0'
+Delete subvolume 365 (commit): '/run/looom-bootstrap-top-bootstrap-veu4y0/@bootstrap-bootstrap-veu4y0'
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 43.33s
+
+     Running tests/configuration.rs (target/release/deps/configuration-da5bbc6b1ccd7d34)
+
+running 5 tests
+test accepts_declared_vm_resources ... ok
+test accepts_generalized_user_and_rejects_bad_identity ... ok
+test rejects_source_directory_symlink ... ok
+test rejects_source_symlink ... ok
+test rejects_unsafe_or_ambiguous_inputs ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+     Running tests/runtime.rs (target/release/deps/runtime-b79945c534bad3bd)
+
+running 1 test
+test native_runtime_suite ... mkfs.fat 4.2 (2021-01-31)
+Create subvolume '/run/looom-native-top-rust-A6mlAZ/@root-rust-gc-rust-a6mlaz'
+Delete subvolume 369 (commit): '/run/looom-native-top-rust-A6mlAZ/@root-rust-gc-rust-a6mlaz'
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.82s
+
+   Doc-tests looom
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+    Finished `release` profile [optimized] target(s) in 0.14s

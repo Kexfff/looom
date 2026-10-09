@@ -437,9 +437,11 @@ looom init /var/lib/looom/config/desktop/base.yaml
 Ожидаются `/@bootstrap`, BootCurrent записи looom и `Machine already initialized`.
 Verify предназначен для релизов, не для bootstrap. После регистрации не менять
 имя/UID/GID пользователя или UUID/пути записанного machine profile.
-Если первый bootstrap прервался, сохранить ошибку и разобрать состояние:
-полного восстановления всех его промежуточных шагов пока нет. Не удалять
-credentials или EFI namespace ради слепого повтора.
+Если первый bootstrap прервался, сохранить ошибку и повторить ту же команду
+с той же декларацией и mounts: новый native bootstrap продолжает закрытый
+журнал. Credentials и EFI namespace не удалять. Старые незавершённые установки
+без журнала, несовпадающие UUID/declaration или изменённые credential hashes
+требуют отдельного разбора.
 
 ## 11. Первый read-only KDE-релиз
 
@@ -589,7 +591,10 @@ Chroot не заменяет настоящую загрузку: verify/confirm
 Это **размонтирование**, не удаление каталогов/данных.
 Смена пароля через looom из Live chroot пока не описана: там другие runtime
 шаблоны. Для повреждённых credentials, отсутствующего machine profile или
-неполного первого bootstrap потребуется отдельный разбор/защищённый backup.
+неполного первого bootstrap без соответствующего журнала потребуется отдельный разбор/защищённый backup.
+Для прерванного подтверждения обновления аварийной базы актуальный native
+`looom bootstrap-recover` согласует Btrfs-профиль и FAT-образ. Подробности:
+[bootstrap recovery](runs/2026-10-09-bootstrap-recovery/README.md).
 
 ## Что сохранить
 

@@ -1,0 +1,81 @@
+    Checking looom v0.2.0 (/workspace)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.21s
+   Compiling looom v0.2.0 (/workspace)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.72s
+     Running unittests src/lib.rs (target/debug/deps/looom-d6ccbef5a1b2975e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/looom-039996093bc9cdaa)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/looom-n100-test.rs (target/debug/deps/looom_n100_test-cd8770417149c547)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/looom-vm-durability.rs (target/debug/deps/looom_vm_durability-2be08f293a84a109)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/looom-vm-test.rs (target/debug/deps/looom_vm_test-dc25f6717ede5a3f)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/bootstrap.rs (target/debug/deps/bootstrap-2c265806239a01bf)
+
+running 1 test
+test native_bootstrap_on_isolated_prepared_arch ... Create snapshot of '/run/looom-bootstrap-top-bootstrap-r6skoa/@bootstrap' in '/run/looom-bootstrap-top-bootstrap-r6skoa/@bootstrap-bootstrap-r6skoa'
+Create subvolume '/run/looom-bootstrap-top-bootstrap-r6skoa/@home-bootstrap-r6skoa'
+Create subvolume '/run/looom-bootstrap-top-bootstrap-r6skoa/@var-bootstrap-r6skoa'
+Create subvolume '/run/looom-bootstrap-top-bootstrap-r6skoa/@state-bootstrap-r6skoa'
+mkfs.fat 4.2 (2021-01-31)
+Machine already initialized
+Prepared native bootstrap; register its UEFI entry with looom boot-entry, then build/publish/try a release
+Delete subvolume 359 (commit): '/run/looom-bootstrap-top-bootstrap-r6skoa/@state-bootstrap-r6skoa'
+Delete subvolume 358 (commit): '/run/looom-bootstrap-top-bootstrap-r6skoa/@var-bootstrap-r6skoa'
+Delete subvolume 357 (commit): '/run/looom-bootstrap-top-bootstrap-r6skoa/@home-bootstrap-r6skoa'
+Delete subvolume 356 (commit): '/run/looom-bootstrap-top-bootstrap-r6skoa/@bootstrap-bootstrap-r6skoa'
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 211.40s
+
+     Running tests/configuration.rs (target/debug/deps/configuration-d947db9a577cfab9)
+
+running 5 tests
+test accepts_declared_vm_resources ... ok
+test accepts_generalized_user_and_rejects_bad_identity ... ok
+test rejects_source_directory_symlink ... ok
+test rejects_source_symlink ... ok
+test rejects_unsafe_or_ambiguous_inputs ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+
+     Running tests/runtime.rs (target/debug/deps/runtime-2770b67f7e7cd10c)
+
+running 1 test
+test native_runtime_suite ... mkfs.fat 4.2 (2021-01-31)
+Create subvolume '/run/looom-native-top-rust-rUZvh1/@root-rust-gc-rust-ruzvh1'
+Delete subvolume 360 (commit): '/run/looom-native-top-rust-rUZvh1/@root-rust-gc-rust-ruzvh1'
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.17s
+
+   Doc-tests looom
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Compiling looom v0.2.0 (/workspace)
+    Finished `release` profile [optimized] target(s) in 15.61s

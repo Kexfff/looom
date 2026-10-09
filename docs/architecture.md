@@ -14,6 +14,10 @@ build/recover, GRUB/UKI, credentials, GC и подключение подгот�
 все сборки и тесты выполнялись только в VM.
 [Текущий контракт](native-rust.md),
 [журнал](runs/2026-10-06-native-rust/README.md).
+2026-10-09 добавлены возобновляемый initial bootstrap и аварийное обновление
+через отдельный writable кандидат, one-shot boot и health confirmation.
+FAT UKI/profile переход журналируется на Btrfs; прежние root/EFI сохраняются.
+[Контракт и VM-проверки](runs/2026-10-09-bootstrap-recovery/README.md).
 Ниже сохранён исходный архитектурный план; актуальные ограничения реализации
 указаны в текущем контракте. Предыдущий смешанный MVP — [история](declarative-mvp.md).
 

@@ -346,8 +346,8 @@ fn clean() -> Result<()> {
     }
     Ok(())
 }
-fn audit() -> Result<()> {
-    let directory = Path::new("/var/lib/looom/dev/durability-20261008/public");
+fn audit(directory: &Path) -> Result<()> {
+    looom::credentials::trusted_dir(directory, true)?;
     let machine = Machine::load()?;
     let mut secrets = Vec::new();
     for name in ["root", machine.user.as_str()] {
@@ -396,7 +396,8 @@ fn run() -> Result<()> {
     match op.as_str() {
         "prepare" => initialize(),
         "clean" => clean(),
-        "audit" => audit(),
+        "audit" => audit(Path::new("/var/lib/looom/dev/durability-20261008/public")),
+        "audit-bootstrap" => audit(Path::new("/var/lib/looom/dev/bootstrap-20261009/public")),
         "enospc" => enospc(),
         "publish" => {
             let m = manager()?;
