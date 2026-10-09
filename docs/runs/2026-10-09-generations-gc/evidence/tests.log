@@ -1,0 +1,98 @@
+   Compiling looom v0.2.0 (/workspace)
+    Finished `release` profile [optimized] target(s) in 19.73s
+     Running unittests src/lib.rs (target/release/deps/looom-61e05d77d250c39a)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/release/deps/looom-547d6dc8651e4711)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/looom-n100-test.rs (target/release/deps/looom_n100_test-99f031e22155bdeb)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/looom-vm-bootstrap.rs (target/release/deps/looom_vm_bootstrap-88e7c4e0fc6ac5b8)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/looom-vm-durability.rs (target/release/deps/looom_vm_durability-8bde3c8113f22cec)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/looom-vm-test.rs (target/release/deps/looom_vm_test-28745369bfc67b90)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/bootstrap.rs (target/release/deps/bootstrap-1e8805d90b06f1d6)
+
+running 1 test
+test native_bootstrap_on_isolated_prepared_arch ... Create snapshot of '/run/looom-bootstrap-top-bootstrap-4ozfbk/@bootstrap' in '/run/looom-bootstrap-top-bootstrap-4ozfbk/@bootstrap-bootstrap-4ozfbk'
+Create subvolume '/run/looom-bootstrap-top-bootstrap-4ozfbk/@home-bootstrap-4ozfbk'
+Create subvolume '/run/looom-bootstrap-top-bootstrap-4ozfbk/@var-bootstrap-4ozfbk'
+Create subvolume '/run/looom-bootstrap-top-bootstrap-4ozfbk/@state-bootstrap-4ozfbk'
+mkfs.fat 4.2 (2021-01-31)
+Valid schema 1; 1 packages, 1 files, 2 persistent directories
+Valid schema 1; 1 packages, 1 files, 2 persistent directories
+Valid schema 1; 1 packages, 1 files, 2 persistent directories
+Valid schema 1; 1 packages, 1 files, 2 persistent directories
+Valid schema 1; 1 packages, 1 files, 2 persistent directories
+Valid schema 1; 1 packages, 1 files, 2 persistent directories
+Valid schema 1; 1 packages, 1 files, 2 persistent directories
+Machine already initialized
+Prepared native bootstrap; register its UEFI entry with looom boot-entry, then build/publish/try a release
+Delete subvolume 379 (commit): '/run/looom-bootstrap-top-bootstrap-4ozfbk/@state-bootstrap-4ozfbk'
+Delete subvolume 378 (commit): '/run/looom-bootstrap-top-bootstrap-4ozfbk/@var-bootstrap-4ozfbk'
+Delete subvolume 377 (commit): '/run/looom-bootstrap-top-bootstrap-4ozfbk/@home-bootstrap-4ozfbk'
+Delete subvolume 376 (commit): '/run/looom-bootstrap-top-bootstrap-4ozfbk/@bootstrap-bootstrap-4ozfbk'
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 43.17s
+
+     Running tests/configuration.rs (target/release/deps/configuration-da5bbc6b1ccd7d34)
+
+running 5 tests
+test accepts_declared_vm_resources ... ok
+test accepts_generalized_user_and_rejects_bad_identity ... ok
+test rejects_source_directory_symlink ... ok
+test rejects_source_symlink ... ok
+test rejects_unsafe_or_ambiguous_inputs ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/runtime.rs (target/release/deps/runtime-b79945c534bad3bd)
+
+running 1 test
+test native_runtime_suite ... mkfs.fat 4.2 (2021-01-31)
+FAILED
+
+failures:
+
+---- native_runtime_suite stdout ----
+PASS: native credentials permissions, owners, symlinks, access/default ACL, missing/malformed inputs, interruption, eight concurrent updates
+PASS: publication recovery rejects traversal and symlink journal targets
+Recreating damaged unselected candidate UKI: rust-bootstrap-recovery
+
+thread 'native_runtime_suite' (13982) panicked at tests/runtime.rs:343:26:
+called `Result::unwrap()` on an `Err` value: No space left on device (os error 28) at path "/run/looom-native-esp-rust-cWqsBB/EFI/Linux/.uki-5zTSAI"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    native_runtime_suite
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.38s
+
+error: test failed, to rerun pass `--test runtime`

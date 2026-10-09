@@ -1,0 +1,11 @@
+PASS: rejected generation-traversal; profile, stable UKI and boot choice intact
+PASS: rejected source-traversal; profile, stable UKI and boot choice intact
+PASS: rejected subvolume-traversal; profile, stable UKI and boot choice intact
+PASS: rejected schema; profile, stable UKI and boot choice intact
+PASS: rejected phase; profile, stable UKI and boot choice intact
+PASS: rejected manager-digest; profile, stable UKI and boot choice intact
+PASS: rejected machine-identity; profile, stable UKI and boot choice intact
+PASS: rejected unknown-field; profile, stable UKI and boot choice intact
+PASS: rejected generation pointer ../escape
+PASS: rejected generation pointer missing-generation
+PASS: candidate confirmation refused from working release

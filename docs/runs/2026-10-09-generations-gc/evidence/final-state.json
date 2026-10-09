@@ -1,0 +1,83 @@
+{
+  "bootstrap_source_sha256": {
+    "Cargo.lock": "010634659a766d304c38e50f0289b7221c212fa8378dc013b28fe4889ba6b99a",
+    "Cargo.toml": "fcd0ed33f71df33619c0a875f09a5b9734265ff5dde01fd59c73e50f3ea891fe",
+    "configs/bootstrap/packages.txt": "964d35ec61e590219e117303d0c44e2303823fd2ec9dacc2b3829a9753d86b87",
+    "src/bootstrap.rs": "c22107cea21727983ce50a93e6f4cfc7867c88b4ef8f06cbe44aab1eefd90fbb",
+    "src/bootstrap_update.rs": "48b073c5568fc01b5304a64dbca4ee1d4bc93ece2c3481d5c6d562bcfe8e4e80",
+    "src/builder.rs": "24c4bfe43aeb92ad6fb03aa87dc84bffd52948a7e9a843682d4c2959a4e2a30e",
+    "src/config.rs": "8459a04ca0522cf059a94358f175766cd840ab2825b1a0997978787d83a48981",
+    "src/credentials.rs": "6aca63e0552f144c2c978b626be546875be8862a0dfb32f3df425bf578ab412d",
+    "src/lib.rs": "cfc604da01eeeb00b1d4e7e271bc43a723c39979c075e0df2c25678f85db6f5b",
+    "src/machine.rs": "88ed83d66fcf95384847502ece03027a321af19f66290594b75966136650af39",
+    "src/main.rs": "26d04fdc0c4c10c5b512a93d8a67fef9c3ec343ae8766a76d367b6261b99f26a",
+    "src/packages.rs": "ba335f6a515da5a9204f32056f833050b41ff15ae060eab944b181788ccb49d0",
+    "src/releases.rs": "4b43063eba8d0bdf7eaa366eb626af32c186f8a0d8d16a6ef9deff237b983728",
+    "src/util.rs": "5deae029fd9cb592e17bff1c33d903b9dfd2dc5c169f86f90ff19868bc3fad1d"
+  },
+  "bootstrap_update": {
+    "generation": "gc-recovery-checked",
+    "kernel": "7.2.9-arch1-1",
+    "manager_sha256": "a8481da9c1bc559fdbf4dac7a9f134dcedddfa4f018481bb30807daa581abbbf",
+    "old_machine": {
+      "bootstrap_uki_sha256": "e13217a3466db0ae5fdb510b5a9778623c66a8d8b270ea29f5d4ce48440c97e0",
+      "esp_uuid": "8CE8-BFE9",
+      "gid": 1000,
+      "guest_agent": true,
+      "home_subvolume": "@home",
+      "passwordless_sudo": false,
+      "root_uuid": "a79f6ab7-52ab-49d0-ab3c-a2b3a1918140",
+      "schema": 1,
+      "serial_console": true,
+      "state_subvolume": "@state",
+      "uid": 1000,
+      "user": "codex",
+      "var_subvolume": "@var"
+    },
+    "phase": "complete",
+    "schema": 2,
+    "source": "rust-gc-generations",
+    "subvolume": "@bootstrap-gc-recovery-checked",
+    "uki_sha256": "5af7a8d0d30d5523a8004a6c7a4f05d58c7cb5f7966137980ee5434d5883f178"
+  },
+  "failed_units": "",
+  "firmware": "BootCurrent: 0006\nTimeout: 3 seconds\nBootOrder: 0006,0005,0003,0002,0000,0001,0004\nBoot0000* BootManagerMenuApp\tFvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(eec25bdc-67f2-4d95-b1d5-f81b2039d11d)\nBoot0001* EFI Firmware Setup\tFvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(462caa21-7614-4503-836e-8ab6f4662331)\nBoot0002* UEFI QEMU DVD-ROM QM00001 \tPciRoot(0x0)/Pci(0x1f,0x2)/Sata(0,65535,0){auto_created_boot_option}\nBoot0003* UEFI Misc Device\tPciRoot(0x0)/Pci(0x2,0x3)/Pci(0x0,0x0){auto_created_boot_option}\nBoot0004* EFI Internal Shell\tFvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(7c04a583-9e3e-4f1c-ad65-e05268d0b4d1)\nBoot0005* looom\tHD(1,GPT,5eceadc7-eec7-44c9-9bb4-491c5c9a03f3,0x800,0x400000)/\\EFI\\looom\\grubx64.efi\nBoot0006* looom-safe\tHD(1,GPT,5eceadc7-eec7-44c9-9bb4-491c5c9a03f3,0x800,0x400000)/\\EFI\\looom\\safex64.efi",
+  "grub_environment": {
+    "next_entry": "",
+    "saved_entry": "looom-rust-gc-ready"
+  },
+  "machine": {
+    "bootstrap_uki_sha256": "5af7a8d0d30d5523a8004a6c7a4f05d58c7cb5f7966137980ee5434d5883f178",
+    "esp_uuid": "8CE8-BFE9",
+    "gid": 1000,
+    "guest_agent": true,
+    "home_subvolume": "@home",
+    "passwordless_sudo": false,
+    "root_uuid": "a79f6ab7-52ab-49d0-ab3c-a2b3a1918140",
+    "schema": 1,
+    "serial_console": true,
+    "state_subvolume": "@state",
+    "uid": 1000,
+    "user": "codex",
+    "var_subvolume": "@var"
+  },
+  "original_credentials_preserved": true,
+  "package_count": 651,
+  "running_release": {
+    "created_at": 1791560530,
+    "declarative_value": "rust-gc-ready",
+    "engine": "rust-0.2",
+    "esp_uuid": "8CE8-BFE9",
+    "id": "rust-gc-ready",
+    "kernel_package": "linux",
+    "kernel_version": "7.2.9-arch1-1",
+    "phase": "confirmed",
+    "root_subvolume": "@root-rust-gc-ready",
+    "root_uuid": "a79f6ab7-52ab-49d0-ab3c-a2b3a1918140",
+    "schema_version": 1,
+    "uki_sha256": "f06d6503d0bd5fd434a7bee39c9a251a98c7673d7f1bce52dd2acf5ba55b90c1"
+  },
+  "runtime_credentials_match": true,
+  "schema": 1,
+  "working_manager_sha256": "a8481da9c1bc559fdbf4dac7a9f134dcedddfa4f018481bb30807daa581abbbf"
+}

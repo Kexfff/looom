@@ -1,0 +1,28 @@
+GC candidate: completed bootstrap trial EFI slot
+GC bootstrap candidate: @bootstrap-gc-recovery-b
+GC retain bootstrap: @bootstrap-gc-recovery-final
+GC retain release: rust-bootstrap-recovery
+GC retain release: rust-gc-generations
+GC candidate: completed bootstrap trial EFI slot
+GC bootstrap candidate: @bootstrap-gc-recovery-b
+@bootstrap-gc-recovery-b
+	Name: 			@bootstrap-gc-recovery-b
+	UUID: 			a58d62e3-e543-3e44-9bc6-5064d9836ff0
+	Parent UUID: 		8fd70e93-95d4-024d-b3b3-082a580bd26e
+	Received UUID: 		-
+	Creation time: 		2026-10-09 18:22:53 +0300
+	Subvolume ID: 		377
+	Generation: 		1437
+	Gen at creation: 	1398
+	Parent ID: 		5
+	Top level ID: 		5
+	Flags: 			-
+	Send transid: 		0
+	Send time: 		2026-10-09 18:22:53 +0300
+	Receive transid: 	0
+	Receive time: 		-
+	Snapshot(s):
+	Quota group:		n/a
+Delete subvolume 377 (commit): '/run/looom-top/@bootstrap-gc-recovery-b'
+GC retain bootstrap: @bootstrap-gc-recovery-final
+GC apply complete; frozen inputs, evidence and persistent data retained

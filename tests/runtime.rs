@@ -202,7 +202,7 @@ fn publication_and_gc_cases(root: &Path) {
     let image = root.join("esp.img");
     File::create(&image)
         .unwrap()
-        .set_len(128 * 1024 * 1024)
+        .set_len(512 * 1024 * 1024)
         .unwrap();
     command("mkfs.fat", &["-F", "32", string(&image).unwrap()]).unwrap();
     let esp_path = PathBuf::from(format!("/run/looom-native-esp-{suffix}"));
@@ -244,30 +244,24 @@ fn publication_and_gc_cases(root: &Path) {
         top: top.0.clone(),
         esp: esp.0.clone(),
     };
-    let source = top.0.join("@root-mvp-b");
-    let metadata = Metadata {
-        schema_version: 1,
-        id: "mvp-b".into(),
-        phase: "validated".into(),
-        root_subvolume: "@root-mvp-b".into(),
-        kernel_package: "linux-lts".into(),
-        kernel_version: fs::read_dir(source.join("usr/lib/modules"))
-            .unwrap()
-            .next()
-            .unwrap()
-            .unwrap()
-            .file_name()
-            .into_string()
-            .unwrap(),
-        root_uuid: uuid.clone(),
-        esp_uuid: manager.machine.esp_uuid.clone(),
-        uki_sha256: hash_file(&source.join("boot/looom-mvp-b.efi")).unwrap(),
-        declarative_value: "mvp-b".into(),
-        created_at: 0,
-        engine: None,
-    };
+    // Any surviving confirmed native release can supply this immutable fixture.
+    // Real GC is free to remove obsolete releases, including the old mvp-b.
+    let records = top.0.join("@state/releases");
+    let mut available: Vec<Metadata> = fs::read_dir(records)
+        .unwrap()
+        .map(|e| serde_json::from_slice(&fs::read(e.unwrap().path()).unwrap()).unwrap())
+        .filter(|m: &Metadata| m.phase == "confirmed" && top.0.join(&m.root_subvolume).exists())
+        .collect();
+    available.sort_by_key(|m| (m.created_at, m.id.clone()));
+    let mut metadata = available
+        .pop()
+        .expect("a confirmed source release is required");
+    let id = metadata.id.clone();
+    let source = top.0.join(&metadata.root_subvolume);
+    metadata.phase = "validated".into();
+    metadata.esp_uuid = manager.machine.esp_uuid.clone();
     manager.save(&metadata).unwrap();
-    manager.operation("mvp-b", "validated").unwrap();
+    manager.operation(&id, "validated").unwrap();
     mkdir(&manager.efi(), 0o700).unwrap();
     let grub = manager.esp.join("looom/grub");
     mkdir(&grub, 0o700).unwrap();
@@ -284,7 +278,7 @@ fn publication_and_gc_cases(root: &Path) {
     let environment = manager.environment().unwrap();
     let journals = manager.state.join("publications");
     mkdir(&journals, 0o700).unwrap();
-    let journal = journals.join("mvp-b.json");
+    let journal = journals.join(format!("{id}.json"));
     let victim = esp.0.join("victim");
     fs::write(&victim, b"must remain intact").unwrap();
     for pending in ["../victim", ".uki-link"] {
@@ -296,7 +290,7 @@ fn publication_and_gc_cases(root: &Path) {
             mkdir(&checked.efi(), 0o700).unwrap();
             symlink(&victim, checked.efi().join(pending)).unwrap();
         }
-        json(&journal, &serde_json::json!({"id":"mvp-b", "uki_sha256": metadata.uki_sha256, "pending_uki":pending}), 0o600).unwrap();
+        json(&journal, &serde_json::json!({"id":&id, "uki_sha256": metadata.uki_sha256, "pending_uki":pending}), 0o600).unwrap();
         assert!(checked.recover_publications().is_err());
         assert_eq!(fs::read(&victim).unwrap(), b"must remain intact");
         fs::remove_file(&journal).unwrap();
@@ -322,16 +316,16 @@ fn publication_and_gc_cases(root: &Path) {
     }
     filler.sync_all().unwrap();
     drop(filler);
-    assert!(manager.publish("mvp-b").is_err());
+    assert!(manager.publish(&id).is_err());
     assert_eq!(fs::read_to_string(grub.join("grub.cfg")).unwrap(), original);
     assert_eq!(manager.environment().unwrap(), environment);
-    assert!(!manager.efi().join("looom-mvp-b.efi").exists());
-    assert_eq!(manager.load("mvp-b").unwrap().phase, "validated");
+    assert!(!manager.efi().join(format!("looom-{id}.efi")).exists());
+    assert_eq!(manager.load(&id).unwrap().phase, "validated");
     fs::remove_file(esp.0.join("filler")).unwrap();
     unsafe {
         std::env::set_var("LOOOM_FAIL_AFTER", "uki");
     }
-    assert!(manager.publish("mvp-b").is_err());
+    assert!(manager.publish(&id).is_err());
     unsafe {
         std::env::remove_var("LOOOM_FAIL_AFTER");
     }
@@ -339,27 +333,29 @@ fn publication_and_gc_cases(root: &Path) {
     assert!(
         !fs::read_to_string(grub.join("grub.cfg"))
             .unwrap()
-            .contains("--id looom-mvp-b {")
+            .contains(&format!("--id looom-{id} {{"))
     );
     assert_eq!(manager.environment().unwrap(), environment);
     // A FAT power cut may corrupt a renamed but uncommitted UKI. Rebuild it
     // from the verified read-only root; never repair a published slot this way.
-    let published_uki = manager.efi().join("looom-mvp-b.efi");
+    let published_uki = manager.efi().join(format!("looom-{id}.efi"));
     fs::write(&published_uki, b"damaged candidate").unwrap();
-    manager.publish("mvp-b").unwrap();
-    manager
-        .validate(&manager.load("mvp-b").unwrap(), true)
-        .unwrap();
+    manager.publish(&id).unwrap();
+    manager.validate(&manager.load(&id).unwrap(), true).unwrap();
     assert_eq!(manager.environment().unwrap(), environment);
     fs::write(&published_uki, b"damaged published slot").unwrap();
-    assert!(manager.publish("mvp-b").is_err());
+    assert!(manager.publish(&id).is_err());
     assert_eq!(fs::read(&published_uki).unwrap(), b"damaged published slot");
-    fs::copy(source.join("boot/looom-mvp-b.efi"), &published_uki).unwrap();
+    fs::copy(source.join(format!("boot/looom-{id}.efi")), &published_uki).unwrap();
     println!("PASS: damaged uncommitted UKI rebuilt; damaged published UKI preserved and rejected");
     println!(
         "PASS: native publication on actual FAT ENOSPC, interruption, recovery and unchanged saved choice"
     );
-    let gc_id = format!("rust-gc-{}", suffix.to_ascii_lowercase());
+    let gc_id = format!(
+        "rust-gc-{}-{}",
+        suffix.to_ascii_lowercase(),
+        "x".repeat(64 - 9 - suffix.len())
+    );
     let owned = top.0.join(format!("@root-{gc_id}"));
     command("btrfs", &["subvolume", "create", string(&owned).unwrap()]).unwrap();
     let mut garbage = metadata.clone();
@@ -369,11 +365,120 @@ fn publication_and_gc_cases(root: &Path) {
     manager.save(&garbage).unwrap();
     manager.gc(2, false).unwrap();
     assert!(owned.exists());
+    // Saved and one-shot targets, mounted roots and symlinks are protected.
+    manager
+        .set_environment(&[format!("next_entry=looom-{gc_id}")])
+        .unwrap();
     manager.gc(2, true).unwrap();
+    assert!(owned.exists());
+    manager
+        .set_environment(&["next_entry=".into(), format!("saved_entry=looom-{gc_id}")])
+        .unwrap();
+    manager.gc(2, true).unwrap();
+    assert!(owned.exists());
+    manager
+        .set_environment(&["saved_entry=looom-bootstrap".into()])
+        .unwrap();
+    manager.operation(&gc_id, "configured").unwrap();
+    manager.gc(2, true).unwrap();
+    assert!(owned.exists());
+    manager.operation(&gc_id, "validated").unwrap();
+    mkdir(&owned.join("nested"), 0o700).unwrap();
+    let mounted_path = PathBuf::from(format!("/run/looom-gc-mounted-{suffix}"));
+    mkdir(&mounted_path, 0o700).unwrap();
+    command(
+        "mount",
+        &[
+            "-o",
+            &format!("subvol=@root-{gc_id},rw"),
+            &format!("UUID={uuid}"),
+            string(&mounted_path).unwrap(),
+        ],
+    )
+    .unwrap();
+    let mounted = Mounted(mounted_path);
+    manager.gc(2, true).unwrap();
+    assert!(owned.exists());
+    let mut removing = garbage.clone();
+    removing.phase = "removing".into();
+    manager.save(&removing).unwrap();
+    assert!(manager.finish_removal(&removing).is_err());
+    let nested_path = PathBuf::from(format!("/run/looom-gc-nested-{suffix}"));
+    mkdir(&nested_path, 0o700).unwrap();
+    command(
+        "mount",
+        &[
+            "--bind",
+            string(&mounted.0.join("nested")).unwrap(),
+            string(&nested_path).unwrap(),
+        ],
+    )
+    .unwrap();
+    let nested = Mounted(nested_path);
+    drop(mounted);
+    assert!(manager.finish_removal(&removing).is_err());
+    assert!(owned.exists());
+    drop(nested);
+    let shared = root.join("shared-bind");
+    mkdir(&shared, 0o700).unwrap();
+    fs::write(shared.join("marker"), b"persistent data must survive").unwrap();
+    command(
+        "mount",
+        &[
+            "--bind",
+            string(&shared).unwrap(),
+            string(&owned.join("nested")).unwrap(),
+        ],
+    )
+    .unwrap();
+    let shared_bind = Mounted(owned.join("nested"));
+    assert!(manager.finish_removal(&removing).is_err());
+    assert!(owned.exists());
+    drop(shared_bind);
+    mkdir(&owned.join("nested"), 0o700).unwrap();
+    command(
+        "mount",
+        &[
+            "-t",
+            "tmpfs",
+            "-o",
+            "size=1M,mode=0700",
+            "none",
+            string(&owned.join("nested")).unwrap(),
+        ],
+    )
+    .unwrap();
+    let foreign_mount = Mounted(owned.join("nested"));
+    assert!(manager.finish_removal(&removing).is_err());
+    assert!(owned.exists());
+    drop(foreign_mount);
+    assert_eq!(
+        fs::read(shared.join("marker")).unwrap(),
+        b"persistent data must survive"
+    );
+    for point in ["gc-journal", "gc-menu", "gc-root", "gc-uki"] {
+        unsafe {
+            std::env::set_var("LOOOM_FAIL_AFTER", point);
+        }
+        assert!(manager.gc(2, true).is_err());
+        unsafe {
+            std::env::remove_var("LOOOM_FAIL_AFTER");
+        }
+        assert_eq!(manager.load(&gc_id).unwrap().phase, "removing");
+    }
+    manager.finish_removal(&removing).unwrap();
     assert!(!owned.exists());
     assert!(manager.load(&gc_id).is_err());
-    assert_eq!(manager.load("mvp-b").unwrap().phase, "published");
+    assert_eq!(manager.load(&id).unwrap().phase, "published");
+    // A registry entry cannot turn a symlink into an owned Btrfs root.
+    symlink(&source, &owned).unwrap();
+    manager.save(&garbage).unwrap();
+    assert!(manager.gc(2, true).is_err());
+    assert!(source.exists());
+    fs::remove_file(&owned).unwrap();
+    manager.finish_removal(&removing).unwrap();
+    assert!(source.exists());
     println!(
-        "PASS: native GC dry-run and removal touch only the uniquely created fixture subvolume"
+        "PASS: GC preview, selected/mounted protection, symlink refusal and four interrupted removals"
     );
 }

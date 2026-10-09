@@ -1,0 +1,6 @@
+Current bootstrap operation: @bootstrap-gc-recovery-checked ("complete")
+@bootstrap-gc-recovery-a "removed" source=rust-bootstrap-recovery kernel=7.2.9-arch1-1
+@bootstrap-gc-recovery-b "removed" source=rust-bootstrap-recovery kernel=7.2.9-arch1-1
+@bootstrap-gc-recovery-checked "complete" source=rust-gc-generations kernel=7.2.9-arch1-1
+@bootstrap-gc-recovery-final "complete" source=rust-bootstrap-recovery kernel=7.2.9-arch1-1
+@bootstrap-rust-upgrade-1007 "removed" source=rust-upgrade-1007 kernel=7.2.9-arch1-1

@@ -1,0 +1,9 @@
+GC candidate: completed bootstrap trial EFI slot
+GC retain bootstrap: @bootstrap-gc-recovery-a
+GC retain bootstrap: @bootstrap-gc-recovery-b
+GC retain release: rust-bootstrap-recovery
+GC retain release: rust-upgrade-1007
+GC candidate: completed bootstrap trial EFI slot
+GC retain bootstrap: @bootstrap-gc-recovery-a
+GC retain bootstrap: @bootstrap-gc-recovery-b
+GC apply complete; frozen inputs, evidence and persistent data retained

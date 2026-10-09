@@ -1,0 +1,25 @@
+GC bootstrap candidate: @bootstrap-gc-recovery-a
+GC retain bootstrap: @bootstrap-gc-recovery-b
+GC retain release: rust-bootstrap-recovery
+GC retain release: rust-upgrade-1007
+GC bootstrap candidate: @bootstrap-gc-recovery-a
+@bootstrap-gc-recovery-a
+	Name: 			@bootstrap-gc-recovery-a
+	UUID: 			646ffe1d-0e07-014f-b371-dc813bee91e3
+	Parent UUID: 		8fd70e93-95d4-024d-b3b3-082a580bd26e
+	Received UUID: 		-
+	Creation time: 		2026-10-09 18:20:30 +0300
+	Subvolume ID: 		376
+	Generation: 		1396
+	Gen at creation: 	1388
+	Parent ID: 		5
+	Top level ID: 		5
+	Flags: 			-
+	Send transid: 		0
+	Send time: 		2026-10-09 18:20:30 +0300
+	Receive transid: 	0
+	Receive time: 		-
+	Snapshot(s):
+	Quota group:		n/a
+Delete subvolume 376 (commit): '/run/looom-top/@bootstrap-gc-recovery-a'
+looom: Injected interruption after gc-bootstrap-root

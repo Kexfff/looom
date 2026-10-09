@@ -1,0 +1,5 @@
+GC retain bootstrap: @bootstrap-gc-recovery-a
+GC retain bootstrap: @bootstrap-rust-upgrade-1007
+GC retain release: rust-bootstrap-recovery
+GC retain release: rust-upgrade-1007
+GC preview complete; frozen inputs, evidence and persistent data retained

@@ -1,0 +1,11 @@
+User=1000
+Name=codex
+Seat=seat0
+Type=wayland
+Active=yes
+plasma-plasmashell.service: active
+plasma-kwin_wayland.service: active
+pipewire.service: active
+pipewire-pulse.service: active
+wireplumber.service: active
+PASS: actual local Plasma Wayland session and audio services

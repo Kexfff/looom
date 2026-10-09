@@ -1,0 +1,930 @@
+Oct 09 18:13:46 archlinux kernel: Linux version 7.2.9-arch1-1 (linux@archlinux) (gcc (GCC) 16.2.1 20260810, GNU ld (GNU Binutils) 2.47) #1 SMP PREEMPT_DYNAMIC Sat, 03 Oct 2026 11:43:28 +0000
+Oct 09 18:13:46 archlinux kernel: Command line: root=UUID=a79f6ab7-52ab-49d0-ab3c-a2b3a1918140 rootflags=subvol=@root-rust-bootstrap-recovery ro console=tty0 console=ttyS0,115200n8
+Oct 09 18:13:46 archlinux kernel: x86/CPU: Model not found in latest microcode list
+Oct 09 18:13:46 archlinux kernel: x86/split lock detection: #DB: warning on user-space bus_locks
+Oct 09 18:13:46 archlinux kernel: BIOS-provided physical RAM map:
+Oct 09 18:13:46 archlinux kernel: BIOS-e820: [mem 0x0000000000000000-0x000000000009ffff]  System RAM
+Oct 09 18:13:46 archlinux kernel: BIOS-e820: [gap 0x00000000000a0000-0x00000000000fffff]
+Oct 09 18:13:46 archlinux kernel: BIOS-e820: [mem 0x0000000000100000-0x0000000000811fff]  System RAM
+Oct 09 18:13:46 archlinux kernel: BIOS-e820: [mem 0x0000000000812000-0x0000000000812fff]  device reserved
+Oct 09 18:13:46 archlinux kernel: BIOS-e820: [mem 0x0000000000813000-0x000000007ee52fff]  System RAM
+Oct 09 18:13:46 archlinux kernel: BIOS-e820: [mem 0x000000007ee53000-0x000000007ef13fff]  device reserved
+Oct 09 18:13:46 archlinux kernel: BIOS-e820: [mem 0x000000007ef14000-0x000000007fc61fff]  System RAM
+Oct 09 18:13:46 archlinux kernel: BIOS-e820: [mem 0x000000007fc62000-0x000000007fee1fff]  device reserved
+Oct 09 18:13:46 archlinux kernel: BIOS-e820: [mem 0x000000007fee2000-0x000000007fef3fff]  ACPI data
+Oct 09 18:13:46 archlinux kernel: BIOS-e820: [mem 0x000000007fef4000-0x000000007ff73fff]  ACPI NVS
+Oct 09 18:13:46 archlinux kernel: BIOS-e820: [mem 0x000000007ff74000-0x000000007ff7bfff]  System RAM
+Oct 09 18:13:46 archlinux kernel: BIOS-e820: [mem 0x000000007ff7c000-0x000000007fffffff]  device reserved
+Oct 09 18:13:46 archlinux kernel: BIOS-e820: [gap 0x0000000080000000-0x00000000dfffffff]
+Oct 09 18:13:46 archlinux kernel: BIOS-e820: [mem 0x00000000e0000000-0x00000000efffffff]  device reserved
+Oct 09 18:13:46 archlinux kernel: BIOS-e820: [gap 0x00000000f0000000-0x00000000feffbfff]
+Oct 09 18:13:46 archlinux kernel: BIOS-e820: [mem 0x00000000feffc000-0x00000000feffffff]  device reserved
+Oct 09 18:13:46 archlinux kernel: BIOS-e820: [gap 0x00000000ff000000-0x00000000ffbfffff]
+Oct 09 18:13:46 archlinux kernel: BIOS-e820: [mem 0x00000000ffc00000-0x00000000ffffffff]  device reserved
+Oct 09 18:13:46 archlinux kernel: BIOS-e820: [mem 0x0000000100000000-0x000000027fffffff]  System RAM
+Oct 09 18:13:46 archlinux kernel: NX (Execute Disable) protection: active
+Oct 09 18:13:46 archlinux kernel: APIC: Static calls initialized
+Oct 09 18:13:46 archlinux kernel: efi: EFI v2.7 by EDK II
+Oct 09 18:13:46 archlinux kernel: efi: SMBIOS=0x7fcf4000 ACPI=0x7fef3000 ACPI 2.0=0x7fef3014 MEMATTR=0x7e64f018 INITRD=0x7e652a98 RNG=0x7fee9018 
+Oct 09 18:13:46 archlinux kernel: random: crng init done
+Oct 09 18:13:46 archlinux kernel: efi: Remove mem123: MMIO range=[0xffc00000-0xffffffff] (4MB) from e820 map
+Oct 09 18:13:46 archlinux kernel: e820: remove [mem 0xffc00000-0xffffffff] device reserved
+Oct 09 18:13:46 archlinux kernel: DMI: SMBIOS 2.8 present.
+Oct 09 18:13:46 archlinux kernel: DMI: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
+Oct 09 18:13:46 archlinux kernel: DMI: Memory slots populated: 1/1
+Oct 09 18:13:46 archlinux kernel: Hypervisor detected: KVM
+Oct 09 18:13:46 archlinux kernel: last_pfn = 0x7ff7c max_arch_pfn = 0x400000000
+Oct 09 18:13:46 archlinux kernel: kvm-clock: Using msrs 4b564d01 and 4b564d00
+Oct 09 18:13:46 archlinux kernel: kvm-clock: using sched offset of 12936968618 cycles
+Oct 09 18:13:46 archlinux kernel: clocksource: kvm-clock: mask: 0xffffffffffffffff max_cycles: 0x1cd42e4dffb, max_idle_ns: 881590591483 ns
+Oct 09 18:13:46 archlinux kernel: tsc: Detected 3686.400 MHz processor
+Oct 09 18:13:46 archlinux kernel: e820: update [mem 0x00000000-0x00000fff] System RAM ==> device reserved
+Oct 09 18:13:46 archlinux kernel: e820: remove [mem 0x000a0000-0x000fffff] System RAM
+Oct 09 18:13:46 archlinux kernel: last_pfn = 0x280000 max_arch_pfn = 0x400000000
+Oct 09 18:13:46 archlinux kernel: MTRR map: 4 entries (2 fixed + 2 variable; max 18), built from 8 variable MTRRs
+Oct 09 18:13:46 archlinux kernel: x86/PAT: Configuration [0-7]: WB  WC  UC- UC  WB  WP  UC- WT  
+Oct 09 18:13:46 archlinux kernel: last_pfn = 0x7ff7c max_arch_pfn = 0x400000000
+Oct 09 18:13:46 archlinux kernel: Using GB pages for direct mapping
+Oct 09 18:13:46 archlinux kernel: Secure boot disabled
+Oct 09 18:13:46 archlinux kernel: RAMDISK: [mem 0x5fbf9000-0x6c216fff]
+Oct 09 18:13:46 archlinux kernel: ACPI: Early table checksum verification disabled
+Oct 09 18:13:46 archlinux kernel: ACPI: RSDP 0x000000007FEF3014 000024 (v02 BOCHS )
+Oct 09 18:13:46 archlinux kernel: ACPI: XSDT 0x000000007FEF20E8 00004C (v01 BOCHS  BXPC     00000001      01000013)
+Oct 09 18:13:46 archlinux kernel: ACPI: FACP 0x000000007FEEE000 0000F4 (v03 BOCHS  BXPC     00000001 BXPC 00000001)
+Oct 09 18:13:46 archlinux kernel: ACPI: DSDT 0x000000007FEEF000 002BF2 (v01 BOCHS  BXPC     00000001 BXPC 00000001)
+Oct 09 18:13:46 archlinux kernel: ACPI: FACS 0x000000007FF52000 000040
+Oct 09 18:13:46 archlinux kernel: ACPI: APIC 0x000000007FEED000 0000A0 (v03 BOCHS  BXPC     00000001 BXPC 00000001)
+Oct 09 18:13:46 archlinux kernel: ACPI: MCFG 0x000000007FEEC000 00003C (v01 BOCHS  BXPC     00000001 BXPC 00000001)
+Oct 09 18:13:46 archlinux kernel: ACPI: WAET 0x000000007FEEB000 000028 (v01 BOCHS  BXPC     00000001 BXPC 00000001)
+Oct 09 18:13:46 archlinux kernel: ACPI: BGRT 0x000000007FEEA000 000038 (v01 INTEL  EDK2     00000002      01000013)
+Oct 09 18:13:46 archlinux kernel: ACPI: Reserving FACP table memory at [mem 0x7feee000-0x7feee0f3]
+Oct 09 18:13:46 archlinux kernel: ACPI: Reserving DSDT table memory at [mem 0x7feef000-0x7fef1bf1]
+Oct 09 18:13:46 archlinux kernel: ACPI: Reserving FACS table memory at [mem 0x7ff52000-0x7ff5203f]
+Oct 09 18:13:46 archlinux kernel: ACPI: Reserving APIC table memory at [mem 0x7feed000-0x7feed09f]
+Oct 09 18:13:46 archlinux kernel: ACPI: Reserving MCFG table memory at [mem 0x7feec000-0x7feec03b]
+Oct 09 18:13:46 archlinux kernel: ACPI: Reserving WAET table memory at [mem 0x7feeb000-0x7feeb027]
+Oct 09 18:13:46 archlinux kernel: ACPI: Reserving BGRT table memory at [mem 0x7feea000-0x7feea037]
+Oct 09 18:13:46 archlinux kernel: No NUMA configuration found
+Oct 09 18:13:46 archlinux kernel: Faking a node at [mem 0x0000000000000000-0x000000027fffffff]
+Oct 09 18:13:46 archlinux kernel: NODE_DATA(0) allocated [mem 0x27ffd4f80-0x27fffffff]
+Oct 09 18:13:46 archlinux kernel: ACPI: PM-Timer IO Port: 0x608
+Oct 09 18:13:46 archlinux kernel: ACPI: LAPIC_NMI (acpi_id[0xff] dfl dfl lint[0x1])
+Oct 09 18:13:46 archlinux kernel: IOAPIC[0]: apic_id 0, version 17, address 0xfec00000, GSI 0-23
+Oct 09 18:13:46 archlinux kernel: ACPI: INT_SRC_OVR (bus 0 bus_irq 0 global_irq 2 dfl dfl)
+Oct 09 18:13:46 archlinux kernel: ACPI: INT_SRC_OVR (bus 0 bus_irq 5 global_irq 5 high level)
+Oct 09 18:13:46 archlinux kernel: ACPI: INT_SRC_OVR (bus 0 bus_irq 9 global_irq 9 high level)
+Oct 09 18:13:46 archlinux kernel: ACPI: INT_SRC_OVR (bus 0 bus_irq 10 global_irq 10 high level)
+Oct 09 18:13:46 archlinux kernel: ACPI: INT_SRC_OVR (bus 0 bus_irq 11 global_irq 11 high level)
+Oct 09 18:13:46 archlinux kernel: ACPI: Using ACPI (MADT) for SMP configuration information
+Oct 09 18:13:46 archlinux kernel: e820: update [mem 0x7dab1000-0x7dab9fff] System RAM ==> device reserved
+Oct 09 18:13:46 archlinux kernel: TSC deadline timer available
+Oct 09 18:13:46 archlinux kernel: CPU topo: Max. logical packages:   6
+Oct 09 18:13:46 archlinux kernel: CPU topo: Max. logical nodes:      1
+Oct 09 18:13:46 archlinux kernel: CPU topo: Num. nodes per package:  1
+Oct 09 18:13:46 archlinux kernel: CPU topo: Max. logical dies:       6
+Oct 09 18:13:46 archlinux kernel: CPU topo: Max. dies per package:   1
+Oct 09 18:13:46 archlinux kernel: CPU topo: Max. threads per core:   1
+Oct 09 18:13:46 archlinux kernel: CPU topo: Num. cores per package:     1
+Oct 09 18:13:46 archlinux kernel: CPU topo: Num. threads per package:   1
+Oct 09 18:13:46 archlinux kernel: CPU topo: Allowing 6 present CPUs plus 0 hotplug CPUs
+Oct 09 18:13:46 archlinux kernel: kvm-guest: APIC: eoi() replaced with kvm_guest_apic_eoi_write()
+Oct 09 18:13:46 archlinux kernel: kvm-guest: KVM setup pv remote TLB flush
+Oct 09 18:13:46 archlinux kernel: kvm-guest: setup PV sched yield
+Oct 09 18:13:46 archlinux kernel: PM: hibernation: Registered nosave memory: [mem 0x00000000-0x00000fff]
+Oct 09 18:13:46 archlinux kernel: PM: hibernation: Registered nosave memory: [mem 0x000a0000-0x000fffff]
+Oct 09 18:13:46 archlinux kernel: PM: hibernation: Registered nosave memory: [mem 0x00812000-0x00812fff]
+Oct 09 18:13:46 archlinux kernel: PM: hibernation: Registered nosave memory: [mem 0x7dab1000-0x7dab9fff]
+Oct 09 18:13:46 archlinux kernel: PM: hibernation: Registered nosave memory: [mem 0x7ee53000-0x7ef13fff]
+Oct 09 18:13:46 archlinux kernel: PM: hibernation: Registered nosave memory: [mem 0x7fc62000-0x7ff73fff]
+Oct 09 18:13:46 archlinux kernel: PM: hibernation: Registered nosave memory: [mem 0x7ff7c000-0xffffffff]
+Oct 09 18:13:46 archlinux kernel: [gap 0x80000000-0xdfffffff] available for PCI devices
+Oct 09 18:13:46 archlinux kernel: Booting paravirtualized kernel on KVM
+Oct 09 18:13:46 archlinux kernel: clocksource: refined-jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 1910969940391419 ns
+Oct 09 18:13:46 archlinux kernel: Zone ranges:
+Oct 09 18:13:46 archlinux kernel:   DMA      [mem 0x0000000000001000-0x0000000000ffffff]
+Oct 09 18:13:46 archlinux kernel:   DMA32    [mem 0x0000000001000000-0x00000000ffffffff]
+Oct 09 18:13:46 archlinux kernel:   Normal   [mem 0x0000000100000000-0x000000027fffffff]
+Oct 09 18:13:46 archlinux kernel:   Device   empty
+Oct 09 18:13:46 archlinux kernel: Movable zone start for each node
+Oct 09 18:13:46 archlinux kernel: Early memory node ranges
+Oct 09 18:13:46 archlinux kernel:   node   0: [mem 0x0000000000001000-0x000000000009ffff]
+Oct 09 18:13:46 archlinux kernel:   node   0: [mem 0x0000000000100000-0x0000000000811fff]
+Oct 09 18:13:46 archlinux kernel:   node   0: [mem 0x0000000000813000-0x000000007ee52fff]
+Oct 09 18:13:46 archlinux kernel:   node   0: [mem 0x000000007ef14000-0x000000007fc61fff]
+Oct 09 18:13:46 archlinux kernel:   node   0: [mem 0x000000007ff74000-0x000000007ff7bfff]
+Oct 09 18:13:46 archlinux kernel:   node   0: [mem 0x0000000100000000-0x000000027fffffff]
+Oct 09 18:13:46 archlinux kernel: Initmem setup node 0 [mem 0x0000000000001000-0x000000027fffffff]
+Oct 09 18:13:46 archlinux kernel: On node 0, zone DMA: 1 pages in unavailable ranges
+Oct 09 18:13:46 archlinux kernel: On node 0, zone DMA: 96 pages in unavailable ranges
+Oct 09 18:13:46 archlinux kernel: On node 0, zone DMA: 1 pages in unavailable ranges
+Oct 09 18:13:46 archlinux kernel: On node 0, zone DMA32: 193 pages in unavailable ranges
+Oct 09 18:13:46 archlinux kernel: On node 0, zone DMA32: 786 pages in unavailable ranges
+Oct 09 18:13:46 archlinux kernel: On node 0, zone Normal: 132 pages in unavailable ranges
+Oct 09 18:13:46 archlinux kernel: setup_percpu: NR_CPUS:8192 nr_cpumask_bits:6 nr_cpu_ids:6 nr_node_ids:1
+Oct 09 18:13:46 archlinux kernel: percpu: Embedded 63 pages/cpu s221184 r8192 d28672 u262144
+Oct 09 18:13:46 archlinux kernel: pcpu-alloc: s221184 r8192 d28672 u262144 alloc=1*2097152
+Oct 09 18:13:46 archlinux kernel: pcpu-alloc: [0] 0 1 2 3 4 5 - - 
+Oct 09 18:13:46 archlinux kernel: kvm-guest: PV spinlocks enabled
+Oct 09 18:13:46 archlinux kernel: PV qspinlock hash table entries: 256 (order: 0, 4096 bytes, linear)
+Oct 09 18:13:46 archlinux kernel: Kernel command line: root=UUID=a79f6ab7-52ab-49d0-ab3c-a2b3a1918140 rootflags=subvol=@root-rust-bootstrap-recovery ro console=tty0 console=ttyS0,115200n8
+Oct 09 18:13:46 archlinux kernel: printk: log buffer data + meta data: 131072 + 557056 = 688128 bytes
+Oct 09 18:13:46 archlinux kernel: Dentry cache hash table entries: 1048576 (order: 11, 8388608 bytes, linear)
+Oct 09 18:13:46 archlinux kernel: Inode-cache hash table entries: 524288 (order: 10, 4194304 bytes, linear)
+Oct 09 18:13:46 archlinux kernel: software IO TLB: area num 8.
+Oct 09 18:13:46 archlinux kernel: Fallback order for Node 0: 0 
+Oct 09 18:13:46 archlinux kernel: Built 1 zonelists, mobility grouping on.  Total pages: 2095943
+Oct 09 18:13:46 archlinux kernel: Policy zone: Normal
+Oct 09 18:13:46 archlinux kernel: mem auto-init: stack:all(zero), heap alloc:on, heap free:off
+Oct 09 18:13:46 archlinux kernel: SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=6, Nodes=1
+Oct 09 18:13:46 archlinux kernel: ftrace: allocating 58761 entries in 232 pages
+Oct 09 18:13:46 archlinux kernel: ftrace: allocated 232 pages with 4 groups
+Oct 09 18:13:46 archlinux kernel: Dynamic Preempt: full
+Oct 09 18:13:46 archlinux kernel: rcu: Preemptible hierarchical RCU implementation.
+Oct 09 18:13:46 archlinux kernel: rcu:         RCU restricting CPUs from NR_CPUS=8192 to nr_cpu_ids=6.
+Oct 09 18:13:46 archlinux kernel: rcu:         RCU priority boosting: priority 1 delay 500 ms.
+Oct 09 18:13:46 archlinux kernel:         Trampoline variant of Tasks RCU enabled.
+Oct 09 18:13:46 archlinux kernel:         Rude variant of Tasks RCU enabled.
+Oct 09 18:13:46 archlinux kernel:         Tracing variant of Tasks RCU enabled.
+Oct 09 18:13:46 archlinux kernel: rcu: RCU calculated value of scheduler-enlistment delay is 100 jiffies.
+Oct 09 18:13:46 archlinux kernel: rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=6
+Oct 09 18:13:46 archlinux kernel: RCU Tasks: Setting shift to 3 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=6.
+Oct 09 18:13:46 archlinux kernel: RCU Tasks Rude: Setting shift to 3 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=6.
+Oct 09 18:13:46 archlinux kernel: NR_IRQS: 524544, nr_irqs: 472, preallocated irqs: 16
+Oct 09 18:13:46 archlinux kernel: rcu: srcu_init: Setting srcu_struct sizes based on contention.
+Oct 09 18:13:46 archlinux kernel: clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 1911260446275000 ns
+Oct 09 18:13:46 archlinux kernel: kfence: initialized - using 2097152 bytes for 255 objects at 0x(____ptrval____)-0x(____ptrval____)
+Oct 09 18:13:46 archlinux kernel: Console: colour dummy device 160x50
+Oct 09 18:13:46 archlinux kernel: printk: legacy console [tty0] enabled
+Oct 09 18:13:46 archlinux kernel: printk: legacy console [ttyS0] enabled
+Oct 09 18:13:46 archlinux kernel: ACPI: Core revision 20260408
+Oct 09 18:13:46 archlinux kernel: APIC: Switch to symmetric I/O mode setup
+Oct 09 18:13:46 archlinux kernel: x2apic enabled
+Oct 09 18:13:46 archlinux kernel: APIC: Switched APIC routing to: physical x2apic
+Oct 09 18:13:46 archlinux kernel: kvm-guest: APIC: send_IPI_mask() replaced with kvm_send_ipi_mask()
+Oct 09 18:13:46 archlinux kernel: kvm-guest: APIC: send_IPI_mask_allbutself() replaced with kvm_send_ipi_mask_allbutself()
+Oct 09 18:13:46 archlinux kernel: kvm-guest: setup PV IPIs
+Oct 09 18:13:46 archlinux kernel: clocksource: tsc-early: mask: 0xffffffffffffffff max_cycles: 0x6a464ae9873, max_idle_ns: 881590529744 ns
+Oct 09 18:13:46 archlinux kernel: Calibrating delay loop (skipped) preset value.. 7372.80 BogoMIPS (lpj=3686400)
+Oct 09 18:13:46 archlinux kernel: x86/cpu: User Mode Instruction Prevention (UMIP) activated
+Oct 09 18:13:46 archlinux kernel: CET detected: Indirect Branch Tracking enabled
+Oct 09 18:13:46 archlinux kernel: Last level iTLB entries: 4KB 0, 2MB 0, 4MB 0
+Oct 09 18:13:46 archlinux kernel: Last level dTLB entries: 4KB 0, 2MB 0, 4MB 0, 1GB 0
+Oct 09 18:13:46 archlinux kernel: mitigations: Enabled attack vectors: user_kernel, user_user, guest_host, guest_guest, SMT mitigations: auto
+Oct 09 18:13:46 archlinux kernel: Speculative Store Bypass: Mitigation: Speculative Store Bypass disabled via prctl
+Oct 09 18:13:46 archlinux kernel: Spectre V2 : Mitigation: Enhanced / Automatic IBRS
+Oct 09 18:13:46 archlinux kernel: Spectre V1 : Mitigation: usercopy/swapgs barriers and __user pointer sanitization
+Oct 09 18:13:46 archlinux kernel: Spectre V2 : Enabling IBPB for BPF
+Oct 09 18:13:46 archlinux kernel: Spectre V2 : mitigation: Enabling conditional Indirect Branch Prediction Barrier
+Oct 09 18:13:46 archlinux kernel: x86/fpu: Supporting XSAVE feature 0x001: 'x87 floating point registers'
+Oct 09 18:13:46 archlinux kernel: x86/fpu: Supporting XSAVE feature 0x002: 'SSE registers'
+Oct 09 18:13:46 archlinux kernel: x86/fpu: Supporting XSAVE feature 0x004: 'AVX registers'
+Oct 09 18:13:46 archlinux kernel: x86/fpu: Supporting XSAVE feature 0x200: 'Protection Keys User registers'
+Oct 09 18:13:46 archlinux kernel: x86/fpu: Supporting XSAVE feature 0x800: 'Control-flow User registers'
+Oct 09 18:13:46 archlinux kernel: x86/fpu: Supporting XSAVE feature 0x1000: 'Control-flow Kernel registers (KVM only)'
+Oct 09 18:13:46 archlinux kernel: x86/fpu: xstate_offset[2]:  576, xstate_sizes[2]:  256
+Oct 09 18:13:46 archlinux kernel: x86/fpu: xstate_offset[9]:  832, xstate_sizes[9]:    8
+Oct 09 18:13:46 archlinux kernel: x86/fpu: xstate_offset[11]:  840, xstate_sizes[11]:   16
+Oct 09 18:13:46 archlinux kernel: x86/fpu: xstate_offset[12]:  856, xstate_sizes[12]:   24
+Oct 09 18:13:46 archlinux kernel: x86/fpu: Enabled xstate features 0x1a07, context size is 880 bytes, using 'compacted' format.
+Oct 09 18:13:46 archlinux kernel: pid_max: default: 32768 minimum: 301
+Oct 09 18:13:46 archlinux kernel: landlock: Up and running.
+Oct 09 18:13:46 archlinux kernel: Yama: becoming mindful.
+Oct 09 18:13:46 archlinux kernel: LSM support for eBPF active
+Oct 09 18:13:46 archlinux kernel: Mount-cache hash table entries: 16384 (order: 5, 131072 bytes, linear)
+Oct 09 18:13:46 archlinux kernel: Mountpoint-cache hash table entries: 16384 (order: 5, 131072 bytes, linear)
+Oct 09 18:13:46 archlinux kernel: VFS: Finished mounting rootfs on nullfs
+Oct 09 18:13:46 archlinux kernel: smpboot: CPU0: Intel(R) Core(TM) Ultra 5 225H (family: 0x6, model: 0xc5, stepping: 0x2)
+Oct 09 18:13:46 archlinux kernel: Performance Events: unsupported CPU family 6 model 197 no PMU driver, software events only.
+Oct 09 18:13:46 archlinux kernel: signal: max sigframe size: 3632
+Oct 09 18:13:46 archlinux kernel: rcu: Hierarchical SRCU implementation.
+Oct 09 18:13:46 archlinux kernel: rcu:         Max phase no-delay instances is 400.
+Oct 09 18:13:46 archlinux kernel: Timer migration: 1 hierarchy levels; 8 children per group; 1 crossnode level
+Oct 09 18:13:46 archlinux kernel: NMI watchdog: Perf NMI watchdog permanently disabled
+Oct 09 18:13:46 archlinux kernel: smp: Bringing up secondary CPUs ...
+Oct 09 18:13:46 archlinux kernel: smpboot: x86: Booting SMP configuration:
+Oct 09 18:13:46 archlinux kernel: .... node  #0, CPUs:      #1 #2 #3 #4 #5
+Oct 09 18:13:46 archlinux kernel: smp: Brought up 1 node, 6 CPUs
+Oct 09 18:13:46 archlinux kernel: smpboot: Total of 6 processors activated (44236.80 BogoMIPS)
+Oct 09 18:13:46 archlinux kernel: Memory: 7861312K/8383772K available (22226K kernel code, 3070K rwdata, 17592K rodata, 4944K init, 5004K bss, 514732K reserved, 0K cma-reserved)
+Oct 09 18:13:46 archlinux kernel: devtmpfs: initialized
+Oct 09 18:13:46 archlinux kernel: x86/mm: Memory block size: 128MB
+Oct 09 18:13:46 archlinux kernel: ACPI: PM: Registering ACPI NVS region [mem 0x7fef4000-0x7ff73fff] (524288 bytes)
+Oct 09 18:13:46 archlinux kernel: posixtimers hash table entries: 4096 (order: 4, 65536 bytes, linear)
+Oct 09 18:13:46 archlinux kernel: futex hash table entries: 2048 (131072 bytes on 1 NUMA nodes, total 128 KiB, linear).
+Oct 09 18:13:46 archlinux kernel: xor: automatically using best checksumming function   avx       
+Oct 09 18:13:46 archlinux kernel: PM: RTC time: 15:13:43, date: 2026-10-09
+Oct 09 18:13:46 archlinux kernel: NET: Registered PF_NETLINK/PF_ROUTE protocol family
+Oct 09 18:13:46 archlinux kernel: DMA: preallocated 1024 KiB GFP_KERNEL pool for atomic allocations
+Oct 09 18:13:46 archlinux kernel: DMA: preallocated 1024 KiB GFP_KERNEL|GFP_DMA pool for atomic allocations
+Oct 09 18:13:46 archlinux kernel: DMA: preallocated 1024 KiB GFP_KERNEL|GFP_DMA32 pool for atomic allocations
+Oct 09 18:13:46 archlinux kernel: audit: initializing netlink subsys (disabled)
+Oct 09 18:13:46 archlinux kernel: audit: type=2000 audit(1791558824.118:1): state=initialized audit_enabled=0 res=1
+Oct 09 18:13:46 archlinux kernel: thermal_sys: Registered thermal governor 'fair_share'
+Oct 09 18:13:46 archlinux kernel: thermal_sys: Registered thermal governor 'bang_bang'
+Oct 09 18:13:46 archlinux kernel: thermal_sys: Registered thermal governor 'step_wise'
+Oct 09 18:13:46 archlinux kernel: thermal_sys: Registered thermal governor 'user_space'
+Oct 09 18:13:46 archlinux kernel: thermal_sys: Registered thermal governor 'power_allocator'
+Oct 09 18:13:46 archlinux kernel: cpuidle: using governor ladder
+Oct 09 18:13:46 archlinux kernel: cpuidle: using governor menu
+Oct 09 18:13:46 archlinux kernel: Freeing SMP alternatives memory: 60K
+Oct 09 18:13:46 archlinux kernel: efi: Freeing EFI boot services memory: 37728K
+Oct 09 18:13:46 archlinux kernel: acpiphp: ACPI Hot Plug PCI Controller Driver version: 0.5
+Oct 09 18:13:46 archlinux kernel: PCI: ECAM [mem 0xe0000000-0xefffffff] (base 0xe0000000) for domain 0000 [bus 00-ff]
+Oct 09 18:13:46 archlinux kernel: PCI: Using configuration type 1 for base access
+Oct 09 18:13:46 archlinux kernel: virt/tdx: TDX not supported by the host platform
+Oct 09 18:13:46 archlinux kernel: kprobes: kprobe jump-optimization is enabled. All kprobes are optimized if possible.
+Oct 09 18:13:46 archlinux kernel: HugeTLB: registered 1.00 GiB page size, pre-allocated 0 pages
+Oct 09 18:13:46 archlinux kernel: HugeTLB: 16380 KiB vmemmap can be freed for a 1.00 GiB page
+Oct 09 18:13:46 archlinux kernel: HugeTLB: registered 2.00 MiB page size, pre-allocated 0 pages
+Oct 09 18:13:46 archlinux kernel: HugeTLB: 28 KiB vmemmap can be freed for a 2.00 MiB page
+Oct 09 18:13:46 archlinux kernel: raid6: using avx2x2 recovery algorithm
+Oct 09 18:13:46 archlinux kernel: raid6: skipped pq benchmark and selected avx2x4
+Oct 09 18:13:46 archlinux kernel: fbcon: Taking over console
+Oct 09 18:13:46 archlinux kernel: ACPI: Added _OSI(Module Device)
+Oct 09 18:13:46 archlinux kernel: ACPI: Added _OSI(Processor Device)
+Oct 09 18:13:46 archlinux kernel: ACPI: Added _OSI(Processor Aggregator Device)
+Oct 09 18:13:46 archlinux kernel: ACPI: 1 ACPI AML tables successfully acquired and loaded
+Oct 09 18:13:46 archlinux kernel: ACPI: \_SB_: platform _OSC: OS support mask [006e7eff]
+Oct 09 18:13:46 archlinux kernel: ACPI: Interpreter enabled
+Oct 09 18:13:46 archlinux kernel: ACPI: PM: (supports S0 S5)
+Oct 09 18:13:46 archlinux kernel: ACPI: Using IOAPIC for interrupt routing
+Oct 09 18:13:46 archlinux kernel: PCI: Using host bridge windows from ACPI; if necessary, use "pci=nocrs" and report a bug
+Oct 09 18:13:46 archlinux kernel: PCI: Using E820 reservations for host bridge windows
+Oct 09 18:13:46 archlinux kernel: ACPI: Enabled 2 GPEs in block 00 to 3F
+Oct 09 18:13:46 archlinux kernel: ACPI: PCI Root Bridge [PCI0] (domain 0000 [bus 00-ff])
+Oct 09 18:13:46 archlinux kernel: acpi PNP0A08:00: _OSC: OS supports [ExtendedConfig ASPM ClockPM Segments MSI EDR HPX-Type3]
+Oct 09 18:13:46 archlinux kernel: acpi PNP0A08:00: _OSC: platform does not support [PCIeHotplug LTR DPC]
+Oct 09 18:13:46 archlinux kernel: acpi PNP0A08:00: _OSC: OS now controls [SHPCHotplug PME AER PCIeCapability]
+Oct 09 18:13:46 archlinux kernel: PCI host bridge to bus 0000:00
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:00: root bus resource [io  0x0000-0x0cf7 window]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:00: root bus resource [io  0x0d00-0xffff window]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:00: root bus resource [mem 0x000a0000-0x000bffff window]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:00: root bus resource [mem 0x80000000-0xdfffffff window]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:00: root bus resource [mem 0xf0000000-0xfebfffff window]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:00: root bus resource [mem 0x38000000000-0x387ffffffff window]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:00: root bus resource [bus 00-ff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:00.0: [8086:29c0] type 00 class 0x060000 conventional PCI endpoint
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:01.0: [1af4:1050] type 00 class 0x030000 conventional PCI endpoint
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:01.0: BAR 0 [mem 0x80000000-0x807fffff pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:01.0: BAR 2 [mem 0x38700000000-0x38700003fff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:01.0: BAR 4 [mem 0x82453000-0x82453fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:01.0: ROM [mem 0xffff0000-0xffffffff pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:01.0: Video device with shadowed ROM at [mem 0x000c0000-0x000dffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.0: [1b36:000c] type 01 class 0x060400 PCIe Root Port
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.0: BAR 0 [mem 0x82452000-0x82452fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.0: PCI bridge to [bus 01]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.0:   bridge window [mem 0x82200000-0x823fffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.0:   bridge window [mem 0x38000000000-0x3807fffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.0: enabling Extended Tags
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.1: [1b36:000c] type 01 class 0x060400 PCIe Root Port
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.1: BAR 0 [mem 0x82451000-0x82451fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.1: PCI bridge to [bus 02]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.1:   bridge window [mem 0x82000000-0x821fffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.1:   bridge window [mem 0x38080000000-0x380ffffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.1: enabling Extended Tags
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.2: [1b36:000c] type 01 class 0x060400 PCIe Root Port
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.2: BAR 0 [mem 0x82450000-0x82450fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.2: PCI bridge to [bus 03]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.2:   bridge window [mem 0x81e00000-0x81ffffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.2:   bridge window [mem 0x38100000000-0x3817fffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.2: enabling Extended Tags
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.3: [1b36:000c] type 01 class 0x060400 PCIe Root Port
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.3: BAR 0 [mem 0x8244f000-0x8244ffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.3: PCI bridge to [bus 04]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.3:   bridge window [mem 0x81c00000-0x81dfffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.3:   bridge window [mem 0x38180000000-0x381ffffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.3: enabling Extended Tags
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.4: [1b36:000c] type 01 class 0x060400 PCIe Root Port
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.4: BAR 0 [mem 0x8244e000-0x8244efff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.4: PCI bridge to [bus 05]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.4:   bridge window [mem 0x81a00000-0x81bfffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.4:   bridge window [mem 0x38200000000-0x3827fffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.4: enabling Extended Tags
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.5: [1b36:000c] type 01 class 0x060400 PCIe Root Port
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.5: BAR 0 [mem 0x8244d000-0x8244dfff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.5: PCI bridge to [bus 06]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.5:   bridge window [mem 0x81800000-0x819fffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.5:   bridge window [mem 0x38280000000-0x382ffffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.5: enabling Extended Tags
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.6: [1b36:000c] type 01 class 0x060400 PCIe Root Port
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.6: BAR 0 [mem 0x8244c000-0x8244cfff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.6: PCI bridge to [bus 07]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.6:   bridge window [mem 0x81600000-0x817fffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.6:   bridge window [mem 0x38300000000-0x3837fffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.6: enabling Extended Tags
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.7: [1b36:000c] type 01 class 0x060400 PCIe Root Port
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.7: BAR 0 [mem 0x8244b000-0x8244bfff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.7: PCI bridge to [bus 08]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.7:   bridge window [mem 0x81400000-0x815fffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.7:   bridge window [mem 0x38380000000-0x383ffffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.7: enabling Extended Tags
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.0: [1b36:000c] type 01 class 0x060400 PCIe Root Port
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.0: BAR 0 [mem 0x8244a000-0x8244afff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.0: PCI bridge to [bus 09]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.0:   bridge window [mem 0x81200000-0x813fffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.0:   bridge window [mem 0x38400000000-0x3847fffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.0: enabling Extended Tags
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.1: [1b36:000c] type 01 class 0x060400 PCIe Root Port
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.1: BAR 0 [mem 0x82449000-0x82449fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.1: PCI bridge to [bus 0a]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.1:   bridge window [mem 0x81000000-0x811fffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.1:   bridge window [mem 0x38480000000-0x384ffffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.1: enabling Extended Tags
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.2: [1b36:000c] type 01 class 0x060400 PCIe Root Port
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.2: BAR 0 [mem 0x82448000-0x82448fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.2: PCI bridge to [bus 0b]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.2:   bridge window [mem 0x80e00000-0x80ffffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.2:   bridge window [mem 0x38500000000-0x3857fffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.2: enabling Extended Tags
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.3: [1b36:000c] type 01 class 0x060400 PCIe Root Port
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.3: BAR 0 [mem 0x82447000-0x82447fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.3: PCI bridge to [bus 0c]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.3:   bridge window [mem 0x80c00000-0x80dfffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.3:   bridge window [mem 0x38580000000-0x385ffffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.3: enabling Extended Tags
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.4: [1b36:000c] type 01 class 0x060400 PCIe Root Port
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.4: BAR 0 [mem 0x82446000-0x82446fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.4: PCI bridge to [bus 0d]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.4:   bridge window [mem 0x80a00000-0x80bfffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.4:   bridge window [mem 0x38600000000-0x3867fffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.4: enabling Extended Tags
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.5: [1b36:000c] type 01 class 0x060400 PCIe Root Port
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.5: BAR 0 [mem 0x82445000-0x82445fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.5: PCI bridge to [bus 0e]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.5:   bridge window [mem 0x80800000-0x809fffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.5:   bridge window [mem 0x38680000000-0x386ffffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.5: enabling Extended Tags
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:1b.0: [8086:293e] type 00 class 0x040300 conventional PCI endpoint
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:1b.0: BAR 0 [mem 0x82440000-0x82443fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:1f.0: [8086:2918] type 00 class 0x060100 conventional PCI endpoint
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:1f.0: quirk: [io  0x0600-0x067f] claimed by ICH6 ACPI/GPIO/TCO
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:1f.2: [8086:2922] type 00 class 0x010601 conventional PCI endpoint
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:1f.2: BAR 4 [io  0x6040-0x605f]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:1f.2: BAR 5 [mem 0x82444000-0x82444fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:1f.3: [8086:2930] type 00 class 0x0c0500 conventional PCI endpoint
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:1f.3: BAR 4 [io  0x6000-0x603f]
+Oct 09 18:13:46 archlinux kernel: acpiphp: Slot [0] registered
+Oct 09 18:13:46 archlinux kernel: pci 0000:01:00.0: [1af4:1041] type 00 class 0x020000 PCIe Endpoint
+Oct 09 18:13:46 archlinux kernel: pci 0000:01:00.0: BAR 1 [mem 0x82200000-0x82200fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:01:00.0: BAR 4 [mem 0x38000000000-0x38000003fff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:01:00.0: ROM [mem 0xfffc0000-0xffffffff pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:01:00.0: enabling Extended Tags
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.0: PCI bridge to [bus 01]
+Oct 09 18:13:46 archlinux kernel: acpiphp: Slot [0-2] registered
+Oct 09 18:13:46 archlinux kernel: pci 0000:02:00.0: [1b36:000d] type 00 class 0x0c0330 PCIe Endpoint
+Oct 09 18:13:46 archlinux kernel: pci 0000:02:00.0: BAR 0 [mem 0x82000000-0x82003fff 64bit]
+Oct 09 18:13:46 archlinux kernel: pci 0000:02:00.0: enabling Extended Tags
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.1: PCI bridge to [bus 02]
+Oct 09 18:13:46 archlinux kernel: acpiphp: Slot [0-3] registered
+Oct 09 18:13:46 archlinux kernel: pci 0000:03:00.0: [1af4:1043] type 00 class 0x078000 PCIe Endpoint
+Oct 09 18:13:46 archlinux kernel: pci 0000:03:00.0: BAR 1 [mem 0x81e00000-0x81e00fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:03:00.0: BAR 4 [mem 0x38100000000-0x38100003fff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:03:00.0: enabling Extended Tags
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.2: PCI bridge to [bus 03]
+Oct 09 18:13:46 archlinux kernel: acpiphp: Slot [0-4] registered
+Oct 09 18:13:46 archlinux kernel: pci 0000:04:00.0: [1af4:1042] type 00 class 0x010000 PCIe Endpoint
+Oct 09 18:13:46 archlinux kernel: pci 0000:04:00.0: BAR 1 [mem 0x81c00000-0x81c00fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:04:00.0: BAR 4 [mem 0x38180000000-0x38180003fff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:04:00.0: enabling Extended Tags
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.3: PCI bridge to [bus 04]
+Oct 09 18:13:46 archlinux kernel: acpiphp: Slot [0-5] registered
+Oct 09 18:13:46 archlinux kernel: pci 0000:05:00.0: [1af4:1045] type 00 class 0x00ff00 PCIe Endpoint
+Oct 09 18:13:46 archlinux kernel: pci 0000:05:00.0: BAR 1 [mem 0x81a00000-0x81a00fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:05:00.0: BAR 4 [mem 0x38200000000-0x38200003fff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:05:00.0: enabling Extended Tags
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.4: PCI bridge to [bus 05]
+Oct 09 18:13:46 archlinux kernel: acpiphp: Slot [0-6] registered
+Oct 09 18:13:46 archlinux kernel: pci 0000:06:00.0: [1af4:1044] type 00 class 0x00ff00 PCIe Endpoint
+Oct 09 18:13:46 archlinux kernel: pci 0000:06:00.0: BAR 1 [mem 0x81800000-0x81800fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:06:00.0: BAR 4 [mem 0x38280000000-0x38280003fff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:06:00.0: enabling Extended Tags
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.5: PCI bridge to [bus 06]
+Oct 09 18:13:46 archlinux kernel: acpiphp: Slot [0-7] registered
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.6: PCI bridge to [bus 07]
+Oct 09 18:13:46 archlinux kernel: acpiphp: Slot [0-8] registered
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.7: PCI bridge to [bus 08]
+Oct 09 18:13:46 archlinux kernel: acpiphp: Slot [0-9] registered
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.0: PCI bridge to [bus 09]
+Oct 09 18:13:46 archlinux kernel: acpiphp: Slot [0-10] registered
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.1: PCI bridge to [bus 0a]
+Oct 09 18:13:46 archlinux kernel: acpiphp: Slot [0-11] registered
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.2: PCI bridge to [bus 0b]
+Oct 09 18:13:46 archlinux kernel: acpiphp: Slot [0-12] registered
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.3: PCI bridge to [bus 0c]
+Oct 09 18:13:46 archlinux kernel: acpiphp: Slot [0-13] registered
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.4: PCI bridge to [bus 0d]
+Oct 09 18:13:46 archlinux kernel: acpiphp: Slot [0-14] registered
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.5: PCI bridge to [bus 0e]
+Oct 09 18:13:46 archlinux kernel: ACPI: PCI: Interrupt link LNKA configured for IRQ 10
+Oct 09 18:13:46 archlinux kernel: ACPI: PCI: Interrupt link LNKB configured for IRQ 10
+Oct 09 18:13:46 archlinux kernel: ACPI: PCI: Interrupt link LNKC configured for IRQ 11
+Oct 09 18:13:46 archlinux kernel: ACPI: PCI: Interrupt link LNKD configured for IRQ 11
+Oct 09 18:13:46 archlinux kernel: ACPI: PCI: Interrupt link LNKE configured for IRQ 10
+Oct 09 18:13:46 archlinux kernel: ACPI: PCI: Interrupt link LNKF configured for IRQ 10
+Oct 09 18:13:46 archlinux kernel: ACPI: PCI: Interrupt link LNKG configured for IRQ 11
+Oct 09 18:13:46 archlinux kernel: ACPI: PCI: Interrupt link LNKH configured for IRQ 11
+Oct 09 18:13:46 archlinux kernel: ACPI: PCI: Interrupt link GSIA configured for IRQ 16
+Oct 09 18:13:46 archlinux kernel: ACPI: PCI: Interrupt link GSIB configured for IRQ 17
+Oct 09 18:13:46 archlinux kernel: ACPI: PCI: Interrupt link GSIC configured for IRQ 18
+Oct 09 18:13:46 archlinux kernel: ACPI: PCI: Interrupt link GSID configured for IRQ 19
+Oct 09 18:13:46 archlinux kernel: ACPI: PCI: Interrupt link GSIE configured for IRQ 20
+Oct 09 18:13:46 archlinux kernel: ACPI: PCI: Interrupt link GSIF configured for IRQ 21
+Oct 09 18:13:46 archlinux kernel: ACPI: PCI: Interrupt link GSIG configured for IRQ 22
+Oct 09 18:13:46 archlinux kernel: ACPI: PCI: Interrupt link GSIH configured for IRQ 23
+Oct 09 18:13:46 archlinux kernel: iommu: Default domain type: Translated
+Oct 09 18:13:46 archlinux kernel: iommu: DMA domain TLB invalidation policy: lazy mode
+Oct 09 18:13:46 archlinux kernel: SCSI subsystem initialized
+Oct 09 18:13:46 archlinux kernel: libata version 3.00 loaded.
+Oct 09 18:13:46 archlinux kernel: ACPI: bus type USB registered
+Oct 09 18:13:46 archlinux kernel: usbcore: registered new interface driver usbfs
+Oct 09 18:13:46 archlinux kernel: usbcore: registered new interface driver hub
+Oct 09 18:13:46 archlinux kernel: usbcore: registered new device driver usb
+Oct 09 18:13:46 archlinux kernel: EDAC MC: Ver: 3.0.0
+Oct 09 18:13:46 archlinux kernel: efivars: Registered efivars operations
+Oct 09 18:13:46 archlinux kernel: NetLabel: Initializing
+Oct 09 18:13:46 archlinux kernel: NetLabel:  domain hash size = 128
+Oct 09 18:13:46 archlinux kernel: NetLabel:  protocols = UNLABELED CIPSOv4 CALIPSO
+Oct 09 18:13:46 archlinux kernel: NetLabel:  unlabeled traffic allowed by default
+Oct 09 18:13:46 archlinux kernel: mctp: management component transport protocol core
+Oct 09 18:13:46 archlinux kernel: NET: Registered PF_MCTP protocol family
+Oct 09 18:13:46 archlinux kernel: PCI: Using ACPI for IRQ routing
+Oct 09 18:13:46 archlinux kernel: PCI: pci_cache_line_size set to 64 bytes
+Oct 09 18:13:46 archlinux kernel: e820: register RAM buffer resource [mem 0x00812000-0x008fffff]
+Oct 09 18:13:46 archlinux kernel: e820: register RAM buffer resource [mem 0x7dab1000-0x7fffffff]
+Oct 09 18:13:46 archlinux kernel: e820: register RAM buffer resource [mem 0x7ee53000-0x7fffffff]
+Oct 09 18:13:46 archlinux kernel: e820: register RAM buffer resource [mem 0x7fc62000-0x7fffffff]
+Oct 09 18:13:46 archlinux kernel: e820: register RAM buffer resource [mem 0x7ff7c000-0x7fffffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:01.0: vgaarb: setting as boot VGA device
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:01.0: vgaarb: bridge control possible
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:01.0: vgaarb: VGA device added: decodes=io+mem,owns=io+mem,locks=none
+Oct 09 18:13:46 archlinux kernel: vgaarb: loaded
+Oct 09 18:13:46 archlinux kernel: clocksource: Switched to clocksource kvm-clock
+Oct 09 18:13:46 archlinux kernel: VFS: Disk quotas dquot_6.6.0
+Oct 09 18:13:46 archlinux kernel: VFS: Dquot-cache hash table entries: 512 (4096 bytes)
+Oct 09 18:13:46 archlinux kernel: acpi PNP0C01:00: Reserved [mem 0xe0000000-0xefffffff]
+Oct 09 18:13:46 archlinux kernel: pnp: PnP ACPI init
+Oct 09 18:13:46 archlinux kernel: ACPI: IRQ 4 override to edge(!), high(!)
+Oct 09 18:13:46 archlinux kernel: pnp: PnP ACPI: found 3 devices
+Oct 09 18:13:46 archlinux kernel: clocksource: acpi_pm: mask: 0xffffff max_cycles: 0xffffff, max_idle_ns: 2085701024 ns
+Oct 09 18:13:46 archlinux kernel: NET: Registered PF_INET protocol family
+Oct 09 18:13:46 archlinux kernel: IP idents hash table entries: 131072 (order: 8, 1048576 bytes, linear)
+Oct 09 18:13:46 archlinux kernel: tcp_listen_portaddr_hash hash table entries: 4096 (order: 4, 65536 bytes, linear)
+Oct 09 18:13:46 archlinux kernel: Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+Oct 09 18:13:46 archlinux kernel: TCP established hash table entries: 65536 (order: 7, 524288 bytes, linear)
+Oct 09 18:13:46 archlinux kernel: TCP bind hash table entries: 65536 (order: 9, 2097152 bytes, linear)
+Oct 09 18:13:46 archlinux kernel: TCP: Hash tables configured (established 65536 bind 65536)
+Oct 09 18:13:46 archlinux kernel: MPTCP token hash table entries: 8192 (order: 6, 196608 bytes, linear)
+Oct 09 18:13:46 archlinux kernel: UDP hash table entries: 4096 (order: 6, 262144 bytes, linear)
+Oct 09 18:13:46 archlinux kernel: NET: Registered PF_UNIX/PF_LOCAL protocol family
+Oct 09 18:13:46 archlinux kernel: NET: Registered PF_XDP protocol family
+Oct 09 18:13:46 archlinux kernel: pci 0000:01:00.0: ROM [mem 0xfffc0000-0xffffffff pref]: can't claim; no compatible bridge window
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.0: bridge window [io  0x1000-0x0fff] to [bus 01] add_size 1000
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.1: bridge window [io  0x1000-0x0fff] to [bus 02] add_size 1000
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.2: bridge window [io  0x1000-0x0fff] to [bus 03] add_size 1000
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.3: bridge window [io  0x1000-0x0fff] to [bus 04] add_size 1000
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.4: bridge window [io  0x1000-0x0fff] to [bus 05] add_size 1000
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.5: bridge window [io  0x1000-0x0fff] to [bus 06] add_size 1000
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.6: bridge window [io  0x1000-0x0fff] to [bus 07] add_size 1000
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.7: bridge window [io  0x1000-0x0fff] to [bus 08] add_size 1000
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.0: bridge window [io  0x1000-0x0fff] to [bus 09] add_size 1000
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.1: bridge window [io  0x1000-0x0fff] to [bus 0a] add_size 1000
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.2: bridge window [io  0x1000-0x0fff] to [bus 0b] add_size 1000
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.3: bridge window [io  0x1000-0x0fff] to [bus 0c] add_size 1000
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.4: bridge window [io  0x1000-0x0fff] to [bus 0d] add_size 1000
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.5: bridge window [io  0x1000-0x0fff] to [bus 0e] add_size 1000
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.0: bridge window [io  0x1000-0x1fff]: assigned
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.1: bridge window [io  0x2000-0x2fff]: assigned
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.2: bridge window [io  0x3000-0x3fff]: assigned
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.3: bridge window [io  0x4000-0x4fff]: assigned
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.4: bridge window [io  0x5000-0x5fff]: assigned
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.5: bridge window [io  0x7000-0x7fff]: assigned
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.6: bridge window [io  0x8000-0x8fff]: assigned
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.7: bridge window [io  0x9000-0x9fff]: assigned
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.0: bridge window [io  0xa000-0xafff]: assigned
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.1: bridge window [io  0xb000-0xbfff]: assigned
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.2: bridge window [io  0xc000-0xcfff]: assigned
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.3: bridge window [io  0xd000-0xdfff]: assigned
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.4: bridge window [io  0xe000-0xefff]: assigned
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.5: bridge window [io  0xf000-0xffff]: assigned
+Oct 09 18:13:46 archlinux kernel: pci 0000:01:00.0: ROM [mem 0x82240000-0x8227ffff pref]: assigned
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.0: PCI bridge to [bus 01]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.0:   bridge window [io  0x1000-0x1fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.0:   bridge window [mem 0x82200000-0x823fffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.0:   bridge window [mem 0x38000000000-0x3807fffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.1: PCI bridge to [bus 02]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.1:   bridge window [io  0x2000-0x2fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.1:   bridge window [mem 0x82000000-0x821fffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.1:   bridge window [mem 0x38080000000-0x380ffffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.2: PCI bridge to [bus 03]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.2:   bridge window [io  0x3000-0x3fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.2:   bridge window [mem 0x81e00000-0x81ffffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.2:   bridge window [mem 0x38100000000-0x3817fffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.3: PCI bridge to [bus 04]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.3:   bridge window [io  0x4000-0x4fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.3:   bridge window [mem 0x81c00000-0x81dfffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.3:   bridge window [mem 0x38180000000-0x381ffffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.4: PCI bridge to [bus 05]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.4:   bridge window [io  0x5000-0x5fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.4:   bridge window [mem 0x81a00000-0x81bfffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.4:   bridge window [mem 0x38200000000-0x3827fffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.5: PCI bridge to [bus 06]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.5:   bridge window [io  0x7000-0x7fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.5:   bridge window [mem 0x81800000-0x819fffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.5:   bridge window [mem 0x38280000000-0x382ffffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.6: PCI bridge to [bus 07]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.6:   bridge window [io  0x8000-0x8fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.6:   bridge window [mem 0x81600000-0x817fffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.6:   bridge window [mem 0x38300000000-0x3837fffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.7: PCI bridge to [bus 08]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.7:   bridge window [io  0x9000-0x9fff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.7:   bridge window [mem 0x81400000-0x815fffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:02.7:   bridge window [mem 0x38380000000-0x383ffffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.0: PCI bridge to [bus 09]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.0:   bridge window [io  0xa000-0xafff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.0:   bridge window [mem 0x81200000-0x813fffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.0:   bridge window [mem 0x38400000000-0x3847fffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.1: PCI bridge to [bus 0a]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.1:   bridge window [io  0xb000-0xbfff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.1:   bridge window [mem 0x81000000-0x811fffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.1:   bridge window [mem 0x38480000000-0x384ffffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.2: PCI bridge to [bus 0b]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.2:   bridge window [io  0xc000-0xcfff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.2:   bridge window [mem 0x80e00000-0x80ffffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.2:   bridge window [mem 0x38500000000-0x3857fffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.3: PCI bridge to [bus 0c]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.3:   bridge window [io  0xd000-0xdfff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.3:   bridge window [mem 0x80c00000-0x80dfffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.3:   bridge window [mem 0x38580000000-0x385ffffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.4: PCI bridge to [bus 0d]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.4:   bridge window [io  0xe000-0xefff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.4:   bridge window [mem 0x80a00000-0x80bfffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.4:   bridge window [mem 0x38600000000-0x3867fffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.5: PCI bridge to [bus 0e]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.5:   bridge window [io  0xf000-0xffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.5:   bridge window [mem 0x80800000-0x809fffff]
+Oct 09 18:13:46 archlinux kernel: pci 0000:00:03.5:   bridge window [mem 0x38680000000-0x386ffffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:00: resource 4 [io  0x0000-0x0cf7 window]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:00: resource 5 [io  0x0d00-0xffff window]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:00: resource 6 [mem 0x000a0000-0x000bffff window]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:00: resource 7 [mem 0x80000000-0xdfffffff window]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:00: resource 8 [mem 0xf0000000-0xfebfffff window]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:00: resource 9 [mem 0x38000000000-0x387ffffffff window]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:01: resource 0 [io  0x1000-0x1fff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:01: resource 1 [mem 0x82200000-0x823fffff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:01: resource 2 [mem 0x38000000000-0x3807fffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:02: resource 0 [io  0x2000-0x2fff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:02: resource 1 [mem 0x82000000-0x821fffff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:02: resource 2 [mem 0x38080000000-0x380ffffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:03: resource 0 [io  0x3000-0x3fff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:03: resource 1 [mem 0x81e00000-0x81ffffff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:03: resource 2 [mem 0x38100000000-0x3817fffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:04: resource 0 [io  0x4000-0x4fff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:04: resource 1 [mem 0x81c00000-0x81dfffff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:04: resource 2 [mem 0x38180000000-0x381ffffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:05: resource 0 [io  0x5000-0x5fff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:05: resource 1 [mem 0x81a00000-0x81bfffff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:05: resource 2 [mem 0x38200000000-0x3827fffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:06: resource 0 [io  0x7000-0x7fff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:06: resource 1 [mem 0x81800000-0x819fffff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:06: resource 2 [mem 0x38280000000-0x382ffffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:07: resource 0 [io  0x8000-0x8fff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:07: resource 1 [mem 0x81600000-0x817fffff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:07: resource 2 [mem 0x38300000000-0x3837fffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:08: resource 0 [io  0x9000-0x9fff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:08: resource 1 [mem 0x81400000-0x815fffff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:08: resource 2 [mem 0x38380000000-0x383ffffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:09: resource 0 [io  0xa000-0xafff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:09: resource 1 [mem 0x81200000-0x813fffff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:09: resource 2 [mem 0x38400000000-0x3847fffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:0a: resource 0 [io  0xb000-0xbfff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:0a: resource 1 [mem 0x81000000-0x811fffff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:0a: resource 2 [mem 0x38480000000-0x384ffffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:0b: resource 0 [io  0xc000-0xcfff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:0b: resource 1 [mem 0x80e00000-0x80ffffff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:0b: resource 2 [mem 0x38500000000-0x3857fffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:0c: resource 0 [io  0xd000-0xdfff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:0c: resource 1 [mem 0x80c00000-0x80dfffff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:0c: resource 2 [mem 0x38580000000-0x385ffffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:0d: resource 0 [io  0xe000-0xefff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:0d: resource 1 [mem 0x80a00000-0x80bfffff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:0d: resource 2 [mem 0x38600000000-0x3867fffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:0e: resource 0 [io  0xf000-0xffff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:0e: resource 1 [mem 0x80800000-0x809fffff]
+Oct 09 18:13:46 archlinux kernel: pci_bus 0000:0e: resource 2 [mem 0x38680000000-0x386ffffffff 64bit pref]
+Oct 09 18:13:46 archlinux kernel: ACPI: \_SB_.GSIG: Enabled at IRQ 22
+Oct 09 18:13:46 archlinux kernel: PCI: CLS 0 bytes, default 64
+Oct 09 18:13:46 archlinux kernel: Trying to unpack rootfs image as initramfs...
+Oct 09 18:13:46 archlinux kernel: PCI-DMA: Using software bounce buffering for IO (SWIOTLB)
+Oct 09 18:13:46 archlinux kernel: software IO TLB: mapped [mem 0x0000000077fc6000-0x000000007bfc6000] (64MB)
+Oct 09 18:13:46 archlinux kernel: clocksource: tsc: mask: 0xffffffffffffffff max_cycles: 0x6a464ae9873, max_idle_ns: 881590529744 ns
+Oct 09 18:13:46 archlinux kernel: Initialise system trusted keyrings
+Oct 09 18:13:46 archlinux kernel: Key type blacklist registered
+Oct 09 18:13:46 archlinux kernel: workingset: timestamp_bits=36 (anon: 31) max_order=21 bucket_order=0 (anon: 0)
+Oct 09 18:13:46 archlinux kernel: fuse: init (API version 7.45)
+Oct 09 18:13:46 archlinux kernel: integrity: Platform Keyring initialized
+Oct 09 18:13:46 archlinux kernel: integrity: Machine keyring initialized
+Oct 09 18:13:46 archlinux kernel: Key type asymmetric registered
+Oct 09 18:13:46 archlinux kernel: Asymmetric key parser 'x509' registered
+Oct 09 18:13:46 archlinux kernel: Block layer SCSI generic (bsg) driver version 0.4 loaded (major 245)
+Oct 09 18:13:46 archlinux kernel: io scheduler mq-deadline registered
+Oct 09 18:13:46 archlinux kernel: io scheduler kyber registered
+Oct 09 18:13:46 archlinux kernel: io scheduler bfq registered
+Oct 09 18:13:46 archlinux kernel: ledtrig-cpu: registered to indicate activity on CPUs
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:02.0: PME: Signaling with IRQ 24
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:02.0: AER: enabled with IRQ 24
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:02.1: PME: Signaling with IRQ 25
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:02.1: AER: enabled with IRQ 25
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:02.2: PME: Signaling with IRQ 26
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:02.2: AER: enabled with IRQ 26
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:02.3: PME: Signaling with IRQ 27
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:02.3: AER: enabled with IRQ 27
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:02.4: PME: Signaling with IRQ 28
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:02.4: AER: enabled with IRQ 28
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:02.5: PME: Signaling with IRQ 29
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:02.5: AER: enabled with IRQ 29
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:02.6: PME: Signaling with IRQ 30
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:02.6: AER: enabled with IRQ 30
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:02.7: PME: Signaling with IRQ 31
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:02.7: AER: enabled with IRQ 31
+Oct 09 18:13:46 archlinux kernel: ACPI: \_SB_.GSIH: Enabled at IRQ 23
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:03.0: PME: Signaling with IRQ 32
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:03.0: AER: enabled with IRQ 32
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:03.1: PME: Signaling with IRQ 33
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:03.1: AER: enabled with IRQ 33
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:03.2: PME: Signaling with IRQ 34
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:03.2: AER: enabled with IRQ 34
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:03.3: PME: Signaling with IRQ 35
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:03.3: AER: enabled with IRQ 35
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:03.4: PME: Signaling with IRQ 36
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:03.4: AER: enabled with IRQ 36
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:03.5: PME: Signaling with IRQ 37
+Oct 09 18:13:46 archlinux kernel: pcieport 0000:00:03.5: AER: enabled with IRQ 37
+Oct 09 18:13:46 archlinux kernel: input: Power Button as /devices/platform/LNXPWRBN:00/input/input0
+Oct 09 18:13:46 archlinux kernel: ACPI: button: Power Button [PWRF]
+Oct 09 18:13:46 archlinux kernel: ACPI: \_SB_.GSIF: Enabled at IRQ 21
+Oct 09 18:13:46 archlinux kernel: Serial: 8250/16550 driver, 32 ports, IRQ sharing enabled
+Oct 09 18:13:46 archlinux kernel: 00:00: ttyS0 at I/O 0x3f8 (irq = 4, base_baud = 115200) is a 16550A
+Oct 09 18:13:46 archlinux kernel: Non-volatile memory driver v1.3
+Oct 09 18:13:46 archlinux kernel: ACPI: bus type drm_connector registered
+Oct 09 18:13:46 archlinux kernel: virtio_blk virtio3: 6/0/0 default/read/poll queues
+Oct 09 18:13:46 archlinux kernel: virtio_blk virtio3: [vda] 125829120 512-byte logical blocks (64.4 GB/60.0 GiB)
+Oct 09 18:13:46 archlinux kernel:  vda: vda1 vda2
+Oct 09 18:13:46 archlinux kernel: ACPI: \_SB_.GSIA: Enabled at IRQ 16
+Oct 09 18:13:46 archlinux kernel: ahci 0000:00:1f.2: AHCI vers 0001.0000, 32 command slots, 1.5 Gbps, SATA mode
+Oct 09 18:13:46 archlinux kernel: ahci 0000:00:1f.2: 6/6 ports implemented (port mask 0x3f)
+Oct 09 18:13:46 archlinux kernel: ahci 0000:00:1f.2: flags: 64bit ncq only 
+Oct 09 18:13:46 archlinux kernel: scsi host0: ahci
+Oct 09 18:13:46 archlinux kernel: scsi host1: ahci
+Oct 09 18:13:46 archlinux kernel: scsi host2: ahci
+Oct 09 18:13:46 archlinux kernel: scsi host3: ahci
+Oct 09 18:13:46 archlinux kernel: scsi host4: ahci
+Oct 09 18:13:46 archlinux kernel: scsi host5: ahci
+Oct 09 18:13:46 archlinux kernel: ata1: SATA max UDMA/133 abar m4096@0x82444000 port 0x82444100 irq 47 lpm-pol 1
+Oct 09 18:13:46 archlinux kernel: ata2: SATA max UDMA/133 abar m4096@0x82444000 port 0x82444180 irq 47 lpm-pol 1
+Oct 09 18:13:46 archlinux kernel: ata3: SATA max UDMA/133 abar m4096@0x82444000 port 0x82444200 irq 47 lpm-pol 1
+Oct 09 18:13:46 archlinux kernel: ata4: SATA max UDMA/133 abar m4096@0x82444000 port 0x82444280 irq 47 lpm-pol 1
+Oct 09 18:13:46 archlinux kernel: ata5: SATA max UDMA/133 abar m4096@0x82444000 port 0x82444300 irq 47 lpm-pol 1
+Oct 09 18:13:46 archlinux kernel: ata6: SATA max UDMA/133 abar m4096@0x82444000 port 0x82444380 irq 47 lpm-pol 1
+Oct 09 18:13:46 archlinux kernel: xhci_hcd 0000:02:00.0: xHCI Host Controller
+Oct 09 18:13:46 archlinux kernel: xhci_hcd 0000:02:00.0: new USB bus registered, assigned bus number 1
+Oct 09 18:13:46 archlinux kernel: xhci_hcd 0000:02:00.0: hcc params 0x00087001 hci version 0x100 quirks 0x0000000000000010
+Oct 09 18:13:46 archlinux kernel: xhci_hcd 0000:02:00.0: xHCI Host Controller
+Oct 09 18:13:46 archlinux kernel: xhci_hcd 0000:02:00.0: new USB bus registered, assigned bus number 2
+Oct 09 18:13:46 archlinux kernel: xhci_hcd 0000:02:00.0: Host supports USB 3.0 SuperSpeed
+Oct 09 18:13:46 archlinux kernel: usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 7.02
+Oct 09 18:13:46 archlinux kernel: usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+Oct 09 18:13:46 archlinux kernel: usb usb1: Product: xHCI Host Controller
+Oct 09 18:13:46 archlinux kernel: usb usb1: Manufacturer: Linux 7.2.9-arch1-1 xhci-hcd
+Oct 09 18:13:46 archlinux kernel: usb usb1: SerialNumber: 0000:02:00.0
+Oct 09 18:13:46 archlinux kernel: hub 1-0:1.0: USB hub found
+Oct 09 18:13:46 archlinux kernel: hub 1-0:1.0: 15 ports detected
+Oct 09 18:13:46 archlinux kernel: usb usb2: We don't know the algorithms for LPM for this host, disabling LPM.
+Oct 09 18:13:46 archlinux kernel: usb usb2: New USB device found, idVendor=1d6b, idProduct=0003, bcdDevice= 7.02
+Oct 09 18:13:46 archlinux kernel: usb usb2: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+Oct 09 18:13:46 archlinux kernel: usb usb2: Product: xHCI Host Controller
+Oct 09 18:13:46 archlinux kernel: usb usb2: Manufacturer: Linux 7.2.9-arch1-1 xhci-hcd
+Oct 09 18:13:46 archlinux kernel: usb usb2: SerialNumber: 0000:02:00.0
+Oct 09 18:13:46 archlinux kernel: hub 2-0:1.0: USB hub found
+Oct 09 18:13:46 archlinux kernel: hub 2-0:1.0: 15 ports detected
+Oct 09 18:13:46 archlinux kernel: usbcore: registered new interface driver usbserial_generic
+Oct 09 18:13:46 archlinux kernel: usbserial: USB Serial support registered for generic
+Oct 09 18:13:46 archlinux kernel: i8042: PNP: PS/2 Controller [PNP0303:KBD,PNP0f13:MOU] at 0x60,0x64 irq 1,12
+Oct 09 18:13:46 archlinux kernel: serio: i8042 KBD port at 0x60,0x64 irq 1
+Oct 09 18:13:46 archlinux kernel: serio: i8042 AUX port at 0x60,0x64 irq 12
+Oct 09 18:13:46 archlinux kernel: rtc_cmos PNP0B00:00: RTC can wake from S4
+Oct 09 18:13:46 archlinux kernel: rtc_cmos PNP0B00:00: registered as rtc0
+Oct 09 18:13:46 archlinux kernel: rtc_cmos PNP0B00:00: setting system clock to 2026-10-09T15:13:44 UTC (1791558824)
+Oct 09 18:13:46 archlinux kernel: rtc_cmos PNP0B00:00: alarms up to one day, y3k, 242 bytes nvram
+Oct 09 18:13:46 archlinux kernel: input: AT Translated Set 2 keyboard as /devices/platform/i8042/serio0/input/input1
+Oct 09 18:13:46 archlinux kernel: intel_pstate: CPU model not supported
+Oct 09 18:13:46 archlinux kernel: simple-framebuffer simple-framebuffer.0: [drm] Registered 1 planes with drm panic
+Oct 09 18:13:46 archlinux kernel: [drm] Initialized simpledrm 1.0.0 for simple-framebuffer.0 on minor 0
+Oct 09 18:13:46 archlinux kernel: Console: switching to colour frame buffer device 160x50
+Oct 09 18:13:46 archlinux kernel: simple-framebuffer simple-framebuffer.0: [drm] fb0: simpledrmdrmfb frame buffer device
+Oct 09 18:13:46 archlinux kernel: hid: raw HID events driver (C) Jiri Kosina
+Oct 09 18:13:46 archlinux kernel: usbcore: registered new interface driver usbhid
+Oct 09 18:13:46 archlinux kernel: usbhid: USB HID core driver
+Oct 09 18:13:46 archlinux kernel: drop_monitor: Initializing network drop monitor service
+Oct 09 18:13:46 archlinux kernel: NET: Registered PF_INET6 protocol family
+Oct 09 18:13:46 archlinux kernel: Segment Routing with IPv6
+Oct 09 18:13:46 archlinux kernel: RPL Segment Routing with IPv6
+Oct 09 18:13:46 archlinux kernel: In-situ OAM (IOAM) with IPv6
+Oct 09 18:13:46 archlinux kernel: NET: Registered PF_PACKET protocol family
+Oct 09 18:13:46 archlinux kernel: IPI shorthand broadcast: enabled
+Oct 09 18:13:46 archlinux kernel: sched_clock: Marking stable (809004064, 1019778)->(1171278795, -361254953)
+Oct 09 18:13:46 archlinux kernel: registered taskstats version 1
+Oct 09 18:13:46 archlinux kernel: Loading compiled-in X.509 certificates
+Oct 09 18:13:46 archlinux kernel: Freeing initrd memory: 202872K
+Oct 09 18:13:46 archlinux kernel: Loaded X.509 cert 'Build time autogenerated kernel key: 48996aa217c92310ea20c83b2dbbf34c3a94c073'
+Oct 09 18:13:46 archlinux kernel: zswap: loaded using pool zstd
+Oct 09 18:13:46 archlinux kernel: Demotion targets for Node 0: null
+Oct 09 18:13:46 archlinux kernel: Key type .fscrypt registered
+Oct 09 18:13:46 archlinux kernel: Key type fscrypt-provisioning registered
+Oct 09 18:13:46 archlinux kernel: Btrfs loaded, zoned=yes, fsverity=yes
+Oct 09 18:13:46 archlinux kernel: Key type big_key registered
+Oct 09 18:13:46 archlinux kernel: PM:   Magic number: 14:459:234
+Oct 09 18:13:46 archlinux kernel: RAS: Correctable Errors collector initialized.
+Oct 09 18:13:46 archlinux kernel: clk: Disabling unused clocks
+Oct 09 18:13:46 archlinux kernel: PM: genpd: Disabling unused power domains
+Oct 09 18:13:46 archlinux kernel: usb 1-1: new high-speed USB device number 2 using xhci_hcd
+Oct 09 18:13:46 archlinux kernel: ata2: SATA link down (SStatus 0 SControl 300)
+Oct 09 18:13:46 archlinux kernel: ata6: SATA link down (SStatus 0 SControl 300)
+Oct 09 18:13:46 archlinux kernel: ata5: SATA link down (SStatus 0 SControl 300)
+Oct 09 18:13:46 archlinux kernel: ata3: SATA link down (SStatus 0 SControl 300)
+Oct 09 18:13:46 archlinux kernel: ata1: SATA link up 1.5 Gbps (SStatus 113 SControl 300)
+Oct 09 18:13:46 archlinux kernel: ata4: SATA link down (SStatus 0 SControl 300)
+Oct 09 18:13:46 archlinux kernel: ata1.00: ATAPI: QEMU DVD-ROM, 2.5+, max UDMA/100
+Oct 09 18:13:46 archlinux kernel: ata1.00: applying bridge limits
+Oct 09 18:13:46 archlinux kernel: ata1.00: configured for UDMA/100
+Oct 09 18:13:46 archlinux kernel: scsi 0:0:0:0: CD-ROM            QEMU     QEMU DVD-ROM     2.5+ PQ: 0 ANSI: 5
+Oct 09 18:13:46 archlinux kernel: Freeing unused decrypted memory: 2028K
+Oct 09 18:13:46 archlinux kernel: Freeing unused kernel image (initmem) memory: 4944K
+Oct 09 18:13:46 archlinux kernel: Write protecting the kernel read-only data: 40960k
+Oct 09 18:13:46 archlinux kernel: Freeing unused kernel image (text/rodata gap) memory: 300K
+Oct 09 18:13:46 archlinux kernel: Freeing unused kernel image (rodata/data gap) memory: 840K
+Oct 09 18:13:46 archlinux kernel: x86/mm: Checked W+X mappings: passed, no W+X pages found.
+Oct 09 18:13:46 archlinux kernel: rodata_test: all tests were successful
+Oct 09 18:13:46 archlinux kernel: Run /init as init process
+Oct 09 18:13:46 archlinux kernel:   with arguments:
+Oct 09 18:13:46 archlinux kernel:     /init
+Oct 09 18:13:46 archlinux kernel:   with environment:
+Oct 09 18:13:46 archlinux kernel:     HOME=/
+Oct 09 18:13:46 archlinux kernel:     TERM=linux
+Oct 09 18:13:46 archlinux kernel: usb 1-1: New USB device found, idVendor=0627, idProduct=0001, bcdDevice= 0.00
+Oct 09 18:13:46 archlinux kernel: usb 1-1: New USB device strings: Mfr=1, Product=3, SerialNumber=10
+Oct 09 18:13:46 archlinux kernel: usb 1-1: Product: QEMU USB Tablet
+Oct 09 18:13:46 archlinux kernel: usb 1-1: Manufacturer: QEMU
+Oct 09 18:13:46 archlinux kernel: usb 1-1: SerialNumber: 28754-0000:00:02.1:00.0-1
+Oct 09 18:13:46 archlinux kernel: input: QEMU QEMU USB Tablet as /devices/pci0000:00/0000:00:02.1/0000:02:00.0/usb1/1-1/1-1:1.0/0003:0627:0001.0001/input/input3
+Oct 09 18:13:46 archlinux kernel: hid-generic 0003:0627:0001.0001: input,hidraw0: USB HID v0.01 Mouse [QEMU QEMU USB Tablet] on usb-0000:02:00.0-1/input0
+Oct 09 18:13:46 archlinux kernel: NET: Registered PF_VSOCK protocol family
+Oct 09 18:13:46 archlinux systemd[1]: Successfully made /usr/ read-only.
+Oct 09 18:13:46 archlinux systemd[1]: systemd 262-1-arch running in system mode (+PAM +AUDIT -SELINUX +APPARMOR -IMA +IPE +SMACK +SECCOMP +GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 +KMOD +LIBCRYPTSETUP +LIBCRYPTSETUP_PLUGINS +LIBFDISK +PCRE2 +PWQUALITY +P11KIT +QRENCODE +TPM2 +BZIP2 +LZ4 +XZ +ZLIB +ZSTD +BPF_FRAMEWORK +BTF +XKBCOMMON +UTMP +LIBARCHIVE)
+Oct 09 18:13:46 archlinux systemd[1]: Detected virtualization kvm.
+Oct 09 18:13:46 archlinux systemd[1]: Detected architecture x86-64.
+Oct 09 18:13:46 archlinux systemd[1]: Running in initrd.
+Oct 09 18:13:46 archlinux systemd[1]: Initializing machine ID from SMBIOS/DMI UUID.
+Oct 09 18:13:46 archlinux systemd[1]: Queued start job for default target Initrd Default Target.
+Oct 09 18:13:46 archlinux systemd[1]: Expecting device /dev/disk/by-uuid/a79f6ab7-52ab-49d0-ab3c-a2b3a1918140...
+Oct 09 18:13:46 archlinux systemd[1]: Reached target Path Units.
+Oct 09 18:13:46 archlinux systemd[1]: Reached target Slice Units.
+Oct 09 18:13:46 archlinux systemd[1]: Reached target Swaps.
+Oct 09 18:13:46 archlinux systemd[1]: Reached target Timer Units.
+Oct 09 18:13:46 archlinux systemd[1]: Listening on Journal Socket (/dev/log).
+Oct 09 18:13:46 archlinux systemd[1]: Listening on Journal Sockets.
+Oct 09 18:13:46 archlinux systemd[1]: TPM PCR Measurements skipped, unmet condition check ConditionSecurity=measured-os
+Oct 09 18:13:46 archlinux systemd[1]: Listening on udev Kernel Socket.
+Oct 09 18:13:46 archlinux systemd[1]: Listening on udev Varlink Socket.
+Oct 09 18:13:46 archlinux systemd[1]: Reached target Socket Units.
+Oct 09 18:13:46 archlinux systemd[1]: Starting Create List of Static Device Nodes...
+Oct 09 18:13:46 archlinux systemd[1]: Early Battery Level Check skipped, unmet condition check ConditionDirectoryNotEmpty=/sys/class/power_supply
+Oct 09 18:13:46 archlinux systemd[1]: Display Boot-Time Emergency Messages In Full Screen skipped, unmet condition check ConditionVirtualization=no
+Oct 09 18:13:46 archlinux systemd[1]: Starting Journal Service...
+Oct 09 18:13:46 archlinux systemd[1]: Starting Load Kernel Modules...
+Oct 09 18:13:46 archlinux systemd[1]: TPM PCR OS Separator skipped, unmet condition check ConditionSecurity=measured-os
+Oct 09 18:13:46 archlinux systemd[1]: TPM PCR Barrier (initrd) skipped, unmet condition check ConditionSecurity=measured-os
+Oct 09 18:13:46 archlinux systemd[1]: Starting Create Static Device Nodes in /dev...
+Oct 09 18:13:46 archlinux systemd[1]: Early TPM SRK Setup skipped, unmet condition check ConditionSecurity=measured-os
+Oct 09 18:13:46 archlinux systemd[1]: TPM PCR NvPCR Initialization Separator skipped, unmet condition check ConditionSecurity=measured-os
+Oct 09 18:13:46 archlinux systemd[1]: Starting Coldplug All udev Devices...
+Oct 09 18:13:46 archlinux systemd[1]: Finished Create List of Static Device Nodes.
+Oct 09 18:13:46 archlinux systemd[1]: Finished Load Kernel Modules.
+Oct 09 18:13:46 archlinux systemd[1]: Finished Create Static Device Nodes in /dev.
+Oct 09 18:13:46 archlinux systemd[1]: Reached target Preparation for Local File Systems.
+Oct 09 18:13:46 archlinux systemd[1]: Reached target Local File Systems.
+Oct 09 18:13:46 archlinux systemd[1]: Starting Rule-based Manager for Device Events and Files...
+Oct 09 18:13:46 archlinux systemd-journald[159]: Collecting audit messages is disabled.
+Oct 09 18:13:46 archlinux systemd[1]: Started Rule-based Manager for Device Events and Files.
+Oct 09 18:13:46 archlinux systemd[1]: Started Journal Service.
+Oct 09 18:13:46 archlinux kernel: lpc_ich 0000:00:1f.0: I/O space for GPIO uninitialized
+Oct 09 18:13:46 archlinux kernel: [drm] pci: virtio-vga detected at 0000:00:01.0
+Oct 09 18:13:46 archlinux kernel: sr 0:0:0:0: [sr0] scsi3-mmc drive: 4x/4x cd/rw xa/form2 tray
+Oct 09 18:13:46 archlinux kernel: Console: switching to colour dummy device 160x50
+Oct 09 18:13:46 archlinux kernel: virtio-pci 0000:00:01.0: vgaarb: deactivate vga console
+Oct 09 18:13:46 archlinux kernel: [drm] features: -virgl +edid -resource_blob -host_visible
+Oct 09 18:13:46 archlinux kernel: [drm] features: -context_init -blob_alignment
+Oct 09 18:13:46 archlinux kernel: [drm] number of scanouts: 1
+Oct 09 18:13:46 archlinux kernel: [drm] number of cap sets: 0
+Oct 09 18:13:46 archlinux kernel: virtio-pci 0000:00:01.0: [drm] Registered 1 planes with drm panic
+Oct 09 18:13:46 archlinux kernel: [drm] Initialized virtio_gpu 0.1.0 for 0000:00:01.0 on minor 1
+Oct 09 18:13:46 archlinux kernel: fbcon: virtio_gpudrmfb (fb0) is primary device
+Oct 09 18:13:46 archlinux kernel: Console: switching to colour frame buffer device 160x50
+Oct 09 18:13:46 archlinux kernel: cdrom: Uniform CD-ROM driver Revision: 3.20
+Oct 09 18:13:46 archlinux kernel: virtio-pci 0000:00:01.0: [drm] fb0: virtio_gpudrmfb frame buffer device
+Oct 09 18:13:46 archlinux kernel: sr 0:0:0:0: Attached scsi CD-ROM sr0
+Oct 09 18:13:47 archlinux kernel: BTRFS: device label LOOOM_ROOT devid 1 transid 1344 /dev/vda2 (254:2) scanned by mount (227)
+Oct 09 18:13:47 archlinux kernel: BTRFS info (device vda2): first mount of filesystem a79f6ab7-52ab-49d0-ab3c-a2b3a1918140
+Oct 09 18:13:47 archlinux kernel: BTRFS info (device vda2): using crc32c checksum algorithm
+Oct 09 18:13:47 archlinux kernel: BTRFS info (device vda2): turning on async discard
+Oct 09 18:13:47 archlinux kernel: BTRFS info (device vda2): enabling free space tree
+Oct 09 18:13:48 looom-vm systemd-journald[159]: Received SIGTERM from PID 1 (systemd).
+Oct 09 18:13:48 looom-vm kernel: clocksource: Watchdog remote CPU 1 read timed out
+Oct 09 18:13:48 looom-vm systemd[1]: systemd 262-1-arch running in system mode (+PAM +AUDIT -SELINUX +APPARMOR -IMA +IPE +SMACK +SECCOMP +GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 +KMOD +LIBCRYPTSETUP +LIBCRYPTSETUP_PLUGINS +LIBFDISK +PCRE2 +PWQUALITY +P11KIT +QRENCODE +TPM2 +BZIP2 +LZ4 +XZ +ZLIB +ZSTD +BPF_FRAMEWORK +BTF +XKBCOMMON +UTMP +LIBARCHIVE)
+Oct 09 18:13:48 looom-vm systemd[1]: Detected virtualization kvm.
+Oct 09 18:13:48 looom-vm systemd[1]: Detected architecture x86-64.
+Oct 09 18:13:48 looom-vm systemd[1]: Hostname set to <looom-vm>.
+Oct 09 18:13:48 looom-vm systemd[1]: bpf-restrict-fs: LSM BPF program attached
+Oct 09 18:13:48 looom-vm systemd[1]: initrd-switch-root.service: Deactivated successfully.
+Oct 09 18:13:48 looom-vm systemd[1]: Stopped Switch Root.
+Oct 09 18:13:48 looom-vm systemd[1]: systemd-journald.service: Scheduled restart job, restart counter is at 1.
+Oct 09 18:13:48 looom-vm systemd[1]: Created slice Slice /system/modprobe.
+Oct 09 18:13:48 looom-vm systemd[1]: Created slice Slice /system/serial-getty.
+Oct 09 18:13:48 looom-vm systemd[1]: Created slice Slice /system/systemd-fsck.
+Oct 09 18:13:48 looom-vm systemd[1]: Created slice User and Session Slice.
+Oct 09 18:13:48 looom-vm systemd[1]: Started Dispatch Password Requests to Console Directory Watch.
+Oct 09 18:13:48 looom-vm systemd[1]: Started Forward Password Requests to Wall Directory Watch.
+Oct 09 18:13:48 looom-vm systemd[1]: Set up automount Arbitrary Executable File Formats File System Automount Point.
+Oct 09 18:13:48 looom-vm systemd[1]: Expecting device /dev/disk/by-uuid/8CE8-BFE9...
+Oct 09 18:13:48 looom-vm systemd[1]: Expecting device /dev/disk/by-uuid/a79f6ab7-52ab-49d0-ab3c-a2b3a1918140...
+Oct 09 18:13:48 looom-vm systemd[1]: Expecting device /dev/ttyS0...
+Oct 09 18:13:48 looom-vm systemd[1]: Reached target Local dm-clone Devices.
+Oct 09 18:13:48 looom-vm systemd[1]: Reached target Image Downloads.
+Oct 09 18:13:48 looom-vm systemd[1]: Stopped target Switch Root.
+Oct 09 18:13:48 looom-vm systemd[1]: Stopped target Initrd File Systems.
+Oct 09 18:13:48 looom-vm systemd[1]: Stopped target Initrd Root File System.
+Oct 09 18:13:48 looom-vm systemd[1]: Reached target Local Integrity Protected Volumes.
+Oct 09 18:13:48 looom-vm systemd[1]: Reached target Path Units.
+Oct 09 18:13:48 looom-vm systemd[1]: Reached target Slice Units.
+Oct 09 18:13:48 looom-vm systemd[1]: Reached target Swaps.
+Oct 09 18:13:48 looom-vm systemd[1]: Reached target Local Verity Protected Volumes.
+Oct 09 18:13:48 looom-vm systemd[1]: Listening on Query the User Interactively for a Password.
+Oct 09 18:13:48 looom-vm systemd[1]: Listening on Process Core Dump Socket.
+Oct 09 18:13:48 looom-vm systemd[1]: Listening on Credential Encryption/Decryption.
+Oct 09 18:13:48 looom-vm systemd[1]: Listening on Disk Encryption Enrollment Service Socket.
+Oct 09 18:13:48 looom-vm systemd[1]: Listening on Factory Reset Management.
+Oct 09 18:13:48 looom-vm systemd[1]: Listening on Hostname Service Socket.
+Oct 09 18:13:48 looom-vm systemd[1]: Starting Journal Log Access Socket...
+Oct 09 18:13:48 looom-vm systemd[1]: Listening on Console Output Muting Service Socket.
+Oct 09 18:13:48 looom-vm systemd[1]: TPM PCR Measurements skipped, unmet condition check ConditionSecurity=measured-os
+Oct 09 18:13:48 looom-vm systemd[1]: Make TPM PCR Policy skipped, unmet condition check ConditionSecurity=measured-uki
+Oct 09 18:13:48 looom-vm systemd[1]: Listening on Disk Repartitioning Service Socket.
+Oct 09 18:13:48 looom-vm systemd[1]: Listening on Simple Block Device Backed Storage Provider.
+Oct 09 18:13:48 looom-vm systemd[1]: Listening on System Install Tool.
+Oct 09 18:13:48 looom-vm systemd[1]: Listening on System Updates.
+Oct 09 18:13:48 looom-vm systemd[1]: Listening on udev Varlink Socket.
+Oct 09 18:13:48 looom-vm systemd[1]: Mounting Huge Pages File System...
+Oct 09 18:13:48 looom-vm systemd[1]: Mounting POSIX Message Queue File System...
+Oct 09 18:13:48 looom-vm systemd[1]: Mounting Kernel Debug File System...
+Oct 09 18:13:48 looom-vm systemd[1]: Mounting Kernel Trace File System...
+Oct 09 18:13:48 looom-vm systemd[1]: Starting Create List of Static Device Nodes...
+Oct 09 18:13:48 looom-vm systemd[1]: Load Kernel Module configfs skipped, unmet condition check ConditionKernelModuleLoaded=!configfs
+Oct 09 18:13:48 looom-vm systemd[1]: Mounting Kernel Configuration File System...
+Oct 09 18:13:48 looom-vm systemd[1]: Load Kernel Module drm skipped, unmet condition check ConditionKernelModuleLoaded=!drm
+Oct 09 18:13:48 looom-vm systemd[1]: Load Kernel Module fuse skipped, unmet condition check ConditionKernelModuleLoaded=!fuse
+Oct 09 18:13:48 looom-vm systemd[1]: Mounting FUSE Control File System...
+Oct 09 18:13:48 looom-vm systemd[1]: systemd-fsck-root.service: Deactivated successfully.
+Oct 09 18:13:48 looom-vm systemd[1]: Stopped File System Check on Root Device.
+Oct 09 18:13:48 looom-vm systemd[1]: Clear Stale Hibernate Storage Info skipped, unmet condition check ConditionPathExists=/sys/firmware/efi/efivars/HibernateLocation-8cf2644b-4b0b-428f-9387-6d876050dc67
+Oct 09 18:13:48 looom-vm systemd[1]: Starting Journal Service...
+Oct 09 18:13:48 looom-vm systemd[1]: Starting Load Kernel Modules...
+Oct 09 18:13:48 looom-vm systemd[1]: TPM PCR Machine ID Measurement skipped, unmet condition check ConditionSecurity=measured-os
+Oct 09 18:13:48 looom-vm systemd[1]: TPM PCR OS Separator skipped, unmet condition check ConditionSecurity=measured-os
+Oct 09 18:13:48 looom-vm systemd[1]: Starting Remount Root and Kernel File Systems...
+Oct 09 18:13:48 looom-vm systemd[1]: Early TPM SRK Setup skipped, unmet condition check ConditionSecurity=measured-os
+Oct 09 18:13:48 looom-vm systemd[1]: TPM PCR NvPCR Initialization Separator skipped, unmet condition check ConditionPathExists=/etc/initrd-release
+Oct 09 18:13:48 looom-vm systemd[1]: Reached target Local Encrypted Volumes.
+Oct 09 18:13:48 looom-vm systemd[1]: Starting Load udev Rules from Credentials...
+Oct 09 18:13:48 looom-vm systemd[1]: Starting Coldplug All udev Devices...
+Oct 09 18:13:48 looom-vm systemd-journald[303]: Collecting audit messages is disabled.
+Oct 09 18:13:48 looom-vm systemd[1]: Started Journal Service.
+Oct 09 18:13:48 looom-vm kernel: BTRFS info (device vda2 state M): use zstd compression, level 3
+Oct 09 18:13:48 looom-vm kernel: i2c_dev: i2c /dev entries driver
+Oct 09 18:13:48 looom-vm kernel: virtio_net virtio1 enp1s0: renamed from eth0
+Oct 09 18:13:49 looom-vm kernel: input: PC Speaker as /devices/platform/pcspkr/input/input4
+Oct 09 18:13:49 looom-vm kernel: mousedev: PS/2 mouse device common for all mice
+Oct 09 18:13:49 looom-vm kernel: iTCO_wdt iTCO_wdt.1.auto: Found a ICH9 TCO device (Version=2, TCOBASE=0x0660)
+Oct 09 18:13:49 looom-vm kernel: iTCO_wdt iTCO_wdt.1.auto: initialized. heartbeat=30 sec (nowayout=0)
+Oct 09 18:13:49 looom-vm kernel: i801_smbus 0000:00:1f.3: Enabling SMBus device
+Oct 09 18:13:49 looom-vm kernel: i801_smbus 0000:00:1f.3: SMBus using PCI interrupt
+Oct 09 18:13:49 looom-vm kernel: i2c i2c-0: Memory type 0x07 not supported yet, not instantiating SPD
+Oct 09 18:13:49 looom-vm kernel: RAPL PMU: API unit is 2^-32 Joules, 0 fixed counters, 10737418240 ms ovfl timer
+Oct 09 18:13:49 looom-vm kernel: snd_hda_codec_generic hdaudioC0D0: autoconfig for Generic: line_outs=1 (0x3/0x0/0x0/0x0/0x0) type:line
+Oct 09 18:13:49 looom-vm kernel: snd_hda_codec_generic hdaudioC0D0:    speaker_outs=0 (0x0/0x0/0x0/0x0/0x0)
+Oct 09 18:13:49 looom-vm kernel: snd_hda_codec_generic hdaudioC0D0:    hp_outs=0 (0x0/0x0/0x0/0x0/0x0)
+Oct 09 18:13:49 looom-vm kernel: snd_hda_codec_generic hdaudioC0D0:    mono: mono_out=0x0
+Oct 09 18:13:49 looom-vm kernel: snd_hda_codec_generic hdaudioC0D0:    inputs:
+Oct 09 18:13:49 looom-vm kernel: snd_hda_codec_generic hdaudioC0D0:      Line=0x5
+Oct 09 18:13:49 looom-vm kernel: intel_rapl_msr: PL4 support detected (updated).
+Oct 09 18:13:50 looom-vm systemd-journald[303]: Received client request to flush runtime journal.
+Oct 09 18:13:50 looom-vm systemd-journald[303]: File /var/log/journal/085283a4f5db445a8f8475d9c30fbc1f/system.journal corrupted or uncleanly shut down, renaming and replacing: Device or resource busy
+Oct 09 18:13:50 looom-vm kernel: input: ImExPS/2 Generic Explorer Mouse as /devices/platform/i8042/serio1/input/input5

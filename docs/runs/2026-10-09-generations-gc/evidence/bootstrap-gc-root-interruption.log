@@ -1,0 +1,26 @@
+GC retain bootstrap: @bootstrap-gc-recovery-a
+GC bootstrap candidate: @bootstrap-rust-upgrade-1007
+GC retain release: rust-bootstrap-recovery
+GC retain release: rust-upgrade-1007
+GC retain bootstrap: @bootstrap-gc-recovery-a
+GC bootstrap candidate: @bootstrap-rust-upgrade-1007
+@bootstrap-rust-upgrade-1007
+	Name: 			@bootstrap-rust-upgrade-1007
+	UUID: 			119d73c1-ffbc-7d43-b8f6-79ba0afa96c1
+	Parent UUID: 		2453e986-21db-bf41-8a69-aa173b3396bd
+	Received UUID: 		-
+	Creation time: 		2026-10-09 16:29:53 +0300
+	Subvolume ID: 		371
+	Generation: 		1180
+	Gen at creation: 	1166
+	Parent ID: 		5
+	Top level ID: 		5
+	Flags: 			-
+	Send transid: 		0
+	Send time: 		2026-10-09 16:29:53 +0300
+	Receive transid: 	0
+	Receive time: 		-
+	Snapshot(s):
+	Quota group:		n/a
+Delete subvolume 371 (commit): '/run/looom-top/@bootstrap-rust-upgrade-1007'
+looom: Injected interruption after gc-bootstrap-root

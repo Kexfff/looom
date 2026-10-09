@@ -1,0 +1,26 @@
+GC retain bootstrap: @bootstrap-gc-recovery-final
+GC candidate: rust-bootstrap-recovery (confirmed)
+@root-rust-bootstrap-recovery
+	Name: 			@root-rust-bootstrap-recovery
+	UUID: 			8fd70e93-95d4-024d-b3b3-082a580bd26e
+	Parent UUID: 		591d3335-81a4-6448-b041-028d18e5b92d
+	Received UUID: 		-
+	Creation time: 		2026-10-09 16:47:33 +0300
+	Subvolume ID: 		375
+	Generation: 		1214
+	Gen at creation: 	1214
+	Parent ID: 		5
+	Top level ID: 		5
+	Flags: 			readonly
+	Send transid: 		0
+	Send time: 		2026-10-09 16:47:33 +0300
+	Receive transid: 	0
+	Receive time: 		-
+	Snapshot(s):
+				@bootstrap-gc-recovery-final
+	Quota group:		n/a
+Delete subvolume 375 (commit): '/run/looom-top/@root-rust-bootstrap-recovery'
+GC retain release: rust-gc-generations
+GC retain release: rust-gc-ready
+GC retain bootstrap: @bootstrap-gc-recovery-final
+GC apply complete; frozen inputs, evidence and persistent data retained

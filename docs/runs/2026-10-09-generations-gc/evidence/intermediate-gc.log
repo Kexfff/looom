@@ -1,0 +1,25 @@
+GC retain bootstrap: @bootstrap-gc-recovery-b
+GC retain release: rust-bootstrap-recovery
+GC retain release: rust-gc-generations
+GC candidate: rust-upgrade-1007 (confirmed)
+@root-rust-upgrade-1007
+	Name: 			@root-rust-upgrade-1007
+	UUID: 			2453e986-21db-bf41-8a69-aa173b3396bd
+	Parent UUID: 		022129a1-a44d-de4d-b0ca-c3dd69241e58
+	Received UUID: 		-
+	Creation time: 		2026-10-08 16:13:01 +0300
+	Subvolume ID: 		350
+	Generation: 		1048
+	Gen at creation: 	1048
+	Parent ID: 		5
+	Top level ID: 		5
+	Flags: 			readonly
+	Send transid: 		0
+	Send time: 		2026-10-08 16:13:01 +0300
+	Receive transid: 	0
+	Receive time: 		-
+	Snapshot(s):
+	Quota group:		n/a
+Delete subvolume 350 (commit): '/run/looom-top/@root-rust-upgrade-1007'
+GC retain bootstrap: @bootstrap-gc-recovery-b
+GC apply complete; frozen inputs, evidence and persistent data retained

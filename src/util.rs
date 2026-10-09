@@ -167,3 +167,15 @@ pub fn remove_if_exists(path: &Path) -> Result<()> {
     }
     Ok(())
 }
+
+/// A deletion target must be an owned ordinary file, never a link/device/FIFO.
+pub fn owned_regular(path: &Path) -> Result<()> {
+    use std::os::unix::fs::MetadataExt;
+    let metadata = fs::symlink_metadata(path)?;
+    ensure!(
+        metadata.is_file() && metadata.uid() == 0 && metadata.mode() & 0o022 == 0,
+        "unsafe file: {}",
+        path.display()
+    );
+    Ok(())
+}

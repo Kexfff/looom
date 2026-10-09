@@ -28,17 +28,21 @@ fn run() -> Result<()> {
     }
     if op == "--help" || op == "-h" {
         println!(
-            "looom {} — native Rust system releases\n\ncheck|init|bootstrap|lock|plan <base.yaml>\nboot-entry | boot-recovery\nbootstrap-update <confirmed-running-release>\nbootstrap-try | bootstrap-confirm | bootstrap-recover\nbuild <base.yaml> <release-id>\nstatus | verify | recover\npublish|try|rollback|reject <release-id>\nconfirm [release-id]\npassword <user> [--stdin]\naccounts generate|check\ngc [--keep N] [--apply]\n\nBuild never changes the boot choice. Reboot separately after try/rollback.\nGC previews candidates unless --apply is given.",
+            "looom {} — native Rust system releases\n\ncheck|init|bootstrap|lock|plan <base.yaml>\nboot-entry | boot-recovery\nbootstrap-update <confirmed-running-release> [generation-id]\nbootstrap-try | bootstrap-confirm | bootstrap-recover | bootstrap-list\nbuild <base.yaml> <release-id>\nstatus | verify | recover\npublish|try|rollback|reject <release-id>\nconfirm [release-id]\npassword <user> [--stdin]\naccounts generate|check\ngc [--keep N] [--apply]\n\nBuild never changes the boot choice. Reboot separately after try/rollback.\nGC previews candidates unless --apply is given.",
             looom::VERSION
         );
         return Ok(());
     }
     if op == "bootstrap-update" {
         ensure!(
-            args.len() == 2,
-            "bootstrap-update <confirmed-running-release>"
+            (args.len() == 2 || args.len() == 3),
+            "bootstrap-update <confirmed-running-release> [generation-id]"
         );
-        return looom::bootstrap_update::stage(&args[1]);
+        return looom::bootstrap_update::stage(&args[1], args.get(2).map(String::as_str));
+    }
+    if op == "bootstrap-list" {
+        ensure!(args.len() == 1, "bootstrap-list takes no arguments");
+        return looom::bootstrap_update::list();
     }
     if ["bootstrap-try", "bootstrap-confirm", "bootstrap-recover"].contains(&op) {
         ensure!(args.len() == 1, "bootstrap operation takes no arguments");
@@ -216,6 +220,7 @@ fn run() -> Result<()> {
                 manager.finish_removal(&metadata)?;
             }
         }
+        looom::bootstrap_update::recover_gc(&manager)?;
         manager.write_menu(&manager.menu(None)?)?;
         println!("Published menu restored; incomplete candidates remain unselected");
         return Ok(());

@@ -1,0 +1,2 @@
+No database errors have been found!
+PASS: booted read-only release rust-gc-ready, kernel, persistent mounts, units, accounts, exact inventory and native manager

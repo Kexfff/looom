@@ -1,0 +1,4 @@
+Running: rust-gc-ready
+GRUB: {"next_entry":"","saved_entry":"looom-rust-gc-ready"}
+rust-gc-generations confirmed 7.2.9-arch1-1 @root-rust-gc-generations
+rust-gc-ready confirmed 7.2.9-arch1-1 @root-rust-gc-ready

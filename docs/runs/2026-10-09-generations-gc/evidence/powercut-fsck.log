@@ -1,0 +1,25 @@
+Oct 09 18:13:46 archlinux systemd[1]: Starting File System Check on /dev/disk/by-uuid/a79f6ab7-52ab-49d0-ab3c-a2b3a1918140...
+Oct 09 18:13:46 archlinux systemd[1]: Finished File System Check on /dev/disk/by-uuid/a79f6ab7-52ab-49d0-ab3c-a2b3a1918140.
+Oct 09 18:13:48 looom-vm systemd[1]: Starting File System Check on /dev/disk/by-uuid/8CE8-BFE9...
+Oct 09 18:13:49 looom-vm systemd-fsck[370]: fsck.fat 4.2 (2021-01-31)
+Oct 09 18:13:49 looom-vm systemd-fsck[370]: There are differences between boot sector and its backup.
+Oct 09 18:13:49 looom-vm systemd-fsck[370]: This is mostly harmless. Differences: (offset:original/backup)
+Oct 09 18:13:49 looom-vm systemd-fsck[370]:   65:01/00
+Oct 09 18:13:49 looom-vm systemd-fsck[370]:   Not automatically fixing this.
+Oct 09 18:13:49 looom-vm systemd-fsck[370]: /looom/grub/grub.cfg
+Oct 09 18:13:49 looom-vm systemd-fsck[370]:   Contains a free cluster (381635). Assuming EOF.
+Oct 09 18:13:49 looom-vm systemd-fsck[370]: /looom/grub/grub.cfg
+Oct 09 18:13:49 looom-vm systemd-fsck[370]:   File size is 2234 bytes, cluster chain length is 0 bytes.
+Oct 09 18:13:49 looom-vm systemd-fsck[370]:   Truncating file to 0 bytes.
+Oct 09 18:13:49 looom-vm systemd-fsck[370]: /looom/grub/grub.cfg.previous
+Oct 09 18:13:49 looom-vm systemd-fsck[370]:   Contains a free cluster (381636). Assuming EOF.
+Oct 09 18:13:49 looom-vm systemd-fsck[370]: /looom/grub/grub.cfg.previous
+Oct 09 18:13:49 looom-vm systemd-fsck[370]:   File size is 2234 bytes, cluster chain length is 0 bytes.
+Oct 09 18:13:49 looom-vm systemd-fsck[370]:   Truncating file to 0 bytes.
+Oct 09 18:13:49 looom-vm systemd-fsck[370]: Reclaimed 2 unused clusters (8192 bytes) in 2 chains.
+Oct 09 18:13:49 looom-vm systemd-fsck[370]: Dirty bit is set. Fs was not properly unmounted and some data may be corrupt.
+Oct 09 18:13:49 looom-vm systemd-fsck[370]:  Automatically removing dirty bit.
+Oct 09 18:13:49 looom-vm systemd-fsck[370]: *** Filesystem was changed ***
+Oct 09 18:13:49 looom-vm systemd-fsck[370]: Writing changes.
+Oct 09 18:13:49 looom-vm systemd-fsck[370]: /dev/vda1: 435 files, 477766/523260 clusters
+Oct 09 18:13:49 looom-vm systemd[1]: Finished File System Check on /dev/disk/by-uuid/8CE8-BFE9.

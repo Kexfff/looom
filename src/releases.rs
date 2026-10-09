@@ -69,7 +69,10 @@ impl Manager {
         Ok(self.state.join("releases").join(format!("{rid}.json")))
     }
     pub fn load(&self, rid: &str) -> Result<Metadata> {
-        let metadata: Metadata = serde_json::from_slice(&fs::read(self.record_path(rid)?)?)?;
+        let path = self.record_path(rid)?;
+        crate::credentials::trusted_dir(path.parent().context("release metadata parent")?, false)?;
+        owned_regular(&path)?;
+        let metadata: Metadata = serde_json::from_slice(&fs::read(path)?)?;
         ensure!(
             metadata.id == rid
                 && metadata.root_subvolume == format!("@root-{rid}")
@@ -526,8 +529,66 @@ impl Manager {
         }
         Ok(())
     }
-    pub fn gc(&self, keep: usize, apply: bool) -> Result<()> {
-        ensure!(keep >= 2, "retain at least two confirmed releases");
+    pub fn mounted_subvolume(&self, subvolume: &str) -> Result<bool> {
+        // A bind from State or a tmpfs mounted inside the root has a different
+        // FSROOT. Protect its target path before checking Btrfs source aliases.
+        let target = self.top.join(subvolume);
+        let target = string(&target)?;
+        let targets = output("findmnt", &["-rn", "-o", "TARGET"])?;
+        if targets
+            .lines()
+            .any(|path| path == target || path.starts_with(&format!("{target}/")))
+        {
+            return Ok(true);
+        }
+        let prefix = format!("/{subvolume}");
+        let mounts = output("findmnt", &["-rn", "-t", "btrfs", "-o", "UUID,FSROOT"])?;
+        Ok(mounts.lines().any(|line| {
+            let mut fields = line.split_whitespace();
+            fields.next() == Some(self.machine.root_uuid.as_str())
+                && fields
+                    .next()
+                    .is_some_and(|root| root == prefix || root.starts_with(&format!("{prefix}/")))
+        }))
+    }
+    pub fn delete_subvolume(&self, subvolume: &str) -> Result<()> {
+        ensure!(
+            subvolume
+                .strip_prefix("@root-")
+                .or_else(|| subvolume.strip_prefix("@bootstrap-"))
+                .is_some_and(crate::config::identifier),
+            "invalid managed root"
+        );
+        ensure!(
+            !self.mounted_subvolume(subvolume)?,
+            "cannot remove mounted root: {subvolume}"
+        );
+        crate::credentials::trusted_dir(&self.top, false)?;
+        let root = self.top.join(subvolume);
+        match fs::symlink_metadata(&root) {
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(()),
+            Err(error) => return Err(error.into()),
+            Ok(metadata) => {
+                use std::os::unix::fs::MetadataExt;
+                ensure!(
+                    metadata.is_dir() && metadata.uid() == 0 && metadata.mode() & 0o022 == 0,
+                    "unsafe managed root"
+                );
+            }
+        }
+        ensure!(
+            output("findmnt", &["-nro", "UUID", "-T", string(&root)?])? == self.machine.root_uuid,
+            "root belongs to another filesystem"
+        );
+        command("btrfs", &["subvolume", "show", string(&root)?])?;
+        command(
+            "btrfs",
+            &["subvolume", "delete", "--commit-after", string(&root)?],
+        )?;
+        sync_dir(&self.top)?;
+        Ok(())
+    }
+    fn gc_protected(&self, keep: usize) -> Result<BTreeSet<String>> {
         let entries = self.list()?;
         let mut confirmed: Vec<_> = entries.iter().filter(|m| m.phase == "confirmed").collect();
         confirmed.sort_by_key(|m| (m.created_at, m.id.clone()));
@@ -537,24 +598,61 @@ impl Manager {
             .take(keep)
             .map(|m| m.id.clone())
             .collect();
-        protected.insert(
-            fs::read_to_string("/etc/looom/release-id")
-                .unwrap_or_default()
-                .trim()
-                .into(),
-        );
+        // I/O failure must not silently turn a working root into an eligible one.
+        match fs::read_to_string("/etc/looom/release-id") {
+            Ok(id) => {
+                protected.insert(id.trim().into());
+            }
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
+            Err(error) => return Err(error.into()),
+        }
         for value in self.environment()?.values() {
             if let Some(id) = value.strip_prefix("looom-") {
                 protected.insert(id.into());
             }
         }
-        for mut metadata in entries {
-            if protected.contains(&metadata.id)
-                || !matches!(
-                    metadata.phase.as_str(),
-                    "confirmed" | "rejected" | "validated" | "removing"
-                )
-            {
+        for metadata in &entries {
+            if self.mounted_subvolume(&metadata.root_subvolume)? {
+                protected.insert(metadata.id.clone());
+            }
+        }
+        protected.extend(crate::bootstrap_update::protected_sources(self)?);
+        for entry in fs::read_dir(self.state.join("operations"))? {
+            let path = entry?.path();
+            if path.extension().and_then(|v| v.to_str()) != Some("json") {
+                continue;
+            }
+            owned_regular(&path)?;
+            let operation: serde_json::Value = serde_json::from_slice(&fs::read(path)?)?;
+            if operation["phase"] == "configured" {
+                let id = operation["id"]
+                    .as_str()
+                    .context("configured operation ID")?;
+                ensure!(
+                    crate::config::identifier(id),
+                    "invalid configured operation ID"
+                );
+                protected.insert(id.into());
+            }
+        }
+        Ok(protected)
+    }
+    pub fn gc(&self, keep: usize, apply: bool) -> Result<()> {
+        ensure!(keep >= 2, "retain at least two confirmed releases");
+        // Validate bootstrap history before deleting any ordinary release.
+        crate::bootstrap_update::gc(self, false)?;
+        let protected = self.gc_protected(keep)?;
+        for mut metadata in self.list()? {
+            if protected.contains(&metadata.id) {
+                println!("GC retain release: {}", metadata.id);
+                continue;
+            }
+            // Published candidates require explicit reject, allowing a user to
+            // prepare a trial without losing it to an unrelated GC invocation.
+            if !matches!(
+                metadata.phase.as_str(),
+                "confirmed" | "rejected" | "validated" | "removing"
+            ) {
                 continue;
             }
             println!("GC candidate: {} ({})", metadata.id, metadata.phase);
@@ -562,39 +660,46 @@ impl Manager {
                 metadata.phase = "removing".into();
                 self.save(&metadata)?;
                 self.operation(&metadata.id, "removing")?;
-                self.write_menu(&self.menu(None)?)?;
+                failpoint("gc-journal")?;
                 self.finish_removal(&metadata)?;
             }
         }
+        if apply {
+            crate::bootstrap_update::gc(self, true)?;
+        }
+        println!(
+            "GC {} complete; frozen inputs, evidence and persistent data retained",
+            if apply { "apply" } else { "preview" }
+        );
         Ok(())
     }
     pub fn finish_removal(&self, metadata: &Metadata) -> Result<()> {
+        let metadata = self.load(&metadata.id)?;
         ensure!(metadata.phase == "removing", "not a removal operation");
         ensure!(
-            !self
-                .environment()?
-                .values()
-                .any(|v| v == &format!("looom-{}", metadata.id))
-                && fs::read_to_string("/etc/looom/release-id")
-                    .unwrap_or_default()
-                    .trim()
-                    != metadata.id,
-            "cannot remove selected/running release"
+            !self.gc_protected(2)?.contains(&metadata.id),
+            "cannot remove protected release: {}",
+            metadata.id
         );
+        // Remove the menu entry durably before deleting either root or image.
+        self.write_menu(&self.menu(None)?)?;
+        command("sync", &["-f", string(&self.esp)?])?;
+        failpoint("gc-menu")?;
         self.clean_publication(&metadata.id)?;
-        let root = self.top.join(&metadata.root_subvolume);
-        if root.exists() {
-            command(
-                "btrfs",
-                &["subvolume", "delete", "--commit-after", string(&root)?],
-            )?;
+        self.delete_subvolume(&metadata.root_subvolume)?;
+        failpoint("gc-root")?;
+        let image = self.efi().join(format!("looom-{}.efi", metadata.id));
+        if image.try_exists()? {
+            owned_regular(&image)?;
+            fs::remove_file(image)?;
         }
-        remove_if_exists(&self.efi().join(format!("looom-{}.efi", metadata.id)))?;
         sync_dir(&self.efi())?;
+        command("sync", &["-f", string(&self.esp)?])?;
+        failpoint("gc-uki")?;
         self.operation(&metadata.id, "removed")?;
+        owned_regular(&self.record_path(&metadata.id)?)?;
         fs::remove_file(self.record_path(&metadata.id)?)?;
         sync_dir(&self.state.join("releases"))?;
-        // Frozen inputs and evidence remain for reproducibility, never garbage collect credentials.
         Ok(())
     }
 }

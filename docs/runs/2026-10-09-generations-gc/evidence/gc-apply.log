@@ -1,0 +1,263 @@
+GC candidate: desktop (confirmed)
+@root-desktop
+	Name: 			@root-desktop
+	UUID: 			44b30595-5708-8a4f-85cf-e447325dbe8c
+	Parent UUID: 		0f829e64-5e7a-de4e-b03f-37d9c69a1df5
+	Received UUID: 		-
+	Creation time: 		2026-10-04 21:59:11 +0300
+	Subvolume ID: 		290
+	Generation: 		172
+	Gen at creation: 	172
+	Parent ID: 		5
+	Top level ID: 		5
+	Flags: 			readonly
+	Send transid: 		0
+	Send time: 		2026-10-04 21:59:11 +0300
+	Receive transid: 	0
+	Receive time: 		-
+	Snapshot(s):
+	Quota group:		n/a
+Delete subvolume 290 (commit): '/run/looom-top/@root-desktop'
+GC candidate: mvp-a4 (confirmed)
+@root-mvp-a4
+	Name: 			@root-mvp-a4
+	UUID: 			007aea65-f63f-ac45-aef0-fade4cc2e2cf
+	Parent UUID: 		a26a3af5-f8ca-c94e-9372-7b9772ea9602
+	Received UUID: 		-
+	Creation time: 		2026-10-06 14:27:22 +0300
+	Subvolume ID: 		304
+	Generation: 		367
+	Gen at creation: 	367
+	Parent ID: 		5
+	Top level ID: 		5
+	Flags: 			readonly
+	Send transid: 		0
+	Send time: 		2026-10-06 14:27:22 +0300
+	Receive transid: 	0
+	Receive time: 		-
+	Snapshot(s):
+	Quota group:		n/a
+Delete subvolume 304 (commit): '/run/looom-top/@root-mvp-a4'
+GC candidate: mvp-b (confirmed)
+@root-mvp-b
+	Name: 			@root-mvp-b
+	UUID: 			0032df0e-8774-a944-9470-1b8962987bdb
+	Parent UUID: 		d628e0d3-1a6e-2545-b3e0-516bb814fae8
+	Received UUID: 		-
+	Creation time: 		2026-10-06 14:37:31 +0300
+	Subvolume ID: 		308
+	Generation: 		394
+	Gen at creation: 	394
+	Parent ID: 		5
+	Top level ID: 		5
+	Flags: 			readonly
+	Send transid: 		0
+	Send time: 		2026-10-06 14:37:31 +0300
+	Receive transid: 	0
+	Receive time: 		-
+	Snapshot(s):
+	Quota group:		n/a
+Delete subvolume 308 (commit): '/run/looom-top/@root-mvp-b'
+GC candidate: mvp-desktop (confirmed)
+@root-mvp-desktop
+	Name: 			@root-mvp-desktop
+	UUID: 			efe01ff4-38d2-e043-bb26-434f01693071
+	Parent UUID: 		ca2992ad-0a76-b344-9b36-03819f8522fd
+	Received UUID: 		-
+	Creation time: 		2026-10-06 14:43:07 +0300
+	Subvolume ID: 		312
+	Generation: 		415
+	Gen at creation: 	415
+	Parent ID: 		5
+	Top level ID: 		5
+	Flags: 			readonly
+	Send transid: 		0
+	Send time: 		2026-10-06 14:43:07 +0300
+	Receive transid: 	0
+	Receive time: 		-
+	Snapshot(s):
+	Quota group:		n/a
+Delete subvolume 312 (commit): '/run/looom-top/@root-mvp-desktop'
+GC candidate: rust-a (confirmed)
+@root-rust-a
+	Name: 			@root-rust-a
+	UUID: 			b229ca95-aa0e-4940-8fd0-e8fb6db0fec4
+	Parent UUID: 		8f01dbaf-57fc-6046-a760-c80357954d5c
+	Received UUID: 		-
+	Creation time: 		2026-10-06 19:25:35 +0300
+	Subvolume ID: 		317
+	Generation: 		695
+	Gen at creation: 	695
+	Parent ID: 		5
+	Top level ID: 		5
+	Flags: 			readonly
+	Send transid: 		0
+	Send time: 		2026-10-06 19:25:35 +0300
+	Receive transid: 	0
+	Receive time: 		-
+	Snapshot(s):
+	Quota group:		n/a
+Delete subvolume 317 (commit): '/run/looom-top/@root-rust-a'
+GC candidate: rust-b (confirmed)
+@root-rust-b
+	Name: 			@root-rust-b
+	UUID: 			f5c6af97-fb7c-5144-b88d-a47ad301019d
+	Parent UUID: 		f7e843a6-0c9b-1d46-a772-4c7fdafb0924
+	Received UUID: 		-
+	Creation time: 		2026-10-06 19:34:02 +0300
+	Subvolume ID: 		322
+	Generation: 		717
+	Gen at creation: 	717
+	Parent ID: 		5
+	Top level ID: 		5
+	Flags: 			readonly
+	Send transid: 		0
+	Send time: 		2026-10-06 19:34:02 +0300
+	Receive transid: 	0
+	Receive time: 		-
+	Snapshot(s):
+	Quota group:		n/a
+Delete subvolume 322 (commit): '/run/looom-top/@root-rust-b'
+GC retain release: rust-bootstrap-recovery
+GC candidate: rust-desktop (confirmed)
+@root-rust-desktop
+	Name: 			@root-rust-desktop
+	UUID: 			86696d4e-0871-be47-9b00-c9481796a318
+	Parent UUID: 		8f498811-96cc-214c-b0b3-fd05306f4aca
+	Received UUID: 		-
+	Creation time: 		2026-10-06 19:57:27 +0300
+	Subvolume ID: 		336
+	Generation: 		773
+	Gen at creation: 	773
+	Parent ID: 		5
+	Top level ID: 		5
+	Flags: 			readonly
+	Send transid: 		0
+	Send time: 		2026-10-06 19:57:27 +0300
+	Receive transid: 	0
+	Receive time: 		-
+	Snapshot(s):
+	Quota group:		n/a
+Delete subvolume 336 (commit): '/run/looom-top/@root-rust-desktop'
+GC candidate: rust-final (confirmed)
+@root-rust-final
+	Name: 			@root-rust-final
+	UUID: 			3366cbaa-5837-f74b-ae13-71d81ab6972c
+	Parent UUID: 		a6bb8662-5c13-2a41-8bd8-1f918a87ea1f
+	Received UUID: 		-
+	Creation time: 		2026-10-06 20:10:43 +0300
+	Subvolume ID: 		345
+	Generation: 		805
+	Gen at creation: 	805
+	Parent ID: 		5
+	Top level ID: 		5
+	Flags: 			readonly
+	Send transid: 		0
+	Send time: 		2026-10-06 20:10:43 +0300
+	Receive transid: 	0
+	Receive time: 		-
+	Snapshot(s):
+	Quota group:		n/a
+Delete subvolume 345 (commit): '/run/looom-top/@root-rust-final'
+GC retain release: rust-upgrade-1007
+GC candidate: v1 (rejected)
+@root-v1
+	Name: 			@root-v1
+	UUID: 			56c4fa0e-f617-0247-9d8d-0d25aaa41cf9
+	Parent UUID: 		064ec3ee-299d-aa42-ab6d-2ef6d88ed91f
+	Received UUID: 		-
+	Creation time: 		2026-10-04 21:21:03 +0300
+	Subvolume ID: 		263
+	Generation: 		66
+	Gen at creation: 	66
+	Parent ID: 		5
+	Top level ID: 		5
+	Flags: 			readonly
+	Send transid: 		0
+	Send time: 		2026-10-04 21:21:03 +0300
+	Receive transid: 	0
+	Receive time: 		-
+	Snapshot(s):
+	Quota group:		n/a
+Delete subvolume 263 (commit): '/run/looom-top/@root-v1'
+GC candidate: v1r1 (rejected)
+@root-v1r1
+	Name: 			@root-v1r1
+	UUID: 			57b8a14b-e0bd-9a4f-979d-be80a3d4eeb7
+	Parent UUID: 		9a9107cc-e8f3-964d-afcb-86d44120e0c2
+	Received UUID: 		-
+	Creation time: 		2026-10-04 21:26:14 +0300
+	Subvolume ID: 		267
+	Generation: 		83
+	Gen at creation: 	83
+	Parent ID: 		5
+	Top level ID: 		5
+	Flags: 			readonly
+	Send transid: 		0
+	Send time: 		2026-10-04 21:26:14 +0300
+	Receive transid: 	0
+	Receive time: 		-
+	Snapshot(s):
+	Quota group:		n/a
+Delete subvolume 267 (commit): '/run/looom-top/@root-v1r1'
+GC candidate: v1r2 (rejected)
+@root-v1r2
+	Name: 			@root-v1r2
+	UUID: 			48e51c6e-c2e2-f54b-85d2-148a91a8b070
+	Parent UUID: 		1fc73271-2daf-6e4a-99a5-0fbbe2c6ae54
+	Received UUID: 		-
+	Creation time: 		2026-10-04 21:30:46 +0300
+	Subvolume ID: 		271
+	Generation: 		98
+	Gen at creation: 	98
+	Parent ID: 		5
+	Top level ID: 		5
+	Flags: 			readonly
+	Send transid: 		0
+	Send time: 		2026-10-04 21:30:46 +0300
+	Receive transid: 	0
+	Receive time: 		-
+	Snapshot(s):
+	Quota group:		n/a
+Delete subvolume 271 (commit): '/run/looom-top/@root-v1r2'
+GC candidate: v1r3 (confirmed)
+@root-v1r3
+	Name: 			@root-v1r3
+	UUID: 			a68a4c26-8542-e045-bef5-2d539d311a5e
+	Parent UUID: 		e168a69d-fb9e-4844-9307-b4c54e5b4ff1
+	Received UUID: 		-
+	Creation time: 		2026-10-04 21:35:12 +0300
+	Subvolume ID: 		275
+	Generation: 		111
+	Gen at creation: 	111
+	Parent ID: 		5
+	Top level ID: 		5
+	Flags: 			readonly
+	Send transid: 		0
+	Send time: 		2026-10-04 21:35:12 +0300
+	Receive transid: 	0
+	Receive time: 		-
+	Snapshot(s):
+	Quota group:		n/a
+Delete subvolume 275 (commit): '/run/looom-top/@root-v1r3'
+GC candidate: v2 (confirmed)
+@root-v2
+	Name: 			@root-v2
+	UUID: 			95cab6a2-de40-e146-afd9-12f6b5b1bb26
+	Parent UUID: 		89fc99a6-338e-8d4c-80eb-b0317388bc23
+	Received UUID: 		-
+	Creation time: 		2026-10-04 21:43:40 +0300
+	Subvolume ID: 		279
+	Generation: 		132
+	Gen at creation: 	132
+	Parent ID: 		5
+	Top level ID: 		5
+	Flags: 			readonly
+	Send transid: 		0
+	Send time: 		2026-10-04 21:43:40 +0300
+	Receive transid: 	0
+	Receive time: 		-
+	Snapshot(s):
+	Quota group:		n/a
+Delete subvolume 279 (commit): '/run/looom-top/@root-v2'
+GC apply complete; frozen inputs, evidence and persistent data retained

@@ -1,0 +1,30 @@
+[
+  {
+    "schema_version": 1,
+    "id": "rust-gc-generations",
+    "phase": "confirmed",
+    "root_subvolume": "@root-rust-gc-generations",
+    "kernel_package": "linux",
+    "kernel_version": "7.2.9-arch1-1",
+    "root_uuid": "a79f6ab7-52ab-49d0-ab3c-a2b3a1918140",
+    "esp_uuid": "8CE8-BFE9",
+    "uki_sha256": "d5a4f92185c6681095432b085f84c2397bb8a823a321a70a2f18de2174442e13",
+    "declarative_value": "rust-gc-generations",
+    "created_at": 1791560096,
+    "engine": "rust-0.2"
+  },
+  {
+    "schema_version": 1,
+    "id": "rust-gc-ready",
+    "phase": "confirmed",
+    "root_subvolume": "@root-rust-gc-ready",
+    "kernel_package": "linux",
+    "kernel_version": "7.2.9-arch1-1",
+    "root_uuid": "a79f6ab7-52ab-49d0-ab3c-a2b3a1918140",
+    "esp_uuid": "8CE8-BFE9",
+    "uki_sha256": "f06d6503d0bd5fd434a7bee39c9a251a98c7673d7f1bce52dd2acf5ba55b90c1",
+    "declarative_value": "rust-gc-ready",
+    "created_at": 1791560530,
+    "engine": "rust-0.2"
+  }
+]

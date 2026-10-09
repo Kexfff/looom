@@ -1,0 +1,33 @@
+Create snapshot of '/run/looom-top/@root-rust-bootstrap-recovery' in '/run/looom-top/@bootstrap-gc-recovery-final'
+==> Building image from preset: /etc/mkinitcpio.d/looom.preset: 'default'
+==> Using configuration file: '/etc/mkinitcpio.conf'
+  -> -k /boot/vmlinuz-looom -c /etc/mkinitcpio.conf -U /boot/looom-bootstrap.efi --cmdline /etc/kernel/cmdline
+==> Starting build: '7.2.9-arch1-1'
+  -> Running build hook: [base]
+  -> Running build hook: [systemd]
+  -> Running build hook: [microcode]
+  -> Running build hook: [modconf]
+  -> Running build hook: [kms]
+==> WARNING: Possibly missing firmware for module: 'ast'
+  -> Running build hook: [keyboard]
+==> WARNING: Possibly missing firmware for module: 'xhci_pci_renesas'
+  -> Running build hook: [sd-vconsole]
+  -> Running build hook: [block]
+==> WARNING: Possibly missing firmware for module: 'aic94xx'
+==> WARNING: Possibly missing firmware for module: 'bfa'
+==> WARNING: Possibly missing firmware for module: 'qed'
+==> WARNING: Possibly missing firmware for module: 'qla1280'
+==> WARNING: Possibly missing firmware for module: 'qla2xxx'
+==> WARNING: Possibly missing firmware for module: 'wd719x'
+  -> Running build hook: [filesystems]
+  -> Running build hook: [fsck]
+==> Generating module dependencies
+==> Creating zstd-compressed initcpio image
+  -> Early uncompressed CPIO image generation successful
+==> Initcpio image generation successful
+==> Creating unified kernel image: '/boot/looom-bootstrap.efi'
+  -> Using ukify to build UKI
+Using config file: /usr/lib/kernel/uki.conf
+Wrote unsigned /boot/looom-bootstrap.efi
+==> Unified kernel image generation successful
+Bootstrap candidate ready; use bootstrap-try, reboot and bootstrap-confirm. Saved release is unchanged
