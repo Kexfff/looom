@@ -1,0 +1,14 @@
+    Checking looom v0.2.0 (/workspace)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.24s
+   Compiling looom v0.2.0 (/workspace)
+    Finished `release` profile [optimized] target(s) in 13.91s
+   Compiling looom v0.2.0 (/workspace)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.32s
+     Running tests/apps.rs (target/debug/deps/apps-4fad7e12248eedb6)
+
+running 2 tests
+test rejects_ambiguous_apps_and_executable_sources ... ok
+test root_cannot_apply_or_run_installers ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+

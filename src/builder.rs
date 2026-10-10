@@ -314,6 +314,7 @@ fn configure(manager: &Manager, root: &Path, bundle: &Bundle) -> Result<()> {
             && chroot_output(root, "id", &["-g", &m.user])? == m.gid.to_string(),
         "personal UID/GID differs"
     );
+    crate::apps::configure_userns(root, &m.user)?;
     write(
         root,
         "etc/sudoers.d/10-looom-vm",
@@ -890,6 +891,11 @@ pub(crate) fn install_sources(root: &Path) -> Result<()> {
         ("Cargo.toml", include_str!("../Cargo.toml")),
         ("Cargo.lock", include_str!("../Cargo.lock")),
         ("src/lib.rs", include_str!("lib.rs")),
+        ("src/apps.rs", include_str!("apps.rs")),
+        (
+            "configs/installer/apps.yaml",
+            include_str!("../configs/installer/apps.yaml"),
+        ),
         ("src/main.rs", include_str!("main.rs")),
         ("src/config.rs", include_str!("config.rs")),
         ("src/util.rs", include_str!("util.rs")),

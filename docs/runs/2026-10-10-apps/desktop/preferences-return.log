@@ -1,0 +1,77 @@
+No database errors have been found!
+PASS: booted read-only release apps-b, kernel, persistent mounts, units, accounts, exact inventory and native manager
+Running: apps-b
+Bootloader Limine: {"saved_entry":"looom-apps-b"}
+apps-a confirmed 7.2.9-arch1-1 @root-apps-a
+apps-b confirmed 7.2.9-arch1-1 @root-apps-b
+ab2600391530fb5927075f714ce0e82b4c76e40f56593cf2685efe4205dc3152  /usr/bin/looom
++ systemd-detect-virt --vm
+kvm
++ findmnt -no OPTIONS /
+ro,noatime,compress=zstd:3,discard=async,space_cache=v2,subvolid=273,subvol=/@root-apps-b
++ which flatpak
+/usr/bin/flatpak
++ which distrobox
+/usr/bin/distrobox
++ which podman
+/usr/bin/podman
++ which fusermount
+/usr/bin/fusermount
++ looom apps status
+{
+  "appimages": {
+    "tool": true,
+    "tool-local": true
+  },
+  "arch_container": true,
+  "flatpak": {
+    "org.gnome.Calculator": true
+  },
+  "last_apply": true
+}
++ flatpak run org.gnome.Calculator --version
+gnome-calculator 51.0
++ looom apps exec -- tree --version
+tree v2.3.2 © 1996 - 2026 by Steve Baker, Thomas Moore, Francesc Rocher, Florian Sesser, Kyosuke Tokoro
++ looom apps exec -- xterm -version
+XTerm(411)
++ looom apps launch tool -- --version
+appimagetool, continuous build (git version 8c8c91f), build 296 built on 2025-12-04 17:55:56 UTC
++ looom apps launch tool-local -- --version
+appimagetool, continuous build (git version 8c8c91f), build 296 built on 2025-12-04 17:55:56 UTC
++ looom apps exec -- jq --version
+jq-1.8.2
++ looom apps exec -- bc --version
+bc 1.08.2
+Copyright 1991-1994, 1997, 1998, 2000, 2004, 2006, 2008, 2012-2018, 2024 Free Software Foundation, Inc.
+PASS: declared applications execute in a read-only system
++ systemd-detect-virt --vm
+kvm
++ findmnt -no OPTIONS /
+ro,noatime,compress=zstd:3,discard=async,space_cache=v2,subvolid=273,subvol=/@root-apps-b
++ which flatpak
+/usr/bin/flatpak
++ which distrobox
+/usr/bin/distrobox
++ which podman
+/usr/bin/podman
++ which fusermount
+/usr/bin/fusermount
++ podman inspect --format {{.Id}} looom-arch
+08ea23457b776bff8d23f8a500a1a86cc080382e55cfc99b1e032494749d197b
++ flatpak info --user --show-commit org.gnome.Calculator
+0032886e3396c2e0cb107d453d600301c8090241d3fef31ca3f688510dba0e43
++ flatpak run --command=gsettings org.gnome.Calculator get org.gnome.calculator show-thousands
+true
+{
+  "looom/apps.yaml": "806319d1f7dc4ddc47812703725e3255dd259339cc400cb9219305826c9a4dff",
+  ".local/share/looom/apps/applied.json": "30749da5667a1de7a9e2915598bd16b285089da7f059f949af23ea6d1163ef00",
+  ".local/share/looom/apps/appimages/tool/active.json": "c35a4a5171fd211b712e595a6cac0c1c1e9a34d4efd68492853b0467607f05e4",
+  ".local/share/looom/apps/appimages/tool-local/active.json": "94e1ca1df3f4680524def0365a292a67fa4545425a97af0a7ff9abd0d5ee8d6c",
+  "looom/acceptance/installer-result.txt": "dfc415d64803954122b35f84d143472179b11a38ca42ebc9230f2dbb3aaa8228",
+  ".local/share/applications/looom-tool.desktop": "ad0b0eadd3672d3a6a9889e794c660d6512b6116aa314415e24f071f2fd95007",
+  "container_id": "08ea23457b776bff8d23f8a500a1a86cc080382e55cfc99b1e032494749d197b",
+  "flatpak_commit": "0032886e3396c2e0cb107d453d600301c8090241d3fef31ca3f688510dba0e43",
+  "flatpak_setting_show_thousands": "true"
+}
+PASS: stable application IDs, content and user state

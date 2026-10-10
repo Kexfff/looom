@@ -21,3 +21,10 @@ curl
 rsync
 tmux
 vim
+flatpak
+distrobox
+podman
+fuse-overlayfs
+passt
+slirp4netns
+fuse2

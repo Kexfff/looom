@@ -644,12 +644,17 @@ fn configure(plan: &Plan, work: &Path) -> Result<()> {
         fs::symlink_metadata(&declaration)?.is_dir(),
         "unsafe declaration directory"
     );
-    for name in ["base.yaml", "base.lock"] {
+    crate::apps::configure_userns(&root, &user.name)?;
+    for name in ["base.yaml", "base.lock", "apps.yaml"] {
         let destination = declaration.join(name);
         match fs::symlink_metadata(&destination) {
             Ok(info) => ensure!(info.is_file(), "unsafe user declaration file"),
             Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
-                copy_owned(&work.join(name), &destination, 0o644)?;
+                if name == "apps.yaml" {
+                    atomic(&destination, crate::apps::TEMPLATE.as_bytes(), 0o644)?;
+                } else {
+                    copy_owned(&work.join(name), &destination, 0o644)?;
+                }
                 chroot(
                     &root,
                     "chown",
@@ -1032,7 +1037,7 @@ pub(super) fn apply(work: &Path, plan: &Plan, resume: bool, stdin: bool) -> Resu
     }
     drop(mounted);
     println!(
-        "Installation complete. First boot is a read-only trial; recovery remains the saved default.\nBoot the target disk, run: looom verify && looom confirm\nEditable declaration: /home/{}/looom/base.yaml (with base.lock).\nRetain workspace {} for the installation record; it contains private password hashes.",
+        "Installation complete. First boot is a read-only trial; recovery remains the saved default.\nBoot the target disk, run: looom verify && looom confirm\nEditable declarations: /home/{}/looom/base.yaml (with base.lock) and apps.yaml.\nRetain workspace {} for the installation record; it contains private password hashes.",
         plan.config.accounts.user.name,
         work.display()
     );

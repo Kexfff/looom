@@ -1,0 +1,9 @@
+No database errors have been found!
+PASS: booted read-only release apps-b, kernel, persistent mounts, units, accounts, exact inventory and native manager
+Confirmed healthy running release: apps-b
+Running: apps-b
+Bootloader Limine: {"saved_entry":"looom-apps-b"}
+apps-a confirmed 7.2.9-arch1-1 @root-apps-a
+apps-b confirmed 7.2.9-arch1-1 @root-apps-b
+initial confirmed 7.2.9-arch1-1 @root-initial
+ab2600391530fb5927075f714ce0e82b4c76e40f56593cf2685efe4205dc3152  /usr/bin/looom

@@ -180,3 +180,6 @@ Calamares сможет формировать тот же план и вызыв
 Исправление выбора диска и приёмка VM без serial: [журнал](runs/2026-10-10-installer-selection/README.md).
 
 Приёмка и ограничения конкретных опытов: [журнал VM](runs/2026-10-09-installer/README.md).
+
+Новая база также включает Flatpak, Distrobox/Podman и FUSE для AppImage.
+У пользователя появляется `~/looom/apps.yaml`: [применение и сторонние установщики](apps.md).

@@ -1,0 +1,9 @@
+No database errors have been found!
+PASS: booted read-only release apps-a, kernel, persistent mounts, units, accounts, exact inventory and native manager
+Confirmed healthy running release: apps-a
+Running: apps-a
+Bootloader Limine: {"saved_entry":"looom-apps-a"}
+apps-a confirmed 7.2.9-arch1-1 @root-apps-a
+initial confirmed 7.2.9-arch1-1 @root-initial
+kexfff:100000:65536
+kexfff:100000:65536

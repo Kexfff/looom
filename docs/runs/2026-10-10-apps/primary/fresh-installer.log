@@ -1,0 +1,4 @@
+Creating new GPT entries in memory.
+The operation has completed successfully.
+PASS: full numbered Limine wizard replaced a nonempty 64 GiB virtual disk without serial/WWN
+PASS: fresh read-only installation includes apps infrastructure, stable UID maps, owner-writable apps.yaml and exact native manager

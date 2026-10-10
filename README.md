@@ -129,3 +129,6 @@ Read-only релизы, управление загрузкой и KDE: [рук�
 Восстановление и пробное обновление аварийной базы: [протокол и VM-проверки](docs/runs/2026-10-09-bootstrap-recovery/README.md).
 
 История аварийных поколений и безопасная очистка: [GC и VM-проверки](docs/runs/2026-10-09-generations-gc/README.md).
+
+Пользовательский слой: [Flatpak, Arch/Distrobox, AppImage и сторонние `.sh`](docs/apps.md).
+[VM-приёмка слоя приложений](docs/runs/2026-10-10-apps/README.md).

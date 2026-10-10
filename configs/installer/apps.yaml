@@ -1,0 +1,16 @@
+# Apply as your regular user: looom apps apply
+# Applications/data survive system rollback. Nothing is removed implicitly.
+schema: 1
+flatpak: []  # Flathub application IDs, e.g. org.mozilla.firefox
+arch:
+  image: docker.io/library/archlinux:latest
+  packages: []  # e.g. [git, base-devel, firefox]
+  exports: []   # desktop app names, e.g. [firefox]
+appimages: {}
+# Example (replace URL and digest with the publisher's values):
+# appimages:
+#   example:
+#     url: https://example.org/Example.AppImage
+#     sha256: <64 lowercase hex characters>
+#     name: Example
+# A local AppImage can use source: ./Example.AppImage instead of url.

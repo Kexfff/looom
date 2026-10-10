@@ -1,0 +1,4 @@
+No database errors have been found!
+PASS: booted read-only release apps-a, kernel, persistent mounts, units, accounts, exact inventory and native manager
+100000:100000 644
+looom 0.2.0 (native Rust)

@@ -1,0 +1,40 @@
+{
+  "container_image": "757718cecb34fbe2c56e22b5f6299a45f149c7ce1c9b85def543a340bacdf7af",
+  "declaration": {
+    "appimages": {
+      "tool": {
+        "name": "Looom AppImage acceptance",
+        "sha256": "ed4ce84f0d9caff66f50bcca6ff6f35aae54ce8135408b3fa33abfc3cb384eb0",
+        "source": null,
+        "url": "https://github.com/AppImage/appimagetool/releases/download/1.9.1/appimagetool-x86_64.AppImage"
+      },
+      "tool-local": {
+        "name": null,
+        "sha256": "ed4ce84f0d9caff66f50bcca6ff6f35aae54ce8135408b3fa33abfc3cb384eb0",
+        "source": "./acceptance/appimagetool.AppImage",
+        "url": null
+      }
+    },
+    "arch": {
+      "exports": [
+        "xterm"
+      ],
+      "image": "docker.io/library/archlinux:latest",
+      "packages": [
+        "tree",
+        "xterm"
+      ]
+    },
+    "flatpak": [
+      "org.gnome.Calculator"
+    ],
+    "schema": 1
+  },
+  "flatpak_commits": {
+    "org.gnome.Calculator": "0032886e3396c2e0cb107d453d600301c8090241d3fef31ca3f688510dba0e43"
+  },
+  "schema": 1
+}["docker.io/library/archlinux@sha256:2fd1ae548076c67bcd41098ddd44e799058010e8d55f085d453dbb890e706860","docker.io/library/archlinux@sha256:4e77cf2ea5f410e6f8be5abf93ccf17ce2436e87a138c167208356711a405dbd"]
+org.gnome.Platform/x86_64/51
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda2        62G   12G   50G  20% /home

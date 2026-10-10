@@ -194,6 +194,7 @@ def install():
     print('PASS: full numbered Limine wizard replaced a nonempty 64 GiB virtual disk without serial/WWN')
 
 
-guard()
-os.umask(0o077)
-{'negatives': negatives, 'replugged': replugged, 'install': install}[sys.argv[1]]()
+if __name__ == '__main__':
+    guard()
+    os.umask(0o077)
+    {'negatives': negatives, 'replugged': replugged, 'install': install}[sys.argv[1]]()

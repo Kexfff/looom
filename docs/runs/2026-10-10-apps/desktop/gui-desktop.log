@@ -1,0 +1,140 @@
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+Refusing to try glamor on llvmpipe
+XWAYLAND: Disabling GLAMOR support
+EGL setup failed, disabling glamor
+Failed to initialize glamor, falling back to sw
+MESA-EGL: warning: failed to open /dev/dri/card1: Permission denied
+MESA-EGL: warning: failed to open /dev/dri/card1: Permission denied
+MESA-EGL: warning: failed to open /dev/dri/card1: Permission denied
+The XKEYBOARD keymap compiler (xkbcomp) reports:
+> Warning:          Multiple symbols for level 1/group 1 on key <FK23>
+>                   Using F23, ignoring XF86TouchpadOff
+> Warning:          Symbol map for key <FK23> redefined
+>                   Using last definition for conflicting fields
+> Warning:          Symbol map for key <FK24> redefined
+>                   Using last definition for conflicting fields
+Errors from xkbcomp are not fatal to the X server
+The XKEYBOARD keymap compiler (xkbcomp) reports:
+> Warning:          Unsupported maximum keycode 709, clipping.
+>                   X11 cannot support keycodes above 255.
+> Warning:          Virtual modifier Hyper multiply defined
+>                   Using 0, ignoring 0
+> Warning:          Virtual modifier ScrollLock multiply defined
+>                   Using 0, ignoring 0
+Errors from xkbcomp are not fatal to the X server
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+KMS: DRM_IOCTL_MODE_CREATE_DUMB failed: Permission denied
+
+xwininfo: Window id: 0x233 (the root window) (has no name)
+
+  Root window id: 0x233 (the root window) (has no name)
+  Parent window id: 0x0 (none)
+     11 children:
+     0x40000d (has no name): ()  1x1+-1+-1  +-1+-1
+     0x400003 "gnome-calculator": ("gnome-calculator" "gnome-calculator")  1x1+0+0  +0+0
+        1 child:
+        0x400004 (has no name): ()  1x1+-1+-1  +-1+-1
+     0x200006 (has no name): ()  10x10+0+0  +0+0
+     0x200005 (has no name): ()  8192x8192+0+0  +0+0
+     0x200004 (has no name): ()  10x10+0+0  +0+0
+     0x200003 (has no name): ()  1x1+0+0  +0+0
+     0x200000 (has no name): ()  1x1+-1+-1  +-1+-1
+     0x200002 "KWin": ()  1x1+0+0  +0+0
+     0x60000c "xterm": ("xterm" "XTerm")  484x316+270+244  +270+244
+        1 child:
+        0x60001b (has no name): ()  484x316+0+0  +270+244
+     0x400005 "Calculator": ("gnome-calculator" "gnome-calculator")  410x666+307+51  +307+51
+        1 child:
+        0x400006 (has no name): ()  1x1+-1+-1  +306+50
+     0x200001 (has no name): ()  1024x768+0+0  +0+0
+
+
+PASS: actual Flatpak Calculator and exported Arch xterm windows coexist under virtual KWin/Xwayland
+(EE) failed to write to Xwayland fd: Broken pipe
+accuracy
+angle-units
+base
+button-mode
+currency-display
+enabled-completions
+favorite-currencies
+history-tape
+number-format
+precision
+refresh-interval
+show-thousands
+show-zeroes
+source-units
+target-units
+unit-category
+window-maximized
+window-position
+window-size
+word-size

@@ -1,0 +1,46 @@
+PASS: fresh read-only installation includes apps infrastructure, stable UID maps, owner-writable apps.yaml and exact native manager
+BootCurrent: 0006
+Timeout: 3 seconds
+BootOrder: 0006,0005,0003,0002,0000,0001,0004
+Boot0000* BootManagerMenuApp	FvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(eec25bdc-67f2-4d95-b1d5-f81b2039d11d)
+Boot0001* EFI Firmware Setup	FvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(462caa21-7614-4503-836e-8ab6f4662331)
+Boot0002* UEFI QEMU DVD-ROM QM00001 	PciRoot(0x0)/Pci(0x1f,0x2)/Sata(0,65535,0){auto_created_boot_option}
+Boot0003* UEFI Misc Device	PciRoot(0x0)/Pci(0x2,0x3)/Pci(0x0,0x0){auto_created_boot_option}
+Boot0004* EFI Internal Shell	FvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(7c04a583-9e3e-4f1c-ad65-e05268d0b4d1)
+Boot0005* looom	HD(1,GPT,5eceadc7-eec7-44c9-9bb4-491c5c9a03f3,0x800,0x400000)/\EFI\looom\grubx64.efi
+Boot0006* looom-safe	HD(1,GPT,5eceadc7-eec7-44c9-9bb4-491c5c9a03f3,0x800,0x400000)/\EFI\looom\safex64.efi
+Boot0008* looom-recovery-f2742935	HD(1,GPT,f2eff199-cdb1-4263-9d5f-e3bb459fd8d3,0x800,0x400000)/\EFI\Linux\looom-bootstrap.efi
+BootCurrent: 0006
+Timeout: 3 seconds
+BootOrder: 0006,0005,0003,0002,0000,0001,0004
+Boot0000* BootManagerMenuApp	FvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(eec25bdc-67f2-4d95-b1d5-f81b2039d11d)
+Boot0001* EFI Firmware Setup	FvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(462caa21-7614-4503-836e-8ab6f4662331)
+Boot0002* UEFI QEMU DVD-ROM QM00001 	PciRoot(0x0)/Pci(0x1f,0x2)/Sata(0,65535,0){auto_created_boot_option}
+Boot0003* UEFI Misc Device	PciRoot(0x0)/Pci(0x2,0x3)/Pci(0x0,0x0){auto_created_boot_option}
+Boot0004* EFI Internal Shell	FvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(7c04a583-9e3e-4f1c-ad65-e05268d0b4d1)
+Boot0005* looom	HD(1,GPT,5eceadc7-eec7-44c9-9bb4-491c5c9a03f3,0x800,0x400000)/\EFI\looom\grubx64.efi
+Boot0006* looom-safe	HD(1,GPT,5eceadc7-eec7-44c9-9bb4-491c5c9a03f3,0x800,0x400000)/\EFI\looom\safex64.efi
+BootCurrent: 0006
+Timeout: 3 seconds
+BootOrder: 0006,0005,0003,0002,0000,0001,0004
+Boot0000* BootManagerMenuApp	FvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(eec25bdc-67f2-4d95-b1d5-f81b2039d11d)
+      dp: 04 07 14 00 c9 bd b8 7c eb f8 34 4f aa ea 3e e4 af 65 16 a1 / 04 06 14 00 dc 5b c2 ee f2 67 95 4d b1 d5 f8 1b 20 39 d1 1d / 7f ff 04 00
+Boot0001* EFI Firmware Setup	FvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(462caa21-7614-4503-836e-8ab6f4662331)
+      dp: 04 07 14 00 c9 bd b8 7c eb f8 34 4f aa ea 3e e4 af 65 16 a1 / 04 06 14 00 21 aa 2c 46 14 76 03 45 83 6e 8a b6 f4 66 23 31 / 7f ff 04 00
+Boot0002* UEFI QEMU DVD-ROM QM00001 	PciRoot(0x0)/Pci(0x1f,0x2)/Sata(0,65535,0){auto_created_boot_option}
+      dp: 02 01 0c 00 d0 41 03 0a 00 00 00 00 / 01 01 06 00 02 1f / 03 12 0a 00 00 00 ff ff 00 00 / 7f ff 04 00
+    data: 4e ac 08 81 11 9f 59 4d 85 0e e2 1a 52 2c 59 b2
+Boot0003* UEFI Misc Device	PciRoot(0x0)/Pci(0x2,0x3)/Pci(0x0,0x0){auto_created_boot_option}
+      dp: 02 01 0c 00 d0 41 03 0a 00 00 00 00 / 01 01 06 00 03 02 / 01 01 06 00 00 00 / 7f ff 04 00
+    data: 4e ac 08 81 11 9f 59 4d 85 0e e2 1a 52 2c 59 b2
+Boot0004* EFI Internal Shell	FvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(7c04a583-9e3e-4f1c-ad65-e05268d0b4d1)
+      dp: 04 07 14 00 c9 bd b8 7c eb f8 34 4f aa ea 3e e4 af 65 16 a1 / 04 06 14 00 83 a5 04 7c 3e 9e 1c 4f ad 65 e0 52 68 d0 b4 d1 / 7f ff 04 00
+Boot0005* looom	HD(1,GPT,5eceadc7-eec7-44c9-9bb4-491c5c9a03f3,0x800,0x400000)/\EFI\looom\grubx64.efi
+      dp: 04 01 2a 00 01 00 00 00 00 08 00 00 00 00 00 00 00 00 40 00 00 00 00 00 c7 ad ce 5e c7 ee c9 44 9b b4 49 1c 5c 9a 03 f3 02 02 / 04 04 32 00 5c 00 45 00 46 00 49 00 5c 00 6c 00 6f 00 6f 00 6f 00 6d 00 5c 00 67 00 72 00 75 00 62 00 78 00 36 00 34 00 2e 00 65 00 66 00 69 00 00 00 / 7f ff 04 00
+Boot0006* looom-safe	HD(1,GPT,5eceadc7-eec7-44c9-9bb4-491c5c9a03f3,0x800,0x400000)/\EFI\looom\safex64.efi
+      dp: 04 01 2a 00 01 00 00 00 00 08 00 00 00 00 00 00 00 00 40 00 00 00 00 00 c7 ad ce 5e c7 ee c9 44 9b b4 49 1c 5c 9a 03 f3 02 02 / 04 04 32 00 5c 00 45 00 46 00 49 00 5c 00 6c 00 6f 00 6f 00 6f 00 6d 00 5c 00 73 00 61 00 66 00 65 00 78 00 36 00 34 00 2e 00 65 00 66 00 69 00 00 00 / 7f ff 04 00
+PASS: only scratch-disk EFI entries and its one-shot request removed; primary boot entries preserved
+Running: rust-gc-ready
+GRUB: {"next_entry":"","saved_entry":"looom-rust-gc-ready"}
+rust-gc-generations confirmed 7.2.9-arch1-1 @root-rust-gc-generations
+rust-gc-ready confirmed 7.2.9-arch1-1 @root-rust-gc-ready

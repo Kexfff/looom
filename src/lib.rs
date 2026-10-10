@@ -1,3 +1,4 @@
+pub mod apps;
 pub mod bootstrap;
 pub mod bootstrap_update;
 pub mod builder;

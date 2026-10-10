@@ -170,6 +170,8 @@ fn reserved(s: &str) -> bool {
         "/etc/group",
         "/etc/shadow",
         "/etc/gshadow",
+        "/etc/subuid",
+        "/etc/subgid",
         "/etc/fstab",
         "/etc/machine-id",
         "/etc/resolv.conf",
@@ -240,7 +242,7 @@ fn date(s: &str) -> bool {
     };
     y >= 2000 && d >= 1 && d <= max
 }
-pub fn load(path: &Path) -> Result<(Config, BTreeMap<String, Vec<u8>>)> {
+pub(crate) fn yaml<T: serde::de::DeserializeOwned>(path: &Path) -> Result<T> {
     let input = fs::OpenOptions::new()
         .read(true)
         .custom_flags(libc::O_NOFOLLOW | libc::O_NONBLOCK | libc::O_CLOEXEC)
@@ -273,8 +275,10 @@ pub fn load(path: &Path) -> Result<(Config, BTreeMap<String, Vec<u8>>)> {
     }
     let value: serde_json::Value =
         serde_saphyr::from_str(&raw).with_context(|| format!("YAML {}", path.display()))?;
-    let cfg: Config =
-        serde_json::from_value(value).with_context(|| format!("schema {}", path.display()))?;
+    serde_json::from_value(value).with_context(|| format!("schema {}", path.display()))
+}
+pub fn load(path: &Path) -> Result<(Config, BTreeMap<String, Vec<u8>>)> {
+    let cfg: Config = yaml(path)?;
     cfg.validate()?;
     let directory = path
         .parent()
