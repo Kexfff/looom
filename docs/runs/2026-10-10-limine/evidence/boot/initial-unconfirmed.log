@@ -1,0 +1,6 @@
+No database errors have been found!
+PASS: booted read-only release initial, kernel, persistent mounts, units, accounts, exact inventory and native manager
+Running: initial
+Bootloader Limine: {"saved_entry":"looom-bootstrap"}
+initial published 7.2.9-arch1-1 @root-initial
+PASS: initial; Limine identity, consumed trial, required services, user-owned editable YAML/lock

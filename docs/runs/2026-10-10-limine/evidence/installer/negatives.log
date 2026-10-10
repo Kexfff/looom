@@ -1,0 +1,5 @@
+PASS: whole disks numbered; optical/loop devices excluded; occupied root unavailable; zero cancels
+PASS: invalid number and occupied disk retry; chosen number resolves to vdb; simple YES confirmation shown
+PASS: hidden root password input; mismatch rejects before disk writes
+PASS: hidden user password input; mismatch rejects before disk writes
+PASS: unlabelled disk plan works; changed boot/diskseq reject; disk remains unchanged

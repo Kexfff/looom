@@ -4,6 +4,7 @@ linux-firmware
 btrfs-progs
 dosfstools
 gptfdisk
+limine
 grub
 efibootmgr
 mkinitcpio

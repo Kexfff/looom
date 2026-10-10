@@ -161,15 +161,28 @@ impl Manager {
                     == metadata.uki_sha256,
                 "published UKI integrity mismatch"
             );
+            let (path, marker) = if self.machine.bootloader == crate::machine::Bootloader::Limine {
+                (
+                    crate::limine::config_path(self),
+                    format!("/looom-{}\n", metadata.id),
+                )
+            } else {
+                (
+                    self.grub().join("grub.cfg"),
+                    format!("--id looom-{} {{", metadata.id),
+                )
+            };
             ensure!(
-                fs::read_to_string(self.grub().join("grub.cfg"))?
-                    .contains(&format!("--id looom-{} {{", metadata.id)),
+                fs::read_to_string(path)?.contains(&marker),
                 "release absent from boot menu"
             );
         }
         Ok(())
     }
     pub fn environment(&self) -> Result<BTreeMap<String, String>> {
+        if self.machine.bootloader == crate::machine::Bootloader::Limine {
+            return crate::limine::environment(self);
+        }
         Ok(output(
             "grub-editenv",
             &[string(&self.grub().join("grubenv"))?, "list"],
@@ -179,6 +192,9 @@ impl Manager {
         .collect())
     }
     pub fn set_environment(&self, values: &[String]) -> Result<()> {
+        if self.machine.bootloader == crate::machine::Bootloader::Limine {
+            return crate::limine::set_environment(self, values);
+        }
         let directory = self.grub();
         let temporary = tempfile::Builder::new()
             .prefix(".grubenv-")
@@ -201,6 +217,9 @@ impl Manager {
         sync_dir(&directory)
     }
     pub fn menu(&self, include: Option<&str>) -> Result<String> {
+        if self.machine.bootloader == crate::machine::Bootloader::Limine {
+            return crate::limine::menu(self, include);
+        }
         let uuid = &self.machine.esp_uuid;
         let mut text = format!(
             "set timeout=5\nset timeout_style=menu\ninsmod part_gpt\ninsmod fat\ninsmod chain\nsearch --no-floppy --fs-uuid --set=esp {uuid}\n"
@@ -224,6 +243,9 @@ impl Manager {
         Ok(text)
     }
     pub fn write_menu(&self, text: &str) -> Result<()> {
+        if self.machine.bootloader == crate::machine::Bootloader::Limine {
+            return crate::limine::write_menu(self, text);
+        }
         let directory = self.grub();
         mkdir(&directory, 0o700)?;
         let mut temporary = tempfile::Builder::new()
@@ -520,7 +542,11 @@ impl Manager {
                 .unwrap_or_else(|_| "bootstrap".into())
                 .trim()
         );
-        println!("GRUB: {}", serde_json::to_string(&self.environment()?)?);
+        println!(
+            "Bootloader {:?}: {}",
+            self.machine.bootloader,
+            serde_json::to_string(&self.environment()?)?
+        );
         for metadata in self.list()? {
             println!(
                 "{} {} {} {}",

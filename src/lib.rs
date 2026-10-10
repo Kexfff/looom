@@ -4,6 +4,7 @@ pub mod builder;
 pub mod config;
 pub mod credentials;
 pub mod installer;
+pub mod limine;
 pub mod machine;
 pub mod packages;
 pub mod releases;

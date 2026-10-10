@@ -57,6 +57,7 @@ fn preflight(plan: &Plan, work: &Path) -> Result<()> {
     for program in [
         "lsblk",
         "swapon",
+        "wipefs",
         "sgdisk",
         "mkfs.fat",
         "mkfs.btrfs",
@@ -82,6 +83,7 @@ fn preflight(plan: &Plan, work: &Path) -> Result<()> {
     // Identity contract is shared with normal releases, including the fixed local /etc allowlist.
     let m = Machine {
         schema: 1,
+        bootloader: crate::machine::Bootloader::Limine,
         root_uuid: plan.root_uuid.clone(),
         esp_uuid: plan.esp_uuid.clone(),
         bootstrap_uki_sha256: plan.recipe_sha256.clone(),
@@ -542,6 +544,9 @@ fn provision(plan: &Plan, work: &Path) -> Result<()> {
 fn configure(plan: &Plan, work: &Path) -> Result<()> {
     let root = work.join("target");
     let cfg = &plan.config;
+    // pacstrap creates /etc before the filesystem package; an inherited 0077
+    // umask otherwise leaves recovery services unable to read machine-id.
+    mkdir(&root.join("etc"), 0o755)?;
     let write = |path: &str, data: String| -> Result<()> {
         atomic(&root.join(path), data.as_bytes(), 0o644)
     };
@@ -578,6 +583,7 @@ fn configure(plan: &Plan, work: &Path) -> Result<()> {
     )?;
     let m = Machine {
         schema: 1,
+        bootloader: crate::machine::Bootloader::Limine,
         root_uuid: plan.root_uuid.clone(),
         esp_uuid: plan.esp_uuid.clone(),
         bootstrap_uki_sha256: plan.recipe_sha256.clone(),
@@ -626,6 +632,44 @@ fn configure(plan: &Plan, work: &Path) -> Result<()> {
             && chroot_output(&root, "id", &["-g", &user.name])? == user.gid.to_string(),
         "existing account identity differs"
     );
+    // Keep the private installation record intact and give the user an editable copy.
+    // Resume must never replace an existing copy (including user edits).
+    let home = root.join("home").join(&user.name);
+    ensure!(fs::symlink_metadata(&home)?.is_dir(), "unsafe managed home");
+    let declaration = home.join("looom");
+    if !declaration.try_exists()? {
+        mkdir(&declaration, 0o755)?;
+    }
+    ensure!(
+        fs::symlink_metadata(&declaration)?.is_dir(),
+        "unsafe declaration directory"
+    );
+    for name in ["base.yaml", "base.lock"] {
+        let destination = declaration.join(name);
+        match fs::symlink_metadata(&destination) {
+            Ok(info) => ensure!(info.is_file(), "unsafe user declaration file"),
+            Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
+                copy_owned(&work.join(name), &destination, 0o644)?;
+                chroot(
+                    &root,
+                    "chown",
+                    &[
+                        &format!("{}:{}", user.uid, user.gid),
+                        &format!("/home/{}/looom/{name}", user.name),
+                    ],
+                )?;
+            }
+            Err(e) => return Err(e.into()),
+        }
+    }
+    chroot(
+        &root,
+        "chown",
+        &[
+            &format!("{}:{}", user.uid, user.gid),
+            &format!("/home/{}/looom", user.name),
+        ],
+    )?;
     let mut data = Zeroizing::new(String::new());
     for (name, file) in [("root", "root"), (user.name.as_str(), "user")] {
         let hash = credentials::read_private(&work.join(format!("{file}.hash")))?;
@@ -732,10 +776,11 @@ fn build(plan: &Plan, work: &Path) -> Result<()> {
 fn boot(plan: &Plan, work: &Path) -> Result<()> {
     let root = work.join("target");
     let esp = root.join("efi");
-    let image = esp.join("EFI/looom/grubx64.efi");
+    let image = esp.join("EFI/looom/liminex64.efi");
     ensure!(
-        hash_file(&image)? == hash_file(&root.join("var/lib/looom/bootstrap-install/grubx64.efi"))?,
-        "installer GRUB integrity mismatch"
+        hash_file(&image)?
+            == hash_file(&root.join("var/lib/looom/bootstrap-install/liminex64.efi"))?,
+        "installer Limine integrity mismatch"
     );
     let fallback = esp.join("EFI/BOOT/BOOTX64.EFI");
     // Only the freshly formatted, UUID-checked target ESP is written.
@@ -753,7 +798,7 @@ fn boot(plan: &Plan, work: &Path) -> Result<()> {
                     .contains(&plan.esp_partuuid.to_ascii_lowercase())
                     && line
                         .to_ascii_lowercase()
-                        .contains("\\efi\\looom\\grubx64.efi"),
+                        .contains("\\efi\\looom\\liminex64.efi"),
                 "firmware entry with our label points elsewhere"
             );
         } else {
@@ -768,10 +813,11 @@ fn boot(plan: &Plan, work: &Path) -> Result<()> {
                     "--label",
                     &label,
                     "--loader",
-                    "\\EFI\\looom\\grubx64.efi",
+                    "\\EFI\\looom\\liminex64.efi",
                 ],
             )?;
         }
+        target_command(work, &["boot-recovery"])?;
     }
     Ok(())
 }
@@ -949,7 +995,13 @@ pub(super) fn apply(work: &Path, plan: &Plan, resume: bool, stdin: bool) -> Resu
             "publish" => target_command(work, &["publish", &plan.release])?,
             "boot" => boot(plan, work)?,
             "ready" => {
-                target_command(work, &["try", &plan.release])?;
+                if plan.register_firmware {
+                    target_command(work, &["try", &plan.release])?;
+                } else {
+                    println!(
+                        "NVRAM unchanged: boot recovery on the target, run looom try initial, then reboot for the read-only trial."
+                    );
+                }
                 let root = work.join("target");
                 let state = root.join("var/lib/looom/installation");
                 json(
@@ -980,7 +1032,8 @@ pub(super) fn apply(work: &Path, plan: &Plan, resume: bool, stdin: bool) -> Resu
     }
     drop(mounted);
     println!(
-        "Installation complete. First boot is a read-only trial; recovery remains the saved default.\nBoot the target disk, run: looom verify && looom confirm\nRetain workspace {} for the installation record; it contains private password hashes.",
+        "Installation complete. First boot is a read-only trial; recovery remains the saved default.\nBoot the target disk, run: looom verify && looom confirm\nEditable declaration: /home/{}/looom/base.yaml (with base.lock).\nRetain workspace {} for the installation record; it contains private password hashes.",
+        plan.config.accounts.user.name,
         work.display()
     );
     Ok(())

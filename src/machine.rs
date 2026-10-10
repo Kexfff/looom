@@ -7,11 +7,20 @@ use std::{
     path::{Path, PathBuf},
 };
 
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Deserialize, Serialize)]
+#[serde(rename_all = "lowercase")]
+pub enum Bootloader {
+    #[default]
+    Grub,
+    Limine,
+}
 pub const STATE: &str = "/var/lib/looom";
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
 pub struct Machine {
     pub schema: u32,
+    #[serde(skip)]
+    pub bootloader: Bootloader,
     pub root_uuid: String,
     pub esp_uuid: String,
     pub bootstrap_uki_sha256: String,
@@ -60,7 +69,12 @@ impl Machine {
             info.is_file() && info.uid() == 0 && info.mode() & 0o022 == 0,
             "untrusted machine profile"
         );
-        let profile: Self = serde_json::from_slice(&fs::read(path)?)?;
+        let mut profile: Self = serde_json::from_slice(&fs::read(path)?)?;
+        let backend = Path::new(STATE).join("bootloader.json");
+        if backend.try_exists()? {
+            owned_regular(&backend)?;
+            profile.bootloader = serde_json::from_slice(&fs::read(backend)?)?;
+        }
         profile.validate()?;
         Ok(profile)
     }
@@ -232,6 +246,7 @@ pub fn initialize(config: &Config) -> Result<()> {
     let virt = output("systemd-detect-virt", &[]).unwrap_or_default();
     let profile = Machine {
         schema: 1,
+        bootloader: Bootloader::Limine,
         root_uuid: output("findmnt", &["-nro", "UUID", "/"])?,
         esp_uuid: output("findmnt", &["-nro", "UUID", "/efi"])?,
         bootstrap_uki_sha256: hash_file(Path::new("/efi/EFI/Linux/looom-bootstrap.efi"))?,
@@ -377,6 +392,7 @@ pub fn initialize(config: &Config) -> Result<()> {
                 .trim(),
         )?;
     }
+    json(&state.join("bootloader.json"), &profile.bootloader, 0o600)?;
     json(&state.join("machine.json"), &profile, 0o600)?;
     println!("Registered Btrfs/UEFI machine; sudo requires a password by default");
     Ok(())

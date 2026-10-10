@@ -1,0 +1,4 @@
+Bootstrap update completed; previous root/image retained, saved release unchanged
+Current bootstrap operation: @bootstrap-limine-native ("complete")
+@bootstrap-limine-native "complete" source=limine-migration kernel=7.2.9-arch1-1
+PASS: recovery trial through Limine consumed; healthy candidate confirmed

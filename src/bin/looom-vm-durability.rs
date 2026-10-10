@@ -97,6 +97,7 @@ fn initialize() -> Result<()> {
     mount_images()?;
     let profile = Machine {
         schema: 1,
+        bootloader: looom::machine::Bootloader::Grub,
         root_uuid: output("findmnt", &["-nro", "UUID", TOP])?,
         esp_uuid: output("findmnt", &["-nro", "UUID", ESP])?,
         bootstrap_uki_sha256: "0".repeat(64),

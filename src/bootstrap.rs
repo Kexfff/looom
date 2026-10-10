@@ -70,6 +70,23 @@ pub fn boot_recovery() -> Result<()> {
     let machine = machine::Machine::load()?;
     machine.guard()?;
     let _lock = Lock::acquire(&Path::new(STATE).join("release-control.lock"))?;
+    if machine.bootloader == machine::Bootloader::Limine {
+        let image = Path::new("/efi/EFI/Linux/looom-bootstrap.efi");
+        ensure!(
+            hash_file(image)? == machine.bootstrap_uki_sha256,
+            "recovery UKI integrity mismatch"
+        );
+        register_entry(
+            &machine,
+            &format!("looom-recovery-{}", &machine.root_uuid[..8]),
+            "\\EFI\\Linux\\looom-bootstrap.efi",
+            true,
+        )?;
+        println!(
+            "Registered direct recovery UKI; Limine configuration is not required for this entry"
+        );
+        return Ok(());
+    }
     let loader = Path::new("/efi/EFI/looom/safex64.efi");
     let receipt = Path::new(STATE).join("boot-recovery.json");
     if loader.exists() {
@@ -399,42 +416,21 @@ pub fn prepare(config: &Config) -> Result<()> {
         journal.uki_sha256.as_deref().unwrap(),
     )?;
     failpoint("bootstrap-uki")?;
-    let loader_checkpoint = workdir.join("grubx64.efi");
+    let loader_checkpoint = workdir.join("liminex64.efi");
     if journal.loader_sha256.is_none() {
         // A crash before recording the digest may leave our own unregistered checkpoint.
         remove_if_exists(&loader_checkpoint)?;
-        recovery_loader(
-            &esp_uuid,
-            matches!(
-                output("systemd-detect-virt", &[])
-                    .unwrap_or_default()
-                    .as_str(),
-                "qemu" | "kvm"
-            ),
-            &loader_checkpoint,
-        )?;
+        crate::limine::copy_loader(&loader_checkpoint)?;
         journal.loader_sha256 = Some(hash_file(&loader_checkpoint)?);
         json(&record, &journal, 0o600)?;
     }
     mkdir(Path::new("/efi/EFI/looom"), 0o700)?;
     copy_checkpoint(
         &loader_checkpoint,
-        Path::new("/efi/EFI/looom/grubx64.efi"),
+        Path::new("/efi/EFI/looom/liminex64.efi"),
         journal.loader_sha256.as_deref().unwrap(),
     )?;
     failpoint("bootstrap-loader")?;
-    let grub = Path::new("/efi/looom/grub");
-    mkdir(grub, 0o700)?;
-    // No releases exist during this operation: repairing grubenv always selects recovery.
-    command("grub-editenv", &[string(&grub.join("grubenv"))?, "create"])?;
-    command(
-        "grub-editenv",
-        &[
-            string(&grub.join("grubenv"))?,
-            "set",
-            "saved_entry=looom-bootstrap",
-        ],
-    )?;
     machine::initialize(config)?;
     let profile = machine::Machine::load()?;
     profile.guard()?;
@@ -477,15 +473,22 @@ pub fn boot_entry() -> Result<()> {
     let machine = machine::Machine::load()?;
     machine.guard()?;
     let _lock = Lock::acquire(&Path::new(STATE).join("release-control.lock"))?;
+    let loader = if machine.bootloader == machine::Bootloader::Limine {
+        "\\EFI\\looom\\liminex64.efi"
+    } else {
+        "\\EFI\\looom\\grubx64.efi"
+    };
     ensure!(
-        Path::new("/efi/EFI/looom/grubx64.efi").is_file(),
-        "native GRUB loader is missing"
+        Path::new("/efi")
+            .join(loader.trim_start_matches('\\').replace('\\', "/"))
+            .is_file(),
+        "native EFI loader missing"
     );
-    register_entry(&machine, "looom", "\\EFI\\looom\\grubx64.efi", false)?;
+    register_entry(&machine, "looom", loader, false)?;
     println!("Registered looom UEFI entry; existing fallback loader retained");
     Ok(())
 }
-fn register_entry(
+pub(crate) fn register_entry(
     machine: &machine::Machine,
     label: &str,
     loader: &str,
@@ -507,14 +510,25 @@ fn register_entry(
                 .all(|c| c.is_ascii_alphanumeric() || b"_-".contains(&c)),
         "plain ESP disk required"
     );
-    let before = output("efibootmgr", &[])?;
-    // Creating a named entry leaves the vendor fallback loader intact.
-    ensure!(
-        !before
-            .lines()
-            .any(|l| l.starts_with("Boot") && l.split_whitespace().nth(1) == Some(label)),
-        "{label} UEFI entry already exists; use firmware boot menu"
-    );
+    let before = output("efibootmgr", &["-v"])?;
+    if let Some(line) = before
+        .lines()
+        .find(|l| l.starts_with("Boot") && l.split_whitespace().nth(1) == Some(label))
+    {
+        let partuuid = output(
+            "blkid",
+            &["-s", "PARTUUID", "-o", "value", string(&partition)?],
+        )?;
+        ensure!(
+            line.to_ascii_lowercase()
+                .contains(&loader.to_ascii_lowercase())
+                && line
+                    .to_ascii_lowercase()
+                    .contains(&partuuid.to_ascii_lowercase()),
+            "UEFI label points to another device/loader"
+        );
+        return Ok(());
+    }
     command(
         "efibootmgr",
         &[

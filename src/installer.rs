@@ -328,6 +328,11 @@ pub fn create_plan(
     json(&work.join("base.yaml"), &plan.config, 0o600)?; // JSON is a YAML subset.
     json(&work.join("plan.json"), &plan, 0o600)?;
     validate(&plan, work)?;
+    if contains_data(&tree)? {
+        println!(
+            "WARNING: disk contains existing partitions/data. Installation will erase ALL of them."
+        );
+    }
     show(&plan, work);
     Ok(plan)
 }
@@ -400,21 +405,22 @@ fn load(work: &Path) -> Result<Plan> {
     validate(&plan, work)?;
     Ok(plan)
 }
-fn confirmation(plan: &Plan) -> String {
-    format!(
-        "ERASE {} {} {}",
-        plan.disk.path,
-        if plan.disk.serial.is_empty() {
-            if plan.disk.wwn.is_empty() {
-                "NO-ID"
-            } else {
-                &plan.disk.wwn
-            }
-        } else {
-            &plan.disk.serial
-        },
-        plan.disk.size
-    )
+fn confirmation(_plan: &Plan) -> String {
+    "YES".into()
+}
+fn contains_data(tree: &Value) -> Result<bool> {
+    if tree["children"].as_array().is_some_and(|v| !v.is_empty())
+        || !text_field(tree, "fstype").is_empty()
+    {
+        return Ok(true);
+    }
+    let signatures: Value = serde_json::from_str(&output(
+        "wipefs",
+        &["--json", "--no-act", &text_field(tree, "path")],
+    )?)?;
+    Ok(signatures["signatures"]
+        .as_array()
+        .is_some_and(|v| !v.is_empty()))
 }
 fn show(plan: &Plan, work: &Path) {
     println!(
@@ -519,8 +525,16 @@ fn select_disk() -> Result<Disk> {
             display_field(&text_field(&choice.tree, "serial")),
             display_field(&text_field(&choice.tree, "wwn"))
         );
+        if contains_data(&choice.tree)? {
+            println!(
+                "   WARNING: existing partitions/data will be erased; a nonempty disk is allowed."
+            );
+        }
         if let Some(reason) = &choice.unavailable {
             println!("   Unavailable: {}", display_field(reason));
+            println!(
+                "   Unmount its partitions and disable swap before restarting. The running system cannot be erased."
+            );
         } else if choice
             .disk
             .as_ref()
@@ -573,7 +587,7 @@ fn select_disk() -> Result<Disk> {
 fn wizard() -> Result<()> {
     root()?;
     credentials::disable_dumps()?;
-    println!("looom installer — UEFI / whole disk / GRUB / Btrfs / KDE Plasma");
+    println!("looom installer — UEFI / whole disk / Limine / Btrfs / KDE Plasma");
     let disk = select_disk()?;
     let hostname = prompt("Computer name", "looom")?;
     let user = prompt("User name", "owner")?;
@@ -626,7 +640,7 @@ fn wizard() -> Result<()> {
         true,
     )?;
     let answer = prompt(
-        "Type the exact confirmation above (anything else cancels)",
+        "Type YES to erase this disk and install (anything else cancels)",
         "",
     )?;
     ensure!(
@@ -832,7 +846,7 @@ pub fn first_release() -> Result<()> {
 pub fn target_session(args: &[String]) -> Result<()> {
     root()?;
     ensure!(
-        matches!(args, [op] if op == "internal-install-build")
+        matches!(args, [op] if ["internal-install-build", "boot-recovery"].contains(&op.as_str()))
             || matches!(args, [op, id] if ["publish","try"].contains(&op.as_str()) && id == "initial")
             || matches!(args, [op, cfg] if op == "bootstrap" && cfg == "/var/lib/looom/installation/base.yaml"),
         "invalid installer target operation"

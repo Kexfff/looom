@@ -1,0 +1,12 @@
+No database errors have been found!
+PASS: booted read-only release limine-migration, kernel, persistent mounts, units, accounts, exact inventory and native manager
+GC candidate: completed bootstrap trial EFI slot
+GC retain release: initial
+GC retain release: limine-migration
+GC candidate: completed bootstrap trial EFI slot
+GC apply complete; frozen inputs, evidence and persistent data retained
+Running: limine-migration
+Bootloader Limine: {"saved_entry":"looom-limine-migration"}
+initial confirmed 7.2.9-arch1-1 @root-initial
+limine-migration confirmed 7.2.9-arch1-1 @root-limine-migration
+PASS: Limine boot after recovery confirmation; GC preserves confirmed defaults and recovery history

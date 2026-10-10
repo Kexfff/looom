@@ -1,0 +1,14 @@
+No database errors have been found!
+PASS: booted read-only release initial, kernel, persistent mounts, units, accounts, exact inventory and native manager
+Running: initial
+Bootloader Limine: {"saved_entry":"looom-bootstrap"}
+initial confirmed 7.2.9-arch1-1 @root-initial
+PASS: initial; UEFI boot identity, consumed trial, required services, user-owned editable YAML/lock
+Confirmed healthy running release: initial
+GC retain release: initial
+GC apply complete; frozen inputs, evidence and persistent data retained
+Running: initial
+Bootloader Limine: {"saved_entry":"looom-initial"}
+initial confirmed 7.2.9-arch1-1 @root-initial
+Limine already selected
+PASS: final exact-binary read-only boot, confirmation, GC protection and idempotent Limine selection

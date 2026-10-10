@@ -1,0 +1,28 @@
+No database errors have been found!
+PASS: booted read-only release limine-migration, kernel, persistent mounts, units, accounts, exact inventory and native manager
+Running: limine-migration
+Bootloader Limine: {"saved_entry":"looom-limine-migration"}
+initial confirmed 7.2.9-arch1-1 @root-initial
+limine-migration confirmed 7.2.9-arch1-1 @root-limine-migration
+Limine already selected
+BootCurrent: 0004
+Timeout: 3 seconds
+BootOrder: 0004,0002,0000,0001,0003
+Boot0000* BootManagerMenuApp	FvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(eec25bdc-67f2-4d95-b1d5-f81b2039d11d)
+      dp: 04 07 14 00 c9 bd b8 7c eb f8 34 4f aa ea 3e e4 af 65 16 a1 / 04 06 14 00 dc 5b c2 ee f2 67 95 4d b1 d5 f8 1b 20 39 d1 1d / 7f ff 04 00
+Boot0001* EFI Firmware Setup	FvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(462caa21-7614-4503-836e-8ab6f4662331)
+      dp: 04 07 14 00 c9 bd b8 7c eb f8 34 4f aa ea 3e e4 af 65 16 a1 / 04 06 14 00 21 aa 2c 46 14 76 03 45 83 6e 8a b6 f4 66 23 31 / 7f ff 04 00
+Boot0002* UEFI Misc Device	PciRoot(0x0)/Pci(0x2,0x3)/Pci(0x0,0x0){auto_created_boot_option}
+      dp: 02 01 0c 00 d0 41 03 0a 00 00 00 00 / 01 01 06 00 03 02 / 01 01 06 00 00 00 / 7f ff 04 00
+    data: 4e ac 08 81 11 9f 59 4d 85 0e e2 1a 52 2c 59 b2
+Boot0003* EFI Internal Shell	FvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(7c04a583-9e3e-4f1c-ad65-e05268d0b4d1)
+      dp: 04 07 14 00 c9 bd b8 7c eb f8 34 4f aa ea 3e e4 af 65 16 a1 / 04 06 14 00 83 a5 04 7c 3e 9e 1c 4f ad 65 e0 52 68 d0 b4 d1 / 7f ff 04 00
+Boot0004* looom-limine	HD(1,GPT,d121b147-10c5-4b07-a666-6dba5c4aa1c4,0x800,0x400000)/\EFI\looom\liminex64.efi
+      dp: 04 01 2a 00 01 00 00 00 00 08 00 00 00 00 00 00 00 00 40 00 00 00 00 00 47 b1 21 d1 c5 10 07 4b a6 66 6d ba 5c 4a a1 c4 02 02 / 04 04 36 00 5c 00 45 00 46 00 49 00 5c 00 6c 00 6f 00 6f 00 6f 00 6d 00 5c 00 6c 00 69 00 6d 00 69 00 6e 00 65 00 78 00 36 00 34 00 2e 00 65 00 66 00 69 00 00 00 / 7f ff 04 00
+Boot0005* looom-recovery-26d9d345	HD(1,GPT,d121b147-10c5-4b07-a666-6dba5c4aa1c4,0x800,0x400000)/\EFI\Linux\looom-bootstrap.efi
+      dp: 04 01 2a 00 01 00 00 00 00 08 00 00 00 00 00 00 00 00 40 00 00 00 00 00 47 b1 21 d1 c5 10 07 4b a6 66 6d ba 5c 4a a1 c4 02 02 / 04 04 42 00 5c 00 45 00 46 00 49 00 5c 00 4c 00 69 00 6e 00 75 00 78 00 5c 00 6c 00 6f 00 6f 00 6f 00 6d 00 2d 00 62 00 6f 00 6f 00 74 00 73 00 74 00 72 00 61 00 70 00 2e 00 65 00 66 00 69 00 00 00 / 7f ff 04 00
+-rwx------ 1 root root 4759552 Oct 10 11:16 /efi/EFI/BOOT/BOOTX64.EFI
+-rwx------ 1 root root 4759552 Oct 10 11:14 /efi/EFI/looom/grubx64.efi
+-rwx------ 1 root root 4595968 Oct 10 12:55 /var/lib/looom/boot-manager
+PASS: real boot through Limine 12.9.3; migrated default healthy; GRUB retained
+Next boot only: initial

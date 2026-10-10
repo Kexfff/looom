@@ -1,0 +1,29 @@
+No database errors have been found!
+PASS: booted read-only release initial, kernel, persistent mounts, units, accounts, exact inventory and native manager
+Running: initial
+Bootloader Limine: {"saved_entry":"looom-bootstrap"}
+initial published 7.2.9-arch1-1 @root-initial
+PASS: initial; Limine identity, consumed trial, required services, user-owned editable YAML/lock
+Confirmed healthy running release: initial
+Running: initial
+Bootloader Limine: {"saved_entry":"looom-initial"}
+initial confirmed 7.2.9-arch1-1 @root-initial
+BootCurrent: 0002
+Timeout: 3 seconds
+BootOrder: 0002,0000,0001,0003
+Boot0000* BootManagerMenuApp	FvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(eec25bdc-67f2-4d95-b1d5-f81b2039d11d)
+Boot0001* EFI Firmware Setup	FvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(462caa21-7614-4503-836e-8ab6f4662331)
+Boot0002* UEFI Misc Device	PciRoot(0x0)/Pci(0x2,0x3)/Pci(0x0,0x0){auto_created_boot_option}
+Boot0003* EFI Internal Shell	FvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(7c04a583-9e3e-4f1c-ad65-e05268d0b4d1)
+Boot0004* looom-recovery-2c32bd56	HD(1,GPT,b738c78b-d9d3-4a9c-9e82-c17681e25a8b,0x800,0x400000)/\EFI\Linux\looom-bootstrap.efi
+Registered direct recovery UKI; Limine configuration is not required for this entry
+BootNext: 0004
+BootCurrent: 0002
+Timeout: 3 seconds
+BootOrder: 0002,0000,0001,0003
+Boot0000* BootManagerMenuApp	FvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(eec25bdc-67f2-4d95-b1d5-f81b2039d11d)
+Boot0001* EFI Firmware Setup	FvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(462caa21-7614-4503-836e-8ab6f4662331)
+Boot0002* UEFI Misc Device	PciRoot(0x0)/Pci(0x2,0x3)/Pci(0x0,0x0){auto_created_boot_option}
+Boot0003* EFI Internal Shell	FvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(7c04a583-9e3e-4f1c-ad65-e05268d0b4d1)
+Boot0004* looom-recovery-2c32bd56	HD(1,GPT,b738c78b-d9d3-4a9c-9e82-c17681e25a8b,0x800,0x400000)/\EFI\Linux\looom-bootstrap.efi
+PASS: both menus deliberately truncated; direct recovery selected for next boot

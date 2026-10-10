@@ -1,0 +1,6 @@
+PASS: status rejects the deliberately empty menu before repair
+PASS: recovery; UEFI boot identity, consumed trial, required services, user-owned editable YAML/lock
+Limine menu repaired; permanent choice: looom-bootstrap
+Published menu restored; incomplete candidates remain unselected
+Next boot only: initial
+PASS: direct recovery boots with both menus empty; native repair rebuilt synchronized menus

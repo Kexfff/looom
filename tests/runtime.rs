@@ -220,6 +220,7 @@ fn publication_and_gc_cases(root: &Path) {
     let esp = Mounted(esp_path);
     let profile = Machine {
         schema: 1,
+        bootloader: looom::machine::Bootloader::Grub,
         root_uuid: uuid.clone(),
         esp_uuid: output("findmnt", &["-nro", "UUID", string(&esp.0).unwrap()]).unwrap(),
         bootstrap_uki_sha256: "0".repeat(64),

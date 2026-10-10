@@ -1,0 +1,6 @@
+Running: bootstrap
+Bootloader Limine: {"saved_entry":"looom-bootstrap"}
+initial published 7.2.9-arch1-1 @root-initial
+PASS: recovery; Limine identity, consumed trial, required services, user-owned editable YAML/lock
+PASS: unconfirmed read-only initial returned to working recovery
+Next boot only: initial

@@ -80,11 +80,8 @@ fn plan(work: &Path) -> Result<Plan> {
     )?;
     Ok(serde_json::from_slice(&fs::read(work.join("plan.json"))?)?)
 }
-fn confirmation(plan: &Plan) -> String {
-    format!(
-        "ERASE {} {} {}",
-        plan.disk.path, plan.disk.serial, plan.disk.size
-    )
+fn confirmation(_plan: &Plan) -> String {
+    "YES".into()
 }
 fn primary() -> Result<Value> {
     Ok(

@@ -28,7 +28,7 @@ fn run() -> Result<()> {
     }
     if op == "--help" || op == "-h" {
         println!(
-            "looom {} — native Rust system releases\n\ninstall [plan|show|apply|resume] (install --help for usage)\ncheck|init|bootstrap|lock|plan <base.yaml>\nboot-entry | boot-recovery\nbootstrap-update <confirmed-running-release> [generation-id]\nbootstrap-try | bootstrap-confirm | bootstrap-recover | bootstrap-list\nbuild <base.yaml> <release-id>\nstatus | verify | recover\npublish|try|rollback|reject <release-id>\nconfirm [release-id]\npassword <user> [--stdin]\naccounts generate|check\ngc [--keep N] [--apply]\n\nBuild never changes the boot choice. Reboot separately after try/rollback.\nGC previews candidates unless --apply is given.",
+            "looom {} — native Rust system releases\n\ninstall [plan|show|apply|resume] (install --help for usage)\ncheck|init|bootstrap|lock|plan <base.yaml>\nboot-entry | boot-recovery | boot-migrate\nbootstrap-update <confirmed-running-release> [generation-id]\nbootstrap-try | bootstrap-confirm | bootstrap-recover | bootstrap-list\nbuild <base.yaml> <release-id>\nstatus | verify | recover\npublish|try|rollback|reject <release-id>\nconfirm [release-id]\npassword <user> [--stdin]\naccounts generate|check\ngc [--keep N] [--apply]\n\nBuild never changes the boot choice. Reboot separately after try/rollback.\nGC previews candidates unless --apply is given.",
             looom::VERSION
         );
         return Ok(());
@@ -61,6 +61,10 @@ fn run() -> Result<()> {
             "bootstrap-confirm" => looom::bootstrap_update::confirm(),
             _ => looom::bootstrap_update::recover(),
         };
+    }
+    if op == "boot-migrate" {
+        ensure!(args.len() == 1, "boot-migrate takes no arguments");
+        return looom::limine::migrate();
     }
     if op == "boot-recovery" {
         ensure!(args.len() == 1, "boot-recovery takes no arguments");
@@ -224,6 +228,9 @@ fn run() -> Result<()> {
         ensure!(args.len() == 1, "recover takes no arguments");
         builder::recover_builds(&manager)?;
         let _lock = manager.lock()?;
+        if manager.machine.bootloader == machine::Bootloader::Limine {
+            looom::limine::recover_menu(&manager)?;
+        }
         manager.recover_publications()?;
         for metadata in manager.list()? {
             if metadata.phase == "removing" {

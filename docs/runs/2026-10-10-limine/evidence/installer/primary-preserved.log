@@ -1,0 +1,5 @@
+/var/lib/looom/machine.json: OK
+/var/lib/looom/credentials/root.hash: OK
+/var/lib/looom/credentials/codex.hash: OK
+/efi/EFI/Linux/looom-bootstrap.efi: OK
+PASS: original GRUB and firmware selection restored

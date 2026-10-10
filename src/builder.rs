@@ -894,6 +894,7 @@ pub(crate) fn install_sources(root: &Path) -> Result<()> {
         ("src/config.rs", include_str!("config.rs")),
         ("src/util.rs", include_str!("util.rs")),
         ("src/machine.rs", include_str!("machine.rs")),
+        ("src/limine.rs", include_str!("limine.rs")),
         ("src/credentials.rs", include_str!("credentials.rs")),
         ("src/packages.rs", include_str!("packages.rs")),
         ("src/releases.rs", include_str!("releases.rs")),

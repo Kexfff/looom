@@ -1,0 +1,7 @@
+No database errors have been found!
+PASS: booted read-only release initial, kernel, persistent mounts, units, accounts, exact inventory and native manager
+Running: initial
+Bootloader Limine: {"saved_entry":"looom-limine-migration"}
+initial confirmed 7.2.9-arch1-1 @root-initial
+limine-migration confirmed 7.2.9-arch1-1 @root-limine-migration
+PASS: old release boots through Limine; credentials/services compatible; one-shot consumed

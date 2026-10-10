@@ -92,6 +92,14 @@ fn native_bootstrap_on_isolated_prepared_arch() {
         ],
     )
     .unwrap();
+    for relative in [
+        "usr/share/limine/BOOTX64.EFI",
+        "usr/share/doc/limine/CONFIG.md",
+    ] {
+        let destination = snapshot.join(relative);
+        fs::create_dir_all(destination.parent().unwrap()).unwrap();
+        fs::copy(Path::new("/").join(relative), destination).unwrap();
+    }
     fixture.subvolumes.push(snapshot);
     let target = PathBuf::from(format!("/run/looom-bootstrap-root-{suffix}"));
     mkdir(&target, 0o700).unwrap();
@@ -278,7 +286,7 @@ fn native_bootstrap_on_isolated_prepared_arch() {
     )
     .unwrap();
     assert!(target.join("efi/EFI/Linux/looom-bootstrap.efi").is_file());
-    assert!(target.join("efi/EFI/looom/grubx64.efi").is_file());
+    assert!(target.join("efi/EFI/looom/liminex64.efi").is_file());
     let profile: serde_json::Value =
         serde_json::from_slice(&fs::read(target.join("var/lib/looom/machine.json")).unwrap())
             .unwrap();

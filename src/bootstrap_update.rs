@@ -634,7 +634,15 @@ pub fn menu_entries(manager: &Manager) -> Result<String> {
                 == *update.uki_sha256.as_ref().unwrap(),
             "bootstrap trial image mismatch"
         );
-        text.push_str("menuentry 'looom bootstrap candidate (one-shot trial)' --id looom-bootstrap-candidate {\n chainloader ($esp)/EFI/Linux/looom-bootstrap-candidate.efi\n}\n");
+        if manager.machine.bootloader == crate::machine::Bootloader::Limine {
+            text.push_str(&crate::limine::entry(
+                "looom-bootstrap-candidate",
+                "One-shot recovery trial",
+                "looom-bootstrap-candidate.efi",
+            ));
+        } else {
+            text.push_str("menuentry 'looom bootstrap candidate (one-shot trial)' --id looom-bootstrap-candidate {\n chainloader ($esp)/EFI/Linux/looom-bootstrap-candidate.efi\n}\n");
+        }
     }
     if manager.efi().join("looom-bootstrap.previous.efi").exists() {
         let digest = hash_file(&manager.efi().join("looom-bootstrap.previous.efi"))?;
@@ -646,7 +654,15 @@ pub fn menu_entries(manager: &Manager) -> Result<String> {
             })
         };
         ensure!(known, "previous bootstrap image mismatch");
-        text.push_str("menuentry 'looom previous bootstrap (recovery)' --id looom-bootstrap-previous {\n chainloader ($esp)/EFI/Linux/looom-bootstrap.previous.efi\n}\n");
+        if manager.machine.bootloader == crate::machine::Bootloader::Limine {
+            text.push_str(&crate::limine::entry(
+                "looom-bootstrap-previous",
+                "Previous recovery",
+                "looom-bootstrap.previous.efi",
+            ));
+        } else {
+            text.push_str("menuentry 'looom previous bootstrap (recovery)' --id looom-bootstrap-previous {\n chainloader ($esp)/EFI/Linux/looom-bootstrap.previous.efi\n}\n");
+        }
     }
     Ok(text)
 }
