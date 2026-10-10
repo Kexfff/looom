@@ -1,0 +1,18 @@
+No database errors have been found!
+PASS: booted read-only release initial, kernel, persistent mounts, units, accounts, exact inventory and native manager
+TARGET SOURCE                    FSTYPE OPTIONS
+/      /dev/vda2[/@root-initial] btrfs  ro,noatime,compress=zstd:3,discard=async,space_cache=v2,subvolid=265,subvol=/@root-initial
+PATH     SIZE SERIAL WWN
+/dev/vda  64G        
+active
+active
+active
+active
+  UNIT LOAD ACTIVE SUB DESCRIPTION
+
+0 loaded units listed.
+82ad7af34ed046073ee572a49a1305c803dae5521723fc691db8ffbbce35ffa4  /usr/bin/looom
+Confirmed healthy running release: initial
+Running: initial
+GRUB: {"next_entry":"","saved_entry":"looom-initial"}
+initial confirmed 7.2.9-arch1-1 @root-initial

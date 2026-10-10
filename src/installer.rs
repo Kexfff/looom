@@ -15,7 +15,14 @@ use std::{
 const GIB: u64 = 1024 * 1024 * 1024;
 const TEMPLATE: &str = include_str!("../configs/installer/base.yaml");
 
-#[derive(Debug, PartialEq, Eq, Deserialize, Serialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
+#[serde(deny_unknown_fields)]
+pub struct SessionDiskIdentity {
+    pub boot_id: String,
+    pub sysfs_path: String,
+    pub diskseq: u64,
+}
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
 pub struct Disk {
     pub path: String,
@@ -23,6 +30,8 @@ pub struct Disk {
     pub model: String,
     pub serial: String,
     pub wwn: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub session_identity: Option<SessionDiskIdentity>,
 }
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
@@ -66,21 +75,46 @@ fn disk_from_tree(tree: &Value) -> Result<Disk> {
         tree["type"] == "disk" && tree["ro"] == false,
         "writable whole disk required"
     );
-    let disk = Disk {
+    let mut disk = Disk {
         path: text_field(tree, "path"),
         size: tree["size"].as_u64().context("disk size")?,
         model: text_field(tree, "model"),
         serial: text_field(tree, "serial"),
         wwn: text_field(tree, "wwn"),
+        session_identity: None,
     };
     ensure!(
         disk.size >= 32 * GIB,
         "at least 32 GiB required (64 GiB recommended for Plasma)"
     );
-    ensure!(
-        !disk.serial.is_empty() || !disk.wwn.is_empty(),
-        "disk has no persistent serial/WWN; configure one before installing"
-    );
+    if disk.serial.is_empty() && disk.wwn.is_empty() {
+        ensure!(
+            output("systemd-detect-virt", &["--vm"])
+                .is_ok_and(|kind| !kind.is_empty() && kind != "none"),
+            "physical disk has no serial/WWN; a persistent identifier is required"
+        );
+        // An unlabelled VM disk is safe only within this live boot. diskseq
+        // changes on removal/re-attachment, even if the path and size are reused.
+        let sysfs = Path::new("/sys/class/block")
+            .join(Path::new(&disk.path).file_name().context("disk name")?);
+        let boot_id = fs::read_to_string("/proc/sys/kernel/random/boot_id")?
+            .trim()
+            .to_owned();
+        ensure!(uuid_valid(&boot_id), "invalid live session identity");
+        let diskseq: u64 = fs::read_to_string(sysfs.join("diskseq"))?
+            .trim()
+            .parse()
+            .context("virtual disk sequence unavailable; configure a serial")?;
+        ensure!(
+            diskseq > 0,
+            "invalid virtual disk sequence; configure a serial"
+        );
+        disk.session_identity = Some(SessionDiskIdentity {
+            boot_id,
+            sysfs_path: string(&fs::canonicalize(sysfs)?)?.to_owned(),
+            diskseq,
+        });
+    }
     Ok(disk)
 }
 fn each_device(tree: &Value, f: &mut impl FnMut(&Value) -> Result<()>) -> Result<()> {
@@ -332,6 +366,12 @@ fn validate(plan: &Plan, work: &Path) -> Result<()> {
         plan.recipe_sha256 == hash_file(&std::env::current_exe()?)?,
         "installer binary differs from saved plan"
     );
+    if let Some(identity) = &plan.disk.session_identity {
+        ensure!(
+            fs::read_to_string("/proc/sys/kernel/random/boot_id")?.trim() == identity.boot_id,
+            "virtual disk without serial/WWN: this plan belongs to a previous live boot; resume requires the same session"
+        );
+    }
     ensure!(
         canonical_disk(Path::new(&plan.disk.path))? == plan.disk.path
             && disk_from_tree(&device_tree(&plan.disk.path)?)? == plan.disk,
@@ -365,7 +405,11 @@ fn confirmation(plan: &Plan) -> String {
         "ERASE {} {} {}",
         plan.disk.path,
         if plan.disk.serial.is_empty() {
-            &plan.disk.wwn
+            if plan.disk.wwn.is_empty() {
+                "NO-ID"
+            } else {
+                &plan.disk.wwn
+            }
         } else {
             &plan.disk.serial
         },
@@ -395,6 +439,11 @@ fn show(plan: &Plan, work: &Path) {
         work.display(),
         confirmation(plan)
     );
+    if plan.disk.session_identity.is_some() {
+        println!(
+            "Virtual disk without serial/WWN: plan valid only in this live session; reconnecting the disk requires a new plan."
+        );
+    }
 }
 fn prompt(label: &str, default: &str) -> Result<String> {
     print!("{label} [{default}]: ");
@@ -407,12 +456,125 @@ fn prompt(label: &str, default: &str) -> Result<String> {
     let line = line.trim();
     Ok(if line.is_empty() { default } else { line }.to_owned())
 }
+struct DiskChoice {
+    tree: Value,
+    disk: Option<Disk>,
+    unavailable: Option<String>,
+}
+fn display_field(value: &str) -> String {
+    if value.is_empty() {
+        return "none".into();
+    }
+    value.chars().filter(|c| !c.is_control()).take(80).collect()
+}
+fn select_disk() -> Result<Disk> {
+    let inventory: Value = serde_json::from_str(&output(
+        "lsblk",
+        &[
+            "--json",
+            "--bytes",
+            "--paths",
+            "--nodeps",
+            "--output",
+            "PATH,TYPE",
+        ],
+    )?)?;
+    let mut choices = Vec::new();
+    for entry in inventory["blockdevices"]
+        .as_array()
+        .context("disk inventory")?
+    {
+        if text_field(entry, "type") != "disk" {
+            continue;
+        }
+        let tree = device_tree(&text_field(entry, "path"))?;
+        let checked = (|| -> Result<Disk> {
+            let disk = disk_from_tree(&tree)?;
+            unused(&tree, None)?;
+            exclusive_disk(&disk.path)?;
+            Ok(disk)
+        })();
+        let (disk, unavailable) = match checked {
+            Ok(disk) => (Some(disk), None),
+            Err(error) => (None, Some(error.to_string())),
+        };
+        choices.push(DiskChoice {
+            tree,
+            disk,
+            unavailable,
+        });
+    }
+    ensure!(!choices.is_empty(), "no whole disks found");
+    println!("Installation disks (enter a number; 0 cancels):");
+    for (index, choice) in choices.iter().enumerate() {
+        println!(
+            "{}) {} | {:.1} GiB | {}",
+            index + 1,
+            display_field(&text_field(&choice.tree, "path")),
+            choice.tree["size"].as_u64().context("disk size")? as f64 / GIB as f64,
+            display_field(&text_field(&choice.tree, "model"))
+        );
+        println!(
+            "   Serial: {}; WWN: {}",
+            display_field(&text_field(&choice.tree, "serial")),
+            display_field(&text_field(&choice.tree, "wwn"))
+        );
+        if let Some(reason) = &choice.unavailable {
+            println!("   Unavailable: {}", display_field(reason));
+        } else if choice
+            .disk
+            .as_ref()
+            .is_some_and(|d| d.session_identity.is_some())
+        {
+            println!("   Available (virtual disk without serial/WWN; same live session only)");
+        } else {
+            println!("   Available");
+        }
+    }
+    loop {
+        let answer = prompt("Disk number to erase", "0")?;
+        if answer == "0" {
+            bail!("installation cancelled; disk unchanged");
+        }
+        let choice = answer
+            .parse::<usize>()
+            .ok()
+            .and_then(|n| n.checked_sub(1))
+            .and_then(|i| choices.get(i));
+        let Some(choice) = choice else {
+            println!(
+                "Enter a disk number from 1 to {}, or 0 to cancel.",
+                choices.len()
+            );
+            continue;
+        };
+        let Some(disk) = &choice.disk else {
+            println!(
+                "Disk unavailable: {}",
+                choice.unavailable.as_deref().unwrap_or("unknown reason")
+            );
+            continue;
+        };
+        let current = device_tree(&disk.path)?;
+        ensure!(
+            disk_from_tree(&current)? == *disk,
+            "disk changed since listing; restart the wizard"
+        );
+        unused(&current, None)?;
+        exclusive_disk(&disk.path)?;
+        println!(
+            "Selected disk {} ({:.1} GiB).",
+            disk.path,
+            disk.size as f64 / GIB as f64
+        );
+        return Ok(disk.clone());
+    }
+}
 fn wizard() -> Result<()> {
     root()?;
     credentials::disable_dumps()?;
     println!("looom installer — UEFI / whole disk / GRUB / Btrfs / KDE Plasma");
-    command("lsblk", &["-d", "-o", "PATH,SIZE,MODEL,SERIAL,WWN,TYPE"])?;
-    let disk = prompt("Disk to erase", "")?;
+    let disk = select_disk()?;
     let hostname = prompt("Computer name", "looom")?;
     let user = prompt("User name", "owner")?;
     let timezone = prompt("Timezone", "Europe/Moscow")?;
@@ -448,8 +610,12 @@ fn wizard() -> Result<()> {
     cfg["packages"] = serde_json::json!(["intel-ucode", "amd-ucode"]);
     let input = work.join("wizard.yaml");
     json(&input, &cfg, 0o600)?;
+    ensure!(
+        disk_from_tree(&device_tree(&disk.path)?)? == disk,
+        "selected disk changed while configuring the system; restart the wizard"
+    );
     let plan = create_plan(
-        Path::new(&disk),
+        Path::new(&disk.path),
         &input,
         &work,
         if key.is_empty() {

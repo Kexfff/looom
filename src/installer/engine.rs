@@ -856,6 +856,9 @@ pub(super) fn apply(work: &Path, plan: &Plan, resume: bool, stdin: bool) -> Resu
         mounted = Some(mounts(plan, work, false)?);
     }
     while journal.completed < STEPS.len() {
+        // Recheck hardware identity after long downloads as well as on resume.
+        // A serial-less device replaced at the same /dev path has a new diskseq.
+        validate(plan, work)?;
         let step = STEPS[journal.completed];
         println!("[{}/{}] {step}", journal.completed + 1, STEPS.len());
         journal.pending = Some(step.into());

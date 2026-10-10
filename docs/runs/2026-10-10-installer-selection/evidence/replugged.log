@@ -1,0 +1,1 @@
+PASS: real detach/re-attach of same vdb and image invalidates old disk plan

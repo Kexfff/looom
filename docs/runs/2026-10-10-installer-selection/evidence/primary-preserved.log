@@ -1,0 +1,6 @@
+PASS: original development VM BootOrder restored; only test target UEFI entry removed
+No database errors have been found!
+PASS: booted read-only release rust-gc-ready, kernel, persistent mounts, units, accounts, exact inventory and native manager
+PASS: final development VM release, profile, credential hashes, saved/next and recovery image unchanged
+PASS: 29 public evidence files checked against private password/hash fixtures and private key markers
+Private baseline and fixtures are excluded from export
