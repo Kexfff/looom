@@ -72,7 +72,10 @@ pub fn mkdir(path: &Path, mode: u32) -> Result<()> {
     Ok(())
 }
 pub fn atomic(path: &Path, bytes: &[u8], mode: u32) -> Result<()> {
-    let parent = path.parent().context("missing parent")?;
+    let parent = path
+        .parent()
+        .filter(|p| !p.as_os_str().is_empty())
+        .unwrap_or(Path::new("."));
     let mut file = tempfile::Builder::new()
         .prefix(".looom-")
         .tempfile_in(parent)?;

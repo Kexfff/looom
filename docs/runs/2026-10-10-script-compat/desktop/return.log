@@ -1,0 +1,9 @@
+Rollback selected; reboot required: compat-niri
+No database errors have been found!
+PASS: booted read-only release compat-niri, kernel, persistent mounts, units, accounts, exact inventory and native manager
+Running: compat-niri
+Bootloader Limine: {"saved_entry":"looom-compat-niri"}
+apps-a confirmed 7.2.9-arch1-1 @root-apps-a
+apps-b confirmed 7.2.9-arch1-1 @root-apps-b
+compat-niri confirmed 7.2.9-arch1-1 @root-compat-niri
+d76cdb361bde3f7d9469734fb8f23e98b0b812fd68cb72b5cf2ddd9ce361e9db  /usr/bin/looom

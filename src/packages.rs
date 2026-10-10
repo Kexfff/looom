@@ -10,6 +10,8 @@ use std::{
 
 const BASE: &str = include_str!("../configs/bootstrap/packages.txt");
 const DESKTOP: &str = "plasma-desktop plasma-workspace plasma-nm plasma-pa kscreen xdg-desktop-portal-kde sddm dolphin konsole mesa pipewire pipewire-pulse wireplumber ttf-dejavu noto-fonts spice-vdagent";
+// Host session and QML runtime. Pacman resolves the transitive closure.
+const NIRI: &str = "niri quickshell xwayland-satellite sddm xorg-server mesa pipewire pipewire-pulse wireplumber xdg-desktop-portal-gnome xdg-desktop-portal-gtk polkit-gnome foot fuzzel wl-clipboard swaylock swayidle qt6-5compat qt6-svg qt6-multimedia-ffmpeg syntax-highlighting kirigami kdialog ttf-dejavu noto-fonts noto-fonts-emoji";
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
 pub struct Package {
@@ -39,7 +41,7 @@ pub struct PackageLock {
 }
 pub fn request(config: &Config) -> Result<Value> {
     Ok(
-        json!({"source":config.source,"kernel":config.kernel.package,"desktop":config.desktop.environment,"packages":config.packages,"recipe_sha256":hash_file(&std::env::current_exe()?)?, "engine":"rust-0.2"}),
+        json!({"source":config.source,"kernel":config.kernel.package,"desktop":config.desktop,"packages":config.packages,"recipe_sha256":hash_file(&std::env::current_exe()?)?, "engine":"rust-0.2"}),
     )
 }
 pub fn requested(config: &Config) -> Vec<String> {
@@ -52,8 +54,11 @@ pub fn requested(config: &Config) -> Vec<String> {
     result.extend(config.packages.iter().cloned());
     result.insert(config.kernel.package.clone());
     result.insert("dbus-broker-units".into());
-    if config.desktop.environment == "plasma" {
+    if config.desktop.includes("plasma") {
         result.extend(DESKTOP.split_whitespace().map(str::to_owned));
+    }
+    if config.desktop.includes("niri") {
+        result.extend(NIRI.split_whitespace().map(str::to_owned));
     }
     result.into_iter().collect()
 }

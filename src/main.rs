@@ -28,7 +28,7 @@ fn run() -> Result<()> {
     }
     if op == "--help" || op == "-h" {
         println!(
-            "looom {} — native Rust system releases\n\napps init|check|plan|apply|status|update [apps.yaml]\napps exec -- <command...> | apps run-script <file.sh> [args...]\ninstall [plan|show|apply|resume] (install --help for usage)\ncheck|init|bootstrap|lock|plan <base.yaml>\nboot-entry | boot-recovery | boot-migrate\nbootstrap-update <confirmed-running-release> [generation-id]\nbootstrap-try | bootstrap-confirm | bootstrap-recover | bootstrap-list\nbuild <base.yaml> <release-id>\nstatus | verify | recover\npublish|try|rollback|reject <release-id>\nconfirm [release-id]\npassword <user> [--stdin]\naccounts generate|check\ngc [--keep N] [--apply]\n\nBuild never changes the boot choice. Reboot separately after try/rollback.\nGC previews candidates unless --apply is given.",
+            "looom {} — native Rust system releases\n\napps init|check|plan|apply|status|update [apps.yaml]\napps exec -- <command...> | apps run-script [--root] <file.sh> [args...]\napps export-packages [new-file.yaml]\ninstall [plan|show|apply|resume] (install --help for usage)\ncheck|init|bootstrap|lock|plan <base.yaml>\nboot-entry | boot-recovery | boot-migrate\nbootstrap-update <confirmed-running-release> [generation-id]\nbootstrap-try | bootstrap-confirm | bootstrap-recover | bootstrap-list\nbuild <base.yaml> <release-id>\nstatus | verify | recover\npublish|try|rollback|reject <release-id>\nconfirm [release-id]\npassword <user> [--stdin]\naccounts generate|check\ngc [--keep N] [--apply]\n\nBuild never changes the boot choice. Reboot separately after try/rollback.\nGC previews candidates unless --apply is given.",
             looom::VERSION
         );
         return Ok(());

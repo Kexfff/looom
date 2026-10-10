@@ -1,0 +1,1 @@
+PASS: app config, receipt, AppImage, script data, container ID and Flatpak commit unchanged; apps execute after rollback

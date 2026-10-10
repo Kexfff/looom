@@ -450,7 +450,7 @@ impl Manager {
         if self.machine.guest_agent {
             required.push("qemu-guest-agent.service");
         }
-        if cfg.desktop.environment == "plasma" {
+        if cfg.desktop.graphical() {
             required.push("sddm.service");
         }
         required.extend(cfg.health.required_units.iter().map(String::as_str));

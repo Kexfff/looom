@@ -1,0 +1,12 @@
+[2m2026-10-10T15:28:19.515607Z[0m [32m INFO[0m [2mniri[0m[2m:[0m starting version 26.04 (8ed0da4)
+[2m2026-10-10T15:28:19.515868Z[0m [34mDEBUG[0m [2mniri_config[0m[2m:[0m loaded config from "/home/kexfff/looom/compat-acceptance/niri-test.kdl"
+[2m2026-10-10T15:28:19.709827Z[0m [34mDEBUG[0m [2mniri::backend::winit[0m[2m:[0m failed building default dmabuf feedback, falling back to v3: error getting EGL device render node
+
+Caused by:
+    None of the following EGL extensions is supported by the underlying EGL implementation, at least one is required: ["EGL_EXT_device_drm"]
+[2m2026-10-10T15:28:19.712015Z[0m [34mDEBUG[0m [2mniri::niri[0m[2m:[0m putting output winit at x=0 y=0
+[2m2026-10-10T15:28:19.712053Z[0m [32m INFO[0m [2mniri[0m[2m:[0m listening on Wayland socket: wayland-1
+[2m2026-10-10T15:28:19.712057Z[0m [32m INFO[0m [2mniri[0m[2m:[0m IPC listening on: /run/user/1000/niri.wayland-1.712.sock
+[2m2026-10-10T15:28:19.725642Z[0m [32m INFO[0m [2mniri[0m[2m:[0m listening on X11 socket: :2
+[2m2026-10-10T15:28:20.232068Z[0m [32m INFO[0m [2mniri::utils::signals::platform[0m[2m:[0m quitting due to receiving signal SIGTERM
+[2m2026-10-10T15:28:20.242241Z[0m [34mDEBUG[0m [2mniri::utils::watcher[0m[2m:[0m exiting watcher thread for Explicit("/home/kexfff/looom/compat-acceptance/niri-test.kdl")

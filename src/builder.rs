@@ -110,7 +110,7 @@ pub fn build(manager: &Manager, bundle: Bundle) -> Result<()> {
     let available: u64 = info.lines().last().context("df")?.trim().parse()?;
     ensure!(
         available
-            > if bundle.config.desktop.environment == "plasma" {
+            > if bundle.config.desktop.graphical() {
                 10 * 1024 * 1024 * 1024
             } else {
                 4 * 1024 * 1024 * 1024
@@ -391,11 +391,15 @@ fn configure(manager: &Manager, root: &Path, bundle: &Bundle) -> Result<()> {
         "[Service]\nExecStart=\nExecStart=/usr/bin/looom accounts check\n",
         0o644,
     )?;
-    if cfg.desktop.environment == "plasma" {
+    if cfg.desktop.graphical() {
         write(
             root,
             "etc/sddm.conf.d/10-looom.conf",
-            "[Theme]\nCurrent=breeze\n[General]\nDisplayServer=x11\n",
+            if cfg.desktop.includes("plasma") {
+                "[Theme]\nCurrent=breeze\n[General]\nDisplayServer=x11\n"
+            } else {
+                "[General]\nDisplayServer=x11\n"
+            },
             0o644,
         )?;
         write(
@@ -541,7 +545,7 @@ fn apply_units(root: &Path, bundle: &Bundle, m: &Machine) -> Result<()> {
     if m.serial_console {
         units.insert("serial-getty@ttyS0.service".into(), "enabled".into());
     }
-    if bundle.config.desktop.environment == "plasma" {
+    if bundle.config.desktop.graphical() {
         units.insert("sddm.service".into(), "enabled".into());
     }
     for (name, state) in &bundle.config.units {
@@ -600,7 +604,7 @@ fn apply_units(root: &Path, bundle: &Bundle, m: &Machine) -> Result<()> {
         &[
             &format!("--root={}", root.display()),
             "set-default",
-            if bundle.config.desktop.environment == "plasma" {
+            if bundle.config.desktop.graphical() {
                 "graphical.target"
             } else {
                 "multi-user.target"

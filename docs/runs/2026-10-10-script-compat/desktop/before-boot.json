@@ -1,0 +1,10 @@
+{
+  "files": {
+    "looom/apps.yaml": "806319d1f7dc4ddc47812703725e3255dd259339cc400cb9219305826c9a4dff",
+    ".local/share/looom/apps/applied.json": "30749da5667a1de7a9e2915598bd16b285089da7f059f949af23ea6d1163ef00",
+    ".local/share/looom/apps/appimages/tool/active.json": "c35a4a5171fd211b712e595a6cac0c1c1e9a34d4efd68492853b0467607f05e4",
+    "looom/compat-acceptance/user-result.txt": "9af3aa3fee012963f4681c65787ac9cfb2c7b2b5c7656e268ced9ed05cbe0cbc"
+  },
+  "container": "08ea23457b776bff8d23f8a500a1a86cc080382e55cfc99b1e032494749d197b",
+  "flatpak": "0032886e3396c2e0cb107d453d600301c8090241d3fef31ca3f688510dba0e43"
+}

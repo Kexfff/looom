@@ -24,6 +24,9 @@ pub struct Config {
     pub desktop: Desktop,
     #[serde(default)]
     pub packages: Vec<String>,
+    /// Resolved into packages before freezing the installer/build configuration.
+    #[serde(default, skip_serializing)]
+    pub packages_from: Vec<String>,
     pub accounts: Accounts,
     #[serde(default)]
     pub units: BTreeMap<String, UnitState>,
@@ -59,6 +62,39 @@ pub struct Kernel {
 #[serde(deny_unknown_fields)]
 pub struct Desktop {
     pub environment: String,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub sessions: Vec<String>,
+}
+impl Desktop {
+    pub fn includes(&self, name: &str) -> bool {
+        self.environment == name || self.sessions.iter().any(|s| s == name)
+    }
+    pub fn graphical(&self) -> bool {
+        self.environment != "none" || !self.sessions.is_empty()
+    }
+}
+#[derive(Debug, Deserialize, Serialize)]
+#[serde(deny_unknown_fields)]
+pub struct PackageSet {
+    pub schema: u32,
+    pub packages: Vec<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub foreign: Vec<String>,
+}
+impl PackageSet {
+    pub fn validate(&self) -> Result<()> {
+        if self.schema != 1 || !unique(&self.packages) || !self.packages.iter().all(|s| package(s))
+        {
+            bail!("invalid package set");
+        }
+        if !self.foreign.is_empty() {
+            bail!(
+                "package set contains foreign/AUR packages: {}; keep them in the container or package them separately, then explicitly remove the foreign field",
+                self.foreign.join(", ")
+            );
+        }
+        Ok(())
+    }
 }
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
@@ -254,6 +290,9 @@ pub(crate) fn yaml<T: serde::de::DeserializeOwned>(path: &Path) -> Result<T> {
     if raw.len() > 1024 * 1024 {
         bail!("configuration exceeds 1 MiB");
     }
+    yaml_text(&raw).with_context(|| format!("schema {}", path.display()))
+}
+fn yaml_text<T: serde::de::DeserializeOwned>(raw: &str) -> Result<T> {
     let mut after_key = false;
     for Token(mark, kind) in Scanner::new(raw.chars()) {
         match &kind {
@@ -261,8 +300,7 @@ pub(crate) fn yaml<T: serde::de::DeserializeOwned>(path: &Path) -> Result<T> {
             | TokenType::Alias(_)
             | TokenType::Tag(_, _)
             | TokenType::TagDirective(_, _) => bail!(
-                "{}:{}:{}: YAML anchors, aliases and tags are unsupported",
-                path.display(),
+                "{}:{}: YAML anchors, aliases and tags are unsupported",
                 mark.line() + 1,
                 mark.col() + 1
             ),
@@ -273,18 +311,32 @@ pub(crate) fn yaml<T: serde::de::DeserializeOwned>(path: &Path) -> Result<T> {
         }
         after_key = matches!(kind, TokenType::Key);
     }
-    let value: serde_json::Value =
-        serde_saphyr::from_str(&raw).with_context(|| format!("YAML {}", path.display()))?;
-    serde_json::from_value(value).with_context(|| format!("schema {}", path.display()))
+    let value: serde_json::Value = serde_saphyr::from_str(raw)?;
+    Ok(serde_json::from_value(value)?)
 }
 pub fn load(path: &Path) -> Result<(Config, BTreeMap<String, Vec<u8>>)> {
-    let cfg: Config = yaml(path)?;
+    let mut cfg: Config = yaml(path)?;
     cfg.validate()?;
     let directory = path
         .parent()
         .filter(|p| !p.as_os_str().is_empty())
         .unwrap_or(Path::new("."))
         .canonicalize()?;
+    let mut packages: BTreeSet<String> = cfg.packages.iter().cloned().collect();
+    for source in &cfg.packages_from {
+        let raw = read_source(&directory, Path::new(source))
+            .with_context(|| format!("confined package set: {source}"))?;
+        let set: PackageSet = yaml_text(std::str::from_utf8(&raw)?)
+            .with_context(|| format!("package set: {source}"))?;
+        set.validate()?;
+        packages.extend(set.packages);
+    }
+    if !cfg.packages_from.is_empty() {
+        cfg.packages = packages.into_iter().collect();
+    }
+    if cfg.packages.len() > 10000 {
+        bail!("too many package requests");
+    }
     let mut bytes = BTreeMap::new();
     for (dest, file) in &cfg.files {
         let data = match (&file.source, &file.content) {
@@ -387,11 +439,30 @@ impl Config {
         {
             bail!("MVP supports linux/linux-lts and no custom kernel arguments yet");
         }
-        if !["none", "plasma"].contains(&self.desktop.environment.as_str()) {
+        if !["none", "plasma", "niri"].contains(&self.desktop.environment.as_str())
+            || !unique(&self.desktop.sessions)
+            || self.desktop.sessions.iter().any(|s| {
+                !["plasma", "niri"].contains(&s.as_str()) || *s == self.desktop.environment
+            })
+        {
             bail!("unsupported desktop");
         }
         if !unique(&self.packages) || !self.packages.iter().all(|s| package(s)) {
             bail!("invalid or duplicate package request");
+        }
+        if !unique(&self.packages_from)
+            || self.packages_from.len() > 16
+            || self.packages_from.iter().any(|s| {
+                s.is_empty()
+                    || s.len() > 1024
+                    || Path::new(s).is_absolute()
+                    || Path::new(s)
+                        .components()
+                        .any(|c| !matches!(c, Component::Normal(_)))
+                    || s.split('/').any(|c| c == "." || c == ".." || c.is_empty())
+            })
+        {
+            bail!("package sets must be unique confined relative paths");
         }
         // Stable personal identity is bound to the registered machine at build time.
         let u = &self.accounts.user;
@@ -465,10 +536,10 @@ impl Config {
                 bail!("required unit cannot be disabled/masked: {name}");
             }
             if name == "sddm.service"
-                && self.desktop.environment == "plasma"
+                && self.desktop.graphical()
                 && !matches!(state, UnitState::Enabled)
             {
-                bail!("Plasma requires SDDM");
+                bail!("graphical sessions require SDDM");
             }
         }
         if !unique(&self.health.required_units)

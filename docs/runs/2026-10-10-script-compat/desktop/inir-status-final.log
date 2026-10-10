@@ -1,0 +1,60 @@
+
+[35m[1m
+   ██╗███╗   ██╗██╗██████╗ 
+   ██║████╗  ██║██║██╔══██╗
+   ██║██╔██╗ ██║██║██████╔╝
+   ██║██║╚██╗██║██║██╔══██╗
+   ██║██║ ╚████║██║██║  ██║
+   ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
+[0m
+  [2miNiR · your niri shell[0m
+
+  [35m[1mStatus[0m
+  What is installed, what is running, and whether this checkout still matches reality.
+  [2mIf any of this looks cursed, run ./setup doctor before you start randomly editing files.[0m
+
+
+  [1mProperty          [0m  [1mValue                               [0m
+  [2m────────────────────────────────────────────────────────[0m
+  Installed Version   0.0.0                               
+  Installed Commit    unknown                             
+  Install Mode        unknown                             
+  Updates             unknown                             
+  Branch              unknown                             
+  Tracks              origin/main                         
+  Remote State        offline or missing remote           
+  Local Changes       unknown                             
+  Runtime Path        (missing)                           
+  Launcher            inir run                            
+  Repo Version        2.33.0                              
+  Repo Commit         unknown                             
+
+
+  [35m[1mSystem & Quickshell[0m
+
+
+  [1mProperty              [0m  [1mValue                                     [0m
+  [2m──────────────────────────────────────────────────────────────────[0m
+  Distro                  Arch Linux                                
+  Kernel                  Linux 7.2.9-arch1-1 x86_64                
+  Compositor              unknown                                   
+  Panel Family            ii                                        
+  Quickshell              not installed                             
+  Session                 tty ((unset))                             
+  User Config             (missing) /home/kexfff/.config/illogical-impulse/config.json
+
+
+  [35m[1mHealth Checks[0m
+
+  [33m⚠[0m Runtime payload missing
+  [32m✓[0m Launcher available
+  [33m⚠[0m User service not installed
+  [33m⚠[0m Repo remote state: offline or missing remote
+  [33m⚠[0m Runtime metadata missing
+  [33m⚠[0m Not running in Niri session
+  [33m⚠[0m 2 pending migration(s)
+  [34m→[0m Run './setup migrate' to review
+  [33m⚠[0m Runtime payload state: unknown
+  [2m○[0m [2mNo snapshots[0m
+  [2m○[0m [2mPreserved modifications: 0 backups[0m
+

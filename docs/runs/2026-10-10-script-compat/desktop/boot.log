@@ -1,0 +1,15 @@
+No database errors have been found!
+PASS: booted read-only release compat-niri, kernel, persistent mounts, units, accounts, exact inventory and native manager
+Confirmed healthy running release: compat-niri
+Running: compat-niri
+Bootloader Limine: {"saved_entry":"looom-compat-niri"}
+apps-a confirmed 7.2.9-arch1-1 @root-apps-a
+apps-b confirmed 7.2.9-arch1-1 @root-apps-b
+compat-niri confirmed 7.2.9-arch1-1 @root-compat-niri
+d76cdb361bde3f7d9469734fb8f23e98b0b812fd68cb72b5cf2ddd9ce361e9db  /usr/bin/looom
+niri 26.04-1
+quickshell 0.3.1-1
+kirigami 6.30.0-1
+figlet 2.2.5-6
+niri.desktop
+plasma.desktop

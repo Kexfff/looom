@@ -79,7 +79,7 @@ sudo /usr/bin/pacman -S --needed --noconfirm bc
 printf '%s\\n' "$2" > "$1"
 ''')
     literal = 'literal spaces; $(touch /tmp/looom-should-not-exist)'
-    command('looom', 'apps', 'run-script', str(WORK/'installer.sh'), str(WORK/'installer-result.txt'), literal)
+    command('looom', 'apps', 'run-script', '--root', str(WORK/'installer.sh'), str(WORK/'installer-result.txt'), literal)
     assert (WORK/'installer-result.txt').read_text() == literal+'\n'
     command('looom', 'apps', 'exec', '--', 'jq', '--version')
     command('looom', 'apps', 'exec', '--', 'bc', '--version')

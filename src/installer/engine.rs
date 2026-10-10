@@ -742,7 +742,7 @@ fn configure(plan: &Plan, work: &Path) -> Result<()> {
         "systemd-timesyncd.service",
         "sddm.service",
     ] {
-        if unit != "sddm.service" || cfg.desktop.environment == "plasma" {
+        if unit != "sddm.service" || cfg.desktop.graphical() {
             chroot(&root, "systemctl", &["enable", unit])?;
         }
     }
@@ -751,7 +751,7 @@ fn configure(plan: &Plan, work: &Path) -> Result<()> {
         "systemctl",
         &[
             "set-default",
-            if cfg.desktop.environment == "plasma" {
+            if cfg.desktop.graphical() {
                 "graphical.target"
             } else {
                 "multi-user.target"

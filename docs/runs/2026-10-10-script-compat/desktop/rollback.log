@@ -1,0 +1,8 @@
+Rollback selected; reboot required: apps-b
+No database errors have been found!
+PASS: booted read-only release apps-b, kernel, persistent mounts, units, accounts, exact inventory and native manager
+Running: apps-b
+Bootloader Limine: {"saved_entry":"looom-apps-b"}
+apps-a confirmed 7.2.9-arch1-1 @root-apps-a
+apps-b confirmed 7.2.9-arch1-1 @root-apps-b
+compat-niri confirmed 7.2.9-arch1-1 @root-compat-niri

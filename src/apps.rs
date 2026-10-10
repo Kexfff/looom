@@ -306,6 +306,80 @@ fn capture_enter(args: &[&str]) -> Result<String> {
     );
     Ok(String::from_utf8(out.stdout)?)
 }
+fn script_command(script: &Path, arguments: &[String], root: bool) -> Result<Command> {
+    let mut args = if root {
+        vec!["sudo".into(), "-n".into(), "bash".into(), "--".into()]
+    } else {
+        // The shim only exists in the managed container. Absolute pacman paths
+        // remain native and require sudo for writes; AUR builds stay unprivileged.
+        run(enter(&[
+            "sudo".into(), "-n".into(), "sh".into(), "-c".into(),
+            "set -eu; install -d -m 755 /usr/local/lib/looom/compat; looom_shim=$(mktemp /usr/local/lib/looom/compat/.pacman.XXXXXX); trap 'rm -f -- \"$looom_shim\"' EXIT; printf '%s\\n' '#!/bin/sh' 'exec sudo -n /usr/bin/pacman \"$@\"' > \"$looom_shim\"; chmod 755 \"$looom_shim\"; mv -f -- \"$looom_shim\" /usr/local/lib/looom/compat/pacman".into(),
+        ]))?;
+        vec![
+            "bash".into(),
+            "-c".into(),
+            "export PATH=/usr/local/lib/looom/compat:$PATH; exec bash -- \"$@\"".into(),
+            "looom-script".into(),
+        ]
+    };
+    args.push(string(script)?.into());
+    args.extend(arguments.iter().cloned());
+    let mut command = enter(&args);
+    command.current_dir(script.parent().context("script directory")?);
+    Ok(command)
+}
+fn export_packages(path: Option<&Path>) -> Result<()> {
+    ensure!(
+        container_exists()?,
+        "no Arch container; run an installer or apps apply first"
+    );
+    let explicit: BTreeSet<String> = capture_enter(&["pacman", "-Qqe"])?
+        .lines()
+        .map(str::to_owned)
+        .collect();
+    let native: BTreeSet<String> = capture_enter(&["pacman", "-Qqn"])?
+        .lines()
+        .map(str::to_owned)
+        .collect();
+    ensure!(
+        explicit.iter().all(|p| token(p)) && explicit.len() < 10000,
+        "invalid container package inventory"
+    );
+    let set = config::PackageSet {
+        schema: 1,
+        packages: explicit.intersection(&native).cloned().collect(),
+        foreign: explicit.difference(&native).cloned().collect(),
+    };
+    // JSON is strict YAML too. Foreign packages are visible and block base
+    // inclusion until the user explicitly resolves them; never silently drop AUR.
+    let mut bytes = serde_json::to_vec_pretty(&set)?;
+    bytes.push(b'\n');
+    if let Some(path) = path {
+        let mut file = OpenOptions::new()
+            .write(true)
+            .create_new(true)
+            .mode(0o644)
+            .open(path)
+            .context("package set already exists or cannot be created")?;
+        file.write_all(&bytes)?;
+        file.sync_all()?;
+        sync_dir(
+            path.parent()
+                .filter(|p| !p.as_os_str().is_empty())
+                .unwrap_or(Path::new(".")),
+        )?;
+        println!(
+            "Exported {} repository requests and {} foreign packages to {}",
+            set.packages.len(),
+            set.foreign.len(),
+            path.display()
+        );
+    } else {
+        std::io::stdout().write_all(&bytes)?;
+    }
+    Ok(())
+}
 fn flathub() -> Result<()> {
     let remotes = capture("flatpak", &["remotes", "--user", "--columns=name,url"])?;
     if let Some(line) = remotes
@@ -499,7 +573,7 @@ pub fn dispatch(args: &[String]) -> Result<()> {
     let op = args.first().map(String::as_str).unwrap_or("--help");
     if ["--help", "-h"].contains(&op) {
         println!(
-            "looom apps init|check|plan|apply|status|update [apps.yaml]\nlooom apps exec -- <command...>\nlooom apps run-script <file.sh> [arguments...]\n\nDefault declaration: ~/looom/apps.yaml. Run as your regular user.\nApply ensures presence; update explicitly updates declared Flatpaks and Arch.\nRun-script executes once as container root in rootless Arch with shared HOME; scripts must live inside HOME.\nSystem rollback preserves apps and their data; apply does not remove manual apps."
+            "looom apps init|check|plan|apply|status|update [apps.yaml]\nlooom apps exec -- <command...>\nlooom apps run-script [--root] <file.sh> [arguments...]\nlooom apps export-packages [new-file.yaml]\n\nDefault declaration: ~/looom/apps.yaml. Run as your regular user.\nApply ensures presence; update explicitly updates declared Flatpaks and Arch.\nRun-script executes as the container user; bare pacman uses container sudo. --root is explicit. Scripts must live inside shared HOME.\nExport-packages creates a reviewable packages_from input for base.yaml; it does not change host packages.\nSystem rollback preserves apps and their data; apply does not remove manual apps."
         );
         return Ok(());
     }
@@ -567,7 +641,7 @@ pub fn dispatch(args: &[String]) -> Result<()> {
         drop(_lock);
         return run(command);
     }
-    if ["exec", "run-script"].contains(&op) {
+    if ["exec", "run-script", "export-packages"].contains(&op) {
         let path = user.config();
         let cfg = if path.try_exists()? {
             load(&path)?
@@ -577,6 +651,12 @@ pub fn dispatch(args: &[String]) -> Result<()> {
                 ..Default::default()
             }
         };
+        if op == "export-packages" {
+            ensure!(args.len() <= 2, "apps export-packages [new-file.yaml]");
+            ensure!(container_exists()?, "no Arch container to export");
+            ensure_arch(&cfg.arch)?;
+            return export_packages(args.get(1).map(Path::new));
+        }
         if op == "exec" {
             ensure!(
                 args.len() >= 3 && args[1] == "--",
@@ -586,23 +666,22 @@ pub fn dispatch(args: &[String]) -> Result<()> {
             drop(_lock);
             return run(enter(&args[2..]));
         }
-        ensure!(args.len() >= 2, "apps run-script <file.sh> [arguments...]");
-        let script = Path::new(&args[1]).canonicalize()?;
+        let root = args.get(1).map(String::as_str) == Some("--root");
+        let index = if root { 2 } else { 1 };
+        let path = args
+            .get(index)
+            .context("apps run-script [--root] <file.sh> [arguments...]")?;
+        ensure!(
+            !path.starts_with('-'),
+            "script path cannot start with an option"
+        );
+        let script = Path::new(path).canonicalize()?;
         ensure!(
             script.starts_with(&user.home) && script.is_file(),
             "put the script and its supporting files inside HOME first"
         );
         ensure_arch(&cfg.arch)?;
-        let mut command_args = vec![
-            "sudo".into(),
-            "-n".into(),
-            "bash".into(),
-            "--".into(),
-            string(&script)?.into(),
-        ];
-        command_args.extend(args[2..].iter().cloned());
-        let mut command = enter(&command_args);
-        command.current_dir(script.parent().context("script directory")?);
+        let command = script_command(&script, &args[index + 1..], root)?;
         drop(_lock);
         return run(command);
     }
