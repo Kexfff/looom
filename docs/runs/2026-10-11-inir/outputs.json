@@ -1,0 +1,182 @@
+{
+  "Virtual-1": {
+    "name": "Virtual-1",
+    "make": "Red Hat, Inc.",
+    "model": "QEMU Monitor",
+    "serial": null,
+    "physical_size": [
+      320,
+      200
+    ],
+    "modes": [
+      {
+        "width": 1280,
+        "height": 800,
+        "refresh_rate": 74994,
+        "is_preferred": true
+      },
+      {
+        "width": 5120,
+        "height": 2160,
+        "refresh_rate": 50000,
+        "is_preferred": false
+      },
+      {
+        "width": 4096,
+        "height": 2160,
+        "refresh_rate": 50000,
+        "is_preferred": false
+      },
+      {
+        "width": 3840,
+        "height": 2160,
+        "refresh_rate": 60000,
+        "is_preferred": false
+      },
+      {
+        "width": 3840,
+        "height": 2160,
+        "refresh_rate": 59940,
+        "is_preferred": false
+      },
+      {
+        "width": 3840,
+        "height": 2160,
+        "refresh_rate": 50000,
+        "is_preferred": false
+      },
+      {
+        "width": 1920,
+        "height": 1440,
+        "refresh_rate": 60000,
+        "is_preferred": false
+      },
+      {
+        "width": 2560,
+        "height": 1080,
+        "refresh_rate": 50000,
+        "is_preferred": false
+      },
+      {
+        "width": 1856,
+        "height": 1392,
+        "refresh_rate": 59995,
+        "is_preferred": false
+      },
+      {
+        "width": 1792,
+        "height": 1344,
+        "refresh_rate": 60000,
+        "is_preferred": false
+      },
+      {
+        "width": 2048,
+        "height": 1152,
+        "refresh_rate": 60000,
+        "is_preferred": false
+      },
+      {
+        "width": 1920,
+        "height": 1200,
+        "refresh_rate": 59885,
+        "is_preferred": false
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "refresh_rate": 60000,
+        "is_preferred": false
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "refresh_rate": 50000,
+        "is_preferred": false
+      },
+      {
+        "width": 1600,
+        "height": 1200,
+        "refresh_rate": 60000,
+        "is_preferred": false
+      },
+      {
+        "width": 1680,
+        "height": 1050,
+        "refresh_rate": 59954,
+        "is_preferred": false
+      },
+      {
+        "width": 1400,
+        "height": 1050,
+        "refresh_rate": 59978,
+        "is_preferred": false
+      },
+      {
+        "width": 1280,
+        "height": 1024,
+        "refresh_rate": 60020,
+        "is_preferred": false
+      },
+      {
+        "width": 1440,
+        "height": 900,
+        "refresh_rate": 59887,
+        "is_preferred": false
+      },
+      {
+        "width": 1280,
+        "height": 960,
+        "refresh_rate": 60000,
+        "is_preferred": false
+      },
+      {
+        "width": 1360,
+        "height": 768,
+        "refresh_rate": 60015,
+        "is_preferred": false
+      },
+      {
+        "width": 1280,
+        "height": 768,
+        "refresh_rate": 59870,
+        "is_preferred": false
+      },
+      {
+        "width": 1024,
+        "height": 768,
+        "refresh_rate": 60004,
+        "is_preferred": false
+      },
+      {
+        "width": 800,
+        "height": 600,
+        "refresh_rate": 60317,
+        "is_preferred": false
+      },
+      {
+        "width": 640,
+        "height": 480,
+        "refresh_rate": 60000,
+        "is_preferred": false
+      },
+      {
+        "width": 640,
+        "height": 480,
+        "refresh_rate": 59940,
+        "is_preferred": false
+      }
+    ],
+    "current_mode": 0,
+    "is_custom_mode": false,
+    "vrr_supported": false,
+    "vrr_enabled": false,
+    "logical": {
+      "x": 0,
+      "y": 0,
+      "width": 1280,
+      "height": 800,
+      "scale": 1.0,
+      "transform": "Normal"
+    }
+  }
+}

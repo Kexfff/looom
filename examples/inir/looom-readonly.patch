@@ -1,0 +1,40 @@
+diff --git a/sdata/subcmd-install/3.files.sh b/sdata/subcmd-install/3.files.sh
+index 021f7a75..e07f2373 100755
+--- a/sdata/subcmd-install/3.files.sh
++++ b/sdata/subcmd-install/3.files.sh
+@@ -344,7 +344,7 @@ fi
+ # ii-pixel-sddm theme (login screen matching ii lockscreen aesthetic)
+ # This MUST run AFTER theming templates are deployed above, because the distributed
+ # config includes the SDDM sync post_hook template.
+-if command -v sddm &>/dev/null; then
++if [[ ${INIR_LOOOM_SKIP_SYSTEM_THEME:-0} != 1 ]] && command -v sddm &>/dev/null; then
+   if [[ "${INSTALL_FIRSTRUN}" == true ]]; then
+     if [[ "${ask}" == "true" ]]; then
+       tui_info "Recommended: install ii-pixel-sddm login theme (matches iNiR lockscreen)."
+diff --git a/services/Updates.qml b/services/Updates.qml
+index a73d6199..0452b486 100644
+--- a/services/Updates.qml
++++ b/services/Updates.qml
+@@ -66,7 +66,7 @@ Singleton {
+         id: checkAvailabilityProc
+         running: false
+         command: ["/usr/bin/bash", "-c",
+-            "if command -v checkupdates &>/dev/null; then printf 'pacman\\n'; " +
++            "if [[ -f /etc/looom/release-id ]]; then exit 1; elif command -v checkupdates &>/dev/null; then printf 'pacman\\n'; " +
+             "elif command -v xbps-install &>/dev/null; then printf 'xbps\\n'; " +
+             "else exit 1; fi"
+         ]
+diff --git a/services/deferred/PackageSearch.qml b/services/deferred/PackageSearch.qml
+index 4ffa0cd0..9b23440e 100644
+--- a/services/deferred/PackageSearch.qml
++++ b/services/deferred/PackageSearch.qml
+@@ -40,7 +40,8 @@ Singleton {
+     }
+ 
+     function _runTerminalScript(script: string, args): void {
+-        const command = ["/usr/bin/bash", "-lc", script + "\nprintf \"\\nPress Enter to close...\"\nread", "bash", ...(args ?? [])]
++        const looomGuard = "if [[ -f /etc/looom/release-id ]]; then printf '%s\\n' 'System packages are managed by looom. Use looom rebuild, or looom apps for container applications.'; else\n" + script + "\nfi"
++        const command = ["/usr/bin/bash", "-lc", looomGuard + "\nprintf \"\\nPress Enter to close...\"\nread", "bash", ...(args ?? [])]
+         const terminal = root._safeTerminal()
+         if (terminal === "wezterm") {
+             ShellExec.execDetachedArgs([terminal, "start", "--always-new-process", "--", ...command], "Run package action")

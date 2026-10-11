@@ -7,6 +7,7 @@
 проекта на Python/Bash. Официальный Arch, строгий YAML, Btrfs read-only и KDE
 проверены в выделенной VM и на физическом Intel N100. Пользовательский слой
 Flatpak/Distrobox/AppImage проверяется в VM; CachyOS — следующий профиль.
+[Проверенный профиль Niri/iNiR и установка](examples/inir/README.md).
 [Текущие команды и контракт](docs/native-rust.md),
 [журнал Rust-проверок](docs/runs/2026-10-06-native-rust/README.md),
 [первый пилот на реальном компьютере](docs/physical-pilot.md).

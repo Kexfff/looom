@@ -1,0 +1,22 @@
+{
+  "appearance": {
+    "iconTheme": "Papirus-Dark",
+    "typography": {
+      "mainFont": "Noto Sans",
+      "titleFont": "Noto Sans",
+      "monospaceFont": "JetBrainsMono Nerd Font"
+    }
+  },
+  "performance": {
+    "lowPower": true,
+    "compositorBlur": false
+  },
+  "search": {
+    "globalActions": {
+      "enablePackages": false
+    }
+  },
+  "shellUpdates": {
+    "enabled": false
+  }
+}

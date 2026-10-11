@@ -1,0 +1,7 @@
+Running: inir-desktop-v2
+Bootloader Limine: {"saved_entry":"looom-inir-desktop-v2"}
+apps-a confirmed 7.2.9-arch1-1 @root-apps-a
+apps-b confirmed 7.2.9-arch1-1 @root-apps-b
+compat-niri confirmed 7.2.9-arch1-1 @root-compat-niri
+inir-desktop published 7.2.9-arch1-1 @root-inir-desktop
+inir-desktop-v2 confirmed 7.2.9-arch1-1 @root-inir-desktop-v2

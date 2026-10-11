@@ -1,0 +1,35 @@
+[
+  {
+    "id": 2,
+    "title": "kitty",
+    "app_id": "kitty",
+    "pid": 3642,
+    "workspace_id": 1,
+    "is_focused": true,
+    "is_floating": false,
+    "is_urgent": false,
+    "layout": {
+      "pos_in_scrolling_layout": [
+        1,
+        1
+      ],
+      "tile_size": [
+        602.0,
+        635.0
+      ],
+      "window_size": [
+        602,
+        635
+      ],
+      "tile_pos_in_workspace_view": null,
+      "window_offset_in_tile": [
+        0.0,
+        0.0
+      ]
+    },
+    "focus_timestamp": {
+      "secs": 128,
+      "nanos": 473376884
+    }
+  }
+]

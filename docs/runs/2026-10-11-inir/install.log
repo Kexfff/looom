@@ -1,0 +1,152 @@
+TERM environment variable not set.
+
+                                                  
+             ██╗███╗   ██╗██╗██████╗              
+             ██║████╗  ██║██║██╔══██╗             
+             ██║██╔██╗ ██║██║██████╔╝             
+             ██║██║╚██╗██║██║██╔══██╗             
+             ██║██║ ╚████║██║██║  ██║             
+             ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝             
+                                                  
+              iNiR · your niri shell              
+
+ Set up iNiR 
+ Preparing v2.33.0 for Arch Linux. 
+ We'll install what this system needs, wire the session, keep backups, and leave the shell ready to start. 
+
+
+ Version v2.33.0    Distro arch    Packages pacman    Session tty    Compositor Not detected    AUR none    VM kvm    UI gum 
+
+
+
+ System snapshot 
+   Version        v2.33.0                          
+   Distro         Arch Linux                       
+   Packages       pacman                           
+   CPU            Intel(R) Core(TM) Ultra 5 225H   
+   GPU            Red Hat, Inc. Virtio 1.0 GPU     
+   RAM            3.8 GiB                          
+   Host           desktop / kvm VM                 
+   Session        tty                              
+   Compositor     Not detected                     
+
+
+✓ Arch Linux has an automated dependency path.
+→ VM detected (kvm). Blur, shader transitions and video performance can look very different from bare metal.
+→ Low-memory host detected (3.8 GiB). Settings → Effects → Low power effects is worth enabling if the desktop feels heavy.
+
+
+ Installation Plan 
+
+
+ What happens next 
+   ❯ Install the runtime packages for arch with pacman                      
+   ❯ Wire services, permissions and the Niri session                        
+   ❯ Install shell files and back up anything we replace                    
+   ❯ Generate the first Material palette, wallpaper and terminal theme      
+   ❯ Save install state so Doctor, updates and rollback know what changed   
+
+
+Most of the wait is package downloads; mirror/network speed matters more than the setup itself.
+  [2mBackup location:[0m /home/kexfff/inir-backup
+
+→ You can cancel now without changing the system.
+
+[36mChecking for conflicting packages...[0m
+[33mFound potential conflicting packages:[0m
+  [31m![0m awww (provides swww, Wallpaper Daemon)
+
+[1miNiR provides its own bar, notifications, wallpaper, and shell.[0m
+Running other shells/bars simultaneously causes visual glitches or double notifications.
+
+[33mRecommendation: Uninstall or disable them manually.[0m
+
+Continuing in non-interactive mode...
+
+Installation progress
+
+  [2m·[0m [2mInstall dependencies[0m
+  [2m·[0m [2mSystem configuration[0m
+  [2m·[0m [2mInstall config files[0m
+  [2m·[0m [2mVersion tracking[0m
+[4A[J  [2m○[0m [2mInstall dependencies[0m [2mskipped[0m
+  [2m·[0m [2mSystem configuration[0m
+  [2m·[0m [2mInstall config files[0m
+  [2m·[0m [2mVersion tracking[0m
+[4A[J  [2m○[0m [2mInstall dependencies[0m [2mskipped[0m
+  [2m○[0m [2mSystem configuration[0m [2mskipped[0m
+  [2m·[0m [2mInstall config files[0m
+  [2m·[0m [2mVersion tracking[0m
+[4A[J  [2m○[0m [2mInstall dependencies[0m [2mskipped[0m
+  [2m○[0m [2mSystem configuration[0m [2mskipped[0m
+  [35m▸[0m [1mInstall config files[0m [2mconfigs, backups, theming[0m
+  [2m·[0m [2mVersion tracking[0m
+
+
+3/3 Installing config files                                           
+User configs, backups, wallpaper defaults, and generated theme inputs.
+
+→ Installing Quickshell inir config...
+→ Setting up Python virtual environment...
+Using Python 3.12.15 environment at: /home/kexfff/.local/state/quickshell/.venv
+Checked 31 packages in 38ms
+→ Installing config files...
+→ Configuring environment variables...
+  [33m⚠[0m INIR_VENV not found in Niri config
+→ Configuring default applications...
+→ Copying wallpapers...
+iNiR: install complete
+
+  [2m·[0m [2mInstall dependencies[0m
+  [2m·[0m [2mSystem configuration[0m
+  [2m·[0m [2mInstall config files[0m
+  [2m·[0m [2mVersion tracking[0m
+[4A[J  [32m✓[0m [32mInstall dependencies[0m [2mcomplete[0m
+  [32m✓[0m [32mSystem configuration[0m [2mcomplete[0m
+  [32m✓[0m [32mInstall config files[0m [2mcomplete[0m
+  [2m·[0m [2mVersion tracking[0m
+[4A[J  [32m✓[0m [32mInstall dependencies[0m [2mcomplete[0m
+  [32m✓[0m [32mSystem configuration[0m [2mcomplete[0m
+  [32m✓[0m [32mInstall config files[0m [2mcomplete[0m
+  [35m▸[0m [1mVersion tracking[0m [2mrecording version[0m
+[4A[J  [32m✓[0m [32mInstall dependencies[0m [2mcomplete[0m
+  [32m✓[0m [32mSystem configuration[0m [2mcomplete[0m
+  [32m✓[0m [32mInstall config files[0m [2mcomplete[0m
+  [32m✓[0m [32mVersion tracking[0m [2m2.33.0[0m
+
+
+
+ iNiR 2.33.0 
+   [2mDistro  [0m  Arch Linux
+   [2mPackages[0m  pacman
+   [2mHost    [0m  desktop / kvm VM
+   [2mGPU     [0m  Red Hat, Inc. Virtio 1.0 GPU
+   [2mRAM     [0m  3.8 GiB
+   [2mSession [0m  Not detected
+
+
+ After that 
+  [35m❯[0m Super+/ lists every shortcut, Super+, opens Settings
+  [35m❯[0m Something off? inir doctor, then inir logs
+  [35m❯[0m Regret it? ./setup rollback
+
+
+  [33m[1m╔══════════════════════════════════════════════════════════════╗[0m
+  [33m[1m║                                                              ║[0m
+  [33m[1m║    RESTART YOUR COMPUTER BEFORE USING iNiR                   ║[0m
+  [33m[1m║    Not a suggestion. Half of it isn't live until you do.     ║[0m
+  [33m[1m║                                                              ║[0m
+  [33m[1m╚══════════════════════════════════════════════════════════════╝[0m
+
+    [1mWhy:[0m
+    • Niri's environment and the shell profile variables only load on 
+      a new login
+
+    Then pick [1mNiri[0m at the login screen and you're in.
+    [2mReboot now:[0m [1msystemctl reboot[0m
+
+Enabled inir.service (wired to niri.service)
+[2m2026-10-11T17:40:59.668644Z[0m [34mDEBUG[0m [2mniri_config[0m[2m:[0m loaded config from "/home/kexfff/.config/niri/config.kdl"
+[2m2026-10-11T17:40:59.668733Z[0m [32m INFO[0m [2mniri[0m[2m:[0m config is valid
+Installed pinned iNiR. Config: /home/kexfff/.config/inir/config.json
+Local backup: /home/kexfff/looom/inir-20261011/backups/20261011T174049-592. Select Niri in SDDM on your next login.

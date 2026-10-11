@@ -1,0 +1,389 @@
+target ytmusic
+  function next(): void
+  function previous(): void
+  function playPause(): void
+  function stop(): void
+target mpris
+  function next(): void
+  function previous(): void
+  function playPause(): void
+  function pauseAll(): void
+  function select(which: string): string
+target overview
+  function toggle(): void
+  function _usesPalette(): bool
+  function clipboardToggle(): void
+  function _usePillLauncher(): bool
+  function open(): void
+  function actionOpen(): void
+  function close(): void
+  function toggleReleaseInterrupt(): void
+target connections
+  function toggle(): void
+  function enable(): void
+  function disable(): void
+  function status(): string
+  function sample(kind: string): string
+target altSwitcher
+  function next(): void
+  function toggle(): void
+  function previous(): void
+  function open(): void
+  function close(): void
+  function opens(which: string): string
+target bluetooth
+  function simulate(state: string): string
+  function status(): string
+target keyboard
+  function getCurrentLayout(): string
+  function getLayouts(): string
+  function switchLayoutPrevious(): void
+  function switchLayout(): void
+target gamemode
+  function activate(): void
+  function toggle(): void
+  function deactivate(): void
+  function status(): string
+target packageSearch
+  function results(): string
+  function search(query: string): string
+target dashboard
+  function toggle(): void
+  function open(): void
+  function close(): void
+target brightness
+  function set(percent: string): string
+  function status(): string
+  function increment(): void
+  function decrement(): void
+  function refresh(): void
+  function sleepBegin(): void
+  function restoreAfterWake(): void
+target osd
+  function keyboard(): void
+  function volume(): void
+  function brightness(): void
+  function media(action: string): string
+  function mic(): void
+  function hide(): void
+target closeConfirm
+  function triggerWindow(windowId: int, appId: string): void
+  function close(): void
+  function trigger(): void
+target mascot
+  function status(): string
+  function romp(): void
+  function appearContextual(pose: string, sourceWidget: string): void
+  function chase(): void
+  function appear(pose: string, edge: string): void
+  function poke(): void
+  function snooze(minutes: int): void
+  function hideSeek(): void
+  function setVoice(mode: string): string
+  function appearWithLine(pose: string, edge: string, line: string): void
+  function hide(): void
+  function tidy(): void
+target settingsNav
+  function section(index: int, name: string): void
+  function count(): int
+  function current(): int
+  function page(index: int): void
+target audio
+  function mute(): void
+  function volumeDown(): void
+  function volumeUp(): void
+  function micMute(): void
+  function playEvent(event: string): void
+target region
+  function screenshot(): void
+  function recordWithSound(): void
+  function record(): void
+  function dismiss(): void
+  function ocr(): void
+  function menu(): void
+  function current(): string
+  function googleLens(): void
+  function search(): void
+target network
+  function simulateLink(spec: string): string
+  function simulate(state: string): string
+  function status(): string
+  function check(): void
+target widgetStacks
+  function status(): string
+  function interval(stack: string, seconds: int): string
+  function add(stack: string, widget: string): string
+  function rotate(stack: string, mode: string): string
+  function create(widgets: string): string
+  function remove(widget: string): string
+  function dissolve(stack: string): string
+  function page(stack: string, to: string): string
+  function move(stack: string, widget: string, delta: int): string
+target wwidgets
+  function toggle(): void
+  function open(): void
+  function close(): void
+target wactionCenter
+  function toggle(): void
+  function open(): void
+  function close(): void
+target session
+  function toggle(): void
+  function open(): void
+  function close(): void
+target mediaControls
+  function toggle(): void
+  function open(): void
+  function close(): void
+target zoom
+  function zoomIn(): void
+  function zoomOut(): void
+target coverflowSelector
+  function toggle(): void
+  function open(): void
+  function close(): void
+target bar
+  function toggle(): void
+  function open(): void
+  function mediaWidth(px: string): string
+  function close(): void
+target settings
+  function toggle(): void
+  function open(): void
+  function openOverlay(): void
+  function openOverlayAt(index: int): void
+  function setOverlayStyle(style: string, index: int): void
+  function openWindowAt(index: int): void
+target wallpaperSelector
+  function next(): string
+  function toggle(): void
+  function random(): void
+  function openLauncher(mode: string): void
+  function toggleOnMonitor(monitorName: string): void
+  function set(path: string): void
+  function shuffle(value: string): string
+  function open(): void
+  function status(): string
+  function preview(path: string): void
+  function close(): void
+  function cancelPreview(): void
+  function kind(name: string): string
+  function browse(source: string, query: string): void
+  function move(step: int): string
+target voiceSearch
+  function toggle(): void
+  function stop(): void
+  function status(): string
+  function refresh(): void
+  function start(): void
+target notifications
+  function invokeAction(identifier: string): string
+  function clearAll(): void
+  function toggleSilent(): void
+  function test(): void
+target globalActions
+  function run(actionId: string): string
+  function list(category: string): string
+  function open(): void
+  function runWithArgs(actionId: string, args: string): string
+  function search(query: string): string
+target colorMode
+  function set(mode: string): string
+  function get(): string
+target panelFamily
+  function set(family: string): void
+  function cycle(): void
+target niriAnimations
+  function apply(id: string): string
+  function active(): string
+  function list(): string
+target orbit
+  function next(): void
+  function toggle(): void
+  function previous(): void
+  function studio(): void
+  function _isIris(): bool
+  function find(query: string): void
+  function open(): void
+  function orbital(): void
+  function toggleView(): void
+  function status(): string
+  function stage(): void
+  function close(): void
+  function pocket(): void
+target autostart
+  function addCommand(cmd: string): string
+  function addApp(desktopId: string): string
+  function status(): string
+  function reload(): string
+  function removeLast(): string
+target osdVolume
+  function toggle(): void
+  function trigger(): void
+  function hide(): void
+target clipboard
+  function toggle(): void
+  function _isIris(): bool
+  function _openIrisClipboard(): void
+  function open(): void
+  function close(): void
+  function _isWaffle(): bool
+target wnotificationCenter
+  function toggle(): void
+  function open(): void
+  function close(): void
+target sidebarLeft
+  function toggle(): void
+  function compact(): void
+  function open(): void
+  function status(): string
+  function close(): void
+  function detach(): void
+  function attach(): void
+  function expand(): void
+target customWidgets
+  function list(): string
+  function create(name: string): string
+  function remove(widgetId: string): string
+  function reload(): string
+target tiling
+  function toggle(): void
+  function promote(): void
+  function open(): void
+  function showOsd(): void
+  function hide(): void
+  function cycle(): void
+target memory
+  function reset(): string
+  function dismiss(): string
+  function stats(): string
+  function restart(): string
+  function collect(): string
+target globalStyle
+  function set(style: string): string
+  function list(): string
+  function get(): string
+target lock
+  function activate(): void
+  function deactivate(): void
+  function focus(): void
+  function status(): string
+  function prepareSleep(): string
+target mascotMood
+  function set(mood: string): void
+  function current(): string
+target overlay
+  function toggle(): void
+  function tool(identifier: string, action: string): string
+target dev
+  function dropBubble(slot: string, x: string, y: string): string
+  function list(): string
+  function open(destination: string): string
+  function meter(ms: string): string
+  function close(): void
+  function dragSim(slot: string, perFrame: string): string
+  function dockSlide(appId: string, pixels: string): string
+  function reload(): string
+  function metered(): string
+  function current(): string
+target controlPanel
+  function toggle(): void
+  function open(): void
+  function close(): void
+target shellUpdate
+  function toggle(): void
+  function performUpdate(): void
+  function simulate(state: string): string
+  function open(): void
+  function check(): void
+  function close(): void
+  function dismiss(): void
+  function undismiss(): void
+  function diagnose(): string
+target cheatsheet
+  function toggle(): void
+  function open(): void
+  function close(): void
+target background
+  function clockDebugSetRegion(color: string, brightness: real, spread: real): string
+  function promoteWidget(widgetName: string): string
+  function toggleWidgetManager(): string
+  function widgetDesign(name: string): string
+  function applyOrganicEdgeResponse(name: string): string
+  function focusWidget(widgetName: string, openControls: bool): string
+  function clockDebugRestore(): string
+  function applyOrganicEdgePreset(name: string): string
+  function applyOrganicEdgeMaterial(name: string): string
+  function editState(): string
+  function setEditMode(enabled: bool): string
+  function clockDebugSetLayout(x: int, y: int, quickControlsOpen: bool): string
+  function legibilityState(): string
+  function setWidgetEnabled(widgetName: string, enabled: bool): string
+  function organicEdgeState(): string
+  function quickControlsPage(page: string): string
+  function desktopItemsState(): string
+  function clockDebugState(): string
+  function setOrganicEdgeEnabled(enabled: bool): string
+  function applyOrganicEdgeComposition(name: string): string
+  function widgetMaterial(action: string): string
+  function resetLayerOrder(): string
+  function quickControlsGeometry(): string
+  function clockDebugSetMode(style: string, adaptToWallpaper: bool): string
+  function widgetSnapshot(widgetName: string, path: string): string
+  function toggleEditMode(): string
+  function widgetSearch(query: string): string
+target sidebarRight
+  function toggle(): void
+  function open(): void
+  function close(): void
+target osk
+  function toggle(): void
+  function open(): void
+  function close(): void
+target battery
+  function simulate(spec: string): string
+  function status(): string
+target widgetpower
+  function status(): string
+target loginScreen
+  function set(look: string): string
+  function status(): string
+  function sync(): void
+  function style(name: string): string
+target ai
+  function refreshCatalog(): void
+  function providers(): string
+  function run(inputText: string): void
+  function runGet(inputText: string): string
+  function ensureInitialized(): void
+  function diagnose(): string
+  function catalog(query: string): string
+target shellLayout
+  function toggle(): string
+  function dragStart(surfaceId: string): string
+  function cancel(): string
+  function reset(surfaceId: string): string
+  function openOn(outputName: string): string
+  function open(): string
+  function status(): string
+  function preview(slot: string): string
+  function setProperty(surfaceId: string, key: string, value: string): string
+  function close(): string
+  function dragUpdate(x: real, y: real): string
+  function validate(surfaceId: string, slot: string): string
+  function place(slot: string): string
+  function lift(surfaceId: string): string
+  function select(surfaceId: string): string
+  function handleEscape(): string
+  function dragEnd(): string
+target taskview
+  function toggle(): void
+  function _isIris(): bool
+  function open(): void
+  function close(): void
+  function _irisOrbit(): bool
+  function _isWaffle(): bool
+target search
+  function toggle(): void
+  function open(): void
+  function close(): void

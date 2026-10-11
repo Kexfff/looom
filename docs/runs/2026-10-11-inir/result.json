@@ -1,0 +1,21 @@
+{
+  "release": "inir-desktop-v2",
+  "source_revision": "48cdcecb0f6089cfbb7019054602eab28e154b3b",
+  "outputs": [
+    "Virtual-1"
+  ],
+  "checks": [
+    "SDDM seat session",
+    "native Niri output",
+    "QML package integration syntax",
+    "host package action guard",
+    "iNiR IPC",
+    "overview",
+    "settings",
+    "clipboard watcher",
+    "notification",
+    "native terminal",
+    "shell restart"
+  ],
+  "shell_restart_pid_changed": true
+}

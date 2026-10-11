@@ -1,0 +1,3 @@
+Prepared /home/kexfff/looom/inir-20261011/prepare-fixture/target/declaration/base.yaml; rebuild it into a new release and reboot before install.
+Valid schema 1; 128 packages, 2 files, 2 persistent directories
+PASS: prepare preserves package includes, files.source bytes and private permissions; software greeter declared

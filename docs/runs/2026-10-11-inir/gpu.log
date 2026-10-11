@@ -1,0 +1,2 @@
+[    1.495047] [drm] features: +virgl +edid -resource_blob -host_visible
+[    1.495048] [drm] features: +context_init -blob_alignment
