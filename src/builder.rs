@@ -25,7 +25,51 @@ pub struct Bundle {
     pub lock: PackageLock,
     pub release: String,
 }
+
 const INITRAMFS: &str = "MODULES=(btrfs)\nBINARIES=()\nFILES=()\nHOOKS=(base systemd microcode modconf kms keyboard sd-vconsole block filesystems fsck)\nCOMPRESSION=\"zstd\"\n";
+const SSH_DROP_IN: &str = "etc/ssh/sshd_config.d/10-looom-vm.conf";
+const SSH_HOST_KEYS: [&str; 2] = [
+    "/var/lib/looom/ssh/ssh_host_ed25519_key",
+    "/var/lib/looom/ssh/ssh_host_rsa_key",
+];
+
+fn validate_sshd(root: &Path) -> Result<()> {
+    // HostKey directives accumulate: a command-line key does not override the
+    // persistent keys. Substitute only our managed paths while validating the
+    // complete configuration, without mounting this machine's private State.
+    let keys = tempfile::Builder::new()
+        .prefix(".looom-validation-")
+        .tempdir_in(root.join("etc/ssh"))?;
+    let key = Path::new("/")
+        .join(keys.path().strip_prefix(root)?)
+        .join("host_key");
+    chroot(
+        root,
+        "ssh-keygen",
+        &["-q", "-t", "ed25519", "-N", "", "-f", string(&key)?],
+    )?;
+    let path = root.join(SSH_DROP_IN);
+    let original = fs::read_to_string(&path)?;
+    let mut validation = original.clone();
+    for host_key in SSH_HOST_KEYS {
+        let directive = format!("HostKey {host_key}\n");
+        ensure!(
+            original.contains(&directive),
+            "missing managed SSH host key"
+        );
+        validation = validation.replace(&directive, &format!("HostKey {}\n", string(&key)?));
+    }
+    let result = (|| {
+        atomic(&path, validation.as_bytes(), 0o644)?;
+        chroot(root, "sshd", &["-t"])
+    })();
+    // Restore even when writing the temporary configuration or sshd fails.
+    atomic(&path, original.as_bytes(), 0o644).context("restore runtime SSH configuration")?;
+    keys.close()
+        .context("remove temporary SSH validation keys")?;
+    result
+}
+
 fn write(root: &Path, name: &str, data: &str, mode: u32) -> Result<()> {
     let path = root.join(name.trim_start_matches('/'));
     mkdir(path.parent().context("parent")?, 0o755)?;
@@ -331,10 +375,10 @@ fn configure(manager: &Manager, root: &Path, bundle: &Bundle) -> Result<()> {
     )?;
     write(
         root,
-        "etc/ssh/sshd_config.d/10-looom-vm.conf",
+        SSH_DROP_IN,
         &format!(
-            "PubkeyAuthentication yes\nPasswordAuthentication no\nKbdInteractiveAuthentication no\nPermitRootLogin prohibit-password\nAllowUsers root {}\nHostKey /var/lib/looom/ssh/ssh_host_ed25519_key\nHostKey /var/lib/looom/ssh/ssh_host_rsa_key\n",
-            m.user
+            "PubkeyAuthentication yes\nPasswordAuthentication no\nKbdInteractiveAuthentication no\nPermitRootLogin prohibit-password\nAllowUsers root {}\nHostKey {}\nHostKey {}\n",
+            m.user, SSH_HOST_KEYS[0], SSH_HOST_KEYS[1]
         ),
         0o644,
     )?;
@@ -447,27 +491,7 @@ fn configure(manager: &Manager, root: &Path, bundle: &Bundle) -> Result<()> {
         0o644,
     )?;
     chroot(root, "mkinitcpio", &["-P"])?;
-    chroot(
-        root,
-        "ssh-keygen",
-        &[
-            "-q",
-            "-t",
-            "ed25519",
-            "-N",
-            "",
-            "-f",
-            "/etc/ssh/looom-validation.key",
-        ],
-    )?;
-    let result = chroot(
-        root,
-        "sshd",
-        &["-t", "-o", "HostKey=/etc/ssh/looom-validation.key"],
-    );
-    remove_if_exists(&root.join("etc/ssh/looom-validation.key"))?;
-    remove_if_exists(&root.join("etc/ssh/looom-validation.key.pub"))?;
-    result?;
+    validate_sshd(root)?;
     chroot(root, "visudo", &["-cf", "/etc/sudoers"])?;
     chroot(root, "pacman", &["-Dk"])?;
     chroot(
@@ -996,4 +1020,144 @@ pub fn plan(cfg: &Config, files: &BTreeMap<String, Vec<u8>>, lock: &PackageLock)
     Ok(
         json!({"engine":"rust-0.2","packages":{"add":add,"remove":remove,"upgrade":upgrade},"file_changes":{"add":file_add,"remove":file_remove,"change":changed},"unit_changes":unit_changes,"target_packages":target.len(),"explicit_requests":packages::requested(cfg),"system":cfg.system,"kernel":cfg.kernel,"desktop":cfg.desktop,"health":cfg.health,"persistent":cfg.persistent}),
     )
+}
+
+#[cfg(test)]
+mod ssh_tests {
+    use super::*;
+    use std::process::Command;
+
+    struct Fixture {
+        parent: Option<tempfile::TempDir>,
+        root: PathBuf,
+        mounted: bool,
+    }
+    impl Drop for Fixture {
+        fn drop(&mut self) {
+            if (self.mounted && !succeeds("umount", &[self.root.to_str().unwrap()]))
+                || !succeeds(
+                    "btrfs",
+                    &["subvolume", "delete", self.root.to_str().unwrap()],
+                )
+            {
+                // Retain a failed snapshot cleanup rather than recursively deleting it.
+                let _ = self.parent.take().unwrap().keep();
+            }
+        }
+    }
+
+    #[test]
+    fn isolated_ssh_validation_restores_config_and_removes_keys() {
+        assert_eq!(std::env::var("LOOOM_TEST_VM").as_deref(), Ok("1"));
+        assert_eq!(unsafe { libc::geteuid() }, 0);
+        assert!(matches!(
+            output("systemd-detect-virt", &["--vm"]).unwrap().as_str(),
+            "qemu" | "kvm"
+        ));
+        assert_eq!(
+            fs::read_to_string("/sys/class/net/enp1s0/address")
+                .unwrap()
+                .trim(),
+            "52:54:00:7b:23:63"
+        );
+        mkdir(Path::new("/workspace/.native-fixtures"), 0o700).unwrap();
+        let parent = tempfile::Builder::new()
+            .prefix("ssh-")
+            .tempdir_in("/workspace/.native-fixtures")
+            .unwrap();
+        let root = parent.path().join("root");
+        command(
+            "btrfs",
+            &["subvolume", "snapshot", "/", string(&root).unwrap()],
+        )
+        .unwrap();
+        let mut fixture = Fixture {
+            parent: Some(parent),
+            root,
+            mounted: false,
+        };
+        command(
+            "mount",
+            &[
+                "--bind",
+                string(&fixture.root).unwrap(),
+                string(&fixture.root).unwrap(),
+            ],
+        )
+        .unwrap();
+        fixture.mounted = true;
+        let root = &fixture.root;
+        for key in SSH_HOST_KEYS {
+            assert!(!root.join(key.trim_start_matches('/')).exists());
+        }
+        let config = format!(
+            "PubkeyAuthentication yes\nPasswordAuthentication no\nHostKey {}\nHostKey {}\n",
+            SSH_HOST_KEYS[0], SSH_HOST_KEYS[1]
+        );
+        write(
+            root,
+            "etc/ssh/sshd_config",
+            "Include /etc/ssh/sshd_config.d/*.conf\n",
+            0o644,
+        )
+        .unwrap();
+        write(root, SSH_DROP_IN, &config, 0o644).unwrap();
+
+        // Reproduce the old bug with the real OpenSSH executable, not a mock.
+        chroot(
+            root,
+            "ssh-keygen",
+            &[
+                "-q",
+                "-t",
+                "ed25519",
+                "-N",
+                "",
+                "-f",
+                "/etc/ssh/old-validation.key",
+            ],
+        )
+        .unwrap();
+        let old = Command::new("arch-chroot")
+            .args([
+                string(root).unwrap(),
+                "sshd",
+                "-t",
+                "-o",
+                "HostKey=/etc/ssh/old-validation.key",
+            ])
+            .output()
+            .unwrap();
+        assert!(old.status.success());
+        let warnings = String::from_utf8(old.stderr).unwrap();
+        for key in SSH_HOST_KEYS {
+            assert!(warnings.contains(&format!("Unable to load host key: {key}")));
+        }
+        println!("Reproduced both misleading host-key warnings with the old validation command");
+        for suffix in ["", ".pub"] {
+            fs::remove_file(root.join(format!("etc/ssh/old-validation.key{suffix}"))).unwrap();
+        }
+
+        let extra = "etc/ssh/sshd_config.d/90-validation-test.conf";
+        for (contents, succeeds) in [
+            ("LogLevel ERROR\n", true),
+            ("LooomInvalidDirective yes\n", false),
+        ] {
+            write(root, extra, contents, 0o644).unwrap();
+            assert_eq!(validate_sshd(root).is_ok(), succeeds);
+            assert_eq!(fs::read_to_string(root.join(SSH_DROP_IN)).unwrap(), config);
+            assert!(fs::read_dir(root.join("etc/ssh")).unwrap().all(|e| {
+                !e.unwrap()
+                    .file_name()
+                    .to_string_lossy()
+                    .starts_with(".looom-validation-")
+            }));
+            for key in SSH_HOST_KEYS {
+                assert!(!root.join(key.trim_start_matches('/')).exists());
+            }
+        }
+        println!(
+            "Real sshd validation passed; invalid included config failed; runtime config restored and temporary keys removed in both cases"
+        );
+    }
 }
