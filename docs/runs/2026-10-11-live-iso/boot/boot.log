@@ -1,0 +1,6 @@
+No database errors have been found!
+PASS: booted read-only release initial, kernel, persistent mounts, units, accounts, exact inventory and native manager
+Running: initial
+Bootloader Limine: {"saved_entry":"looom-bootstrap"}
+initial published 7.2.9-arch1-1 @root-initial
+PASS: real installed read-only initial boot, KDE display manager, owner-accessible declarations and user-apps infrastructure

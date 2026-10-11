@@ -1,0 +1,7 @@
+looom — experimental online installer / rescue environment
+
+Run looom-live for the welcome menu, or looom install for the installer.
+Installation guide: /usr/share/looom/INSTALLATION.md
+UEFI, Secure Boot disabled, whole disk, Btrfs, Limine, KDE Plasma.
+An Internet connection is required. Nothing is installed automatically.
+

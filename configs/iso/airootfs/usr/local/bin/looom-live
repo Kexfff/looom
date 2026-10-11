@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -u
+while true; do
+    printf '\nlooom — install / rescue\n\n'
+    printf '1) Install looom (KDE Plasma, whole disk)\n'
+    printf '2) Network help\n3) Installation guide\n4) Reboot\n5) Power off\n0) Shell\n\n'
+    if ! read -r -p 'Choice [0]: ' choice; then exit 0; fi
+    case ${choice:-0} in
+        1)
+            looom install
+            result=$?
+            printf '\nInstaller exit code: %s. No automatic reboot.\n' "$result"
+            ;;
+        2)
+            printf '\nWired connections use DHCP automatically.\n'
+            printf 'For Wi-Fi, choose Shell and run iwctl:\n'
+            printf '  device list\n  station <device> scan\n  station <device> get-networks\n  station <device> connect <SSID>\n  exit\n'
+            printf 'Then run looom-live to return. Current addresses:\n'
+            ip -brief address
+            ;;
+        3) less /usr/share/looom/INSTALLATION.md ;;
+        4) systemctl reboot; exit $? ;;
+        5) systemctl poweroff; exit $? ;;
+        0) printf 'Return to this menu with: looom-live\n'; exit 0 ;;
+        *) printf 'Choose a number from the menu.\n' ;;
+    esac
+done

@@ -1,0 +1,6 @@
+755 /etc
+755 /var
+755 /var/cache
+755 /var/cache/fontconfig
+NotoSans-Regular.ttf: "Noto Sans" "Regular"
+fontconfig cache files: 7

@@ -15,10 +15,16 @@ Flatpak/Distrobox/AppImage проверяется в VM; CachyOS — следу�
 
 ## Установка с нуля
 
+[Тестовый ISO с готовым looom: загрузка, установка и первый вход](docs/live-iso.md).
+[Скачать ISO 0.2.0 alpha 1 и SHA-256](https://github.com/Kexfff/looom/releases/tag/v0.2.0-alpha.1).
+Загрузить ISO в UEFI, подключить интернет и выбрать `Install looom` в меню.
+Готовый менеджер уже внутри; мастер сам размечает выбранный целый диск и
+устанавливает KDE, Limine и первый read-only релиз. Calamares пока не включён.
+
 [Экспериментальный Rust-установщик: мастер в терминале, plan/apply/resume](docs/installer.md).
 [Limine, пробная загрузка и переход с GRUB](docs/limine.md),
 [приёмка установщика и Limine на VM](docs/runs/2026-10-10-limine/README.md).
-Готовый бинарник запускается из Arch ISO и сам готовит целый диск, Limine/Btrfs,
+Отдельный готовый бинарник также запускается из Arch ISO и сам готовит целый диск, Limine/Btrfs,
 пользователя и первый read-only релиз. Сборка на целевой машине не требуется.
 
 [Полная инструкция: Intel N100, Arch ISO, GPT/Btrfs, KDE и откат](docs/installation.md).
