@@ -164,14 +164,10 @@ packages: [quickshell, jq, cliphist]
 системного релиза:
 
 ```sh
-sudo looom check ~/looom/base.yaml
-sudo looom lock ~/looom/base.yaml
-sudo looom plan ~/looom/base.yaml
-sudo looom build ~/looom/base.yaml desktop-next
-sudo looom publish desktop-next
-sudo looom try desktop-next
+sudo looom rebuild ~/looom/base.yaml desktop-next
 sudo reboot
 # После загрузки и проверки:
+sudo looom verify
 sudo looom confirm desktop-next
 ```
 

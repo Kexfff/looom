@@ -1,5 +1,5 @@
 use crate::{
-    config::Config,
+    config::{self, Config},
     credentials,
     machine::Machine,
     packages::{self, PackageLock},
@@ -118,9 +118,74 @@ impl Drop for BuildMount {
     }
 }
 
+fn unused_release(manager: &Manager, rid: &str) -> Result<()> {
+    ensure!(crate::config::identifier(rid), "invalid release ID");
+    let inputs = manager.state.join("inputs").join(rid);
+    ensure!(
+        !inputs.exists()
+            && !manager.top.join(format!("@build-{rid}")).exists()
+            && !manager.top.join(format!("@root-{rid}")).exists()
+            && !manager
+                .state
+                .join("releases")
+                .join(format!("{rid}.json"))
+                .exists(),
+        "refusing to overwrite an existing build/release"
+    );
+    Ok(())
+}
+
+pub fn rebuild(path: &Path, rid: &str) -> Result<()> {
+    root()?;
+    ensure!(config::identifier(rid), "invalid release ID");
+    println!("[1/5] check: {}", path.display());
+    // Freeze the declaration and file contents once for all subsequent stages.
+    let (cfg, files) = config::load(path).context("rebuild stopped at check")?;
+    let manager = Manager::installed(Machine::load().context("rebuild stopped at check")?)
+        .context("rebuild stopped at check")?;
+    manager
+        .machine
+        .config_contract(&cfg)
+        .context("rebuild stopped at check")?;
+    {
+        let _control = manager.lock()?;
+        unused_release(&manager, rid).context("rebuild stopped at check")?;
+    }
+    println!("[2/5] lock: {}", path.display());
+    // Resolution owns the same control lock internally. Reacquire it before
+    // loading the lock and keep it through build, publication and selection.
+    packages::resolve(&cfg, &packages::lock_path(path)).context("rebuild stopped at lock")?;
+    let _control = manager.lock()?;
+    let lock = packages::load(path, &cfg).context("rebuild stopped at lock")?;
+    let request = packages::request(&cfg)?;
+    println!("[3/5] build: {rid}");
+    build(
+        &manager,
+        Bundle {
+            schema: 2,
+            config: cfg,
+            files,
+            request,
+            lock,
+            release: rid.into(),
+        },
+    )
+    .context("rebuild stopped at build")?;
+    println!("[4/5] publish: {rid}");
+    manager.publish(rid).context("rebuild stopped at publish")?;
+    println!("[5/5] try: {rid}");
+    manager
+        .select("try", rid)
+        .context("rebuild stopped at try")?;
+    println!(
+        "Rebuild complete: {rid}. Reboot when ready; then run looom verify and looom confirm."
+    );
+    Ok(())
+}
+
 pub fn build(manager: &Manager, bundle: Bundle) -> Result<()> {
     let rid = &bundle.release;
-    ensure!(crate::config::identifier(rid), "invalid release ID");
+    unused_release(manager, rid)?;
     manager.machine.config_contract(&bundle.config)?;
     bundle.lock.validate(&bundle.config, true)?;
     ensure!(
@@ -139,17 +204,6 @@ pub fn build(manager: &Manager, bundle: Bundle) -> Result<()> {
         )?;
     }
     let inputs = manager.state.join("inputs").join(rid);
-    ensure!(
-        !inputs.exists()
-            && !manager.top.join(format!("@build-{rid}")).exists()
-            && !manager.top.join(format!("@root-{rid}")).exists()
-            && !manager
-                .state
-                .join("releases")
-                .join(format!("{rid}.json"))
-                .exists(),
-        "refusing to overwrite an existing build/release"
-    );
     let info = output("df", &["-B1", "--output=avail", string(&manager.top)?])?;
     let available: u64 = info.lines().last().context("df")?.trim().parse()?;
     ensure!(

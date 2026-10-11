@@ -21,14 +21,14 @@ fn run() -> Result<()> {
     if basename.as_deref() == Some("looom-password") {
         args.insert(0, "password".into());
     }
-    let op=args.first().map(String::as_str).context("Usage: looom check|init|lock|plan <base.yaml>; build <base.yaml> <id>; status|recover|publish|try|confirm|rollback|reject [id]; password <user> [--stdin]; accounts generate|check; gc [--keep N] [--apply]")?;
+    let op=args.first().map(String::as_str).context("Usage: looom check|init|lock|plan <base.yaml>; build|rebuild <base.yaml> <id>; status|recover|publish|try|confirm|rollback|reject [id]; password <user> [--stdin]; accounts generate|check; gc [--keep N] [--apply]")?;
     if op == "--version" {
         println!("looom {} (native Rust)", looom::VERSION);
         return Ok(());
     }
     if op == "--help" || op == "-h" {
         println!(
-            "looom {} — native Rust system releases\n\napps init|check|plan|apply|status|update [apps.yaml]\napps exec -- <command...> | apps run-script [--root] <file.sh> [args...]\napps export-packages [new-file.yaml]\ninstall [plan|show|apply|resume] (install --help for usage)\ncheck|init|bootstrap|lock|plan <base.yaml>\nboot-entry | boot-recovery | boot-migrate\nbootstrap-update <confirmed-running-release> [generation-id]\nbootstrap-try | bootstrap-confirm | bootstrap-recover | bootstrap-list\nbuild <base.yaml> <release-id>\nstatus | verify | recover\npublish|try|rollback|reject <release-id>\nconfirm [release-id]\npassword <user> [--stdin]\naccounts generate|check\ngc [--keep N] [--apply]\n\nBuild never changes the boot choice. Reboot separately after try/rollback.\nGC previews candidates unless --apply is given.",
+            "looom {} — native Rust system releases\n\napps init|check|plan|apply|status|update [apps.yaml]\napps exec -- <command...> | apps run-script [--root] <file.sh> [args...]\napps export-packages [new-file.yaml]\ninstall [plan|show|apply|resume] (install --help for usage)\ncheck|init|bootstrap|lock|plan <base.yaml>\nboot-entry | boot-recovery | boot-migrate\nbootstrap-update <confirmed-running-release> [generation-id]\nbootstrap-try | bootstrap-confirm | bootstrap-recover | bootstrap-list\nbuild <base.yaml> <release-id>\nrebuild <base.yaml> <release-id> (check, lock, build, publish, try)\nstatus | verify | recover\npublish|try|rollback|reject <release-id>\nconfirm [release-id]\npassword <user> [--stdin]\naccounts generate|check\ngc [--keep N] [--apply]\n\nBuild never changes the boot choice. Rebuild selects a trial boot. Reboot separately after rebuild/try/rollback.\nGC previews candidates unless --apply is given.",
             looom::VERSION
         );
         return Ok(());
@@ -175,6 +175,10 @@ fn run() -> Result<()> {
             _ => unreachable!(),
         }
         return Ok(());
+    }
+    if op == "rebuild" {
+        ensure!(args.len() == 3, "rebuild <base.yaml> <release-id>");
+        return builder::rebuild(Path::new(&args[1]), &args[2]);
     }
     if op == "internal-finalize" {
         ensure!(args.len() == 2, "frozen input directory required");

@@ -13,6 +13,19 @@ Flatpak/Distrobox/AppImage проверяется в VM; CachyOS — следу�
 [Журнал установки и приёмки N100](docs/runs/2026-10-07-n100/README.md).
 [Обновление Arch и испытания сбоев на VM](docs/runs/2026-10-08-durability/README.md).
 
+Для нового релиза из отредактированной конфигурации:
+
+```sh
+sudo looom rebuild ~/looom/base.yaml desktop-next
+sudo reboot
+# После загрузки и проверки:
+sudo looom verify
+sudo looom confirm
+```
+
+`rebuild` объединяет проверку, lock, сборку, публикацию и выбор пробной загрузки.
+При ошибке цепочка останавливается. Перезагрузка выполняется отдельно.
+
 ## Установка с нуля
 
 [Тестовый ISO с готовым looom: загрузка, установка и первый вход](docs/live-iso.md).

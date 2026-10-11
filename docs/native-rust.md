@@ -79,6 +79,7 @@ looom bootstrap-list
 looom lock <base.yaml>
 looom plan <base.yaml>
 looom build <base.yaml> <release-id>
+looom rebuild <base.yaml> <release-id>
 looom status
 looom verify
 looom publish <release-id>
@@ -152,17 +153,21 @@ vendor units и drop-ins, но не сохраняет обычную /etc mask.
 UKI и аппаратной загрузке N100, где новые TPM NvPCR-службы иначе падали.
 
 ```bash
-sudo looom check /path/to/base.yaml
-sudo looom lock /path/to/base.yaml
-sudo looom plan /path/to/base.yaml
-sudo looom build /path/to/base.yaml release-1
-sudo looom publish release-1
-sudo looom try release-1
+sudo looom rebuild /path/to/base.yaml release-1
 sudo systemctl reboot
 # В новой загрузке:
 sudo looom verify
 sudo looom confirm
 ```
+
+`rebuild` последовательно выполняет `check`, `lock`, `build`, `publish`, `try`.
+Декларация и содержимое её файлов читаются один раз; `base.lock` обновляется
+явно как часть команды. Вывод показывает текущий этап. Ошибка останавливает
+цепочку; незавершённые операции сохраняются для диагностики.
+Уже существующее имя релиза отклоняется до разрешения пакетов,
+повторное создание релиза не выполняется. При успехе выбирается один следующий
+старт, автоматической перезагрузки и подтверждения нет. Отдельные команды
+сохраняются; для предварительного просмотра можно выполнить `lock` и `plan`.
 
 Сборка и публикация не меняют постоянный выбор загрузки. `try` выбирает один
 следующий старт. Limine потребляет BLI-запрос до загрузки ядра; неподтверждённый релиз

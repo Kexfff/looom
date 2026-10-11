@@ -67,19 +67,21 @@ Secure Boot выключен, GPT, Limine, Btrfs, без шифрования и
 Оба файла принадлежат личному пользователю. Закрытый исходный протокол сохраняется
 в `/var/lib/looom/installation`; парольных хэшей в пользовательской копии нет.
 `resume` не перезаписывает уже существующую пользовательскую копию.
-После изменения списка пакетов нужно явно обновить lock перед сборкой:
+После изменения конфигурации собрать и выбрать следующий пробный релиз:
 
 ```sh
-sudo looom check ~/looom/base.yaml
-sudo looom lock ~/looom/base.yaml
-sudo looom build ~/looom/base.yaml my-next-release
-sudo looom publish my-next-release
-sudo looom try my-next-release
+sudo looom rebuild ~/looom/base.yaml my-next-release
 sudo reboot
 # После проверки рабочего стола:
 sudo looom verify
 sudo looom confirm
 ```
+
+`rebuild` выполняет `check → lock → build → publish → try`, обновляя `base.lock`
+рядом с декларацией. При ошибке последующие этапы не запускаются. Имя релиза
+должно быть новым; незавершённые сборки сохраняются для диагностики. Перезагрузка
+и подтверждение остаются отдельными действиями. Для контроля каждого этапа
+по-прежнему доступны отдельные команды.
 
 В мастер встроен проверенный профиль Arch + Plasma из
 `configs/installer/base.yaml`, сейчас со снимком архива 2026-10-07.
