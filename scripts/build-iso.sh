@@ -13,10 +13,10 @@ out=$3
 command -v mkarchiso >/dev/null
 project=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
 snapshot=${LOOOM_ISO_SNAPSHOT:-2026-10-07}
-version=${LOOOM_ISO_VERSION:-0.2.0-alpha.1-2026.10.11}
+version=${LOOOM_ISO_VERSION:-0.2.0}
 [[ $snapshot =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ && $version =~ ^[a-zA-Z0-9._-]+$ ]] || exit 1
 archive_date=${snapshot//-//}
-export SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH:-1791676800}
+export SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH:-1791763200}
 mkdir -p -- "$work" "$out"
 profile=$work/profile
 cp -a /usr/share/archiso/configs/releng "$profile"
@@ -32,7 +32,7 @@ cat >> "$profile/profiledef.sh" <<EOF
 
 # looom live installer; the installed system uses Limine + per-release UKIs.
 iso_name="looom"
-iso_label="LOOOM_20261011"
+iso_label="LOOOM_020"
 iso_publisher="looom <https://github.com/Kexfff/looom>"
 iso_application="looom online installer and rescue environment"
 iso_version="$version"

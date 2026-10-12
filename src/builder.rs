@@ -70,7 +70,7 @@ fn validate_sshd(root: &Path) -> Result<()> {
     result
 }
 
-fn write(root: &Path, name: &str, data: &str, mode: u32) -> Result<()> {
+pub(crate) fn write(root: &Path, name: &str, data: &str, mode: u32) -> Result<()> {
     let path = root.join(name.trim_start_matches('/'));
     mkdir(path.parent().context("parent")?, 0o755)?;
     remove_if_exists(&path)?;
@@ -490,11 +490,16 @@ fn configure(manager: &Manager, root: &Path, bundle: &Bundle) -> Result<()> {
         0o644,
     )?;
     if cfg.desktop.graphical() {
+        crate::setup::install(root, cfg.desktop.includes("plasma"))?;
         write(
             root,
             "etc/sddm.conf.d/10-looom.conf",
             if cfg.desktop.includes("plasma") {
-                "[Theme]\nCurrent=breeze\n[General]\nDisplayServer=x11\n"
+                if m.serial_console {
+                    "[Theme]\nCurrent=breeze\n[General]\nDisplayServer=x11\nGreeterEnvironment=QT_QUICK_BACKEND=software\n"
+                } else {
+                    "[Theme]\nCurrent=breeze\n[General]\nDisplayServer=x11\n"
+                }
             } else {
                 "[General]\nDisplayServer=x11\n"
             },
@@ -625,6 +630,8 @@ fn apply_units(root: &Path, bundle: &Bundle, m: &Machine) -> Result<()> {
     }
     if bundle.config.desktop.graphical() {
         units.insert("sddm.service".into(), "enabled".into());
+        units.insert("bluetooth.service".into(), "enabled".into());
+        units.insert("power-profiles-daemon.service".into(), "enabled".into());
     }
     for (name, state) in &bundle.config.units {
         units.insert(
@@ -974,6 +981,7 @@ pub(crate) fn install_sources(root: &Path) -> Result<()> {
         ("Cargo.lock", include_str!("../Cargo.lock")),
         ("src/lib.rs", include_str!("lib.rs")),
         ("src/apps.rs", include_str!("apps.rs")),
+        ("src/setup.rs", include_str!("setup.rs")),
         (
             "configs/installer/apps.yaml",
             include_str!("../configs/installer/apps.yaml"),

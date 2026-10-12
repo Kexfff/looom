@@ -1,7 +1,7 @@
 # Apply as your regular user: looom apps apply
 # Applications/data survive system rollback. Nothing is removed implicitly.
 schema: 1
-flatpak: []  # Flathub application IDs, e.g. org.mozilla.firefox
+flatpak: [org.mozilla.firefox]  # Installed by looom setup / apps apply as the regular user
 arch:
   image: docker.io/library/archlinux:latest
   packages: []  # e.g. [git, base-devel, firefox]

@@ -66,6 +66,8 @@ fn root_cannot_apply_or_run_installers() {
     vm();
     for args in [
         vec!["apps", "apply"],
+        vec!["setup"],
+        vec!["setup", "--first-login"],
         vec!["apps", "exec", "--", "pacman", "-S", "tree"],
         vec!["apps", "run-script", "/tmp/installer.sh"],
     ] {

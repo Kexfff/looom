@@ -28,7 +28,7 @@ fn run() -> Result<()> {
     }
     if op == "--help" || op == "-h" {
         println!(
-            "looom {} — native Rust system releases\n\napps init|check|plan|apply|status|update [apps.yaml]\napps exec -- <command...> | apps run-script [--root] <file.sh> [args...]\napps export-packages [new-file.yaml]\ninstall [plan|show|apply|resume] (install --help for usage)\ncheck|init|bootstrap|lock|plan <base.yaml>\nboot-entry | boot-recovery | boot-migrate\nbootstrap-update <confirmed-running-release> [generation-id]\nbootstrap-try | bootstrap-confirm | bootstrap-recover | bootstrap-list\nbuild <base.yaml> <release-id>\nrebuild <base.yaml> <release-id> (check, lock, build, publish, try)\nstatus | verify | recover\npublish|try|rollback|reject <release-id>\nconfirm [release-id]\npassword <user> [--stdin]\naccounts generate|check\ngc [--keep N] [--apply]\n\nBuild never changes the boot choice. Rebuild selects a trial boot. Reboot separately after rebuild/try/rollback.\nGC previews candidates unless --apply is given.",
+            "looom {} — native Rust system releases\n\nsetup [--status|--first-login] (regular user; first login and maintenance)\napps init|check|plan|apply|status|update [apps.yaml]\napps exec -- <command...> | apps run-script [--root] <file.sh> [args...]\napps export-packages [new-file.yaml]\ninstall [plan|show|apply|resume] (install --help for usage)\ncheck|init|bootstrap|lock|plan <base.yaml>\nboot-entry | boot-recovery | boot-migrate\nbootstrap-update <confirmed-running-release> [generation-id]\nbootstrap-try | bootstrap-confirm | bootstrap-recover | bootstrap-list\nbuild <base.yaml> <release-id>\nrebuild <base.yaml> <release-id> (check, lock, build, publish, try)\nstatus | verify | recover\npublish|try|rollback|reject <release-id>\nconfirm [release-id]\npassword <user> [--stdin]\naccounts generate|check\ngc [--keep N] [--apply]\n\nBuild never changes the boot choice. Rebuild selects a trial boot. Reboot separately after rebuild/try/rollback.\nGC previews candidates unless --apply is given.",
             looom::VERSION
         );
         return Ok(());
@@ -38,6 +38,9 @@ fn run() -> Result<()> {
     }
     if op == "install" {
         return looom::installer::dispatch(&args[1..]);
+    }
+    if op == "setup" {
+        return looom::setup::dispatch(&args[1..]);
     }
     if op == "internal-install-build" {
         ensure!(args.len() == 1, "internal-install-build takes no arguments");

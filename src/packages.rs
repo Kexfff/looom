@@ -9,9 +9,9 @@ use std::{
 };
 
 const BASE: &str = include_str!("../configs/bootstrap/packages.txt");
-const DESKTOP: &str = "plasma-desktop plasma-workspace plasma-nm plasma-pa kscreen xdg-desktop-portal-kde sddm dolphin konsole mesa pipewire pipewire-pulse wireplumber ttf-dejavu noto-fonts spice-vdagent";
+const DESKTOP: &str = "plasma-desktop plasma-workspace plasma-nm plasma-pa kscreen powerdevil bluedevil bluez bluez-utils power-profiles-daemon polkit-kde-agent xdg-desktop-portal-kde sddm dolphin konsole ark kate spectacle kio-extras mesa pipewire pipewire-pulse pipewire-alsa wireplumber ttf-dejavu noto-fonts noto-fonts-emoji spice-vdagent";
 // Host session and QML runtime. Pacman resolves the transitive closure.
-const NIRI: &str = "niri quickshell xwayland-satellite sddm xorg-server mesa pipewire pipewire-pulse wireplumber xdg-desktop-portal-gnome xdg-desktop-portal-gtk polkit-gnome foot fuzzel wl-clipboard swaylock swayidle qt6-5compat qt6-svg qt6-multimedia-ffmpeg syntax-highlighting kirigami kdialog ttf-dejavu noto-fonts noto-fonts-emoji";
+const NIRI: &str = "niri quickshell xwayland-satellite sddm xorg-server mesa pipewire pipewire-pulse pipewire-alsa wireplumber bluez bluez-utils power-profiles-daemon xdg-desktop-portal-gnome xdg-desktop-portal-gtk polkit-gnome foot fuzzel wl-clipboard swaylock swayidle qt6-5compat qt6-svg qt6-multimedia-ffmpeg syntax-highlighting kirigami kdialog ttf-dejavu noto-fonts noto-fonts-emoji";
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
 pub struct Package {
