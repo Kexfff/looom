@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/var/lib/looom/dev/release-0.2.0-test/scripts/test-release-desktop.py", line 141, in <module>
+    {'setup': setup, 'apps': apps, 'snapshot': snapshot, 'verify': verify}[sys.argv[1]]()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/var/lib/looom/dev/release-0.2.0-test/scripts/test-release-desktop.py", line 127, in verify
+    assert Path('/etc/looom-release-proof.conf').read_text() == 'declarative file exists only in desktop-next\n'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/etc/looom-release-proof.conf'

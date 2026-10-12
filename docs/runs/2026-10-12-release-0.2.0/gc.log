@@ -1,0 +1,33 @@
+Rejected candidate retained for diagnosis: desktop-next
+GC retain release: desktop-changed
+GC candidate: desktop-next (rejected)
+GC retain release: initial
+GC preview complete; frozen inputs, evidence and persistent data retained
+GC retain release: desktop-changed
+GC candidate: desktop-next (rejected)
+@root-desktop-next
+	Name: 			@root-desktop-next
+	UUID: 			65df4720-8efd-1e4f-9676-12cd1959c3d0
+	Parent UUID: 		2e3d1651-2b99-9d4e-85d6-cce6295966c5
+	Received UUID: 		-
+	Creation time: 		2026-10-12 15:49:18 +0300
+	Subvolume ID: 		269
+	Generation: 		67
+	Gen at creation: 	67
+	Parent ID: 		5
+	Top level ID: 		5
+	Flags: 			readonly
+	Send transid: 		0
+	Send time: 		2026-10-12 15:49:18 +0300
+	Receive transid: 	0
+	Receive time: 		-
+	Snapshot(s):
+	Quota group:		n/a
+Delete subvolume 269 (commit): '/run/looom-top/@root-desktop-next'
+GC retain release: initial
+GC apply complete; frozen inputs, evidence and persistent data retained
+Running: initial
+Bootloader Limine: {"next_entry":"looom-desktop-changed","saved_entry":"looom-initial"}
+desktop-changed published 7.2.9-arch1-1 @root-desktop-changed
+initial confirmed 7.2.9-arch1-1 @root-initial
+PASS: GC removed rejected candidate and kept running and next trial UKIs

@@ -1,0 +1,44 @@
+]3008;start=3067cfdc5071460ab4afb6d1db244999;user=root;hostname=looom-020;machineid=b6ca9f064e2044238a5d50815e8768e9;bootid=e11b007ec03e4d6a85a24802b038adaf;pid=1264;pidfdid=12517;comm=runuser;targetuser=kexfff;type=session\looom 0.2.0 — system setup
+Running system: initial
+System declaration: /home/kexfff/looom/base.yaml
+Applications: /home/kexfff/looom/apps.yaml
+Guide: /usr/share/looom/GETTING-STARTED.txt
+
+1) Install declared applications (default: Firefox)
+2) Check and confirm the running system
+3) System and release status
+4) Application status
+5) Update declared applications
+6) Change my password
+7) Rebuild from a system declaration
+8) Preview old release cleanup
+9) Getting started guide
+0) Close
+Choice [0]: 2
+
+We trust you have received the usual lecture from the local System
+Administrator. It usually boils down to these three things:
+
+    #1) Respect the privacy of others.
+    #2) Think before you type.
+    #3) With great power comes great responsibility.
+
+For security reasons, the password you type will not be visible.
+
+[sudo] password for kexfff: 
+]3008;start=b148d7ad7bde43529031154e6d8a4fed;user=kexfff;hostname=looom-020;machineid=b6ca9f064e2044238a5d50815e8768e9;bootid=e11b007ec03e4d6a85a24802b038adaf;pid=1266;pidfdid=4437;comm=sudo;targetuser=root;type=session\[?25lNo database errors have been found!
+[?25hPASS: booted read-only release initial, kernel, persistent mounts, units, accounts, exact inventory and native manager
+]3008;end=b148d7ad7bde43529031154e6d8a4fed\]3008;start=7e6cfbb49bb2418d9b1658b33a3541b4;user=kexfff;hostname=looom-020;machineid=b6ca9f064e2044238a5d50815e8768e9;bootid=e11b007ec03e4d6a85a24802b038adaf;pid=1328;pidfdid=4454;comm=sudo;targetuser=root;type=session\Confirmed healthy running release: initial
+]3008;end=7e6cfbb49bb2418d9b1658b33a3541b4\
+1) Install declared applications (default: Firefox)
+2) Check and confirm the running system
+3) System and release status
+4) Application status
+5) Update declared applications
+6) Change my password
+7) Rebuild from a system declaration
+8) Preview old release cleanup
+9) Getting started guide
+0) Close
+Choice [0]: 0
+]3008;end=3067cfdc5071460ab4afb6d1db244999\

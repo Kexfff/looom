@@ -1,0 +1,10 @@
+powerdevil 6.7.5-2
+bluedevil 1:6.7.5-1
+polkit-kde-agent 6.7.5-1
+ark 26.08.1-1
+kate 26.08.1-1
+spectacle 1:6.7.5-1
+pipewire-alsa 1:1.6.9-1
+No database errors have been found!
+PASS: booted read-only release initial, kernel, persistent mounts, units, accounts, exact inventory and native manager
+PASS: installed read-only initial, desktop services and utilities, native setup assets, editable declarations, accounts and exact manager

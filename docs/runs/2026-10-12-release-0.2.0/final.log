@@ -1,0 +1,9 @@
++ runuser -u kexfff -- env HOME=/home/kexfff XDG_RUNTIME_DIR=/run/user/1000 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus looom setup --first-login
++ looom verify
+No database errors have been found!
+PASS: booted read-only release desktop-changed, kernel, persistent mounts, units, accounts, exact inventory and native manager
++ looom accounts check
++ systemctl is-enabled bluetooth
+enabled
+PASS: every required desktop/audio/portal unit active; Bluetooth enabled (no virtual adapter)
+PASS: confirmed read-only KDE, new password login after changing root, persistent apps/data, one-time welcome and explicit application update

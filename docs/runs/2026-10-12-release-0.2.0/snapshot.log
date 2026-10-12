@@ -1,0 +1,3 @@
++ chown kexfff:kexfff /home/kexfff/.var/app/org.mozilla.firefox/release-proof.txt
++ chown -R kexfff:kexfff /home/kexfff/looom/release-test
+PASS: same-VM private state snapshot and update declaration prepared

@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-12",
+  "vm": "Looom-release-0.2.0",
+  "mac": "52:54:00:20:02:00",
+  "cpu": 4,
+  "ram_gib": 8,
+  "disk_gib": 64,
+  "bootloader": "Limine",
+  "release": "desktop-changed",
+  "root": "/@root-desktop-changed ro,noatime,compress=zstd:3,discard=async,space_cache=v2,subvolid=273,subvol=/@root-desktop-changed",
+  "native_sha256": "d89ecd0dc663df14d52167f3a9c2c39f504f2db97e825ebc2c65ecbed906f17b",
+  "packages": 720,
+  "versions": [
+    "plasma-workspace 6.7.5-1",
+    "linux 7.2.9.arch1-1",
+    "flatpak 1:1.18.4-1",
+    "distrobox 1.8.2.5-1",
+    "podman 6.1.3-1",
+    "sddm 0.21.0-7"
+  ],
+  "firefox_commit": "04ec9b3a6d0d8ce0654f48feeda8fb8dc816ffb9ab9b132e906c49e75c54571f",
+  "credentials_exported": false
+}

@@ -60,8 +60,8 @@ class Terminal:
         self.output = b''
         self.cursor = 0
 
-    def expect(self, pattern, answer, hidden=False):
-        deadline = time.monotonic() + 90
+    def expect(self, pattern, answer, hidden=False, timeout=90):
+        deadline = time.monotonic() + timeout
         while True:
             match = re.search(pattern, self.output[self.cursor:])
             if match:

@@ -31,6 +31,7 @@ sudo looom confirm
 
 [ISO с готовым looom: загрузка, установка и первый вход](docs/live-iso.md).
 [Скачать looom 0.2.0: ISO, бинарник и SHA-256](https://github.com/Kexfff/looom/releases/tag/v0.2.0).
+[Изменения и границы выпуска](docs/releases/0.2.0.md).
 Загрузить ISO в UEFI, подключить интернет и выбрать `Install looom` в меню.
 Готовый менеджер уже внутри; мастер сам размечает выбранный целый диск и
 устанавливает KDE, Limine и первый read-only релиз. Calamares пока не включён.
@@ -40,6 +41,7 @@ sudo looom confirm
 из меню или командой `looom setup`. База включает сеть, звук, Bluetooth,
 управление питанием, файловый менеджер, терминал, архиватор, редактор и снимки экрана.
 Пользовательские программы находятся отдельно в Flatpak/Distrobox/AppImage.
+[Приёмка выпуска: чистая установка, первый вход, приложения и откаты](docs/runs/2026-10-12-release-0.2.0/README.md).
 
 [Экспериментальный Rust-установщик: мастер в терминале, plan/apply/resume](docs/installer.md).
 [Limine, пробная загрузка и переход с GRUB](docs/limine.md),

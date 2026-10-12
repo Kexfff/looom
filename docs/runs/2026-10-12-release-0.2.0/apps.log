@@ -1,0 +1,65 @@
++ runuser -u kexfff -- env HOME=/home/kexfff XDG_RUNTIME_DIR=/run/user/1000 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus curl --fail --location --retry 3 -o /home/kexfff/looom/release-test/appimagetool.AppImage https://github.com/AppImage/appimagetool/releases/download/1.9.1/appimagetool-x86_64.AppImage
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+  0      0   0      0   0      0      0      0                              0  0      0   0      0   0      0      0      0                              0  0      0   0      0   0      0      0      0                              0
+  0      0   0      0   0      0      0      0                              0100 14.39M 100 14.39M   0      0 12.79M      0   00:01   00:01              0100 14.39M 100 14.39M   0      0 12.79M      0   00:01   00:01              0100 14.39M 100 14.39M   0      0 12.79M      0   00:01   00:01              0
++ runuser -u kexfff -- env HOME=/home/kexfff XDG_RUNTIME_DIR=/run/user/1000 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus looom apps apply
+Creating rootless looom-arch (docker.io/library/archlinux:latest)
+Trying to pull docker.io/library/archlinux:latest...
+Getting image source signatures
+Copying blob sha256:97290d28223872e83bae823bbb5bdad6ffb2590145b4cb023bc2faec2e44f45a
+Copying blob sha256:9df4a71740bac465174ffcdc445e624409ab822c1738302325b03887fbf75daf
+Copying config sha256:757718cecb34fbe2c56e22b5f6299a45f149c7ce1c9b85def543a340bacdf7af
+Writing manifest to image destination
+757718cecb34fbe2c56e22b5f6299a45f149c7ce1c9b85def543a340bacdf7af
+Creating 'looom-arch' using image docker.io/library/archlinux:latest	[32m [ OK ]
+[0mDistrobox 'looom-arch' successfully created.
+To enter, run:
+
+distrobox enter looom-arch
+
+warning: tree-2.3.2-1 is up to date -- skipping
+ there is nothing to do
+Applications applied; manual applications and previous AppImages retained
++ runuser -u kexfff -- env HOME=/home/kexfff XDG_RUNTIME_DIR=/run/user/1000 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus looom apps launch tool -- --version
+appimagetool, continuous build (git version 8c8c91f), build 296 built on 2025-12-04 17:55:56 UTC
++ chown kexfff:kexfff /home/kexfff/looom/release-test/installer.sh
++ runuser -u kexfff -- env HOME=/home/kexfff XDG_RUNTIME_DIR=/run/user/1000 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus looom apps run-script --root /home/kexfff/looom/release-test/installer.sh /home/kexfff/looom/release-test/installer-result.txt literal spaces; $(touch /tmp/looom-should-not-exist)
+resolving dependencies...
+looking for conflicting packages...
+
+Package (2)      New Version  Net Change  Download Size
+
+extra/oniguruma  6.9.10-3       0.87 MiB       0.22 MiB
+extra/jq         1.8.2-1        0.47 MiB       0.20 MiB
+
+Total Download Size:   0.42 MiB
+Total Installed Size:  1.34 MiB
+
+:: Proceed with installation? [Y/n] 
+:: Retrieving packages...
+ oniguruma-6.9.10-3-x86_64 downloading...
+ jq-1.8.2-1-x86_64 downloading...
+checking keyring...
+checking package integrity...
+loading package files...
+checking for file conflicts...
+:: Running pre-transaction hooks...
+(1/1) Distrobox hook /etc/distrobox-pre-hook.sh...
+:: Processing package changes...
+installing oniguruma...
+installing jq...
+:: Running post-transaction hooks...
+(1/3) Arming ConditionNeedsUpdate...
+(2/3) Distrobox hook /etc/distrobox-post-hook.sh...
+(3/3) Distrobox hook /usr/share/libalpm/scripts/distrobox_post_hook.sh...
+warning: bc-1.08.2-1 is up to date -- skipping
+ there is nothing to do
++ runuser -u kexfff -- env HOME=/home/kexfff XDG_RUNTIME_DIR=/run/user/1000 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus looom apps exec -- tree --version
+tree v2.3.2 © 1996 - 2026 by Steve Baker, Thomas Moore, Francesc Rocher, Florian Sesser, Kyosuke Tokoro
++ runuser -u kexfff -- env HOME=/home/kexfff XDG_RUNTIME_DIR=/run/user/1000 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus looom apps exec -- jq --version
+jq-1.8.2
++ runuser -u kexfff -- env HOME=/home/kexfff XDG_RUNTIME_DIR=/run/user/1000 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus looom apps exec -- bc --version
+bc 1.08.2
+Copyright 1991-1994, 1997, 1998, 2000, 2004, 2006, 2008, 2012-2018, 2024 Free Software Foundation, Inc.
+PASS: declared AppImage, rootless Arch container and real pacman installer script; arguments remain literal; host stays read-only

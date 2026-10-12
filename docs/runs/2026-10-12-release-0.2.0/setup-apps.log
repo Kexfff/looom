@@ -1,0 +1,62 @@
+]3008;start=2202fef7b1ae4f338abd8ff285228228;user=root;hostname=looom-020;machineid=b6ca9f064e2044238a5d50815e8768e9;bootid=e11b007ec03e4d6a85a24802b038adaf;pid=1380;pidfdid=8525;comm=runuser;targetuser=kexfff;type=session\looom 0.2.0 — system setup
+Running system: initial
+System declaration: /home/kexfff/looom/base.yaml
+Applications: /home/kexfff/looom/apps.yaml
+Guide: /usr/share/looom/GETTING-STARTED.txt
+
+1) Install declared applications (default: Firefox)
+2) Check and confirm the running system
+3) System and release status
+4) Application status
+5) Update declared applications
+6) Change my password
+7) Rebuild from a system declaration
+8) Preview old release cleanup
+9) Getting started guide
+0) Close
+Choice [0]: 1
+Declared Flatpaks: org.mozilla.firefox
+Arch packages: 0; AppImages: 0. Internet may be required.
+Proceed? Type YES: YES
+
+Note that the directories 
+
+'/var/lib/flatpak/exports/share'
+'/home/kexfff/.local/share/flatpak/exports/share'
+
+are not in the search path set by the XDG_DATA_DIRS environment variable, so
+applications installed by Flatpak may not appear on your desktop until the
+session is restarted.
+
+
+Note that the directories 
+
+'/var/lib/flatpak/exports/share'
+'/home/kexfff/.local/share/flatpak/exports/share'
+
+are not in the search path set by the XDG_DATA_DIRS environment variable, so
+applications installed by Flatpak may not appear on your desktop until the
+session is restarted.
+
+Installing runtime/org.freedesktop.Platform.GL.default/x86_64/25.08
+Installing runtime/org.freedesktop.Platform.GL.default/x86_64/25.08-extra
+Installing runtime/org.freedesktop.Platform.Locale/x86_64/25.08
+Installing runtime/org.freedesktop.Platform.codecs-extra/x86_64/25.08-extra
+Installing runtime/org.freedesktop.Platform/x86_64/25.08
+Installing runtime/org.mozilla.firefox.Locale/x86_64/stable
+Installing app/org.mozilla.firefox/x86_64/stable
+cannot chdir to /root: Permission denied
+Applications applied; manual applications and previous AppImages retained
+
+1) Install declared applications (default: Firefox)
+2) Check and confirm the running system
+3) System and release status
+4) Application status
+5) Update declared applications
+6) Change my password
+7) Rebuild from a system declaration
+8) Preview old release cleanup
+9) Getting started guide
+0) Close
+Choice [0]: 0
+]3008;end=2202fef7b1ae4f338abd8ff285228228\

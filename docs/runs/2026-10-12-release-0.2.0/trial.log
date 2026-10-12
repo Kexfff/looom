@@ -1,0 +1,13 @@
++ looom verify
+No database errors have been found!
+PASS: booted read-only release desktop-next, kernel, persistent mounts, units, accounts, exact inventory and native manager
++ looom accounts check
++ runuser -u kexfff -- env HOME=/home/kexfff XDG_RUNTIME_DIR=/run/user/1000 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus looom apps launch tool -- --version
+appimagetool, continuous build (git version 8c8c91f), build 296 built on 2025-12-04 17:55:56 UTC
++ runuser -u kexfff -- env HOME=/home/kexfff XDG_RUNTIME_DIR=/run/user/1000 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus looom apps exec -- jq --version
+jq-1.8.2
+PASS: desktop-next keeps passwords, container, Flatpak commit, AppImage, home and local settings; declarative file matches release
+Running: desktop-next
+Bootloader Limine: {"saved_entry":"looom-initial"}
+desktop-next published 7.2.9-arch1-1 @root-desktop-next
+initial confirmed 7.2.9-arch1-1 @root-initial
