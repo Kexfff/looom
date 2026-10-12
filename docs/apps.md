@@ -1,235 +1,185 @@
-# Пользовательские приложения
+# User applications
 
-`base.yaml` определяет read-only систему: ядро, драйверы, KDE и инфраструктуру
-приложений. `apps.yaml` принадлежит обычному пользователю и применяется без
-пересборки системы и без `sudo`. Данные находятся в постоянном домашнем каталоге.
-Готовый менеджер и установщик доступны в [тестовом live ISO](live-iso.md).
+`base.yaml` controls the read-only system. `apps.yaml` belongs to your regular
+user and applies without sudo or a system rebuild. New releases include Flatpak,
+KDE portals, Distrobox, rootless Podman, and FUSE support for AppImage.
 
-Новые базовые релизы включают Flatpak, KDE portals, Distrobox, rootless Podman,
-FUSE для AppImage и контейнеров. Для единственного управляемого пользователя
-сборщик записывает одинаковые `/etc/subuid` и `/etc/subgid`: диапазон
-`100000:65536`. Эти файлы нельзя переопределять через `base.yaml`.
-Установщик оставляет редактируемый `~/looom/apps.yaml` рядом с `base.yaml`;
-при обновлении уже установленной системы выполните `looom apps init`.
+The installer creates `~/looom/apps.yaml` alongside the system declaration.
+On an existing installation, run `looom apps init`; it preserves an existing file.
+The new default declares Firefox. Installation starts only when you explicitly
+choose it in `looom setup` or run `looom apps apply`.
 
-Новый шаблон 0.2.0 содержит Firefox (`org.mozilla.firefox`). Установка начинается
-после выбора в `looom setup` или команды `looom apps apply` от пользователя;
-скрытого скачивания при входе нет. До применения можно изменить `apps.yaml`.
-Существующие декларации, включая намеренно пустые, сохраняются без миграции.
-
-## Декларация
+## Declaration
 
 ```yaml
 schema: 1
-flatpak:
-  - org.mozilla.firefox
+flatpak: [org.mozilla.firefox]
 arch:
   image: docker.io/library/archlinux:latest
   packages: [git, base-devel]
   exports: []
-appimages:
-  example:
-    url: https://publisher.example/Example.AppImage
-    sha256: <SHA256 файла, 64 строчные шестнадцатеричные цифры>
-    name: Example
+appimages: {}
 ```
 
-URL и digest в примере нужно заменить реальными. Для локального файла вместо
-`url` используется `source: ./Example.AppImage`; относительный путь считается
-от каталога YAML. Для OCI-образа допустима ссылка с `@sha256:…` вместо изменяемого
-`latest`. В первой версии один управляемый Arch-контейнер: `looom-arch`. Он создаётся
-при объявлении пакетов/экспорта или первом `exec/run-script`; пустая декларация
-не скачивает OCI-образ.
+JSON is also accepted. The OCI image may be pinned with `@sha256:…` instead of
+`latest`. There is one managed container, `looom-arch`, created only when packages,
+exports, or `exec`/`run-script` need it. An empty Arch declaration does not pull an image.
 
 ```sh
-looom apps check             # проверка декларации
-looom apps plan              # показать желаемое состояние, без скачиваний
-looom apps apply             # обеспечить наличие приложений
-looom apps status            # проверить наличие и digest AppImage
-looom apps update            # явно обновить объявленные Flatpak и Arch
-looom apps exec -- bash      # открыть Arch-контейнер
+looom apps init
+looom apps check
+looom apps plan
+looom apps apply
+looom apps status
+looom apps update
+looom apps exec -- bash
 ```
 
-У `check`, `plan`, `apply`, `status`, `update` есть необязательный путь к YAML.
-По умолчанию используется `~/looom/apps.yaml`. `check/plan <путь>` можно
-выполнять администратору; изменяющие операции требуют обычной пользовательской
-сессии. Не используйте `sudo looom apps` или `sudo distrobox`.
+`check`, `plan`, `apply`, `status`, and `update` accept an optional YAML path;
+the default is `~/looom/apps.yaml`. Modifying operations require a regular user
+session. Do not run `sudo looom apps` or `sudo distrobox`.
 
-Правило декларативности — «указанное должно быть установлено». Удаление строки
-из YAML ничего не удаляет: ручные установки, данные и старые AppImage сохраняются.
-Повторный `apply` не обновляет уже установленные приложения. `update` обновляет
-объявленные Flatpak и весь Arch-контейнер согласованно через `pacman -Syu`. Если старые версии пакетов исчезли с rolling-зеркал, сначала
-обновите контейнер через `looom apps update` и повторите `apply`.
-Автоматическая очистка пользовательских приложений пока не предусмотрена;
-системный `looom gc` не удаляет домашние каталоги и контейнерное хранилище.
+The rule is **ensure declared applications are present**. Removing an entry does
+not uninstall anything. Manual applications, old AppImages, and data remain.
+`apply` does not update already installed applications; `update` updates declared
+Flatpaks and the entire Arch container with `pacman -Syu`. If an old rolling-mirror
+package disappeared, update the container and retry `apply`.
 
-Применение последовательное, с блокировкой на пользователя. При ошибке уже
-успешные установки сохраняются; повторный `apply` продолжает обеспечение
-наличия. `applied.json` записывается только после полного успеха; в нём сохраняются
-commit установленных Flatpak и фактический ID OCI-образа. Это не атомарный
-системный релиз и не полный lock всех внешних источников.
+Application operations are serialized per user. Successful installations remain
+when a later step fails; rerun `apply` to continue. The receipt is written only
+after success and records Flatpak commits and the actual OCI image ID. It is not
+a complete lock or an atomic rollback mechanism for all application sources.
 
 ## Flatpak
 
-Используются пользовательские установки и штатный Flathub с проверкой подписей
-по умолчанию. Добавление remote выполняется через официальный `.flatpakrepo`.
-Если пользовательский remote `flathub` уже указывает на другой URL, операция
-останавливается. Приложение из другого origin не заменяется молча.
-Меню KDE получает desktop-файлы через штатный экспорт Flatpak. Перезапуск
-пользовательской сессии может потребоваться после первого добавления remote.
-[Режимы установки Flatpak](https://docs.flatpak.org/en/latest/using-flatpak.html).
+Applications are installed with `--user` from the standard Flathub remote, using
+normal Flatpak signature verification. A preexisting `flathub` remote with a
+different URL is rejected, and an application from a different origin is not
+silently replaced. Desktop entries use Flatpak's normal export mechanism;
+a session restart may be needed after adding the remote for the first time.
 
-## Arch и сторонние установщики
+## Arch containers and installer scripts
 
 ```sh
 looom apps exec -- sudo pacman -Syu
-looom apps run-script ~/Downloads/vendor/install.sh argument
+looom apps run-script ~/Downloads/vendor/setup argument
 looom apps run-script --root ~/Downloads/vendor/root-install.sh
 ```
 
-Весь `.sh` выполняется **внутри Arch-контейнера от обычного пользователя**.
-Сохраняются личный HOME и возможность запускать `makepkg`/AUR helper без root.
-Для этого запуска looom добавляет в PATH контейнерный `pacman`, который передаёт
-аргументы в `sudo -n /usr/bin/pacman`. Поэтому голый `pacman -S …` работает;
-`sudo pacman` и `sudo /usr/bin/pacman` также устанавливают в контейнер.
-Абсолютный `/usr/bin/pacman -S …` без sudo остаётся непривилегированным и откажет.
-Изменение PATH ограничено дочерним процессом скрипта; host-команды не меняются.
+`run-script` runs the whole script **inside the Arch container as the regular user**.
+The user's HOME is shared, so tools such as `makepkg` or an AUR helper can run
+without root. During this child process only, a container PATH shim forwards
+bare `pacman` to `sudo -n /usr/bin/pacman`. `sudo pacman` and
+`sudo /usr/bin/pacman` also modify the container. An absolute `/usr/bin/pacman`
+without sudo remains unprivileged. Host pacman is never globally intercepted.
 
-Опция `--root` нужна скриптам, которые явно требуют root: она запускает весь
-скрипт через контейнерный sudo. Root в rootless Podman не является root хоста;
-файлы, созданные им в общем HOME, могут принадлежать subordinate UID/GID.
-Это изменение поведения относительно первого MVP: прежние root-скрипты теперь
-требуют явного `--root`. Сам скрипт не попадает в декларацию и не запускается
-повторно при `apply`. `exec` сохраняет обычное окружение Distrobox без pacman shim.
+Use `--root` only when the script explicitly requires root. This is container
+root, not host root; files it creates in shared HOME may have subordinate UID/GID
+ownership. The script is not added to the declaration or rerun during `apply`.
+`exec` keeps the normal Distrobox environment without the pacman shim.
 
-Скрипт и сопутствующие файлы должны лежать в домашнем каталоге. Рабочий каталог —
-каталог скрипта; аргументы передаются отдельно, без склейки в командную строку.
-Для графических программ добавьте имя desktop-приложения в `arch.exports`
-и повторите `apply`: например, `packages: [firefox]`, `exports: [firefox]`.
+Place the script and its supporting files inside HOME. Its working directory
+is the script directory, and arguments are passed individually without shell
+concatenation. For graphical container applications, declare their packages
+and desktop names in `arch.exports`, then apply:
 
-Команды host `pacman` глобально не подменяются. Скрипты, которым требуется
-изменение ядра, загрузчика, драйверов или системных служб **хоста**, через этот
-механизм не устанавливаются. Distrobox разделяет домашний каталог с пользователем;
-это среда совместимости, а не sandbox для недоверенного кода.
-[Вход в Distrobox](https://distrobox.it/usage/distrobox-enter/),
-[экспорт приложений](https://distrobox.it/usage/distrobox-export/),
-[rootless Podman](https://docs.podman.io/en/latest/markdown/podman.1.html#rootless-mode).
+```yaml
+arch:
+  image: docker.io/library/archlinux:latest
+  packages: [firefox]
+  exports: [firefox]
+```
 
-## Системные зависимости без ручного переноса каждого пакета
+Distrobox is an integrated compatibility environment, not a security sandbox for
+untrusted code. Scripts that configure the host kernel, bootloader, drivers,
+udev, accounts, or system services need explicit host-side configuration instead.
+Changing `arch.image` does not replace an existing container; migrate its data and
+recreate it explicitly through Distrobox. An unrelated container with the same
+name is rejected.
 
-Для компонентов пользовательской графической сессии предусмотрены системные
-профили и подключаемые списки пакетов. Можно сохранить KDE и добавить Niri:
+## Import system dependencies
+
+Some graphical-session dependencies must be in the base system. Add a supported
+session and an imported package list rather than enumerating every dependency:
 
 ```yaml
 desktop:
   environment: plasma
   sessions: [niri]
-packages_from:
-  - desktop-packages.yaml
+packages_from: [desktop-packages.yaml]
 ```
 
-`environment: niri` включает только Niri вместо KDE. Профиль добавляет Niri,
-Quickshell, Xwayland Satellite, SDDM, portals, polkit agent, звук, терминал,
-базовые QML/KDE-модули и шрифты. Транзитивные зависимости разрешает pacman;
-их имена не требуется перечислять вручную. Профиль предоставляет базовую
-сессию Niri; пользовательская оболочка iNiR устанавливается отдельно.
+`environment: niri` selects Niri alone. Its profile includes Niri, Quickshell,
+Xwayland Satellite, SDDM, portals, a polkit agent, audio, a terminal, QML libraries,
+and fonts. The iNiR user shell is installed separately.
 
-После установки зависимостей сторонним скриптом внутри контейнера:
+After installing dependencies inside the container:
 
 ```sh
-looom apps run-script ~/Downloads/project/setup arguments
 looom apps export-packages ~/looom/desktop-packages.yaml
 ```
 
-Экспорт содержит **все явно установленные пакеты контейнера**, включая ранее
-установленные приложения и инструменты Distrobox. Просмотрите список и уберите
-программы, которые хотите оставить только в контейнере. Это один редактируемый
-список, а не ручное выписывание всей цепочки зависимостей. Без пути команда
-печатает документ в stdout; существующий файл никогда не перезаписывается.
-Формат JSON одновременно является строгим YAML:
+This exports **all explicitly installed container packages**, including earlier
+applications and Distrobox tools. Review the list and remove software that should
+stay only in the container. Existing output files are never overwritten;
+without a path, the document is printed to stdout.
 
 ```yaml
 schema: 1
 packages: [quickshell, jq, cliphist]
 ```
 
-`packages` берутся из явных пакетов, известных sync databases контейнера.
-Окончательную доступность **в официальных core/extra на дату snapshot** проверяет
-системный `lock`. Добавленные контейнеру сторонние repositories и их подписи
-не переносятся на хост.
+Repository packages must be available in official Arch core/extra on the selected
+system snapshot date. Extra container repositories and their trust configuration
+are not imported. AUR/local packages appear in `foreign`; a nonempty `foreign`
+list blocks system check/build until you handle them separately and explicitly
+remove that field. There is no automatic system AUR builder. Do not copy binary
+Qt/QML plugins from a container into a host with different library versions.
 
-Имена явных пакетов вне sync databases (обычно AUR и локальные сборки) помещаются
-в `foreign`. Непустой `foreign` останавливает системный `check/lock/build`:
-пользователь должен оставить эти пакеты в контейнере или отдельно подготовить
-системные пакеты, затем явно удалить поле. Автоматической сборки AUR в системном
-релизе пока нет. Бинарные Qt/QML-плагины контейнера нельзя просто копировать в хост:
-версии библиотек должны быть совместимы.
+Apply the reviewed list through a normal system rebuild. Includes are confined
+relative files with no symlinks, traversal, tags/anchors, or nested includes;
+the resolved package set is frozen for recovery. See [configuration](configuration.md#package-lists).
 
-Подключите файл через `packages_from` и примените обычную процедуру нового
-системного релиза:
-
-```sh
-sudo looom rebuild ~/looom/base.yaml desktop-next
-sudo reboot
-# После загрузки и проверки:
-sudo looom verify
-sudo looom confirm desktop-next
-```
-
-До сборки импорт лишь меняет желаемый список. Запущенная read-only система
-сохраняется. Имена пакетов из всех списков и `packages` объединяются; одинаковые
-имена между списками допустимы. Внутри одного списка дубли запрещены. Пути
-считаются от `base.yaml`, ограничены его каталогом, без `..`, symlink, YAML
-anchors/tags и вложенных include. Максимум 16 файлов по 1 MiB. Frozen build и
-installer сохраняют уже раскрытый список: оригинальные include-файлы для
-восстановления завершённой операции не нужны. Изменение итогового набора пакетов
-делает предыдущий package lock устаревшим.
-
-### Применение к iNiR
-
-iNiR разделяет этапы флагами `--skip-deps`, `--skip-setups`, `--skip-files`.
-Практическое разделение: зависимости ставятся в контейнер, нужные хосту
-repository packages импортируются одним списком; сессия/службы настраиваются
-в `base.yaml`; пользовательские конфиги ставятся обычным пользователем.
-Проверенный профиль с закреплённым source, пакетным списком, Python-зависимостями
-и правками для read-only looom: [установка iNiR](../examples/inir/README.md).
-Основная оболочка проверена в настоящей SDDM/Niri-сессии на VM;
-опциональные AUR-темы и аппаратные функции в эту проверку не входят.
-[Исходник флагов iNiR](https://github.com/snowarch/iNiR/blob/main/sdata/subcmd-install/options.sh).
-
-Запуск установщика в контейнере может настроить пользовательские services и
-конфиги общего HOME; записи в контейнерные `/etc` и `/usr` относятся к контейнеру.
-Для host-конфигов можно отдельно запускать файловую фазу с `--skip-deps
---skip-setups`, предварительно проверив действия конкретного установщика.
-looom не переписывает произвольный shell-код и не превращает `systemctl`,
-`usermod`, драйверы и системные плагины в атомарные host-операции.
-
-Образ контейнера не заменяется автоматически. Изменение `arch.image` при
-существующем `looom-arch` требует явного переноса данных и пересоздания через
-Distrobox. Совпавшее имя чужого контейнера также вызывает отказ.
+For iNiR, use the [pinned integration profile](../examples/inir/README.md).
+Third-party installers can separate dependencies, host session setup, and user
+configuration into phases. looom does not rewrite arbitrary shell code or turn
+host `systemctl`/`usermod` actions into atomic release resources.
 
 ## AppImage
 
-Каждый файл скачивается по HTTPS, проверяется по обязательному SHA256 и сигнатуре
-формата AppImage, затем атомарно сохраняется с правом исполнения. Декларация
-не исполняет скачанный файл во время установки. Предыдущая версия остаётся на
-диске. В меню KDE создаётся launcher `looom-<id>.desktop`, который обращается к
-нативному `looom apps launch <id>` и повторно проверяет digest перед запуском.
+Add an HTTPS URL or a local source, plus a required lowercase SHA-256 digest:
 
-AppImage не обновляется сам при `update`: смените URL/файл и SHA256 в YAML,
-повторите `apply`. Можно запускать `looom apps launch example -- аргументы`.
-FUSE2 входит в базу; совместимость конкретного AppImage зависит от его сборки.
-[Требования FUSE](https://docs.appimage.org/user-guide/troubleshooting/fuse.html).
+```yaml
+appimages:
+  example:
+    source: ./Example.AppImage
+    sha256: <64 lowercase hexadecimal characters>
+    name: Example
+```
 
-## Откаты и существующие установки
+Replace the placeholder with the file's actual digest. For a download, replace
+`source` with `url: https://publisher.example/Example.AppImage`. Relative local
+sources are resolved from the YAML directory.
 
-Flatpak, Podman, AppImage, экспортированные launcher и данные приложений находятся
-в `$HOME/.local/share` (или постоянном `XDG_DATA_HOME` внутри HOME). Они переживают
-системный rollback. Удаление базовой инфраструктуры в очень старом системном
-релизе может сделать запуск недоступным, сохраняя сами данные. Для проверки
-работоспособности после отката нужны два релиза с инфраструктурой приложений.
+looom verifies the digest and AppImage format, then atomically stores the executable.
+It does not execute downloaded files during installation. A desktop launcher calls
+`looom apps launch <id>`, which checks the active digest again before execution:
 
-Для перехода со старого looom: собрать новый базовый релиз новым бинарником,
-явно обновить `base.lock`, проверить пробную загрузку и подтвердить её.
-Затем в обычной пользовательской сессии создать и применить `apps.yaml`.
-Не устанавливайте инфраструктуру host-командой `pacman` в read-only root.
+```sh
+looom apps launch example -- --version
+```
+
+`update` does not automatically discover new AppImage versions. Change the URL/file
+and digest, then apply. Previous versions remain. FUSE2 is included, but individual
+AppImage compatibility depends on the application. AppImage itself is not a sandbox.
+
+## Rollback and data
+
+Applications, container storage, launchers, and data live in persistent HOME,
+including `.local/share` or a persistent `XDG_DATA_HOME` inside HOME. They survive
+system rollback. A very old base release without the infrastructure may be unable
+to launch them while preserving their files.
+
+`looom gc` does not delete user applications or container storage. Application
+cleanup and backups are separate responsibilities. System rollback does not undo
+application upgrades or restore personal desktop settings.

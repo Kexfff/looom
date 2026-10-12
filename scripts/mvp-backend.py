@@ -194,9 +194,6 @@ def build(bundle):
         shutil.copytree(PROJECT / folder, frozen / folder, ignore=shutil.ignore_patterns('__pycache__'))
     shutil.copytree(PROJECT / 'src', frozen / 'src')
     shutil.copy2(PROJECT / 'Cargo.toml', frozen / 'Cargo.toml')
-    evidence = frozen / 'docs/runs/2026-10-04-bootstrap/evidence'
-    evidence.mkdir(parents=True)
-    shutil.copy2(PROJECT / 'docs/runs/2026-10-04-bootstrap/evidence/mkinitcpio.conf', evidence / 'mkinitcpio.conf')
     shutil.copy2(PROJECT / 'Cargo.lock', frozen / 'Cargo.lock')
     (frozen / 'target/release').mkdir(parents=True)
     binary = PROJECT / 'target/release/looom'

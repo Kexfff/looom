@@ -1,64 +1,78 @@
-# Загрузка looom через Limine
+# Boot and recovery
 
-Новые установки используют Limine из того же закреплённого снимка Arch,
-что и ядро/пакеты. В снимке 2026-10-07 это **12.9.3-1**. looom проверяет,
-что пакет поддерживает `LoaderEntryOneShot`; старые версии без BLI не подходят.
-[Документация этой версии](https://github.com/limine-bootloader/limine/blob/v12.9.3/CONFIG.md),
-[потребление одноразового выбора](https://github.com/limine-bootloader/limine/blob/v12.9.3/common/lib/bli.c).
+New installations use Limine and a separate Unified Kernel Image (UKI) for each
+release. The bootloader comes from the same pinned Arch snapshot as the system.
+looom requires support for the UEFI Boot Loader Interface `LoaderEntryOneShot`.
+Snapshot `2026-10-07` supplies Limine `12.9.3-1`.
 
-## Обычная работа
+## Trial boots and rollback
 
 ```sh
-sudo looom build ~/looom/base.yaml next
-sudo looom publish next
-sudo looom try next
+sudo looom rebuild ~/looom/base.yaml desktop-next
 sudo reboot
-# Проверить рабочий стол, затем:
+# Check the new desktop before confirming.
 sudo looom verify
 sudo looom confirm
-# Возврат к ранее подтверждённому релизу:
+
 sudo looom rollback initial
 sudo reboot
 ```
 
-После изменения пакетов сначала выполнять `sudo looom lock ~/looom/base.yaml`.
-`build` и `publish` не меняют постоянный выбор. `try` действует на следующую
-загрузку; без `confirm` последующая перезагрузка возвращает прежний default.
-Зависание требует перезагрузки пользователем; автоматического watchdog пока нет.
+Build/publication leave the permanent default unchanged. `try` selects one next
+boot through the UEFI BLI variable; Limine consumes it before starting the kernel.
+Without confirmation, another ordinary boot uses the previous default.
+A hang needs an explicit restart; there is no automatic watchdog or boot counting.
+The first installation uses writable recovery as its default until `initial`
+is confirmed. looom rejects an unknown one-shot request from another bootloader.
 
-На ESP:
+## Boot files
 
-- `/EFI/looom/liminex64.efi` — закреплённый EFI-загрузчик;
-- `/EFI/looom/limine.conf` — сгенерированное меню и `default_entry`;
-- `/EFI/BOOT/BOOTX64.EFI` и `limine.conf` — fallback новой установки;
-- `/EFI/Linux/looom-<id>.efi` — UKI опубликованного релиза;
-- `/EFI/Linux/looom-bootstrap.efi` — writable recovery.
+Paths below are relative to the ESP mounted at `/efi`:
 
-`remember_last_entry: no` сохраняет постоянный выбор при пробной загрузке.
-Однократный выбор хранится в EFI-переменной BLI `LoaderEntryOneShot`, а не
-в изменённом корне. Limine удаляет её до запуска ядра. Переменная общая для
-UEFI-машины: looom блокирует неизвестный запрос другого загрузчика.
+| Path | Purpose |
+| --- | --- |
+| `EFI/looom/liminex64.efi` | Pinned bootloader |
+| `EFI/looom/limine.conf` | Generated menu and permanent default |
+| `EFI/BOOT/BOOTX64.EFI`, `EFI/BOOT/limine.conf` | New installation's fallback loader/menu |
+| `EFI/Linux/looom-<id>.efi` | Published release UKI |
+| `EFI/Linux/looom-bootstrap.efi` | Stable writable recovery UKI |
 
-В State `/var/lib/looom/bootloader.json` указан backend. Отсутствие файла означает
-исторический GRUB. Схема `machine.json` не меняется, поэтому старые службы
-аккаунтов продолжают читать профиль при откате. GRUB-пакет пока сохранён в
-closure для совместимости; новые установки загружаются через Limine.
+`/var/lib/looom/bootloader.json` selects the backend. Its absence indicates a
+legacy GRUB machine. `machine.json` retains its schema so older account services
+can still read it after rollback. Do not edit these files to force a migration.
 
-## Переход существующей GRUB-установки
+## Damaged menus and interrupted operations
 
-Не нужно форматировать диск. Сначала получить новый бинарник из проверенной
-сборки или собрать репозиторий. Ниже `./looom-new` — именно новый бинарник;
-старый установленный менеджер ещё не знает команды `boot-migrate`.
-
-Если раньше конфигурация оставалась только в закрытом протоколе:
+Installation and `looom boot-recovery` register a firmware entry named
+`looom-recovery-<root-UUID-prefix>`. It boots the recovery UKI directly, without
+the Limine configuration. Select it in the firmware menu, then run:
 
 ```sh
-mkdir -p ~/looom
-sudo cp /var/lib/looom/installation/base.yaml ~/looom/base.yaml
-sudo chown "$(id -u):$(id -g)" ~/looom/base.yaml
+sudo looom recover
+sudo looom status
+sudo looom try <healthy-release-id>
+sudo reboot
+# After checking the healthy release:
+sudo looom verify
+sudo looom confirm
 ```
 
-Подготовить новый релиз, содержащий новый менеджер и пакет Limine:
+If the permanent selection is missing or invalid, menu recovery uses the recovery
+system as default until you explicitly choose and confirm a healthy release.
+On a migrated machine with an old recovery manager, use
+`sudo /var/lib/looom/boot-manager recover` instead.
+
+`recover` reconciles journaled operations. Publication uses synchronized temporary
+UKI files and metadata, but FAT writes cannot guarantee survival of every power
+loss. A damaged unselected validated candidate can be republished; published,
+confirmed, or selected images are not silently replaced. A damaged recovery UKI,
+ESP, or firmware boot path requires a live environment.
+
+## GRUB migration
+
+No disk formatting is needed. Obtain and verify a current manager binary; below,
+`./looom-new` means that binary, not the old installed manager. First prepare a
+release containing the new manager and Limine:
 
 ```sh
 sudo ./looom-new lock ~/looom/base.yaml
@@ -66,7 +80,7 @@ sudo ./looom-new build ~/looom/base.yaml limine-ready
 sudo ./looom-new publish limine-ready
 sudo ./looom-new try limine-ready
 sudo reboot
-# Этот запуск ещё через GRUB:
+# This boot is still through GRUB.
 sudo looom verify
 sudo looom confirm
 sudo looom boot-migrate
@@ -76,36 +90,13 @@ sudo looom verify
 sudo looom status
 ```
 
-`boot-migrate` требует завершить ожидающую GRUB-пробу и иметь подтверждённый
-постоянный релиз. Он сохраняет прежний EFI-образ GRUB, его меню и fallback,
-копирует Limine, сохраняет тот же default и регистрирует новую UEFI-запись.
-Повторный вызов на Limine-машине ничего не меняет. Пакеты на работающем
-read-only корне не устанавливаются через pacman.
+Migration requires a confirmed permanent release and no pending GRUB trial.
+It keeps the previous GRUB EFI image, menu, and fallback, installs Limine,
+retains the default release, and registers a new firmware entry. Repeating it
+on an already migrated machine does nothing.
 
-Новый менеджер дополнительно сохраняется в `/var/lib/looom/boot-manager`.
-После отката к старому релизу или запуска старого recovery для управления
-**Limine** применять этот бинарник через sudo. Старый `/usr/bin/looom`
-продолжает управлять только историческим GRUB:
-
-```sh
-sudo /var/lib/looom/boot-manager status
-sudo /var/lib/looom/boot-manager try limine-ready
-```
-
-Для обновления recovery до нового менеджера можно использовать уже существующий
-цикл `bootstrap-update`, `bootstrap-try`, reboot и `bootstrap-confirm`.
-
-## Повреждённое меню
-
-Обычный installer и `looom boot-recovery` создают UEFI-запись
-`looom-recovery-<первые 8 символов root UUID>`, которая напрямую запускает recovery
-UKI. Выбрать её в меню прошивки; конфиг Limine для этого не нужен.
-В recovery новый менеджер восстанавливает меню командой `looom recover`.
-Если постоянный выбор потерян или больше не указывает на опубликованный релиз,
-меню восстанавливается с recovery по умолчанию. Затем явно выполнить
-`looom try <рабочий-id>`, reboot и `looom confirm`.
-Старому recovery после миграции нужен `/var/lib/looom/boot-manager recover`.
-
-При повреждении самого UKI, ESP или прошивки потребуется live-система.
-Встроенного в Limine аварийного конфига, автоматического переключения на GRUB
-и boot counting в этой версии looom нет.
+The current manager is also retained at `/var/lib/looom/boot-manager`. After
+rolling back to an old release or recovery, use this binary through sudo to
+manage Limine. Older `/usr/bin/looom` versions only know their GRUB backend.
+Update recovery through the `bootstrap-update` → `bootstrap-try` → reboot →
+`bootstrap-confirm` workflow when ready; see [system commands](native-rust.md#recovery-generations).

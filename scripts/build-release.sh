@@ -205,7 +205,7 @@ printf 'root=UUID=%s rootflags=subvol=@root-%s ro console=tty0 console=ttyS0,115
     "$root_uuid" "$RELEASE_ID" > "$BUILD/etc/kernel/cmdline"
 [[ $BROKEN_BOOT == no ]] || printf ' systemd.unit=emergency.target' >> "$BUILD/etc/kernel/cmdline"
 printf '\n' >> "$BUILD/etc/kernel/cmdline"
-cp "$PROJECT_DIR/docs/runs/2026-10-04-bootstrap/evidence/mkinitcpio.conf" "$BUILD/etc/mkinitcpio.conf"
+cp "$PROJECT_DIR/configs/bootstrap/mkinitcpio.conf" "$BUILD/etc/mkinitcpio.conf"
 kernel_version=$(find "$BUILD/usr/lib/modules" -mindepth 1 -maxdepth 1 -type d -printf '%f\n')
 [[ -n $kernel_version && $kernel_version != *$'\n'* ]]
 install -m 644 "$BUILD/usr/lib/modules/$kernel_version/vmlinuz" "$BUILD/boot/vmlinuz-looom"

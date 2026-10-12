@@ -1,166 +1,80 @@
-# Atomic Arch/CachyOS Desktop
+# looom
 
-Идея проекта — собрать декларируемую, атомарную и легко откатываемую десктоп-систему на базе пакетов **Arch / CachyOS**, где базовая система отделена от пользовательских приложений.
+looom is a Rust system manager for an atomic Arch Linux desktop. It builds
+complete system releases from a declaration, boots them with a read-only Btrfs
+root, and lets you return to a previous confirmed release. User applications
+and personal data live separately from the base system.
 
-Текущая реализация — **looom 0.2.0, нативный Rust-менеджер базовой системы**.
-Сборка, пароли, Limine/UKI, восстановление, откаты и GC работают без backend
-проекта на Python/Bash. Официальный Arch, строгий YAML, Btrfs read-only и KDE
-проверены в выделенной VM и на физическом Intel N100. Пользовательский слой
-Flatpak/Distrobox/AppImage проверяется в VM; CachyOS — следующий профиль.
-[Проверенный профиль Niri/iNiR и установка](examples/inir/README.md).
-[Текущие команды и контракт](docs/native-rust.md),
-[журнал Rust-проверок](docs/runs/2026-10-06-native-rust/README.md),
-[первый пилот на реальном компьютере](docs/physical-pilot.md).
-[Журнал установки и приёмки N100](docs/runs/2026-10-07-n100/README.md).
-[Обновление Arch и испытания сбоев на VM](docs/runs/2026-10-08-durability/README.md).
+**[Download looom 0.2.0](https://github.com/Kexfff/looom/releases/tag/v0.2.0)** —
+installation ISO, native binary, build manifest, and SHA-256 checksums.
 
-Для нового релиза из отредактированной конфигурации:
+## Install
+
+Boot the ISO in UEFI mode, connect to the internet, and select **Install looom**.
+Choose the target disk by number, confirm `YES`, and set your own passwords.
+The installer erases the entire selected disk and installs KDE Plasma, Limine,
+and the first read-only release. No manual partitioning or compilation is needed.
+
+After signing in to KDE, `looom setup` opens once. Check the desktop, network,
+and sound, then confirm the system and install your declared applications.
+The default application declaration contains Firefox as a user Flatpak.
+
+Supported: official Arch, x86_64/UEFI, a whole disk, Btrfs, and one managed user.
+The ISO is a console-based online installer. Secure Boot, disk encryption,
+dual boot, CachyOS, and Calamares are not supported yet. For a VM, use 4 vCPU,
+8 GiB RAM, and a 64 GiB disk.
+
+[Installation and upgrades](docs/live-iso.md) ·
+[Advanced installer usage](docs/installer.md)
+
+## Everyday use
+
+Your editable declarations are `~/looom/base.yaml` for the system and
+`~/looom/apps.yaml` for applications. Keep the account identity and persistent
+mounts from the installed system when editing `base.yaml`.
 
 ```sh
+# Build and select a trial system release; use a new release name each time.
 sudo looom rebuild ~/looom/base.yaml desktop-next
 sudo reboot
-# После загрузки и проверки:
+
+# After checking the new desktop:
 sudo looom verify
 sudo looom confirm
+
+# Apply or update user applications without rebuilding the system.
+looom apps apply
+looom apps update
+
+# Return to a previously confirmed release.
+sudo looom rollback initial
+sudo reboot
+
+# Preview cleanup before explicitly applying it.
+sudo looom gc --keep 3
+sudo looom gc --keep 3 --apply
 ```
 
-`rebuild` объединяет проверку, lock, сборку, публикацию и выбор пробной загрузки.
-При ошибке цепочка останавливается. Перезагрузка выполняется отдельно.
+`rebuild` runs check → lock → build → publish → try and stops on the first error.
+Rebooting and confirming remain explicit. An unconfirmed trial returns to the
+previous default on the next ordinary boot; a hung machine still needs a restart.
 
-## Установка с нуля
+System rollback preserves passwords, HOME, applications, `/var`, and explicitly
+allowed local settings. It does not undo application updates or personal desktop
+configuration. Keep independent backups of your data.
 
-[ISO с готовым looom: загрузка, установка и первый вход](docs/live-iso.md).
-[Скачать looom 0.2.0: ISO, бинарник и SHA-256](https://github.com/Kexfff/looom/releases/tag/v0.2.0).
-[Изменения и границы выпуска](docs/releases/0.2.0.md).
-Загрузить ISO в UEFI, подключить интернет и выбрать `Install looom` в меню.
-Готовый менеджер уже внутри; мастер сам размечает выбранный целый диск и
-устанавливает KDE, Limine и первый read-only релиз. Calamares пока не включён.
+## Documentation
 
-В первом входе KDE откроется «Настройка looom»: установка Firefox из Flathub,
-подтверждение рабочей системы, пароль и обслуживание. Его можно открыть снова
-из меню или командой `looom setup`. База включает сеть, звук, Bluetooth,
-управление питанием, файловый менеджер, терминал, архиватор, редактор и снимки экрана.
-Пользовательские программы находятся отдельно в Flatpak/Distrobox/AppImage.
-[Приёмка выпуска: чистая установка, первый вход, приложения и откаты](docs/runs/2026-10-12-release-0.2.0/README.md).
+- [System configuration](docs/configuration.md): supported YAML fields and ownership rules.
+- [Applications](docs/apps.md): Flatpak, Distrobox, AppImage, and installer scripts.
+- [Command reference](docs/native-rust.md): system releases, recovery, passwords, and GC.
+- [Boot and recovery](docs/limine.md): Limine, recovery entries, and GRUB migration.
+- [Architecture](docs/architecture.md): system boundaries and persistent state.
+- [Credential security](docs/credentials-security.md): password storage and limitations.
+- [Development](docs/development.md): VM-only builds, tests, and ISO generation.
+- [Optional Niri/iNiR profile](examples/inir/README.md): install after the KDE system is ready.
+- [Release notes](docs/releases/0.2.0.md) and [validation evidence](docs/runs/2026-10-12-release-0.2.0/README.md).
 
-[Экспериментальный Rust-установщик: мастер в терминале, plan/apply/resume](docs/installer.md).
-[Limine, пробная загрузка и переход с GRUB](docs/limine.md),
-[приёмка установщика и Limine на VM](docs/runs/2026-10-10-limine/README.md).
-Отдельный готовый бинарник также запускается из Arch ISO и сам готовит целый диск, Limine/Btrfs,
-пользователя и первый read-only релиз. Сборка на целевой машине не требуется.
-
-[Полная инструкция: Intel N100, Arch ISO, GPT/Btrfs, KDE и откат](docs/installation.md).
-Она рассчитана на отдельный диск целиком под looom, x86_64/UEFI, без Secure Boot
-и шифрования. Команды разметки удаляют данные выбранного диска.
-После установки обычного Arch репозиторий клонируется и собирается так:
-
-```bash
-git clone https://github.com/Kexfff/looom.git
-cd looom
-cargo build --locked --release --bin looom
-```
-
-Порядок подключения и монтирования приведён в инструкции.
-Не запускать исторический VM installer на реальном компьютере.
-
-## Основная концепция
-
-Система делится на два слоя:
-
-1. **Атомарный базовый образ**
-   - Собирается из пакетов Arch и/или CachyOS.
-   - Содержит только системно-важные компоненты:
-     - ядро;
-     - драйверы;
-     - системные сервисы;
-     - сеть, звук, Bluetooth;
-     - графическую оболочку;
-     - базовые утилиты;
-     - инфраструктуру для контейнеров и песочниц.
-   - Размещается на Btrfs как отдельный подтом.
-   - Монтируется преимущественно в режиме `read-only`.
-   - Обновляется через создание нового снапшота/релиза.
-   - При проблемах позволяет откатиться на предыдущий рабочий снимок.
-
-2. **Пользовательские приложения**
-   - Не включаются в базовый образ.
-   - Устанавливаются отдельно через:
-     - `Flatpak`;
-     - `AppImage`;
-     - `Distrobox`;
-     - `Podman`;
-     - другие пользовательские песочницы.
-   - Обновляются независимо от базовой системы.
-   - Переживают откат базового образа.
-
-## Цели проекта
-
-- Получить атомарную и откатываемую систему без сложной инфраструктуры уровня OSTree.
-- Использовать пакетную базу Arch/CachyOS для базового слоя.
-- Вынести пользовательский софт из базовой системы.
-- Описать состояние системы декларативно.
-- Упростить восстановление и воспроизведение окружения.
-
-Принятые требования, предлагаемые решения и план первой версии:
-[архитектурный черновик](docs/architecture.md).
-Предложение схемы декларации и правил владения:
-[конфигурация v1 для обсуждения](docs/configuration-proposal.md).
-Предыдущая реализация Rust CLI с Python/Bash backend, сохранённая как история:
-[декларативный MVP](docs/declarative-mvp.md).
-Практические этапы и проверки: [план прототипа в VM](docs/mvp-plan.md).
-Установка и воспроизведение начальной системы: [руководство](docs/bootstrap-installation.md).
-Read-only релизы, управление загрузкой и KDE: [руководство](docs/read-only-releases.md).
-Проверенные загрузки и откаты: [журнал](docs/runs/2026-10-04-releases/README.md).
-
-## Архитектура
-
-```text
-+------------------------------------------------------+
-| base.yaml                                            |
-| Декларативное описание базовой системы               |
-+--------------------------+---------------------------+
-                           |
-                           v
-+------------------------------------------------------+
-| Сборка базового релиза                               |
-| - Btrfs snapshot                                     |
-| - установка архивов из package lock                  |
-| - настройка сервисов                                 |
-| - генерация initramfs                                |
-| - создание загрузочной записи                        |
-+--------------------------+---------------------------+
-                           |
-                           v
-+------------------------------------------------------+
-| Btrfs-релизы                                         |
-| @root-2026.09.20-1                                   |
-| @root-2026.10.03-1                                   |
-+--------------------------+---------------------------+
-                           |
-                           v
-+------------------------------------------------------+
-| Загрузка через Limine + отдельный UKI релиза           |
-+------------------------------------------------------+
-
-+------------------------------------------------------+
-| apps.yaml                                            |
-| Декларативное описание приложений                    |
-+--------------------------+---------------------------+
-                           |
-                           v
-+------------------------------------------------------+
-| Пользовательский слой                                |
-| Flatpak / AppImage / Distrobox / Podman              |
-+------------------------------------------------------+
-```
-
-Восстановление и пробное обновление аварийной базы: [протокол и VM-проверки](docs/runs/2026-10-09-bootstrap-recovery/README.md).
-
-История аварийных поколений и безопасная очистка: [GC и VM-проверки](docs/runs/2026-10-09-generations-gc/README.md).
-
-Пользовательский слой: [Flatpak, Arch/Distrobox, AppImage и сторонние `.sh`](docs/apps.md).
-[VM-приёмка слоя приложений](docs/runs/2026-10-10-apps/README.md).
-Для сторонних установщиков: запуск от пользователя, контейнерный pacman,
-экспорт пакетов в `packages_from` и дополнительная системная сессия Niri/Quickshell
-описаны в [руководстве приложений](docs/apps.md#системные-зависимости-без-ручного-переноса-каждого-пакета).
-[VM-приёмка скриптов, импорта зависимостей и Niri](docs/runs/2026-10-10-script-compat/README.md).
+Version 0.2.0 passed VM acceptance covering ISO installation, KDE and Firefox,
+container scripts, AppImage, trial fallback, rollback, password persistence, and GC.
+Hardware coverage remains limited; see the validation report for its scope.

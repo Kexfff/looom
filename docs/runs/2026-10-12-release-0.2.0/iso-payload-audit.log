@@ -1,1 +1,0 @@
-PASS: ISO payload exact native binary; empty authorized keys; no SSH private/host keys, machine state, password hashes, builder history; machine ID uninitialized

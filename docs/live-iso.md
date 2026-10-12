@@ -1,112 +1,119 @@
-# ISO looom 0.2.0
+# Installation and upgrades
 
-ISO — установочная и аварийная консольная среда с готовым Rust looom 0.2.0.
-Это установка через интернет, не графическая live-сессия KDE/Niri.
-После установки доступен KDE Plasma и слой Flatpak/Distrobox/AppImage.
+The [looom 0.2.0 release](https://github.com/Kexfff/looom/releases/tag/v0.2.0)
+provides a console installation and rescue ISO with the native manager included.
+Installation requires internet access; the live environment is not a KDE desktop.
 
-[Скачать ISO, отдельный бинарник и контрольные суммы](https://github.com/Kexfff/looom/releases/tag/v0.2.0).
-Файл ISO: `looom-0.2.0-x86_64.iso`. Для его проверки:
+## Requirements
+
+- x86_64, UEFI, Secure Boot disabled.
+- A disk dedicated entirely to looom: at least 32 GiB; 64 GiB recommended.
+- Official Arch packages, Btrfs, one managed user, no disk encryption or dual boot.
+- For a VM: 4 vCPU and 8 GiB RAM recommended; VirtIO disk and network work.
+
+## Install from the ISO
+
+1. Download `looom-0.2.0-x86_64.iso` and its adjacent `.sha256` file.
+   Verify them before writing the ISO to a USB drive or attaching it as a VM CD-ROM:
+
+   ```sh
+   sha256sum -c looom-0.2.0-x86_64.iso.sha256
+   ```
+
+2. Boot in UEFI mode. Ethernet uses DHCP automatically. For Wi-Fi, choose
+   **Network help**, enter the shell, and connect with `iwctl`:
+
+   ```text
+   device list
+   station <device> scan
+   station <device> get-networks
+   station <device> connect <SSID>
+   exit
+   ```
+
+   Run `looom-live` to return to the menu. Live Wi-Fi connections are not
+   automatically copied into the installed system.
+
+3. Choose **1 — Install looom**. Select the target disk by its displayed number.
+   Existing data is allowed, with a warning; **all data on that disk will be erased**.
+   Mounted disks, active swap, and the installer workspace disk cannot be selected.
+   Enter `0` or leave the disk choice empty to cancel.
+4. Set the computer name, user name, timezone, locale, and keyboard layout.
+   Leave the SSH public key field empty for a local installation, or provide
+   a file containing your public key for later SSH access.
+5. Review the disk, type `YES`, and enter separate root and user passwords.
+   Password input is hidden. The ISO contains no preset login passwords or keys.
+6. Wait for `Installation complete`. Shut down or restart, remove the installation
+   medium, and boot from the installed disk. The installer does not reboot for you.
+7. Sign in to KDE and check the desktop, network, and sound. The first-login
+   `looom setup` menu offers system confirmation and application installation.
+   System operations require sudo authentication. The initial boot is a trial;
+   rebooting without confirmation returns to writable recovery.
+
+You can also confirm from a terminal after checking the system:
 
 ```sh
-sha256sum -c looom-0.2.0-x86_64.iso.sha256
+sudo looom verify
+sudo looom confirm
 ```
 
-## Установка
+## Your configuration
 
-1. Проверить ISO по соседнему `.sha256` и записать образ на USB как образ диска.
-   В VM подключить ISO как CD-ROM, выбрать UEFI и дать отдельный диск 64 GiB,
-   желательно 4 CPU и 8 GiB RAM. Secure Boot выключить.
-2. Загрузиться с USB/ISO. Ethernet получает адрес автоматически. Для Wi-Fi
-   выбрать `Network help`, затем подключиться через `iwctl` в Shell.
-3. В приветственном меню выбрать `1` — Install looom. Если меню закрыто,
-   выполнить `looom-live` или напрямую `looom install`.
-4. Выбрать **номер** целевого диска. Все данные на этом диске будут удалены;
-   старая ОС разрешена, смонтированные диски и активный swap запрещены.
-   Ввести имя компьютера, пользователя, локаль и часовой пояс.
-   SSH public key file можно оставить пустым для локальной установки.
-5. Проверить выбранный диск и подтвердить `YES`. Задать собственные пароли
-   root и пользователя. В ISO нет встроенных пользовательских паролей или ключей.
-6. Дождаться `Installation complete`, выключить VM/перезагрузить компьютер,
-   отключить установочный носитель и загрузиться с установленного диска.
-7. Войти в KDE своим пользователем. Проверить сеть, звук и рабочий стол.
-   В первом входе откроется «Настройка looom»: выбрать подтверждение системы
-   и установку приложений. Для системных операций потребуется пароль sudo.
-   В новом `apps.yaml` объявлен Firefox из Flathub; его можно заменить до установки.
-   Мастер доступен в меню KDE и командой `looom setup`.
-   При выполнении команд отдельно: `sudo looom verify`, затем `sudo looom confirm initial`.
-   Пока релиз не подтверждён, следующий обычный старт вернётся в recovery.
+The installer creates user-owned copies:
 
-Пользовательские декларации находятся в `~/looom/base.yaml` и
-`~/looom/apps.yaml`. Приложения управляются от обычного пользователя:
-`looom apps apply`. Примеры: [apps.md](apps.md).
-Изменения базовой системы требуют отдельного релиза; инструкция:
-[native-rust.md](native-rust.md). Niri/Quickshell можно добавить как дополнительную
-сессию через `desktop.sessions: [niri]` в декларации с KDE.
+```text
+~/looom/base.yaml
+~/looom/base.lock
+~/looom/apps.yaml
+```
 
-## Обновление установленной alpha
+Edit the existing files rather than replacing the account identity or mount
+contract. The default `apps.yaml` declares Firefox; install it with `looom setup`
+or `looom apps apply` as your regular user. Existing declarations are preserved.
 
-Повторная установка и форматирование не нужны. Скачайте из релиза отдельный
-`looom-0.2.0-x86_64-unknown-linux-gnu`, проверьте его по `SHA256SUMS`, затем:
+[System configuration](configuration.md) · [Applications](apps.md) ·
+[System commands](native-rust.md)
+
+## Upgrade an existing alpha installation
+
+Reinstallation is not required. Download
+`looom-0.2.0-x86_64-unknown-linux-gnu` and `SHA256SUMS` from the release.
+Verify the binary against its manifest entry, then:
 
 ```sh
 sudo install -D -m 0755 ./looom-0.2.0-x86_64-unknown-linux-gnu /var/lib/looom/tools/looom-0.2.0
 sudo /var/lib/looom/tools/looom-0.2.0 rebuild ~/looom/base.yaml system-0-2-0
 sudo reboot
-# После проверки нового рабочего стола:
+# Check the new desktop before confirming.
 sudo looom verify
 sudo looom confirm system-0-2-0
 ```
 
-Для системы с iNiR используйте её собственную полную декларацию вместо старой
-KDE-only `base.yaml`. Существующие приложения, пароли, HOME и declarations
-сохраняются. Старая пустая `apps.yaml` не заменяется автоматически;
-добавьте `org.mozilla.firefox` в `flatpak`, если хотите установить Firefox.
+For an iNiR installation, rebuild from its complete declaration rather than an
+older KDE-only `base.yaml`. Existing HOME, passwords, applications, and declarations
+remain in place. An existing empty `apps.yaml` is not replaced; add
+`org.mozilla.firefox` yourself if desired.
 
-## Поддерживаемая конфигурация
+Older GRUB installations use the separate [migration procedure](limine.md#grub-migration).
+The original alpha binary does not include `rebuild`; use the new binary above.
 
-Только x86_64/UEFI, целый диск, Btrfs, без шифрования, Secure Boot и dual boot.
-ISO запускается стандартным загрузчиком UEFI Archiso; **установленная система
-использует Limine** и отдельный UKI каждого релиза. Calamares пока не включён.
-Пакеты скачиваются из подписанного Arch Linux Archive на дату 2026-10-07.
-На медленном интернете установка может занять значительное время.
+## Rescue and SSH
 
-SSH не содержит готовых credentials: для доступа к live-среде сначала в её
-локальной консоли задать пароль root командой `passwd` и запустить
-`systemctl start sshd`, либо добавить собственный публичный ключ.
-Это настройки только текущей live-сессии; они не попадут в установленную ОС.
+Open the live shell to inspect an interrupted installation. Keep the workspace
+path printed by the installer and use `looom install show <workspace>`.
+A workspace in `/run` disappears on reboot. See [installer recovery](installer.md#resume-and-interruptions)
+before repeating any partition or format operation.
 
-Старый ISO `v0.2.0-alpha.1` сохранён как предыдущая версия. В нём `looom build` может вывести
-`Unable to load host key: /var/lib/looom/ssh/ssh_host_…_key`. Это предупреждение
-проверки SSH внутри изолированной сборки: постоянные host keys туда не
-подключаются, а проверка использует временный ключ. Само по себе предупреждение
-не означает отказ сборки или добавление ключей для входа. Исправление проверки
-включено в 0.2.0; уже опубликованный alpha образ не изменён.
-Назначение серверных и пользовательских ключей описано в [installer.md](installer.md).
-Команда `rebuild` включена в 0.2.0. Для бинарника из `alpha.1`
-нужно выполнять `check`, `lock`, `build`, `publish`, `try` отдельно; новый
-менеджер объединяет их в `sudo looom rebuild ~/looom/base.yaml desktop-next`.
-
-При ошибке не повторять форматирование вслепую: сохранить показанный workspace
-и посмотреть `looom install show <workspace>`. Возобновление и ограничения:
-[installer.md](installer.md). Workspace в RAM пропадает после перезапуска live;
-для его сохранения нужна отдельная постоянная файловая система.
-
-## Сборка и воспроизведение
-
-Сборка выполняется **в выделенной Arch VM**, root, с `archiso 91-1` из
-фиксированного архива 2026-10-07. Готовый looom предварительно собрать и проверить
-там же: `cargo build --locked --release --bin looom`.
+For SSH into the live environment, add your own public key in the local console,
+or set a temporary root password with `passwd`, then start `sshd`:
 
 ```sh
-bash scripts/build-iso.sh /absolute/target/release/looom /absolute/new-work /absolute/output
+systemctl start sshd
 ```
 
-Каждая сборка требует нового work-каталога. Скрипт использует releng-профиль
-установленного Archiso, добавляет только публичные файлы из `configs/iso`,
-бинарник и шаблоны деклараций. Домашний каталог сборщика, SSH-ключи и State
-рабочей системы в ISO не копируются. Получаются `.iso`, `.iso.sha256`,
-манифест входов `*-build.txt` и точный список live-пакетов `*-packages.txt`.
-Манифест фиксирует входы для воспроизведения процесса; побитовая идентичность
-двух сборок пока не заявляется.
+These live settings are not copied into the installed system. Installed releases
+use key-based SSH login; their automatically generated server host keys identify
+the computer and do not grant user access. See [SSH keys](installer.md#ssh-keys).
 
-Формат профиля описан в [официальной документации Archiso](https://github.com/archlinux/archiso/blob/master/docs/README.profile.rst).
+For an installed system with a damaged boot menu, use its firmware recovery entry:
+[boot and recovery](limine.md). ISO build instructions are in [development](development.md#build-the-iso).

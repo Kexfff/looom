@@ -1,104 +1,34 @@
-# Нативный установщик looom
+# Advanced installer
 
-Установщик входит в тот же Rust-бинарник, что и менеджер релизов.
-`looom install` запускает последовательный мастер в терминале, в том числе
-через SSH. Компилятор, Git и исходники для самой установки не нужны.
-Установка 0.2.0 поддерживает **отдельный диск целиком**: x86_64, UEFI,
-Secure Boot выключен, GPT, Limine, Btrfs, без шифрования и dual boot.
-Минимум 32 GiB, для Plasma и нескольких релизов рекомендуется 64 GiB.
-
-Для установки без переноса отдельного бинарника используйте
-[ISO looom 0.2.0](live-iso.md): загрузка → интернет → `Install looom`.
-
-## Запуск из Arch ISO
-
-1. Загрузить официальный Arch ISO в режиме UEFI и подключить интернет.
-2. Скопировать готовый проверенный бинарник `looom` на live-систему, например
-   с USB или через SCP. Проверить SHA-256 по сопровождающему манифесту сборки.
-   Бинарник и SHA-256 доступны в [релизе 0.2.0](https://github.com/Kexfff/looom/releases/tag/v0.2.0).
-   При самостоятельной сборке: `cargo build --release --locked
-   --bin looom`, результат `target/release/looom`.
-3. От root запустить:
-
-   ```sh
-   chmod 755 ./looom
-   ./looom install
-   ```
-
-4. Выбрать **номер диска** в показанном списке (например `1`). Оптические
-   приводы и loop-устройства не включаются; занятые и неподдерживаемые диски
-   помечаются `Unavailable` с причиной. `0` или пустой ввод отменяет установку.
-   Непустой диск разрешён: мастер предупреждает об уничтожении разделов и данных.
-   Если диск смонтирован, сначала размонтировать его разделы и отключить swap;
-   установленная на нём старая ОС сама по себе не запрещает переустановку.
-   Диск запущенной live-системы и диск с workspace выбирать нельзя.
-   Затем указать имя компьютера, пользователя, часовой пояс, локаль и раскладку.
-   Для последующего SSH-входа указать файл **публичного** SSH-ключа. Парольный
-   SSH-вход read-only релиза выключен; личный пароль используется для Plasma,
-   sudo и локальной консоли. Приватный ключ остаётся на клиентском компьютере.
-
-   Серверные SSH host keys создаются автоматически для каждого установленного
-   компьютера, даже если поле публичного ключа оставлено пустым. Они удостоверяют
-   сам компьютер и сохраняются в `/var/lib/looom/ssh` при смене релизов и откатах.
-   Это отдельные ключи: право входа пользователю задаёт `authorized_keys`.
-
-5. Проверить модель, серийный номер/WWN и размер диска. Подтвердить стирание
-   словом `YES`. Затем ввести два пароля с повтором:
-   root для восстановления и личного пользователя.
-6. После завершения загрузить выбранный диск. Первая загрузка — пробная.
-
-   В KDE автоматически откроется «Настройка looom». Проверьте рабочий стол,
-   сеть и звук, затем выберите подтверждение системы и установку приложений.
-   Мастер также доступен в меню KDE или командой `looom setup` от пользователя.
-   Firefox устанавливается пользовательским Flatpak из `~/looom/apps.yaml`.
-   Для подтверждения и других системных операций потребуется пароль sudo.
-   Команды для выполнения отдельно:
-
-   ```sh
-   looom verify
-   looom confirm
-   ```
-
-   Из личной учётной записи команды выполняются через sudo. Подтверждение
-   допускается только из действительно загруженного и здорового read-only
-   релиза. До него постоянным выбором Limine остаётся writable recovery:
-   повторная загрузка без подтверждения возвращает аварийную систему.
-
-После установки доступна редактируемая копия конфигурации:
+`looom install` runs the native terminal wizard, including over SSH. The ready-made
+[ISO](live-iso.md) is the simplest path. The same release binary can be copied to
+an official Arch live environment, checked against `SHA256SUMS`, made executable,
+and run as root:
 
 ```sh
-~/looom/base.yaml
-~/looom/base.lock
+chmod 755 ./looom
+./looom install
 ```
 
-Оба файла принадлежат личному пользователю. Закрытый исходный протокол сохраняется
-в `/var/lib/looom/installation`; парольных хэшей в пользовательской копии нет.
-`resume` не перезаписывает уже существующую пользовательскую копию.
-После изменения конфигурации собрать и выбрать следующий пробный релиз:
+The wizard installs KDE on a whole disk. It allows existing partitions with an
+explicit erase warning, excludes mounted/unsupported disks, and uses numbered
+selection and `YES` confirmation. Passwords are entered twice with hidden input.
+For the complete user workflow, see [installation](live-iso.md).
 
-```sh
-sudo looom rebuild ~/looom/base.yaml my-next-release
-sudo reboot
-# После проверки рабочего стола:
-sudo looom verify
-sudo looom confirm
-```
+## SSH keys
 
-`rebuild` выполняет `check → lock → build → publish → try`, обновляя `base.lock`
-рядом с декларацией. При ошибке последующие этапы не запускаются. Имя релиза
-должно быть новым; незавершённые сборки сохраняются для диагностики. Перезагрузка
-и подтверждение остаются отдельными действиями. Для контроля каждого этапа
-по-прежнему доступны отдельные команды.
+An optional public key file enables key-based login to the installed system.
+Private client keys stay on your client. Password-based SSH login is disabled
+in read-only releases; your user password is for KDE, local consoles, and sudo.
 
-В мастер встроен проверенный профиль Arch + Plasma из
-`configs/installer/base.yaml`, сейчас со снимком архива 2026-10-07.
-UID/GID личного пользователя — 1000/1000; root и личный пароль независимы.
-Автоматическая сеть — Ethernet/DHCP. Настройка Wi-Fi в live-среде пока выполняется
-до запуска; её соединения автоматически не импортируются на установленную ОС.
+Server host keys are generated automatically and persist in `/var/lib/looom/ssh`
+across release changes. These keys identify the server; they are separate from
+user access keys in `authorized_keys`. Their presence on a clean installation
+is expected even when you supplied no public key.
 
-## Отдельный план и выполнение
+## Plan and apply
 
-Для автоматизации и будущего графического интерфейса:
+For automation or a workspace on a separate persistent disk:
 
 ```sh
 ./looom install plan /dev/nvme0n1 ./base.yaml /run/looom-session \
@@ -108,96 +38,68 @@ UID/GID личного пользователя — 1000/1000; root и личн�
 ./looom install resume /run/looom-session
 ```
 
-Команда `plan` записывает файлы в отдельный root-only workspace, но не изменяет
-диск. Рабочий каталог должен быть абсолютным, без ссылок, с доверенными родителями.
-Он **не может находиться на выбранном диске**. Для продолжения после перезагрузки
-сохранить его на другом постоянном накопителе: `/run` live-системы исчезнет.
-Мастер по умолчанию использует `/run/looom-installer/<uuid>` и печатает путь.
-Если родитель пуст и ещё не смонтирован, он создаёт отдельный tmpfs с лимитом
-50% RAM. Для Plasma рекомендуется 8 GiB RAM: проверенный пакетный кэш занимает
-около 1.8 GiB. При меньшей памяти использовать `plan/apply` с workspace на другом
-постоянном накопителе. Лимит tmpfs не резервирует память заранее.
-Копия плана/lock/journal сохраняется в State установленной системы после
-подготовки пакетов; это протокол, а не автоматическая реконструкция workspace.
-`installation/result.json` фиксирует завершение установки перед первой загрузкой;
-актуальное подтверждение релиза показывает `looom status`.
+`plan` writes a root-only workspace without changing the selected disk. Use an
+absolute path with trusted parents and no symlinks, on a different disk from
+the installation target. To resume after reboot, keep it on persistent storage;
+`/run` belongs to the live session and disappears.
 
-`--no-nvram` у `plan` предназначен для установки на вторичный тестовый диск:
-прошивка текущей машины не изменяется, но на **целевом** ESP создаётся
-`EFI/BOOT/BOOTX64.EFI`. Обычно создаётся собственная UEFI-запись
-`looom-<первые 8 символов root UUID>`, которая ставится первой в BootOrder.
-Загрузчики на других дисках не перезаписываются.
-С `--no-nvram` не меняются также BLI-переменные: первый старт ведёт в recovery,
-откуда нужно выполнить `looom try initial` и перезагрузиться.
-Обычная установка добавляет прямую UEFI-запись `looom-recovery-<UUID>` для
-запуска recovery UKI даже при повреждённом конфиге Limine.
-Подробнее: [загрузчик и переход с GRUB](limine.md).
+The wizard uses `/run/looom-installer/<uuid>` and prints the path. With an empty,
+unmounted parent, it creates a dedicated tmpfs capped at 50% RAM. This is why
+8 GiB RAM is recommended for Plasma. Smaller machines should use `plan/apply`
+with a workspace on another persistent device. The tmpfs limit does not reserve
+all that memory upfront.
 
-Машинный ввод паролей — `--passwords-stdin` для `apply`/`resume`: ограниченный JSON
-с двумя строками `root` и `user`. Передавать по stdin из закрытого источника;
-не включать пароли в аргументы, YAML, shell history или публичные протоколы.
-Workspace содержит отдельные yescrypt-хэши `root.hash`/`user.hash`, root:root/0600.
-Кэш и протокол установки тоже закрыты; их публичный экспорт требует отдельного
-отбора. Core dumps отключаются, строки паролей обнуляются после использования.
+After preparing packages, the installer stores a copy of its plan, lock, and
+journal in the installed State. This is a record, not an automatic reconstruction
+of a lost workspace. `installation/result.json` records installer completion;
+`looom status` records whether the system was later booted and confirmed.
 
-## Этапы и восстановление
+## Disk identity and boot registration
 
-1. `inputs`: полный пакетный набор, подписи pacman, хэши пакетов и repository DB,
-   фиксированный архив и SHA-256 самого менеджера — **до стирания диска**.
-2. `partition`: очистка таблицы, GPT, EFI 2 GiB и оставшийся Btrfs-раздел.
-3. `esp-format` / `root-format`: новые UUID, FAT32 и Btrfs.
-4. `subvolumes`: `@bootstrap`, `@home`, `@var`, `@state` и проверенные mounts.
-5. `packages`: установка точной подписанной closure и копия входов на целевой диск.
-6. `configure`: локаль, hostname, fstab, пользователь, хэши, sudo, сеть, SSH, SDDM.
-7. `bootstrap`: существующий журналируемый native bootstrap, UKI, Limine и State.
-8. `build`: отдельный fresh read-only `initial` из тех же frozen inputs.
-9. `publish` / `boot`: публикация релиза, fallback Limine на целевом ESP и UEFI-запись.
-10. `ready`: одноразовый UEFI `LoaderEntryOneShot=looom-initial`, sync и итоговая запись.
+The installer checks disk identity, size, partitions, filesystem UUIDs, mounts,
+swap/holders, and frozen inputs before writing. Physical disks need a serial or WWN.
+An identified QEMU/KVM disk can instead use the current boot ID, sysfs path,
+and kernel `diskseq`. Such a plan is valid only during that live boot and stops
+working after reattachment. Set a virtual serial/WWN beforehand if you need
+resume across live-system restarts; retain the workspace too.
 
-В JSON-журнале хранится pending-этап, количество завершённых этапов, SHA плана
-и замороженного lock. Общий диск блокируется отдельно от workspace. Проверяются
-серийный номер/WWN, размер, исходная разметка, GPT/partition GUID, номера разделов,
-UUID файловых систем, mounts, swap/holders, бинарник и декларация.
-Рабочий диск, подключённый swap, чужие/вложенные mounts и изменённые входы
-останавливают операцию. Физический диск требует serial или WWN.
-В распознанной VM допускается диск без этих полей: в план записываются
-идентификатор текущей загрузки, sysfs-путь и kernel disk sequence (`diskseq`).
-Такой план действует **только в этой live-сессии**; переподключение устройства
-или новая загрузка блокируют его использование. Перед записью идентичность
-проверяется снова, в том числе после загрузки пакетов. При отсутствии `diskseq`
-нужно настроить serial виртуального диска. Для resume после перезапуска live-ОС
-следует заранее настроить serial/WWN и хранить workspace на постоянном диске.
+`plan --no-nvram` leaves the current firmware and BLI variables untouched while
+writing the target ESP's fallback loader. The first boot then enters recovery;
+run `looom try initial` there and reboot. Normal installation registers its own
+Limine entry first in BootOrder plus a direct recovery UKI entry. Other disks'
+EFI loaders are not overwritten.
 
-Завершённая разметка/форматирование при `resume` пропускаются. Если pending-этап
-— `partition`, `esp-format` или `root-format`, автоматический повтор запрещён:
-сохранить журнал и диагностировать состояние. При необходимости начать новую
-установку с **новым планом и новым явным подтверждением стирания**.
-Прерывания обычных этапов возобновляются. Configured-сборка завершается штатным
-recovery. Более ранний незавершённый первый build перезапускается только при
-совпадении входов и отсутствии опубликованных выходов; прежние frozen inputs
-сохраняются в `State/installation/abandoned-builds`. Смонтированные частичные
-корни требуют предварительного unmount, автоматическое удаление их запрещено.
+## Password automation
 
-Завершённый `resume` не меняет выбор загрузки и пароли. Установщик сам не
-перезагружает машину и не подтверждает релиз до первой реальной загрузки.
+`apply` and `resume` accept `--passwords-stdin`: bounded JSON with `root` and
+`user` string values from a private input source. Keep secrets out of arguments,
+YAML, history, and public logs. The workspace contains root-owned `0600` password
+hash files and private installation data. Public evidence must be selected and
+audited before export. See [credential security](credentials-security.md).
 
-## Граница MVP и следующий интерфейс
+## Resume and interruptions
 
-Поддерживаются базовые настройки уже существующей схемы: linux/linux-lts,
-Plasma/none, один стабильный пользователь, дополнительные пакеты и фиксированные
-локальные каталоги. Произвольные `files`, дополнительные kernel arguments,
-ручная разметка, импорт других ОС и офлайн-установка пока не поддерживаются.
-Мастер — последовательные вопросы в терминале, без полноэкранного интерфейса.
+The journal tracks frozen inputs and pending/completed stages: verified packages,
+partitioning, formatting, subvolumes, package installation, configuration,
+bootstrap, initial build, publication, and boot registration.
 
-Первый live-носитель — [Archiso с готовым бинарником и меню](live-iso.md).
-Calamares сможет формировать тот же план и вызывать тот же движок через адаптер;
-его модули разметки не должны параллельно владеть разметкой looom.
-Базовый `base.yaml` описывает желаемую ОС, `plan.json` — конкретную установку,
-а `machine.json` — фактические UUID и стабильную личную учётную запись.
+- Package closure, signatures, repository hashes, and manager SHA are prepared
+  **before disk erasure**. Disk identity is checked again before writing.
+- `resume` skips completed partition/format stages. If `partition`, `esp-format`,
+  or `root-format` is pending, automatic repetition is refused. Preserve the
+  journal and inspect the disk; a fresh installation needs a fresh plan and
+  another explicit erase confirmation.
+- Ordinary interrupted stages can resume with matching inputs. Configured builds
+  finish through recovery. Earlier incomplete initial builds can restart only
+  when inputs match and nothing has been published; old inputs remain protected.
+- Mounted partial roots must be explicitly unmounted before cleanup; the installer
+  does not recursively delete mounted data.
+- A completed resume does not reset passwords or boot selection.
 
-Исправление выбора диска и приёмка VM без serial: [журнал](runs/2026-10-10-installer-selection/README.md).
+The installer never reboots or confirms the first release automatically. Confirm
+only after its real boot and usability checks.
 
-Приёмка и ограничения конкретных опытов: [журнал VM](runs/2026-10-09-installer/README.md).
-
-Новая база также включает Flatpak, Distrobox/Podman и FUSE для AppImage.
-У пользователя появляется `~/looom/apps.yaml`: [применение и сторонние установщики](apps.md).
+The current contract excludes custom file resources during installation,
+nonempty extra kernel arguments, manual partition layouts, OS import, offline
+installation, encryption, and dual boot. After installation, supported file
+resources can be added through [system configuration](configuration.md).

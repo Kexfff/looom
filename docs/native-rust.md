@@ -1,289 +1,140 @@
-# Нативный менеджер системы looom 0.2
+# System command reference
 
-Дата: 2026-10-06. Весь действующий код управления системой перенесён на Rust:
-разрешение пакетов, lock, сборка, конфигурация, финализация, восстановление,
-публикация, выбор загрузки, подтверждение, откат, очистка и credentials.
-Установленный `/usr/bin/looom` содержит собственный рецепт и работает без
-Python/Bash backend проекта. Исторические скрипты оставлены для воспроизведения
-предыдущих экспериментов; SSH-скрипт остаётся средством доставки на VM.
+looom 0.2.0 manages the base system in Rust. It calls standard Arch tools to
+resolve packages and construct releases; it does not install packages into the
+active read-only root. User applications use [separate commands](apps.md).
 
-Это менеджер базовой системы. pacman проверяет и устанавливает пакеты;
-looom управляет согласованными корнями, настройками и их жизненным циклом.
-Используются штатные Arch-инструменты: pacman, pacstrap, arch-chroot, mkinitcpio,
-ukify, Btrfs, Limine и systemd; для прежних установок сохранён GRUB backend. Их собственные зависимости могут включать Python
-или shell. Пользовательские приложения управляются отдельным нативным `apps.yaml`: [контракт](apps.md).
+## Everyday workflow
 
-Исходная приёмка и разрушительные runtime fixtures выполнены в выделенной VM.
-2026-10-07 отдельно разрешены установка, сборка и приёмка физического N100;
-на локальном компьютере сборки и тесты не запускаются.
-[Журнал VM](runs/2026-10-06-native-rust/README.md),
-[журнал N100](runs/2026-10-07-n100/README.md).
+```sh
+# Regular user; also available in the KDE application menu.
+looom setup
+looom setup --status
 
-С 2026-10-10 новые установки используют Limine. Одноразовая загрузка — через
-UEFI Boot Loader Interface, постоянный выбор — в `limine.conf`.
-[Переход с GRUB и восстановление](limine.md). Старый `machine.json` сохраняет
-схему; новый загрузчик отмечается отдельным root-only `bootloader.json` в State.
-
-## Конфигурация и машина
-
-`base.yaml` — строгая типизированная схема 1. Неизвестные поля, дубликаты ключей,
-YAML-теги, anchors/aliases, неоднозначные типы, выход исходных файлов за каталог
-декларации и симлинки в исходных путях отклоняются. Размер YAML и каждого
-объявленного файла ограничен 1 MiB. YAML достаточен для текущего подмножества:
-профиль Arch, дата архива, система, ядро, Plasma/Niri/console, дополнительные пакеты,
-один пользователь, units, файлы, постоянные каталоги и обязательные службы.
-Будущие ресурсы добавляются типизированными обработчиками.
-`desktop.sessions: [niri]` добавляет Niri/Quickshell рядом с Plasma;
-`packages_from` подключает ограниченные относительные списки пакетов, включая
-экспорт из пользовательского Arch-контейнера. Списки раскрываются до freeze.
-[Совместимость со сторонними установщиками](apps.md#системные-зависимости-без-ручного-переноса-каждого-пакета).
-
-Примеры: [console A](../configs/native/a/base.yaml),
-[console B](../configs/native/b/base.yaml),
-[Plasma](../configs/native/desktop/base.yaml).
-
-`machine.json` хранится в `/var/lib/looom` и описывает UUID Btrfs и ESP,
-постоянные подтомы, имя/UID/GID пользователя, bootstrap UKI и параметры машины.
-Профиль не привязан к адресу или MAC тестовой VM. В тестовых программах отдельно
-проверяется идентичность разрешённой VM. Обычная машина по умолчанию требует
-пароль для sudo; последовательная консоль и guest agent выбираются для QEMU/KVM.
-
-Текущий контракт: x86_64, UEFI, Limine, FAT ESP в `/efi`, один Btrfs без шифрования,
-отдельные writable `/home`, `/var`, `/var/lib/looom`, Secure Boot выключен.
-[Установщик](installer.md) создаёт такую машину с нуля на отдельном диске;
-при подключении уже установленной системы сохраняется прежний путь bootstrap.
-Личный пользователь создаётся установщиком или уже существует при подключении;
-затем имя и UID/GID
-не меняются между релизами. Поддерживаются UID/GID 1000–65533, wheel и Bash.
-
-Релиз владеет `/etc/fstab`, загрузочными настройками и аккаунтными шаблонами.
-Произвольная замена критических файлов декларацией запрещена. Постоянные
-исключения пока фиксированы: `/etc/looom-local` и
-`/etc/NetworkManager/system-connections`, root:root/0700.
-Первый импорт сохраняет их содержимое, machine-id, SSH host keys и root SSH.
-
-## Интерфейс
-
-```text
-looom setup [--status|--first-login]
-install [plan|show|apply|resume]
-looom check <base.yaml>
-looom bootstrap <base.yaml>
-looom init <base.yaml>
-looom boot-entry
-looom boot-recovery
-looom bootstrap-update <confirmed-running-release> [generation-id]
-looom bootstrap-try
-looom bootstrap-confirm
-looom bootstrap-recover
-looom bootstrap-list
-looom lock <base.yaml>
-looom plan <base.yaml>
-looom build <base.yaml> <release-id>
-looom rebuild <base.yaml> <release-id>
-looom status
-looom verify
-looom publish <release-id>
-looom try <release-id>
-looom confirm [release-id]
-looom rollback <release-id>
-looom reject <release-id>
-looom recover
-looom gc [--keep N] [--apply]
-looom password <user> [--stdin]
-looom accounts generate|check
-```
-
-`setup` запускается обычным пользователем. Это Rust-мастер первого входа и
-обслуживания: установка/обновление пользовательских приложений, проверка и
-подтверждение системы, статус, смена пароля, пересборка и просмотр GC.
-Системные действия вызывают установленный менеджер через sudo с его обычной
-аутентификацией; операции приложения выполняются без root. Декларации не
-перезаписываются. `--status` не создаёт файлы и не делает сетевых запросов.
-KDE открывает первый запуск один раз на HOME; закрытый маркер обозначает только
-показ мастера, а не успешную установку или подтверждение системы.
-Повторный запуск доступен в меню «Настройка looom». Офлайн-памятка установлена
-в `/usr/share/looom/GETTING-STARTED.txt`.
-
-`bootstrap` подключает подготовленную writable установку Arch, создаёт её
-аварийный UKI, Limine и профиль. Диск не размечает. `boot-entry` отдельно
-регистрирует UEFI-запись looom, не заменяя существующий fallback loader.
-`init` регистрирует уже подготовленную инфраструктуру или проверяет её профиль.
-Историческая GRUB-версия 2026-10-08 содержит диспетчер со встроенной первой
-аварийной записью: bootstrap загружается даже при пустом внешнем `grub.cfg`.
-Для прежней GRUB-установки `boot-recovery` добавляет отдельный `safex64.efi` и
-UEFI-запись `looom-safe`, сохраняя старый loader и BootOrder. Новый loader
-сначала проверяют через firmware BootNext, затем отдельно выбирают постоянно.
-На Limine `boot-recovery` вместо этого регистрирует прямой recovery UKI.
-При утрате default в обоих конфигурациях `recover` выбирает recovery;
-рабочий релиз затем назначают явно. Аварийные EFI/UKI и сама ESP должны быть целы.
-С 2026-10-09 первоначальный `bootstrap` записывает закрытый журнал и EFI
-checkpoints на Btrfs. Повтор с той же декларацией, ядром и mounts продолжает
-прерванную операцию, завершённый повтор не меняет выбор загрузки. Другая
-декларация или прежний EFI namespace без подходящего журнала отвергаются.
-Первый импорт проверяет уже сохранённые хэши паролей и не перезаписывает их.
-
-`bootstrap-update` создаёт аварийный writable root из здорового подтверждённого
-текущего релиза. `bootstrap-try` выбирает его только для следующей загрузки,
-`bootstrap-confirm` проверяет реально загруженный кандидат и лишь затем
-заменяет стабильный аварийный UKI. Saved рабочий релиз остаётся прежним.
-В recovery root используется multi-user.target; пакеты KDE сохраняются.
-`bootstrap-recover` согласует журнал между FAT и Btrfs; обычный `recover`
-выполняет этот шаг до проверки bootstrap SHA. Сохраняются предыдущий root,
-обе Btrfs-копии EFI и отдельная previous запись загрузочного меню.
-С 2026-10-09 каждое обновление получает отдельный закрытый журнал и уникальное
-поколение в `State/bootstrap-history`. Атомарный `bootstrap-current.json` выбирает
-активную операцию после сохранения её входов. Существующий singleton импортируется
-при следующем обновлении. Чтобы обновить bootstrap из того же исходного релиза
-снова, укажите новое `generation-id`. `bootstrap-list` показывает историю.
-Стабильная и предыдущая аварийные системы сохраняются; устаревшие завершённые
-поколения и ненужный trial EFI удаляет GC. Менеджер старого singleton-релиза
-не обслуживает новую историю; после отката используйте актуальный bootstrap
-для её восстановления/обновления.
-Протокол и фактические испытания: [журнал](runs/2026-10-09-bootstrap-recovery/README.md).
-
-`lock` явно получает пакеты из выбранной даты Arch Linux Archive, проверяет
-подписи через pacman и фиксирует полное замыкание зависимостей, архивы, подписи,
-контрольные суммы и базы репозиториев. `base.lock` лежит рядом с YAML.
-В request включён SHA-256 исполняемого Rust-менеджера: после его замены lock
-нужно явно обновить даже при прежних версиях пакетов. Рецепт, бинарник и файлы
-замораживаются для каждой сборки. Для повторения нужны также архивы, подписи
-и сохранённые базы, одного JSON недостаточно.
-
-`plan` сравнивает пакеты, файлы и units с текущей системой без обновления lock.
-`build` создаёт новый private корень, устанавливает конкретные архивы,
-применяет декларацию, создаёт UKI, проверяет состав и делает read-only снимок.
-Рабочие `/var` и `/boot` изолированы от действующих данных; общий только кэш.
-После успеха private подтом удаляется. Источники и данные сборки сохраняются
-в `/var/lib/looom/inputs/<id>`; исходники установленного рецепта находятся в
-`/usr/lib/looom/source`. Пакетная база каждого корня — `/usr/lib/looom/pacman`.
-
-Декларативное `masked` действует и на раннюю загрузку: mkinitcpio переносит
-vendor units и drop-ins, но не сохраняет обычную /etc mask. Поэтому Rust builder
-добавляет drop-in с всегда ложным `ConditionPathExists=/dev/null/looom-masked`.
-В основном root остаётся штатная mask `/dev/null`. Это проверено на фактическом
-UKI и аппаратной загрузке N100, где новые TPM NvPCR-службы иначе падали.
-
-```bash
-sudo looom rebuild /path/to/base.yaml release-1
-sudo systemctl reboot
-# В новой загрузке:
+# System administration.
+sudo looom status
+sudo looom rebuild ~/looom/base.yaml desktop-next
+sudo reboot
+# After checking the new desktop:
 sudo looom verify
 sudo looom confirm
+
+sudo looom rollback initial
+sudo reboot
 ```
 
-`rebuild` последовательно выполняет `check`, `lock`, `build`, `publish`, `try`.
-Декларация и содержимое её файлов читаются один раз; `base.lock` обновляется
-явно как часть команды. Вывод показывает текущий этап. Ошибка останавливает
-цепочку; незавершённые операции сохраняются для диагностики.
-Уже существующее имя релиза отклоняется до разрешения пакетов,
-повторное создание релиза не выполняется. При успехе выбирается один следующий
-старт, автоматической перезагрузки и подтверждения нет. Отдельные команды
-сохраняются; для предварительного просмотра можно выполнить `lock` и `plan`.
+`setup` offers confirmation, application installation/update, password changes,
+rebuilding, status, and a cleanup preview. System actions use the installed manager
+through sudo; application actions run as the regular user. Run setup without sudo.
+`--status` only prints paths and the current release. KDE opens `--first-login`
+once per HOME; its marker records that the menu was shown, not that the system
+was confirmed or applications were installed. The offline guide is
+`/usr/share/looom/GETTING-STARTED.txt`.
 
-Сборка и публикация не меняют постоянный выбор загрузки. `try` выбирает один
-следующий старт. Limine потребляет BLI-запрос до загрузки ядра; неподтверждённый релиз
-не становится постоянным. `confirm` проверяет действительно запущенный корень,
-ядро, постоянные монтирования, аккаунты и необходимые службы.
-Графический вход дополнительно проверяется человеком или VM-тестом.
+## Release commands
 
-Публикация записывает временное имя UKI в закрытый `State/publications`.
-`recover` убирает названный журналом незавершённый файл и строит меню из
-Btrfs-метаданных. После power-cut FAT может повредить уже переименованный
-файл; fsync/rename не являются обещанием сохранности FAT при любом обесточивании.
-Повторный `publish` пересоздаёт повреждённый UKI только у validated-кандидата,
-который не выбран в saved/next. Опубликованные/подтверждённые или выбранные
-образы автоматически не заменяются. Для доступа при повреждённом меню
-служит прямая UEFI-запись recovery (в старом GRUB — встроенная аварийная запись);
-в bootstrap выполняется `recover`,
-после чего повторно публикуют нужный кандидат.
+| Command | Behavior |
+| --- | --- |
+| `looom check <base.yaml>` | Validate schema and file inputs; no build or boot selection |
+| `sudo looom lock <base.yaml>` | Resolve and verify the pinned package closure; write adjacent `base.lock` |
+| `sudo looom plan <base.yaml>` | Compare packages, files, and units with the current system; do not refresh the lock |
+| `sudo looom build <base.yaml> <id>` | Build and validate a private root, UKI, and read-only snapshot |
+| `sudo looom publish <id>` | Publish the validated release; leave the permanent boot choice unchanged |
+| `sudo looom try <id>` | Select one next boot |
+| `sudo looom rebuild <base.yaml> <id>` | Run check → lock → build → publish → try; stop on error |
+| `sudo looom verify` | Check the running root, kernel, mounts, accounts, inventory, manager, and required units |
+| `sudo looom confirm [id]` | Make the healthy, actually running release the permanent choice |
+| `sudo looom rollback <id>` | Select a previously confirmed release; reboot separately |
+| `sudo looom reject <id>` | Reject an unused unconfirmed candidate; retain it for diagnosis/GC |
+| `sudo looom status` | Show the running release, boot selections, and release records |
+| `sudo looom recover` | Reconcile interrupted builds, publication, menus, recovery updates, and removals |
 
-```bash
-sudo looom rollback previous-confirmed-id
-sudo systemctl reboot
+`rebuild` reads the declaration and file inputs once. An existing build/release ID
+is rejected before resolution; failures retain private state for diagnosis.
+There is no automatic reboot or confirmation. An unconfirmed trial returns to
+the old default on the next ordinary boot. Restart a hung machine yourself.
+
+Frozen build inputs are under `/var/lib/looom/inputs/<id>`. The installed recipe
+is under `/usr/lib/looom/source`; each release's package database is under
+`/usr/lib/looom/pacman`. The request includes the exact manager SHA-256.
+See [configuration](configuration.md) for schema and lock rules.
+
+## Passwords and accounts
+
+```sh
+sudo looom password <user-name>
+sudo looom accounts check
 ```
 
-`rollback` выбирает ранее подтверждённый релиз; `/home`, локальные настройки,
-пароли и `/var` сохраняются. Совместимость форматов данных служб с прежними
-версиями остаётся отдельным вопросом.
+Password prompts are hidden. `password <user-name> --stdin` is available for
+controlled private automation; never place passwords in command arguments.
+`accounts generate` regenerates runtime account files and is normally invoked
+by the boot service. Direct `passwd`/GUI password changes are unsupported.
+[Credential security](credentials-security.md) explains storage and limitations.
 
-`recover` завершает настроенный Rust private build его собственным замороженным
-бинарником, в том числе после снимка без метаданных, и согласует меню/очистку.
-Незавершённые сборки старого Python-прототипа не запускает автоматически.
+## Garbage collection
 
-## Пароли и очистка
-
-Нативный credential-компонент читает файлы через проверенные дескрипторы,
-проверяет root ownership, тип, права, отсутствие симлинков и access/default ACL.
-Credentials находятся в защищённом постоянном состоянии, не в YAML/lock/UKI.
-Шаблоны shadow релиза содержат заблокированные поля; действующие shadow/gshadow
-создаются в `/run` с 0600. Смена и генерация сериализованы, журнал позволяет
-перегенерировать runtime после прерывания постоянной записи.
-
-Новые пароли хэшируются системной libxcrypt, yescrypt j9T; поддерживается импорт
-ограниченного SHA-512-crypt старого прототипа. Буферы с паролями очищаются, дампы
-credential-процесса отключаются. Это проверенная функциональная реализация,
-не независимый аудит криптографии/PAM. Root и доступ к незашифрованному диску
-остаются способами получения хэшей. Прежний bootstrap и его резервные копии
-тоже содержат секреты и не относятся к публичному комплекту воспроизводимости.
-
-Административная смена: `sudo looom password <имя>` с интерактивным подтверждением.
-Совместимый `looom-password` — ссылка на тот же Rust-бинарник. Не передавать пароль
-аргументом или командой, записываемой в историю. Стандартные passwd/usermod,
-GUI-смена, самостоятельная PAM-смена, полная политика aging и постоянной
-блокировки аккаунта пока не поддерживаются.
-
-GC по умолчанию показывает кандидатов. `--keep` сохраняет не менее двух последних
-подтверждённых релизов; текущий, saved, next, смонтированные корни и вложенные
-каталоги всегда защищены. Источники незавершённых bootstrap-поколений и
-configured-сборок сохраняются. Published-кандидат нужно сначала явно `reject`.
-Для bootstrap защищены стабильная/предыдущая системы и активная операция.
-`--apply` удаляет только принадлежащие журналу корни/UKI/метаданные; пути,
-владельцы и файловая система проверяются до удаления. Меню сохраняется раньше
-удаления обычного корня, EFI синхронизируется перед удалением метаданных.
-Общее состояние, credentials, frozen inputs, журнал операций и evidence
-не удаляются. Незавершённую очистку продолжает `recover`, проверяя защиту снова.
-[Протокол и VM-проверки GC](runs/2026-10-09-generations-gc/README.md).
-
-## Проверки и воспроизводимость разработки
-
-На подготовленной VM исходники лежат в `/var/lib/looom/dev/src`, компилятор —
-в отдельном writable подтоме `/var/lib/looom/dev/root`; действующий корень
-не изменяется. Внутри этой тестовой среды:
-
-```bash
-cd /workspace
-cargo fmt --check
-LOOOM_TEST_VM=1 cargo test --locked -- --test-threads=1
-cargo clippy --locked --all-targets -- -D warnings
-cargo build --locked --release
+```sh
+sudo looom gc --keep 3
+sudo looom gc --keep 3 --apply
 ```
 
-Runtime/bootstrap тесты требуют root, разрешённую QEMU/KVM-машину, Btrfs,
-доступный `/dev/vda2` и собственные временные FAT-образы. Они не предназначены
-для запуска на рабочем компьютере. `looom-vm-test` — отдельный приёмочный
-Rust-инструмент для PAM, временного пароля и uinput; в релизы не ставится.
-Общие приёмочные проверки вынесены в `src/bin/support/acceptance.rs`.
-`looom-n100-test` отдельно проверяет identity разрешённого физического пилота;
-VM guard и разрушительные fixtures на него не распространяются.
+The default is a preview; `--apply` is required for removal. `--keep` defaults to 2
+and must be at least 2. GC retains the latest required confirmed releases and
+always protects the running, saved, next, mounted, and active recovery resources.
+A published candidate must first be explicitly rejected before it can be removed.
 
-Проверены typed YAML, credential permissions/ACL/symlinks/concurrency/interruption,
-настоящий FAT ENOSPC, прерывание публикации, GC собственной тестовой записи,
-изолированный bootstrap, восстановление configured build, фактические загрузки
-и откаты ядер, сохранение пароля, SDDM и Plasma Wayland. Power cut во время записи
-FAT, Btrfs ENOSPC и смена даты архива проверены в выбранных сценариях
-[на VM 2026-10-08](runs/2026-10-08-durability/README.md). Обнаружены повреждения
-FAT-меню/кандидата UKI; добавлены embedded emergency GRUB и восстановление
-uncommitted публикации. Это hard stop VM, не физическое обесточивание диска.
-Аппаратные проверки N100 и их пределы описаны в отдельном журнале.
-Воспроизводимость здесь означает зафиксированные входы и
-проверяемый состав; идентичность UKI байт в байт не обещается.
+Only owned roots, UKIs, and release metadata are removed. HOME, shared `/var`,
+credentials, frozen inputs, operation journals, and evidence are retained.
+Interrupted removals are resumed by `recover` with protection checks repeated.
+Keeping these inputs means GC does not reclaim every byte associated with a build.
 
+## Recovery generations
 
-2026-10-09 добавлен native whole-disk installer в тот же бинарник. До стирания
-проверяются диск, чужие mounts/holders, пакетный набор и подписи; журнал отделяет
-план от исполнения. Pending-разметка и форматирование не повторяются автоматически.
-Первый релиз проходит настоящую пробную загрузку и ручное подтверждение.
-`looom-vm-installer` проверяет отдельный виртуальный диск и прерывания; в целевую
-ОС не устанавливается. [Инструкция](installer.md),
-[фактическая приёмка](runs/2026-10-09-installer/README.md).
+```sh
+sudo looom bootstrap-list
+sudo looom bootstrap-update <confirmed-running-release> [generation-id]
+sudo looom bootstrap-try
+sudo reboot
+# In the actually booted recovery candidate:
+sudo looom bootstrap-confirm
+```
+
+This creates a writable recovery root from the healthy confirmed running release.
+The recovery candidate boots into `multi-user.target`; KDE packages remain present.
+Confirmation replaces the stable recovery UKI while leaving the saved system
+release unchanged. To repeat an update from the same source release, supply a
+new generation ID.
+
+`bootstrap-recover` reconciles the update journal across FAT and Btrfs; `recover`
+also performs this step. Stable and previous recovery roots and EFI copies are
+kept. `bootstrap-list` shows history; GC can remove obsolete completed generations.
+Older managers that only understand the previous singleton journal should not
+manage the new history; use the current recovery manager instead.
+
+## Attach a prepared Arch installation
+
+The ISO installer is the supported route for a new whole-disk installation.
+Advanced attachment uses a prepared writable Arch root, FAT ESP mounted at `/efi`,
+one unencrypted Btrfs filesystem, and separate writable `/home`, `/var`, and
+`/var/lib/looom` subvolumes. The declared user must already exist with the same identity.
+Additional mounts and persistent-resource migrations are rejected.
+
+```sh
+sudo looom bootstrap /path/to/base.yaml
+sudo looom boot-entry
+```
+
+`bootstrap` does not partition the disk. It registers the machine, imports protected
+identity/credentials, creates the recovery UKI, and initializes boot infrastructure.
+It journals its work; retries require matching declaration, kernel, and mounts.
+A completed retry does not replace passwords or boot selection. `init <base.yaml>`
+registers or validates infrastructure that has already been prepared.
+
+`boot-entry` registers the firmware entry separately. `boot-recovery` creates a
+direct firmware recovery entry. `boot-migrate` migrates an eligible legacy GRUB
+installation to Limine; use the [migration guide](limine.md#grub-migration).
+Do not modify `machine.json` or boot metadata manually to bypass their guards.
+
+[Boot and recovery](limine.md) · [Advanced installer](installer.md) ·
+[Development and tests](development.md)

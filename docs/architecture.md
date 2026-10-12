@@ -1,287 +1,93 @@
-# Архитектура и план первой версии
+# Architecture
 
-Статус: черновик для обсуждения, 2026-10-04.
-Принятые пользователем требования отделены от технических предложений.
+looom manages complete system releases rather than wrapping pacman for the active
+root. pacman resolves, verifies, and installs packages into an isolated build.
+looom owns declarations, frozen inputs, Btrfs roots, per-release UKIs, boot selection,
+credentials, recovery, and cleanup. The manager and application layer are written
+in Rust; standard Arch tools retain their own dependencies.
 
-Предлагаемая схема декларации и подробные правила для обсуждения:
-[черновик конфигурации v1](configuration-proposal.md), 2026-10-06.
-Документ содержит как реализованное подмножество, так и предложения будущих возможностей.
+## Two layers
 
-Состояние на 2026-10-06: действующий менеджер полностью перенесён на Rust.
-Реализованы строгий YAML, package lock, замороженные бинарники/входы, native
-build/recover, Limine/UKI, credentials, GC и подключение подготовленного Arch.
-Проверены настоящие загрузки и откаты Rust-релизов и KDE Wayland;
-все сборки и тесты выполнялись только в VM.
-[Текущий контракт](native-rust.md),
-[журнал](runs/2026-10-06-native-rust/README.md).
-2026-10-09 добавлены возобновляемый initial bootstrap и аварийное обновление
-через отдельный writable кандидат, one-shot boot и health confirmation.
-FAT UKI/profile переход журналируется на Btrfs; прежние root/EFI сохраняются.
-[Контракт и VM-проверки](runs/2026-10-09-bootstrap-recovery/README.md).
-Добавлены история bootstrap-поколений, атомарный указатель активной операции
-и GC с защитой смонтированных/выбранных корней и продолжением по журналу.
-[Контракт и VM-проверки GC](runs/2026-10-09-generations-gc/README.md).
-Ниже сохранён исходный архитектурный план; актуальные ограничения реализации
-указаны в текущем контракте. Предыдущий смешанный MVP — [история](declarative-mvp.md).
-
-2026-10-06 пользователь согласовал предложенные границы базовых функций MVP
-и управление критическими конфигами через модули. Для `fstab` и подобных файлов
-позже рассматриваются отдельные обработчики пользовательских настроек.
-Оценка текущего хранения паролей и необходимые усиления:
-[password credentials](credentials-security.md).
-
-Практический порядок работ и критерии завершения каждого этапа:
-[план прототипа в VM](mvp-plan.md).
-
-Состояние реализации на 2026-10-04: на VM загружены и подтверждены read-only
-релизы v1r3, v2 и desktop; проверены откат ядра/пакетов/декларации,
-сохранение локальных настроек и пароля, неподтверждённый старт и прерывания.
-KDE Plasma 6.7.5 работает в реальной Wayland-сессии; цикл desktop -> v1r3 -> desktop пройден.
-Начальный writable bootstrap сохранён как аварийная запись.
-[Установка](bootstrap-installation.md), [реализованный прототип](read-only-releases.md),
-[журнал проверок](runs/2026-10-04-releases/README.md).
-
-В прототипе выбран следующий способ предоставления аккаунтов: passwd/group
-остаются read-only файлами релиза, shadow/gshadow генерируются в `/run` из
-заблокированных шаблонов и отдельных credentials. Смена пароля выполняется
-через `looom-password`; стандартные passwd/usermod и GUI изменения аккаунтов пока не поддерживаются.
-Локальные исключения `/etc` — looom-local и NetworkManager/system-connections;
-resolv.conf указывает в `/run`. Root SSH и host keys сохраняются в `@state`.
-Пакетная сборка новая, её `/var` и `/boot` изолированы; общий только кэш пакетов.
-Исходный прототип использовал Bash-профили. Текущий Rust-менеджер принимает YAML
-и замораживает типизированную декларацию, файлы, lock и собственный бинарник.
-Package lock и метаданные — JSON; GC реализован с защищёнными running/saved/next
-и как минимум двумя последними подтверждёнными релизами.
-
-## Принятые требования
-
-- Первая версия предназначена для одного своего компьютера; затем обобщаем решение.
-- Первый прототип и проверка архитектуры выполняются в виртуальной машине.
-  Выбор и проверка реального оборудования выполняются после успешного прототипа.
-- Загрузка через UEFI, без Secure Boot в первой версии.
-- Графическая оболочка — KDE Plasma.
-- Первая версия без шифрования диска.
-- Декларативные системные настройки откатываются вместе с базой.
-- Локальные настройки сохраняются при обновлении и откате базы.
-- Локальные изменения `/etc` разрешены только для явно перечисленных файлов
-  и каталогов. Остальные системные настройки задаются декларативно.
-- Первый пакетный профиль — официальный Arch; CachyOS добавляется следующим профилем.
-- Предпочтительные загрузчики — GRUB или Limine; systemd-boot для прототипа не выбран.
-- В первой версии один личный пользователь, описанный в конфигурации.
-  Пароль хранится отдельно от декларации и релиза.
-- Основа проекта: пакеты Arch/CachyOS, релизы на Btrfs и независимые приложения.
-
-## Предлагаемый архитектурный контракт
-
-### Три категории данных
-
-| Категория | Содержимое | Поведение при откате |
+| Layer | Managed by | Update and rollback behavior |
 | --- | --- | --- |
-| Базовый релиз | Системные файлы, ядро, модули, декларативные настройки, база pacman | Выбирается предыдущая согласованная версия |
-| Состояние компьютера | Локальные настройки, идентификаторы, учётные данные, данные сервисов | Сохраняется |
-| Пользовательский слой | Домашние каталоги, Flatpak, контейнеры, пользовательские данные | Сохраняется |
+| Base system: kernel, drivers, services, desktop, application infrastructure | `base.yaml` and looom releases | Build a new root; trial boot; explicitly confirm or roll back |
+| User applications: Flatpak, Arch/Distrobox, AppImage | `apps.yaml` and user commands | Update independently; data and installations survive system rollback |
 
-Откат базы не обещает откат форматов данных сервисов или приложений.
-Совместимость сохраняемого состояния с предыдущим релизом проверяется отдельно.
+Application declarations ensure that named applications are present. Removing a
+name does not uninstall it. User applications do not form an atomic system release.
 
-### Релиз и раскладка диска
+## Disk and state layout
 
-Релиз включает корневой подтом, соответствующий загрузочный образ и метаданные.
-Ядро, initramfs, параметры загрузки, модули и корневая система согласованы по ID релиза.
+A new installation uses a 2 GiB FAT32 ESP and the remaining disk as Btrfs.
 
-Предлагаемая раскладка:
+| Resource | Mount or path | Purpose |
+| --- | --- | --- |
+| `@root-<id>` | `/`, read-only | A system release, including its package inventory and configuration |
+| `@bootstrap` and recovery generations | `/` when booted into recovery, writable | Repair and management outside the normal read-only root |
+| `@home` | `/home`, writable | Personal files, desktop configuration, application installations/data |
+| `@var` | `/var`, writable | Service data and package cache |
+| `@state` | `/var/lib/looom`, writable, root-only | Machine identity, credentials, journals, release records, frozen inputs |
+| ESP | `/efi`, writable, restricted permissions | Limine, generated menus, and release/recovery UKIs |
 
-```text
-ESP (FAT):
-  Limine (новые установки; GRUB backend для прежних)
-  меню и изменяемое состояние загрузчика вне базового релиза
-  отдельные UKI опубликованных релизов
+The registered machine profile binds filesystem UUIDs, persistent subvolumes,
+and account identity. Hostname, packages, desktop, files, and units may change
+through releases; the managed user identity and persistent mount contract remain stable.
 
-Btrfs:
-  @root-<release-id>  -> /                  read-only
-  @home             -> /home              read-write
-  @var              -> /var               read-write
-  @state            -> /var/lib/looom     read-write
-  @build-<build-id>  -> рабочая сборка      read-write, не загрузочный релиз
-```
+## Configuration ownership
 
-Состояние менеджера релизов выделено из общего `/var`, чтобы управлять им независимо.
-Вложенные подтомы Btrfs не входят в снимок родителя; все постоянные монтирования явные.
-`/run` и `/tmp` — временное состояние.
+The release owns system settings. `files` declares selected regular files in
+`/etc`, while typed settings generate protected resources such as `fstab` and
+account templates. Arbitrary replacement of these resources is rejected.
 
-База pacman хранится внутри каждого релиза. Предлагаемый путь:
-`/usr/lib/looom/pacman`, заданный через `DBPath`; совместимость с hooks проверяем в прототипе.
-Общими могут быть кэш пакетов и журналы, но не сведения об установленных пакетах.
+Two explicit local directories remain writable across releases:
+`/etc/NetworkManager/system-connections` and `/etc/looom-local`.
+Personal desktop settings live in HOME and also survive rollback.
+[Configuration rules](configuration.md) describe the supported schema and boundaries.
 
-### Декларативный и локальный /etc
+Passwords are separate from releases. Runtime `shadow`/`gshadow` files are generated
+from protected persistent credentials, so a system rollback retains the current
+password. Machine ID and SSH host keys also persist. See [credential security](credentials-security.md).
 
-Принята модель явных локальных исключений. Предложение по реализации: `/etc`
-входит в read-only релиз; локальные каталоги подключаются из постоянного хранилища
-отдельными монтированиями до запуска потребляющих сервисов.
-Механизм для отдельных файлов выбирается с учётом способа записи конкретной программы:
-простое монтирование файла не обеспечивает замену файла через временный файл и rename.
+## Release lifecycle
 
-Правила:
+1. **Check:** parse and validate the declaration and its file inputs.
+2. **Lock:** resolve a complete package closure from the selected Arch Archive date;
+   verify signatures and record package/repository hashes and the manager digest.
+3. **Build:** freeze the declaration, manager recipe, binary, and file inputs;
+   install exact archives in a private Btrfs root, configure it, build the UKI,
+   verify the result, and create a read-only release snapshot.
+4. **Publish:** synchronize the UKI and publish boot metadata without changing
+   the permanent boot choice.
+5. **Try:** select one next boot. Limine consumes the UEFI one-shot request before
+   starting the kernel. Without confirmation, the next ordinary boot uses the old default.
+6. **Confirm:** verify the actually running release and make it the permanent choice.
+   Desktop, network, and sound usability still require a human check.
 
-1. Каждый управляемый путь имеет одного владельца: декларация либо локальное состояние.
-2. Конфликт владельцев, включая вложенные пути, останавливает подготовку релиза.
-3. Локальные пути перечислены явно; произвольная запись в остальной `/etc` не разрешается.
-4. Для файла, где нужны оба вида настроек, используем поддерживаемые сервисом
-   отдельные конфигурационные фрагменты; иначе требуется явное правило генерации.
-5. Подключение локального каталога заменяет содержимое пути целиком. Поэтому
-   в нём не должны одновременно находиться декларативные файлы релиза.
-6. Новые локальные пути и изменения их формата требуют совместимости с сохраняемыми
-   релизами. Поддерживаемая глубина отката должна быть явно определена.
+`rebuild` combines the first five steps. It stops on error and does not reboot
+or confirm automatically. Build scripts receive private `/var` and `/boot` state;
+the working machine's persistent data and ESP are not exposed for package scripts to write.
 
-Первый кандидат на локальное исключение — подключения NetworkManager,
-если сеть настраивается через интерфейс пользователя. Окончательный список не выбран.
-Постоянные секреты не входят в YAML, Git или публикуемые метаданные.
+## Recovery and cleanup
 
-Постоянный OverlayFS поверх всего `/etc` не предлагается как механизм по умолчанию:
-локальные копии и отметки удаления могут скрывать обновлённые файлы базового релиза.
+Journals identify incomplete builds, publications, credential writes, recovery
+updates, and removals. Recovery uses frozen inputs and the appropriate manager
+recipe rather than reinterpreting changed source files. EFI publication and Btrfs
+state are coordinated; they are not a single cross-filesystem transaction.
 
-### Учётные записи: предлагаемая модель
+A direct firmware recovery entry can bypass a damaged Limine menu. Damaged recovery
+UKIs or an unusable ESP require a live environment. There is no automatic watchdog
+or universal guarantee against storage damage after power loss.
 
-- Системные пользователи и группы определяются потребностями пакетов релиза.
-- UID/GID закрепляются в общей карте назначений и не переиспользуются
-  в пределах поддерживаемой истории релизов. Конфликт ID блокирует подготовку.
-- Принято: один личный пользователь описан декларативно, пароль хранится отдельно.
-  Предложение по реализации — фиксированный UID/GID и постоянное защищённое
-  хранилище password hash вне базового релиза.
-- Общие `/home` и состояние сервисов сохраняют корректных владельцев после отката.
-- Изменение пароля должно действовать и после загрузки предыдущего релиза;
-  hash и другие секреты не входят в репозиторий или lock.
-- Не делаем файлы `passwd`/`group`/`shadow` общими без процедуры согласования
-  системных аккаунтов. Пакетная сборка не изменяет действующие учётные записи.
+GC previews by default and protects running, saved, next, mounted, and required
+confirmed releases, plus active/stable recovery generations. It removes only
+owned release resources; credentials, HOME, shared `/var`, frozen inputs, and
+operation evidence remain. [Command reference](native-rust.md) and
+[boot recovery](limine.md) cover the operational procedures.
 
-Перед общей сборкой нужен небольшой прототип представления учётных записей:
-проверить NSS/PAM, вход в SDDM и консоль, обновление пароля и откат.
-Способ генерации и предоставления этих данных, инструменты управления аккаунтами
-и аварийный доступ ещё не выбраны. Поддержка стандартных `passwd`/`usermod`
-не считается обеспеченной, пока не проверены запись и замена файлов на read-only корне.
+## Scope
 
-### Сборка и декларация
-
-- `base.yaml`: пакетный профиль, сервисы, системные настройки, локальные исключения.
-- `base.lock`: точные пакеты с зависимостями, версии, репозитории, контрольные суммы.
-- `apps.yaml`: пользовательские приложения и контейнерные окружения.
-- Метаданные релиза: ID, исходная декларация, lock, список пакетов и результаты проверок.
-
-Предложение для MVP — локальная сборка нового корня из выбранного набора пакетов.
-Сборку из снимка предыдущего релиза можно добавить позже как оптимизацию:
-она обязана удалять исключённые пакеты и не наследовать неописанные изменения.
-
-Пакетные операции выполняются в изолированной рабочей системе и не меняют
-сервисы, загрузочные файлы или постоянное состояние работающего компьютера.
-Hooks и скрипты установки входят в проверяемую поверхность сборщика.
-
-Принятый первый источник — официальный Arch. Предложение по сборке — использовать
-согласованное состояние репозиториев. CachyOS добавляется отдельным последующим профилем
-с явным приоритетом репозиториев и способом сохранения пакетов.
-
-Lock без доступных архивов пакетов недостаточен для воспроизведения.
-В MVP цель — воспроизвести состав пакетов и конфигурацию; побитовая идентичность
-всего образа не заявляется.
-
-### Публикация, загрузка и откат
-
-С 2026-10-10 выбран Limine и отдельный UKI каждого релиза. UKI объединяет
-ядро, initramfs и параметры с конкретным корневым подтомом. Limine запускает UKI
-через EFI chainloading. Загрузчик и ESP — отдельная инфраструктура;
-откат корня не откатывает загрузчик. GRUB backend сохранён для старых машин.
-
-```text
-building -> validated -> published -> pending boot -> confirmed
-                                               \-> failed
-```
-
-- Корень, состав пакетов и UKI проверяются перед публикацией; ESP и Btrfs
-  синхронизируются до изменения выбора загрузки.
-- Стабильный ID пункта Limine — `looom-<release-id>`, не номер в меню.
-- Постоянный выбор задаётся `default_entry` в `EFI/looom/limine.conf`.
-  `remember_last_entry: no` запрещает пробной загрузке менять default.
-- `try` записывает UEFI `LoaderEntryOneShot`. Limine удаляет её до запуска ядра.
-  Следующая перезагрузка без `confirm` возвращает постоянный выбор.
-  Для этого требуется Limine с поддержкой BLI; в закреплённом Arch — 12.9.3.
-- `confirm` проверяет действительно запущенный read-only релиз, аккаунты,
-  монтирования и обязательные службы; только затем меняет постоянный выбор.
-- Зависшая ОС требует внешней перезагрузки: watchdog автоматически не включён.
-- Прямая UEFI-запись recovery UKI запускается независимо от конфигурации Limine.
-  Это ручной аварийный путь при повреждении меню; автоматического failover
-  при повреждении самого загрузчика/ESP не заявляем.
-- GC сначала исключает релиз из обоих конфигов ESP, синхронизирует их, затем
-  удаляет корень и UKI. Работающие, выбранные, пробные и два последних
-  подтверждённых релиза защищены.
-- Переключение старой GRUB-машины — отдельный `boot-migrate` с сохранением
-  прежнего EFI-образа и fallback; рабочие credentials и schema machine.json
-  не меняются. Старые бинарники управляют старым GRUB, поэтому после перехода
-  используется новый менеджер из State до установки нового релиза.
-
-[Подробности Limine и перехода](limine.md),
-[документация закреплённой версии](https://github.com/limine-bootloader/limine/blob/v12.9.3/CONFIG.md).
-
-### Приложения
-
-Реализован отдельный `apps.yaml`: пользовательский Flatpak, rootless Podman/Distrobox
-с Arch-контейнером и AppImage с обязательным SHA256. Инфраструктура входит в базу,
-а приложения и данные сохраняются в HOME. Применение обеспечивает наличие и
-не удаляет ручные установки. Сторонние `.sh` запускаются целиком внутри Arch;
-контейнерный `pacman` не изменяет host root. [Контракт и команды](apps.md).
-Совместимость: скрипт по умолчанию выполняется от пользователя, голый `pacman`
-эскалирует права только в контейнере; root всего скрипта включается явно.
-Системная сессия Niri/Quickshell добавляется профилем, в том числе рядом с KDE.
-Явные контейнерные пакеты можно экспортировать в подключаемый `packages_from`;
-системный resolver строит официальный подписанный lock на выбранную дату.
-Foreign/AUR не импортируются молча. Freeze раскрывает списки, а host меняется
-только через обычную сборку, пробную загрузку и подтверждение релиза.
-Сохранность приложений при откате не означает совместимость с любым старым ядром
-или драйвером; поддерживаемый диапазон релизов проверяется.
-
-## План и критерии готовности
-
-Предлагаемая VM: QEMU/KVM с UEFI через OVMF, 4 vCPU, 8 GiB RAM,
-64 GiB виртуального диска; ESP 2 GiB, остальное Btrfs.
-Параметры можно уменьшить с учётом ресурсов хоста. Переменные UEFI сохраняются
-между загрузками этой VM; шифрование и Secure Boot отключены.
-
-1. **Требования прототипа.** Утвердить загрузочную цепочку,
-   параметры UEFI VM и способ восстановления. Оболочка — KDE Plasma,
-   шифрование и Secure Boot в первой версии не используются.
-2. **Контракт состояния.** Утвердить раскладку, локальные пути, учётные записи,
-   правила совместимости данных и критерий успешной загрузки. Сначала проверить
-   read-only `/etc`, изменяемый локальный каталог и модель пользователей на небольшой
-   загрузочной базе; затем подключить полный рабочий стол.
-3. **Прототип в VM.** Собрать два релиза и загрузить каждый с read-only корнем.
-   Проверить соответствие базы pacman файлам, сохранение локальной настройки
-   и возврат декларативной настройки при откате.
-4. **Прерывания и восстановление.** Проверить остановку сборки, недостаток места,
-   прерывание публикации, неудачную загрузку и очистку. Последний рабочий релиз
-   должен оставаться доступным; незавершённые операции должны обнаруживаться.
-5. **Декларативный инструмент.** Добавить валидацию YAML, lock, сборку, публикацию,
-   просмотр релизов, выбор следующей загрузки и откат. Удалённый из декларации
-   пакет должен исчезать из нового релиза.
-6. **Приложения.** Проверить сохранение приложения и его данных после отката базы.
-7. **Оборудование.** Выбрать целевой компьютер, способ установки и восстановления.
-   Проверить графику, сеть, звук, Bluetooth и сон.
-
-## Открытые решения
-
-- Среда виртуализации и параметры VM; реальное оборудование — после прототипа.
-- Расширение проверки Limine/UKI на другие прошивки UEFI.
-- Представление учётных записей и способ сохранения/обновления пароля на read-only корне.
-- Точный список локальных путей, модель учётных записей и стабильность UID/GID.
-- Совместимость состояния сервисов, глубина отката и хранение релизов.
-- Установка на отдельный диск или переход с существующей системы.
-- Язык инструмента и формат схемы YAML — после проверки механики в VM.
-
-## Источники
-
-- [Btrfs subvolumes и snapshots](https://btrfs.readthedocs.io/en/latest/btrfs-subvolume.html).
-- [pacman: DBPath и работа с другой системой](https://man.archlinux.org/man/pacman.8.en).
-- [Arch Linux Archive](https://wiki.archlinux.org/title/Arch_Linux_Archive).
-- [GRUB: однократная загрузка](https://man.archlinux.org/man/grub-reboot.8.en).
-- [GRUB: постоянный выбор](https://man.archlinux.org/man/grub-set-default.8.en).
-- [GRUB environment block](https://www.gnu.org/software/grub/manual/grub/html_node/Environment-block.html).
-- [GRUB: запуск UKI](https://wiki.archlinux.org/title/GRUB#Chainloading_a_unified_kernel_image).
-- [Limine: конфигурация и UEFI Boot Loader Interface](https://github.com/Limine-Bootloader/Limine/blob/v12.x/CONFIG.md).
-- [OverlayFS: upper/lower и whiteouts](https://docs.kernel.org/filesystems/overlayfs.html).
+The current implementation targets official Arch, x86_64/UEFI, one Btrfs filesystem,
+one managed user, and a whole-disk installation. CachyOS, encryption, Secure Boot,
+dual boot, general mount handlers, and broader hardware support remain future work.
+Fixing input packages enables repeatable composition; byte-identical ISO or UKI
+rebuilds are not promised.

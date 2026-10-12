@@ -1,5 +1,0 @@
-+ chown kexfff:kexfff /home/kexfff/.var/app/org.mozilla.firefox/release-proof.txt
-+ chown -R kexfff:kexfff /home/kexfff/looom/release-test
-+ looom check /home/kexfff/looom/release-test/base.yaml
-Valid schema 1; 2 packages, 1 files, 2 persistent directories
-PASS: same-VM private state snapshot and update declaration prepared

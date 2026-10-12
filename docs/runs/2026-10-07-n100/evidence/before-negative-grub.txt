@@ -1,2 +1,0 @@
-saved_entry=looom-n100-a
-next_entry=

@@ -105,9 +105,6 @@ def main():
     import shutil
     for folder in ('scripts', 'configs'):
         shutil.copytree(project/folder, source/folder, ignore=shutil.ignore_patterns('__pycache__'))
-    evidence = source/'docs/runs/2026-10-04-bootstrap/evidence'
-    evidence.mkdir(parents=True)
-    shutil.copy2(project/'docs/runs/2026-10-04-bootstrap/evidence/mkinitcpio.conf', evidence/'mkinitcpio.conf')
     shutil.copy2(project/'Cargo.lock', source/'Cargo.lock')
     if (project/'src').is_dir():
         shutil.copytree(project/'src', source/'src')

@@ -1,136 +1,62 @@
-# Password credentials: модель и требования к MVP
+# Credential security
 
-Дата: 2026-10-06. Первичная оценка основана на чтении исходного прототипа.
-Текущий credential-компонент перенесён на Rust: реализованы descriptor-based
-чтение, ownership/ACL/symlink проверки, yescrypt через libxcrypt, сериализация
-и восстановление runtime. Sudo по умолчанию требует пароль.
-[Текущий контракт](native-rust.md), [результаты](runs/2026-10-06-native-rust/README.md).
-Account aging, постоянная блокировка и самостоятельная PAM-смена остаются будущими.
-После согласования началась реализация и тестирование усилений исключительно в VM:
-[текущее состояние MVP](declarative-mvp.md), [журнал](runs/2026-10-06-mvp/README.md).
-Разделы об исходном коде ниже сохранены как история причин изменений.
-Не все требования, в частности account aging, уже реализованы.
+System declarations contain credential names such as `login-owner` and `login-root`,
+never plaintext passwords or password hashes. Credentials are persistent machine
+state, independent of the selected release.
 
-## Модель
+## Storage and authentication
 
-Декларация содержит имя credential, а не пароль или его hash.
-Защищённое состояние машины хранит salted password hash. При загрузке генератор
-подставляет его в шаблон shadow выбранного релиза и создаёт runtime-файл в `/run`.
-PAM проверяет пароль через обычный механизм shadow; отдельный протокол
-аутентификации looom не изобретает.
+- Protected credential files are stored under `/var/lib/looom/credentials`.
+  Private directories are root-owned with `0700`; files use `0600`.
+- Release account templates contain locked password fields. At boot, the Rust
+  credential service generates runtime `shadow` and `gshadow` under `/run` with `0600`.
+- PAM authenticates against these runtime files. There is no custom looom login protocol.
+- New passwords use the system libxcrypt implementation of yescrypt with `j9T`
+  parameters. Bounded legacy SHA-512-crypt hashes can be imported.
+- File access checks owner, type, permissions, trusted parent directories,
+  symlinks, and access/default ACLs using checked descriptors.
+- Password updates and runtime generation share a lock. Persistent writes use
+  synchronization, atomic replacement, and recovery metadata. Password buffers
+  are zeroized and credential-process core dumps are disabled.
 
-Такая модель позволяет обновить пароль независимо от релиза и использовать
-новое значение после отката. Парольные данные относятся к сохраняемому состоянию.
+A changed password remains current after switching or rolling back system releases.
 
-Как и `/etc/shadow` обычной системы, эти хэши нельзя предоставлять обычным
-пользователям. Хэш не является шифротекстом с ключом расшифрования,
-но при его утечке возможен подбор исходного пароля.
-[shadow(5)](https://man.archlinux.org/man/shadow.5.en),
-[crypt(5)](https://man.archlinux.org/man/crypt.5.en).
+## Change a password
 
-## Что делал исходный прототип
+Use `looom setup` as your regular user, or run:
 
-- `scripts/initialize-release-state.py` переносит хэши root/codex из bootstrap
-  в `/var/lib/looom/credentials/{root,codex}.hash`; каталог создаётся с `0700`,
-  файлы с `0600`, процесс выполняется под root.
-- `scripts/looom-accounts.py` создаёт runtime shadow/gshadow с `0600`.
-  Пароль читается интерактивно, передаётся хэшировщику через stdin,
-  а не через аргумент команды. Он остаётся в памяти процессов во время обработки.
-- Сохранение отдельного файла выполняется через временный файл с `0600`,
-  fsync, rename и fsync родительского каталога.
-- В read-only релизе shadow/gshadow — ссылки на runtime-файлы; шаблоны содержат
-  заблокированные password-поля. Статические passwd/group остаются в релизе.
-- Генерация выполняется ранней службой, от которой зависят соответствующие
-  PAM-потребители прототипа. Корректный и неверный пароль ранее проверялись
-  через PAM, в том числе после отката; это проверка функции, а не полный аудит.
-- Используется `openssl passwd -6`, то есть SHA-512-crypt, а не просто SHA-512.
-  [OpenSSL passwd](https://docs.openssl.org/3.5/man1/openssl-passwd/).
+```sh
+sudo looom password <user-name>
+```
 
-## Границы защиты
+The command asks for the new password twice with hidden input. For controlled
+automation, `--stdin` reads it from standard input; keep the source private and
+never put a password in command arguments, YAML, shell history, or public logs.
+`looom-password` is a compatibility entry point to the same Rust manager.
 
-Обычный непривилегированный процесс при корректных правах не должен прочитать
-credential-файлы. Получивший root может прочитать или заменить хэши независимо
-от read-only свойства корня. Этот механизм не защищает от уже захваченного root.
+Direct changes through `passwd`, `usermod`, desktop password dialogs, or self-service
+PAM password changes are not supported. Full password aging and persistent account
+locking policies are also outside the current implementation.
 
-Первый прототип сознательно без шифрования диска. Читающий qcow2 или физический
-диск вне работающей гостевой ОС может получить хэши: гостевые права доступа
-не обеспечивают шифрование. Устойчивость к подбору зависит от алгоритма и пароля.
-Защита данных при краже диска относится к последующему этапу шифрования.
+## SSH keys
 
-В прототипе отдельно существует writable `@bootstrap` с обычным `/etc/shadow`:
-перенос хэшей в credentials не удаляет первоначальные значения из bootstrap.
-Снимки состояния и резервные копии могут также содержать прежние хэши.
-Это защищённые материалы машины, которые нельзя включать в публичные артефакты.
-Воспроизводимость пакетов не требует включения credentials в исходный комплект.
+SSH server host keys identify the installed computer and persist in
+`/var/lib/looom/ssh`. They are created even when no user public key was supplied.
+They do not grant login access. A supplied public key is installed into the managed
+accounts' `authorized_keys`; private client keys stay on the client.
+Installed read-only releases disable password-based SSH login.
 
-В первоначальном профиле тестовой VM был настроен `NOPASSWD: ALL`. Получение доступа к его
-учётной записи даёт возможность стать root без пароля. Это политика тестового
-профиля; текущий Rust-профиль по умолчанию её не наследует.
+## Backups and limits
 
-## Найденные ограничения исходного кода
+Root can read or replace password hashes. Offline access to an unencrypted disk
+can also expose them; filesystem permissions do not provide disk encryption.
+Hashes cannot be decrypted, but leaked hashes can be attacked by password guessing.
 
-1. Генератор проверяет отсутствие group/other permission bits, но не проверяет
-   полностью UID владельца, тип файла, ACL, доверенность родительских каталогов
-   и отсутствие симлинков. Защищённый родительский каталог снижает риск,
-   но не заменяет проверку этих условий.
-2. Проверка формата hash ограничена префиксом `$` и запретом части разделителей.
-   Нет строгой проверки поддерживаемого алгоритма, структуры и разумной стоимости.
-3. Между сменами паролей и генерацией shadow нет общего lock. Отдельные файлы
-   атомарны, но конкурентные генерации могут опубликовать устаревшее представление.
-4. Сначала заменяется credential, затем генерируется shadow. При сбое между ними
-   сохранённый и действующий пароль могут временно различаться. Единой транзакции
-   между постоянным диском и `/run` нет; нужны журнал и согласование при восстановлении.
-5. Политики aging/даты смены пароля не управляются полноценно: поля берутся
-   из шаблона релиза. Стандартные `passwd`/`usermod` и GUI смена пароля не поддержаны.
-6. Процедура первого переноса из bootstrap имеет маркер завершения, но не полноценный
-   журнал промежуточных шагов; частичное выполнение требует отдельной обработки.
+Recovery roots, previous recovery generations, installer workspaces, State backups,
+SSH private host keys, and NetworkManager connection files can contain secrets.
+Protect them separately and do not include them in source archives or public evidence.
+Package reproducibility does not require publishing credentials.
 
-## Требования до завершения MVP
-
-- Владелец постоянных и runtime-файлов — UID 0, файлы с `0600`;
-  постоянный каталог с `0700`. Проверять фактический доступ с учётом ACL.
-  Для runtime-каталога допустим `0755`, если все секретные файлы закрыты.
-- Доступ к credentials выполнять через проверенные дескрипторы внутри доверенного
-  каталога, без следования пользовательским симлинкам. Secret ID не является
-  произвольным путём файловой системы.
-- Для новых паролей использовать yescrypt через системную libxcrypt с явной
-  проверенной политикой стоимости и случайной солью. Не реализовывать алгоритм
-  хэширования самостоятельно. yescrypt рекомендован для новых хэшей в
-  [crypt(5)](https://man.archlinux.org/man/crypt.5.en);
-  [crypt_gensalt(3)](https://man.archlinux.org/man/crypt_gensalt.3.en)
-  описывает генерацию соли и параметров.
-- Проверить поддержку алгоритма и его стоимости в PAM/libxcrypt всех сохраняемых
-  релизов до смены формата. Старые хэши нельзя преобразовать в новые без исходного
-  пароля: переход происходит при его вводе или установке нового пароля.
-- Сериализовать смену credentials и генерацию. Сохраняемые credentials — источник
-  истины, runtime shadow — производное представление. Журнал и номер поколения
-  должны позволять обнаружить неполную смену и пересоздать runtime без отката
-  к старому хэшу. Сообщать об успехе только после публикации действующего значения.
-- Отсутствующий или повреждённый hash объявленного пользователя должен блокировать
-  парольный вход и выдавать диагностику без раскрытия данных. Нельзя подставлять
-  пустой пароль или молча брать старый hash. Путь аварийного восстановления должен
-  быть описан отдельно; недоступность password-входа не запрещает другие способы входа.
-- Не помещать пароль или hash в CLI-аргументы, историю, логи, трассировку,
-  исходные комплекты и публикуемые артефакты. Для нового credential-компонента
-  ограничить время жизни plaintext в памяти и исключить его из собственных дампов.
-- Разделить административную смену и будущую пользовательскую смену пароля.
-  Самостоятельная смена пользователем должна проверять его текущий пароль через PAM;
-  административная операция требует соответствующих привилегий.
-- Зафиксировать поддерживаемую политику account lock/aging. Откат релиза не должен
-  незаметно отменять постоянную блокировку учётной записи или её парольную политику.
-- Не использовать VM-политику passwordless sudo как default рабочего компьютера.
-
-## Проверки перед MVP
-
-Проверять на подготовленных тестовых credentials, без сохранения их значений
-в репозитории или выводе:
-
-1. Чтение credentials и runtime shadow обычным пользователем запрещено.
-2. Неверный владелец, симлинк, лишние права, повреждённый формат и отсутствие
-   credential обнаруживаются; парольный вход не становится доступным без пароля.
-3. Одновременные смены и сбои на границах commit/generate восстанавливают
-   одно согласованное поколение; старое значение не появляется после успеха.
-4. После смены и отката правильный пароль принимается, старый и неверный отвергаются.
-5. Сохранённые релизы поддерживают выбранный формат хэша и парольную политику.
-6. Публикуемый комплект и read-only корень не содержат хэши managed users;
-   bootstrap и backup состояния учитываются как отдельные защищённые материалы.
+The implementation has VM tests for permissions, ACLs, symlinks, concurrency,
+interrupted writes, and persistence. These are functional checks, not an independent
+cryptographic or PAM security audit. See [release validation](runs/2026-10-12-release-0.2.0/README.md).
